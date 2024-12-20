@@ -4,23 +4,32 @@
   <meta charset="utf-8">
   
   
-  <title>&#39;格格格密码&#39; | Hexo</title>
+  <title>Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="LLL算法 简介：LLL算法用于解决最短向量问题的多项式时间复杂度算法。  LLL算法解释对格的认识![在这里插入图片描述](https:&#x2F;&#x2F;i-blog.csdnimg.cn&#x2F;blog_migrate&#x2F;0368780808a7e1b750e955cf6b101d73.png) 不同的基也可以生成同一个格。 例如一个基向量是（1,0)和（0，1）构成的格。该格用数学符号表示。 ![image-20">
+  <meta name="description" content="LLL算法 简介：LLL算法用于解决最短向量问题的多项式时间复杂度算法。  LLL算法解释原神对格的认识 不同的基也可以生成同一个格。 例如一个基向量是（1,0)和（0，1）构成的格。该格用数学符号表示。   格的维数:即向量的个数，上述表示的是一个二维的格。 然后根据系数a的不同就能得到不同的L集合。 假定现在v1,v2,v3…vn(称为张空间) 是格L的基，让存在不同个集合属于L 即w1 w2">
 <meta property="og:type" content="article">
-<meta property="og:title" content="&#39;格格格密码&#39;">
+<meta property="og:title" content="Hexo">
 <meta property="og:url" content="http://example.com/2024/12/21/%E6%A0%BC%E6%A0%BC%E6%A0%BC%E5%AF%86%E7%A0%81/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="LLL算法 简介：LLL算法用于解决最短向量问题的多项式时间复杂度算法。  LLL算法解释对格的认识![在这里插入图片描述](https:&#x2F;&#x2F;i-blog.csdnimg.cn&#x2F;blog_migrate&#x2F;0368780808a7e1b750e955cf6b101d73.png) 不同的基也可以生成同一个格。 例如一个基向量是（1,0)和（0，1）构成的格。该格用数学符号表示。 ![image-20">
+<meta property="og:description" content="LLL算法 简介：LLL算法用于解决最短向量问题的多项式时间复杂度算法。  LLL算法解释原神对格的认识 不同的基也可以生成同一个格。 例如一个基向量是（1,0)和（0，1）构成的格。该格用数学符号表示。   格的维数:即向量的个数，上述表示的是一个二维的格。 然后根据系数a的不同就能得到不同的L集合。 假定现在v1,v2,v3…vn(称为张空间) 是格L的基，让存在不同个集合属于L 即w1 w2">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/0368780808a7e1b750e955cf6b101d73.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/846d4e43f4e7cc31174f75c9970be401.png">
 <meta property="og:image" content="https://www.helloimg.com/i/2024/12/17/6760eb205ecb2.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/89b0cbfaff782a6570f2f90911e8fc5b.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/eaba6027147f175e55cc60cb4c6b0e6c.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/d333e18fcc3fa9fcd7c7939bdc22f328.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/ecdebf47b0420ef33e2e6ff92c32262d.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/a5f5017c9499507f3eca6345e218dec0.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/32a8129eef81a915f4b4f7ace6f8d010.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/eae24001bbe299decdd775bef1ea1800.png">
 <meta property="og:image" content="https://www.helloimg.com/i/2024/12/19/67642106d12f7.jpg">
 <meta property="og:image" content="https://www.helloimg.com/i/2024/12/20/6765634b5c0e0.jpg">
-<meta property="article:published_time" content="2024-12-20T16:12:50.000Z">
-<meta property="article:modified_time" content="2024-12-20T16:13:38.718Z">
+<meta property="article:published_time" content="2024-12-20T16:26:39.848Z">
+<meta property="article:modified_time" content="2024-12-20T16:29:58.840Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://www.helloimg.com/i/2024/12/17/6760eb205ecb2.png">
+<meta name="twitter:image" content="https://i-blog.csdnimg.cn/blog_migrate/0368780808a7e1b750e955cf6b101d73.png">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -78,41 +87,31 @@
         <section id="main"><article id="post-格格格密码" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2024/12/21/%E6%A0%BC%E6%A0%BC%E6%A0%BC%E5%AF%86%E7%A0%81/" class="article-date">
-  <time class="dt-published" datetime="2024-12-20T16:12:50.000Z" itemprop="datePublished">2024-12-21</time>
+  <time class="dt-published" datetime="2024-12-20T16:26:39.848Z" itemprop="datePublished">2024-12-21</time>
 </a>
     
   </div>
   <div class="article-inner">
     
     
-      <header class="article-header">
-        
-  
-    <h1 class="p-name article-title" itemprop="headline name">
-      &#39;格格格密码&#39;
-    </h1>
-  
-
-      </header>
-    
     <div class="e-content article-entry" itemprop="articleBody">
       
         <h1 id="LLL算法"><a href="#LLL算法" class="headerlink" title="LLL算法"></a>LLL算法</h1><ol>
 <li>简介：LLL算法用于解决最短向量问题的多项式时间复杂度算法。</li>
 </ol>
-<h2 id="LLL算法解释"><a href="#LLL算法解释" class="headerlink" title="LLL算法解释"></a>LLL算法解释</h2><h2 id="对格的认识"><a href="#对格的认识" class="headerlink" title="对格的认识"></a>对格的认识</h2><p>![在这里插入图片描述](<a target="_blank" rel="noopener" href="https://i-blog.csdnimg.cn/blog_migrate/">https://i-blog.csdnimg.cn/blog_migrate/</a><br>0368780808a7e1b750e955cf6b101d73.png)</p>
+<h2 id="LLL算法解释"><a href="#LLL算法解释" class="headerlink" title="LLL算法解释"></a>LLL算法解释</h2><h6 id="原神"><a href="#原神" class="headerlink" title="原神"></a>原神</h6><h2 id="对格的认识"><a href="#对格的认识" class="headerlink" title="对格的认识"></a>对格的认识</h2><p><img src="https://i-blog.csdnimg.cn/blog_migrate/0368780808a7e1b750e955cf6b101d73.png" alt="在这里插入图片描述"></p>
 <p>不同的基也可以生成同一个格。</p>
 <p>例如一个基向量是（1,0)和（0，1）构成的格。该格用数学符号表示。</p>
-<p>![image-20240217180326238](<a target="_blank" rel="noopener" href="https://i-blog.csdnimg.cn/blog_migrate/">https://i-blog.csdnimg.cn/blog_migrate/</a><br>846d4e43f4e7cc31174f75c9970be401.png)</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/846d4e43f4e7cc31174f75c9970be401.png" alt="image-20240217180326238"></p>
 <p><img src="https://www.helloimg.com/i/2024/12/17/6760eb205ecb2.png"></p>
 <p>格的维数:即向量的个数，上述表示的是一个二维的格。</p>
 <p>然后根据系数a的不同就能得到不同的L集合。</p>
-<p>假定现在v1,v2,v3…vn(称为张空间) 是格L的基，让存在不同个集合属于L 即w1 w2 …,<br>wm。</p>
-<p>![image-20230827000008282](<a target="_blank" rel="noopener" href="https://i-blog.csdnimg.cn/blog_migrate/">https://i-blog.csdnimg.cn/blog_migrate/</a><br>89b0cbfaff782a6570f2f90911e8fc5b.png)</p>
+<p>假定现在v1,v2,v3…vn(称为张空间) 是格L的基，让存在不同个集合属于L 即w1 w2 …,wm。</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/89b0cbfaff782a6570f2f90911e8fc5b.png" alt="image-20230827000008282"></p>
 <p>可以转化位矩阵运算。</p>
 <p>AV&#x3D;W</p>
 <blockquote>
-<p>线性无关（linearly independence）v1 , v2 , … , vn线性无关，当且仅当方程a1v1+…<br>+anvn&#x3D;0的唯一解是a全部为0；否则线性相关（linearly dependent）</p>
+<p>线性无关（linearly independence）v1 , v2 , … , vn线性无关，当且仅当方程a1v1+…+anvn&#x3D;0的唯一解是a全部为0；否则线性相关（linearly dependent）</p>
 <p>正交基（orthogonal basis）v1 , v2 , … , vn 中任意不同的两个v点积的结果为0</p>
 <p>规范正交（orthonormal） 上面的每一个v的**欧几里得范数(类似于模 长度)**为1</p>
 <p>据此在上面的w的||w||2 &#x3D; 所有系数a的平方和</p>
@@ -121,10 +120,10 @@
 <p>AV&#x3D;W;</p>
 <p>示例一个有关向量的问题</p>
 <p>选定基向量生成格L:</p>
-<p>![image-20230827115527756](<a target="_blank" rel="noopener" href="https://i-blog.csdnimg.cn/blog_migrate/">https://i-blog.csdnimg.cn/blog_migrate/</a><br>eaba6027147f175e55cc60cb4c6b0e6c.png)</p>
-<p>化作行矩阵![image-20230827115559284](<a target="_blank" rel="noopener" href="https://i-blog.csdnimg.cn/blog_migrate/">https://i-blog.csdnimg.cn/blog_migrate/</a><br>d333e18fcc3fa9fcd7c7939bdc22f328.png)</p>
-<p>将设L的某向量组为:![image-20230827115630795](<a target="_blank" rel="noopener" href="https://i-blog.csdnimg.cn/">https://i-blog.csdnimg.cn/</a><br>blog_migrate&#x2F;ecdebf47b0420ef33e2e6ff92c32262d.png)</p>
-<p>其系数a形成向量组U&#x3D;![image-20230827115656983](<a target="_blank" rel="noopener" href="https://i-blog.csdnimg.cn/">https://i-blog.csdnimg.cn/</a><br>blog_migrate&#x2F;a5f5017c9499507f3eca6345e218dec0.png)</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/eaba6027147f175e55cc60cb4c6b0e6c.png" alt="image-20230827115527756"></p>
+<p>化作行矩阵<img src="https://i-blog.csdnimg.cn/blog_migrate/d333e18fcc3fa9fcd7c7939bdc22f328.png" alt="image-20230827115559284"></p>
+<p>将设L的某向量组为:<img src="https://i-blog.csdnimg.cn/blog_migrate/ecdebf47b0420ef33e2e6ff92c32262d.png" alt="image-20230827115630795"></p>
+<p>其系数a形成向量组U&#x3D;<img src="https://i-blog.csdnimg.cn/blog_migrate/a5f5017c9499507f3eca6345e218dec0.png" alt="image-20230827115656983"></p>
 <p>W(转置)&#x3D;（w1,w2,w3).</p>
 <p>W&#x3D;A*U</p>
 <p>操作代码</p>
@@ -132,7 +131,7 @@
 
 <p>SVP(最短向量问题)</p>
 <p>一个格会有无数多个向量集合v</p>
-<p>最短向量问题，指的格L中最短的非零向量，即寻找一个v满足<em><strong>欧几里得范数</strong></em>最小（指的<br>该集合每一个元素的平方和再开平方，类似于模的长度）范数就是长度。</p>
+<p>最短向量问题，指的格L中最短的非零向量，即寻找一个v满足<em><strong>欧几里得范数</strong></em>最小（指的该集合每一个元素的平方和再开平方，类似于模的长度）范数就是长度。</p>
 <blockquote>
 <ol>
 <li>基：</li>
@@ -146,15 +145,15 @@
 <ol start="3">
 <li><strong>格基约规</strong></li>
 </ol>
-<p>![image-20240328150052301](<a target="_blank" rel="noopener" href="https://i-blog.csdnimg.cn/blog_migrate/">https://i-blog.csdnimg.cn/blog_migrate/</a><br>32a8129eef81a915f4b4f7ace6f8d010.png)</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/32a8129eef81a915f4b4f7ace6f8d010.png" alt="image-20240328150052301"></p>
 <p>random basis也是一组基，可以构成这个格子中的所有点 但是不是正交基</p>
 <p>通过LLL或BKZ算法 得到正交基或者是最接近正交基，我们通过到他们，在之中</p>
 </blockquote>
 <p>Cvp(最近向量问题)—不是很能理解这里先留着</p>
-<h2 id="接下来实战一些格的题"><a href="#接下来实战一些格的题" class="headerlink" title="接下来实战一些格的题"></a>接下来实战一些格的题</h2><h3 id="hermite-定理"><a href="#hermite-定理" class="headerlink" title="hermite 定理"></a>hermite 定理</h3><p>![image-20240521130132678](<a target="_blank" rel="noopener" href="https://i-blog.csdnimg.cn/blog_migrate/">https://i-blog.csdnimg.cn/blog_migrate/</a><br>eae24001bbe299decdd775bef1ea1800.png)</p>
+<h2 id="接下来实战一些格的题"><a href="#接下来实战一些格的题" class="headerlink" title="接下来实战一些格的题"></a>接下来实战一些格的题</h2><h3 id="hermite-定理"><a href="#hermite-定理" class="headerlink" title="hermite 定理"></a>hermite 定理</h3><p><img src="https://i-blog.csdnimg.cn/blog_migrate/eae24001bbe299decdd775bef1ea1800.png" alt="image-20240521130132678"></p>
 <p>给出最短向量的上限。</p>
 <p>2024极客大挑战</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">from Crypto.Util.number import *</span><br><span class="line"></span><br><span class="line">flag = b&#x27;******&#x27;</span><br><span class="line">m = bytes_to_long(flag)</span><br><span class="line"></span><br><span class="line">assert m.bit_length() == 327</span><br><span class="line">p = getPrime(1024)</span><br><span class="line">a = getPrime(1024)</span><br><span class="line">c = getPrime(400)</span><br><span class="line"></span><br><span class="line">b = (a*m + c) % p</span><br><span class="line"></span><br><span class="line">print(f&#x27;a = &#123;a&#125;&#x27;)</span><br><span class="line">print(f&#x27;b = &#123;b&#125;&#x27;)</span><br><span class="line">print(f&#x27;p = &#123;p&#125;&#x27;)</span><br><span class="line"></span><br><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line">a = </span><br><span class="line">1697908498043235409461972047084027628625861976041831025892707418597085503019</span><br><span class="line">2034811294130599976409219799692929847459006262555680679361326852776377401377</span><br><span class="line">2685954699561684244945434843656515307801882995934869499880288594142919381501</span><br><span class="line">7964888150332941275916232608947647502145889934568404044435156713538026144504</span><br><span class="line">11717</span><br><span class="line">b = </span><br><span class="line">8798570883152323898094893816541498431837945992600279850443596453820344387798</span><br><span class="line">8599888615810231215118828138306895572062833107988965151522391460216837691927</span><br><span class="line">9602498745118188781343993631470080425622229102347399406975538525402656176034</span><br><span class="line">8299509120310504018746048567357938217126019729178374888676592937617915180406</span><br><span class="line">2085</span><br><span class="line">p = </span><br><span class="line">1317244945120656588010397665467888217180639631444678187357680406313670691538</span><br><span class="line">1625485522965544955909918869440326004499036629202691608534025007719873521577</span><br><span class="line">4149087025577263769846650728593180101073940507285459917860726551385227481715</span><br><span class="line">8735036126832494330202017291908624304760548221028654411367639774158243318588</span><br><span class="line">01617</span><br><span class="line">&#x27;&#x27;&#x27;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">from Crypto.Util.number import *</span><br><span class="line"></span><br><span class="line">flag = b&#x27;******&#x27;</span><br><span class="line">m = bytes_to_long(flag)</span><br><span class="line"></span><br><span class="line">assert m.bit_length() == 327</span><br><span class="line">p = getPrime(1024)</span><br><span class="line">a = getPrime(1024)</span><br><span class="line">c = getPrime(400)</span><br><span class="line"></span><br><span class="line">b = (a*m + c) % p</span><br><span class="line"></span><br><span class="line">print(f&#x27;a = &#123;a&#125;&#x27;)</span><br><span class="line">print(f&#x27;b = &#123;b&#125;&#x27;)</span><br><span class="line">print(f&#x27;p = &#123;p&#125;&#x27;)</span><br><span class="line"></span><br><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line">a = 169790849804323540946197204708402762862586197604183102589270741859708550301920348112941305999764092197996929298474590062625556806793613268527763774013772685954699561684244945434843656515307801882995934869499880288594142919381501796488815033294127591623260894764750214588993456840404443515671353802614450411717</span><br><span class="line">b = 87985708831523238980948938165414984318379459926002798504435964538203443877988599888615810231215118828138306895572062833107988965151522391460216837691927960249874511818878134399363147008042562222910234739940697553852540265617603482995091203105040187460485673579382171260197291783748886765929376179151804062085</span><br><span class="line">p = 131724494512065658801039766546788821718063963144467818735768040631367069153816254855229655449559099188694403260044990366292026916085340250077198735215774149087025577263769846650728593180101073940507285459917860726551385227481715873503612683249433020201729190862430476054822102865441136763977415824331858801617</span><br><span class="line">&#x27;&#x27;&#x27;</span><br></pre></td></tr></table></figure>
 
 <p>已知a,b,p。</p>
 <p>接下来构造函数</p>
@@ -164,23 +163,23 @@
 <p>m&#x3D;0+m+0</p>
 <p>1&#x3D;[1,0,0]</p>
 <p>[1,m,k]*[1,0,b&#x2F;&#x2F;0,1,-a&#x2F;&#x2F;0,0,p]&#x3D;[1,m,c]</p>
-<p>如果m和c远远小于a,b,p则[1,m,c]可视为最短向量,通过求出最短向量即可求出m和c。但是<br>这里[1,0,b]不能确定是否一定比[1,m,c]大很多，所以我们可以先尝试</p>
+<p>如果m和c远远小于a,b,p则[1,m,c]可视为最短向量,通过求出最短向量即可求出m和c。但是这里[1,0,b]不能确定是否一定比[1,m,c]大很多，所以我们可以先尝试</p>
 </blockquote>
-<p><img src="https://www.helloimg.com/i/2024/12/19/67642106d12f7.jpg" 
-style="zoom:33%;" /></p>
-<p>这里构造出来，$b-a*m +kp &#x3D; c$<br>$$(1\quad m\quad k )\begin{bmatrix}1&amp;0&amp;b\0&amp;1&amp;-<br>a\0&amp;0&amp;p\end{bmatrix}&#x3D;\begin{pmatrix}1&amp;m&amp;c\end{pmatrix}$$<br>$||\mathbf{v}||&#x3D;\sqrt{1+|m|2+|c|2}\approx2^{401}&gt;|p|{1&#x2F;3}&#x3D;2^{341}$<br>补个$2^{200}$<br>|V|&lt;&#x3D;|p|*1&#x2F;3，并且大小接近，但是为了它解决一些问题（我也不知道是啥），但是加了ZZ之<br>后早格的范围变大了一些。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">import libnum</span><br><span class="line">h = </span><br><span class="line">9848463356094730516607732957888686710609147955724620108704251779566910519170</span><br><span class="line">6901986846286857625962321246131156918826888279184892971223194160810191210384</span><br><span class="line">43</span><br><span class="line">p = </span><br><span class="line">1140361820099559342874766369386053202626116121193172638192267749990688583476</span><br><span class="line">6955987247477478421850280928508004160386000301268285541073474589048412962888</span><br><span class="line">947 </span><br><span class="line"></span><br><span class="line">b = 2^256</span><br><span class="line">print(b)</span><br><span class="line">Ge = Matrix(ZZ,[[1,b*h],</span><br><span class="line">                [0,b*p]])</span><br><span class="line">print(Ge.LLL())</span><br><span class="line">f,g = Ge.LLL()[0]</span><br><span class="line">f,g = abs(f),abs(g)</span><br><span class="line"></span><br><span class="line">print(libnum.n2s(int(f)))</span><br><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line">[                                                               </span><br><span class="line">-1606938044258990275541962092341162602522202993782792835301376              </span><br><span class="line">            </span><br><span class="line">-178031712611238596731249743701069017647681195469247290391686157388613750102</span><br><span class="line">558209749690172438492797    </span><br><span class="line">-142371460798832051390694059090944467186180017572792844312285989754342416920</span><br><span class="line">4465903120062899702489534790382025992649911781]</span><br><span class="line">[-39523216145816118552852770466240643484043469389020643465094612286301410186</span><br><span class="line">97111764570873243462667147874514820918258171904000 </span><br><span class="line">1102477097424119435635141577831865889140478974100888881433534521498532712031</span><br><span class="line">2327987661010446998349273402602930064085544791039      </span><br><span class="line">6072599423981648379958935496169235416579611584676615029327257820303786851189</span><br><span class="line">77605128203981095781547283026357210121196616]</span><br><span class="line">[127723356310299733482842810125008648142220428241061240360749984461490147840</span><br><span class="line">20302388021660678658812576032680157067301544263680  </span><br><span class="line">1989859068338576062737125779102727373006139524538419442179364279037300729728</span><br><span class="line">682145168939805686355731905541180681315283394820      </span><br><span class="line">6703631863683382657736900625551642011288931615955838528129309593883269159978</span><br><span class="line">28413278423044835291227154576871436883176417]</span><br><span class="line">b&#x27;SYC&#123;1e989433efffd767589e989ad0f091075c06&#125;&#x27;</span><br><span class="line">&#x27;&#x27;&#x27;</span><br></pre></td></tr></table></figure>
+<img src="https://www.helloimg.com/i/2024/12/19/67642106d12f7.jpg" style="zoom:33%;" />
 
-<h3 id="easyLattice"><a href="#easyLattice" class="headerlink" title="easyLattice"></a>easyLattice</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">from Crypto.Util.number import *</span><br><span class="line">from secret import flag</span><br><span class="line">import gmpy2</span><br><span class="line"></span><br><span class="line">assert len(flag) == 47</span><br><span class="line"></span><br><span class="line">f = bytes_to_long(flag)</span><br><span class="line">p = getPrime(512)</span><br><span class="line">g = getPrime(128)</span><br><span class="line">h = (gmpy2.invert(f, p) * g %</span><br><span class="line">     p)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">print(&#x27;h =&#x27;, h)</span><br><span class="line">print(&#x27;p =&#x27;, p)</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">h = </span><br><span class="line">9848463356094730516607732957888686710609147955724620108704251779566910519170</span><br><span class="line">6901986846286857625962321246131156918826888279184892971223194160810191210384</span><br><span class="line">43</span><br><span class="line">p = </span><br><span class="line">1140361820099559342874766369386053202626116121193172638192267749990688583476</span><br><span class="line">6955987247477478421850280928508004160386000301268285541073474589048412962888</span><br><span class="line">947     </span><br><span class="line">&quot;&quot;&quot;</span><br></pre></td></tr></table></figure>
+<p>这里构造出来，$b-a*m +kp &#x3D; c$<br>$$(1\quad m\quad k )\begin{bmatrix}1&amp;0&amp;b\0&amp;1&amp;-<br>a\0&amp;0&amp;p\end{bmatrix}&#x3D;\begin{pmatrix}1&amp;m&amp;c\end{pmatrix}$$<br>$||\mathbf{v}||&#x3D;\sqrt{1+|m|2+|c|2}\approx2^{401}&gt;|p|{1&#x2F;3}&#x3D;2^{341}$<br>补个$2^{200}$<br>|V|&lt;&#x3D;|p|*1&#x2F;3，并且大小接近，但是为了它解决一些问题（我也不知道是啥），但是加了ZZ之后早格的范围变大了一些。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">import libnum</span><br><span class="line">h = 9848463356094730516607732957888686710609147955724620108704251779566910519170690198684628685762596232124613115691882688827918489297122319416081019121038443</span><br><span class="line">p = 11403618200995593428747663693860532026261161211931726381922677499906885834766955987247477478421850280928508004160386000301268285541073474589048412962888947 </span><br><span class="line"></span><br><span class="line">b = 2^256</span><br><span class="line">print(b)</span><br><span class="line">Ge = Matrix(ZZ,[[1,b*h],</span><br><span class="line">                [0,b*p]])</span><br><span class="line">print(Ge.LLL())</span><br><span class="line">f,g = Ge.LLL()[0]</span><br><span class="line">f,g = abs(f),abs(g)</span><br><span class="line"></span><br><span class="line">print(libnum.n2s(int(f)))</span><br><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line">[                                                               -1606938044258990275541962092341162602522202993782792835301376                          -178031712611238596731249743701069017647681195469247290391686157388613750102558209749690172438492797    -1423714607988320513906940590909444671861800175727928443122859897543424169204465903120062899702489534790382025992649911781]</span><br><span class="line">[-3952321614581611855285277046624064348404346938902064346509461228630141018697111764570873243462667147874514820918258171904000 11024770974241194356351415778318658891404789741008888814335345214985327120312327987661010446998349273402602930064085544791039      607259942398164837995893549616923541657961158467661502932725782030378685118977605128203981095781547283026357210121196616]</span><br><span class="line">[12772335631029973348284281012500864814222042824106124036074998446149014784020302388021660678658812576032680157067301544263680  1989859068338576062737125779102727373006139524538419442179364279037300729728682145168939805686355731905541180681315283394820      670363186368338265773690062555164201128893161595583852812930959388326915997828413278423044835291227154576871436883176417]</span><br><span class="line">b&#x27;SYC&#123;1e989433efffd767589e989ad0f091075c06&#125;&#x27;</span><br><span class="line">&#x27;&#x27;&#x27;</span><br></pre></td></tr></table></figure>
+
+<h3 id="easyLattice"><a href="#easyLattice" class="headerlink" title="easyLattice"></a>easyLattice</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">from Crypto.Util.number import *</span><br><span class="line">from secret import flag</span><br><span class="line">import gmpy2</span><br><span class="line"></span><br><span class="line">assert len(flag) == 47</span><br><span class="line"></span><br><span class="line">f = bytes_to_long(flag)</span><br><span class="line">p = getPrime(512)</span><br><span class="line">g = getPrime(128)</span><br><span class="line">h = (gmpy2.invert(f, p) * g %</span><br><span class="line">     p)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">print(&#x27;h =&#x27;, h)</span><br><span class="line">print(&#x27;p =&#x27;, p)</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">h = 9848463356094730516607732957888686710609147955724620108704251779566910519170690198684628685762596232124613115691882688827918489297122319416081019121038443</span><br><span class="line">p = 11403618200995593428747663693860532026261161211931726381922677499906885834766955987247477478421850280928508004160386000301268285541073474589048412962888947     </span><br><span class="line">&quot;&quot;&quot;</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://www.helloimg.com/i/2024/12/20/6765634b5c0e0.jpg"></p>
 <p>造格，(2p)**1&#x2F;2&gt;&#x3D;(f^2+ g^2) ^1&#x2F;2  不成立，所以我们需要配平，对h和p同时乘256如下</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">from Crypto.Util.number import *</span><br><span class="line">import gmpy2</span><br><span class="line">h = </span><br><span class="line">9848463356094730516607732957888686710609147955724620108704251779566910519170</span><br><span class="line">6901986846286857625962321246131156918826888279184892971223194160810191210384</span><br><span class="line">43</span><br><span class="line">p = </span><br><span class="line">1140361820099559342874766369386053202626116121193172638192267749990688583476</span><br><span class="line">6955987247477478421850280928508004160386000301268285541073474589048412962888</span><br><span class="line">947     </span><br><span class="line">b=2^256</span><br><span class="line">L=matrix(ZZ,[[1,b*h],[0,b*p]])</span><br><span class="line">print(L.LLL()[0])</span><br><span class="line">f,g=L.LLL()[0]</span><br><span class="line">f=abs(f)</span><br><span class="line">print(long_to_bytes(f)</span><br><span class="line">’‘’</span><br><span class="line">(-50073894085033274448337202692453522746880698077702322983028272289946704698</span><br><span class="line">284083256500537353714697134260425361796, </span><br><span class="line">-295551500733965922086803354946845239836841432933019811581578004323048889824</span><br><span class="line">32677680588686983225737089584138075242496)</span><br><span class="line">b&#x27;SICTF&#123;e3fea01c-18f3-4638-9544-9201393940a9&#125;A\xf0\x89\x84&#x27;</span><br><span class="line">‘’‘</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">from Crypto.Util.number import *</span><br><span class="line">import gmpy2</span><br><span class="line">h = 9848463356094730516607732957888686710609147955724620108704251779566910519170690198684628685762596232124613115691882688827918489297122319416081019121038443</span><br><span class="line">p = 11403618200995593428747663693860532026261161211931726381922677499906885834766955987247477478421850280928508004160386000301268285541073474589048412962888947     </span><br><span class="line">b=2^256</span><br><span class="line">L=matrix(ZZ,[[1,b*h],[0,b*p]])</span><br><span class="line">print(L.LLL()[0])</span><br><span class="line">f,g=L.LLL()[0]</span><br><span class="line">f=abs(f)</span><br><span class="line">print(long_to_bytes(f)</span><br><span class="line">’‘’</span><br><span class="line">(-50073894085033274448337202692453522746880698077702322983028272289946704698284083256500537353714697134260425361796, -29555150073396592208680335494684523983684143293301981158157800432304888982432677680588686983225737089584138075242496)</span><br><span class="line">b&#x27;SICTF&#123;e3fea01c-18f3-4638-9544-9201393940a9&#125;A\xf0\x89\x84&#x27;</span><br><span class="line">‘’‘</span><br></pre></td></tr></table></figure>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/12/21/%E6%A0%BC%E6%A0%BC%E6%A0%BC%E5%AF%86%E7%A0%81/" data-id="cm4wyeoor0001w4bh9q1lhfd6" data-title="&#39;格格格密码&#39;" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/12/21/%E6%A0%BC%E6%A0%BC%E6%A0%BC%E5%AF%86%E7%A0%81/" data-id="cm4wyqqk90001c0bh93gndztk" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -190,19 +189,10 @@ style="zoom:33%;" /></p>
     
 <nav id="article-nav">
   
-    <a href="/2024/12/21/chenge-first-blog/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          &#39;chenge-first-blog&#39;
-        
-      </div>
-    </a>
   
-  
-    <a href="/2024/12/20/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2024/12/21/chenge-first-blog/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Hello World</div>
+      <div class="article-nav-title">&#39;chenge-first-blog&#39;</div>
     </a>
   
 </nav>
@@ -240,11 +230,11 @@ style="zoom:33%;" /></p>
       <ul>
         
           <li>
-            <a href="/2024/12/21/chenge-first-blog/">&#39;chenge-first-blog&#39;</a>
+            <a href="/2024/12/21/%E6%A0%BC%E6%A0%BC%E6%A0%BC%E5%AF%86%E7%A0%81/">(no title)</a>
           </li>
         
           <li>
-            <a href="/2024/12/21/%E6%A0%BC%E6%A0%BC%E6%A0%BC%E5%AF%86%E7%A0%81/">&#39;格格格密码&#39;</a>
+            <a href="/2024/12/21/chenge-first-blog/">&#39;chenge-first-blog&#39;</a>
           </li>
         
           <li>
