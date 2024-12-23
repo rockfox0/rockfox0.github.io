@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>我的第一篇文章</title>
+    <link href="/2024/12/23/DH%20%E5%AF%86%E9%92%A5%E4%BA%A4%E6%8D%A2%E5%8D%8F%E8%AE%AE/"/>
+    <url>/2024/12/23/DH%20%E5%AF%86%E9%92%A5%E4%BA%A4%E6%8D%A2%E5%8D%8F%E8%AE%AE/</url>
+    
+    <content type="html"><![CDATA[<h1 id="DH-密钥交换协议"><a href="#DH-密钥交换协议" class="headerlink" title="DH 密钥交换协议"></a>DH 密钥交换协议</h1><p>在基于<a href="https://zhida.zhihu.com/search?content_id=221358888&content_type=Article&match_order=1&q=%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86&zhida_source=entity">对称加密</a>进行安全通信的过程中，通信双方需要持有一个共享的密钥。只有这样，由任何一方加密的信息才能由另一方使用相同的密钥解密。但是<strong>在能够安全的通信之前，通信双方应该如何约定一个共享的密钥呢？这就是安全中的经典问题：密钥配送问题（Key Distribution Problem</strong>[<a href="https://zhuanlan.zhihu.com/p/599518034#ref_1">1]</a><strong>）</strong>。</p><p>Diffe-Hellman密钥交换协议只是其中一种约定功能共享密钥的方式，</p><h2 id="DHKE协议简介"><a href="#DHKE协议简介" class="headerlink" title="DHKE协议简介"></a>DHKE协议简介</h2><p><strong>DHKE是一种通过公共通道安全地交换加密密钥的数学方法，以Whitfield Diffi</strong>e和Martin Hellman的名字命名。</p><h2 id="数学原理"><a href="#数学原理" class="headerlink" title="数学原理"></a>数学原理</h2><blockquote><p>$c&#x3D;G^e mod P(0&lt;&#x3D;c&lt;P)$</p><p>G是P的原根，满足条件</p><p>{g1modp,g2modp,g3modp,…,gp−1modp}&#x3D;{1,2,3,…,p−1}</p></blockquote><h2 id="DHKE协议的过程"><a href="#DHKE协议的过程" class="headerlink" title="DHKE协议的过程"></a>DHKE协议的过程</h2><p><img src="https://rockfox0.github.io/picx-images-hosting/v2-39cb492c048f5f2a643368c135626925_1440w.175g9ciqha.webp"></p><ol><li><p>客户端和服务端生成协商大素数P及其原根G</p></li><li><p>客户端生成私钥和公钥a和A</p><blockquote><p>A&#x3D;G<sup>a</sup> mod p</p></blockquote></li><li><p>将公钥A发送给服务端</p></li><li><p>服务端生成私钥b和公钥B</p></li></ol><blockquote><p>$B&#x3D;G^b mod P$</p></blockquote><ol><li><p>服务端将公钥B发送给客户端</p></li><li><p>客户端已知G,P,A,a,B计算密钥S1</p></li><li><blockquote><p>$S1&#x3D;B^a mod P$ </p></blockquote></li><li><p>服务端已知A B b G P计算共享密钥</p></li></ol><blockquote><p>$S2&#x3D;A^b mod p$</p></blockquote><ol start="9"><li>客户端和服务端共享密钥S</li></ol><blockquote><p>$S&#x3D;S1&#x3D;B^a mod P&#x3D;(G^b) mod p&#x3D;A^b mod P&#x3D;S2$</p></blockquote><p>可以知道共享密钥的原理，</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>crypto</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>crypto</tag>
+      
+      <tag>Hexo</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>LLL算法</title>
     <link href="/2024/12/23/gege%E5%AF%86%E7%A0%81/"/>
     <url>/2024/12/23/gege%E5%AF%86%E7%A0%81/</url>
