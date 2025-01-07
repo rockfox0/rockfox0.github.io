@@ -1,0 +1,855 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/OIP-C.jpg">
+  <link rel="icon" href="/img/OIP-C.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="fox">
+  <meta name="keywords" content="菜菜的密码劳弟">
+  
+    <meta name="description" content="RSA两种特殊攻击情况P和q的不当分解|p-q|很大时，一定存在某个参数ip较小，这里我们假设p较小我们可以通过穷举法分解模数，但是很少遇到 |p-q|较小 $(p+q)^2&#x2F;4-n&#x3D;(p-q)^2&#x2F;4$; |p-q|较小，那么(p-q)&#x2F;2和n^1&#x2F;2^也比较接近  顺序检查 √nn 的每一个整数 x，直到找到一个 x 使得 x2−nx2−n 是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DSA签名算法">
+<meta property="og:url" content="http://example.com/2024/12/29/RSA-wiener/index.html">
+<meta property="og:site_name" content="Rockfox的密码记录">
+<meta property="og:description" content="RSA两种特殊攻击情况P和q的不当分解|p-q|很大时，一定存在某个参数ip较小，这里我们假设p较小我们可以通过穷举法分解模数，但是很少遇到 |p-q|较小 $(p+q)^2&#x2F;4-n&#x3D;(p-q)^2&#x2F;4$; |p-q|较小，那么(p-q)&#x2F;2和n^1&#x2F;2^也比较接近  顺序检查 √nn 的每一个整数 x，直到找到一个 x 使得 x2−nx2−n 是">
+<meta property="og:locale">
+<meta property="og:image" content="https://rockfox0.github.io/picx-images-hosting/wiener.99tfjay02x.webp">
+<meta property="og:image" content="https://rockfox0.github.io/picx-images-hosting/26a1d4b9c2b9329f06b882ccf7930df9.54xu78e8w8.webp">
+<meta property="og:image" content="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-01-05-144234.9rjh97w4em.webp">
+<meta property="og:image" content="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-01-05-155922.8l060oyhju.webp">
+<meta property="og:image" content="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-01-05-155934.4xumd62jsr.webp">
+<meta property="og:image" content="https://rockfox0.github.io/picx-images-hosting/eae24001bbe299decdd775bef1ea1800.73u0gaysyt.webp">
+<meta property="og:image" content="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-01-05-161454.83a4c4gc3x.webp">
+<meta property="article:published_time" content="2024-12-29T04:00:00.000Z">
+<meta property="article:modified_time" content="2025-01-07T11:48:10.766Z">
+<meta property="article:author" content="fox">
+<meta property="article:tag" content="crypto">
+<meta property="article:tag" content="RSA">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://rockfox0.github.io/picx-images-hosting/wiener.99tfjay02x.webp">
+  
+  
+  
+  <title>DSA签名算法 - Rockfox的密码记录</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":40,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 100vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>fox的密码学习记录</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Startseite</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archiv</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Kategorien</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Schlagwörter</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>Über</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>Weblinks</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/syc.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="DSA签名算法"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-12-29 12:00" pubdate>
+          December 29, 2024 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.2k wörter
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          19 minuten
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">DSA签名算法</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="RSA两种特殊攻击情况"><a href="#RSA两种特殊攻击情况" class="headerlink" title="RSA两种特殊攻击情况"></a>RSA两种特殊攻击情况</h1><h2 id="P和q的不当分解"><a href="#P和q的不当分解" class="headerlink" title="P和q的不当分解"></a>P和q的不当分解</h2><p><strong>|p-q|很大</strong>时，一定存在某个参数ip较小，这里我们假设p较小我们可以通过穷举法分解模数，但是很少遇到</p>
+<p><strong>|p-q|较小</strong></p>
+<p>$(p+q)^2&#x2F;4-n&#x3D;(p-q)^2&#x2F;4$;</p>
+<p>|p-q|较小，那么(p-q)&#x2F;2和n^1&#x2F;2^也比较接近</p>
+<ul>
+<li>顺序检查 √nn 的每一个整数 x，直到找到一个 x 使得 x2−nx2−n 是平方数，记为 y2y2</li>
+<li>那么 x2−n&#x3D;y2x2−n&#x3D;y2，进而根据平方差公式即可分解 N</li>
+</ul>
+<p>举例</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> gmpy2<br><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> getPrime<br><span class="hljs-keyword">import</span> random<br><br><span class="hljs-comment"># 生成 p 和 q</span><br>p = getPrime(<span class="hljs-number">1024</span>)<br>q = gmpy2.next_prime(p, p + <span class="hljs-number">10000</span>) <br>n = p * q<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;p=&quot;</span>,p)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;q=&quot;</span>,q)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;n=&quot;</span>,n)<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">factor</span>(<span class="hljs-params">n</span>):<br>    a = gmpy2.iroot(n, <span class="hljs-number">2</span>)[<span class="hljs-number">0</span>] <span class="hljs-comment">#a可以看作p+q</span><br>    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>        a+=<span class="hljs-number">1</span><br>        b2 = a * a - n  <span class="hljs-comment">#</span><br><br>        <span class="hljs-keyword">if</span> gmpy2.is_square(b2):<span class="hljs-comment">#判断b2是否是全平方</span><br>            b2 = gmpy2.mpz(b2)  <span class="hljs-comment"># 转换为大整数</span><br>            b, xflag = gmpy2.iroot(b2, <span class="hljs-number">2</span>) <span class="hljs-comment">#返回元组</span><br>            <span class="hljs-keyword">assert</span> xflag  <span class="hljs-comment"># 如果能平方返回True</span><br>            <span class="hljs-keyword">return</span> (a - b, a + b)<br><br><span class="hljs-built_in">print</span>(factor(n))<br><br></code></pre></td></tr></table></figure>
+
+<p>一个变式题目:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">import</span> gmpy2<br><span class="hljs-keyword">from</span> flag <span class="hljs-keyword">import</span> flag<br><span class="hljs-keyword">assert</span> flag[:<span class="hljs-number">5</span>]==<span class="hljs-string">b&#x27;flag&#123;&#x27;</span><br>​<br>m1 = bytes_to_long(flag[:<span class="hljs-number">20</span>])<br>p  = getPrime(<span class="hljs-number">512</span>)<br>p1 = gmpy2.next_prime(p)<br>q  = getPrime(<span class="hljs-number">512</span>)<br>q1 = gmpy2.next_prime(q)<br>n1 = p*q*p1*q1<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;n1 =&#x27;</span>,n1)<br>e = <span class="hljs-number">0x10001</span><br>c1 = <span class="hljs-built_in">pow</span>(m1,e,n1)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;c1 =&#x27;</span>,c1)<br>​<br></code></pre></td></tr></table></figure>
+
+<p>这里有n&#x3D;四个素数因子乘积</p>
+<p>上述可以分为两种。。(p,q)(p1,q1)…(p,q1)(p1,q)这两组每组两个元素乘积相近，可以利用费马分解。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> gmpy2<br><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> getPrime, inverse, long_to_bytes<br><span class="hljs-keyword">import</span> random<br><br><span class="hljs-keyword">from</span> gmpy2 <span class="hljs-keyword">import</span> gcd<br><span class="hljs-keyword">from</span> pywin.Demos.cmdserver <span class="hljs-keyword">import</span> flags<br><span class="hljs-keyword">from</span> scipy.signal <span class="hljs-keyword">import</span> qspline1d<br><span class="hljs-keyword">from</span> sympy <span class="hljs-keyword">import</span> factor_list<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">factor</span>(<span class="hljs-params">n</span>):<br>    a = gmpy2.iroot(n, <span class="hljs-number">2</span>)[<span class="hljs-number">0</span>] <span class="hljs-comment">#a可以看作p+q</span><br>    factor_list = []<br>    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>        a+=<span class="hljs-number">1</span><br>        b2 = a * a - n  <span class="hljs-comment">#</span><br><br>        <span class="hljs-comment"># 如果 b^2 是一个完全平方数</span><br>        <span class="hljs-keyword">if</span> gmpy2.is_square(b2):<br>            b2 = gmpy2.mpz(b2)  <span class="hljs-comment"># 转换为大整数</span><br>            b, xflag = gmpy2.iroot(b2, <span class="hljs-number">2</span>) <span class="hljs-comment">#返回元组</span><br>            <span class="hljs-keyword">assert</span> xflag<span class="hljs-comment"># 如果能平方返回True</span><br>            factor_list.append([a + b, a - b])<br>            <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(factor_list) == <span class="hljs-number">2</span>:<br>                <span class="hljs-keyword">break</span><br><br>    <span class="hljs-keyword">return</span> factor_list<br>e = <span class="hljs-number">0x10001</span><br>c1 = <span class="hljs-number">6201882078995455673376327652982610102807874783073703018551044780440620679217833227711395689114659144506630609087600915116940111002026241056808189658969089532597757995423694966667948250438579639890580690392400661711864264184444018345499567505424672090632235109624193289954785503512742400960515331371813467034511130432319427185134018830006918682733848618201088649690422818940385123599468595766345668931882249779415788129316594083269412221804774856038796248038700275509397599351533280014908894068141056694660319816046357462684688942519849441237878018480036145051967731081582598773076490918572392784684372694103015244826</span><br>n = <span class="hljs-number">6348779979606280884589422188738902470575876294643492831465947360363568026280963989291591157710389629216109615274754718329987990551836115660879103234129921943824061416396264358110216047994331119920503431491509529604742468032906950984256964560405062345280120526771439940278606226153077959057882262745273394986607004406770035459301695806378598890589432538916219821477777021460189140081521779103226953544426441823244765828342973086422949017937701261348963541035128661464068769033772390320426795044617751909787914185985911277628404632533530390761257251552073493697518547350246993679844132297414094727147161169548160586911</span><br>factor_list=factor(n)<br>X1,Y1=factor_list[<span class="hljs-number">0</span>]<br>X2,Y2=factor_list[<span class="hljs-number">1</span>]<br>p=gcd(X1,X2)<br>p1=gcd(Y1,Y2)<br>q=X1//p<br>q1=Y1//p1<br>Phi=(p-<span class="hljs-number">1</span>)*(q-<span class="hljs-number">1</span>)*(p1-<span class="hljs-number">1</span>)* (q1-<span class="hljs-number">1</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;p=&quot;</span>,p)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;q=&quot;</span>,q)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;q1=&quot;</span>,q1)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;p1&quot;</span>,p1)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Phi=&quot;</span>,Phi)<br><br>d = inverse(e, Phi)<br>flag=<span class="hljs-built_in">pow</span>(c1,d,n)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;flag=&quot;</span>,long_to_bytes(flag),<span class="hljs-string">&quot;&#125;&quot;</span>)<br><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">flag= b&#x27;flag&#123;Euler_funct1ons&#x27; &#125;&#x27;&#x27;&#x27;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2><h2 id="维纳攻击"><a href="#维纳攻击" class="headerlink" title="维纳攻击"></a>维纳攻击</h2><h3 id="使用条件"><a href="#使用条件" class="headerlink" title="使用条件"></a>使用条件</h3><p>私钥d&lt;1&#x2F;3N^1&#x2F;4^,选择较大的公钥e，用*e* ′代替*e*，其中*e* ′ &#x3D; *e* + *k* ⋅ *λ* ( *N* )，*k*为某个较大的数。当*e* ′ 足够大时，即*e* ′ &gt; <em>N</em> 3&#x2F;2 <em>，则无论d</em>有多小，都无法实施维纳攻击。假设p与q二进制长度相等即p&lt;q&lt;2p，可以得到p+q&lt;3p&lt;3(n)^0.5^</p>
+<p>欧拉函数φ(N)&#x3D;N-p-q+1 满足N-3(N)^0.5^&lt;φ(N)&lt;N</p>
+<ul>
+<li>基于定理</li>
+</ul>
+<p><img src="https://rockfox0.github.io/picx-images-hosting/wiener.99tfjay02x.webp" srcset="/img/loading.gif" lazyload></p>
+<h3 id="维纳攻击-1"><a href="#维纳攻击-1" class="headerlink" title="维纳攻击"></a>维纳攻击</h3><blockquote>
+</blockquote>
+<h3 id="维纳的方法"><a href="#维纳的方法" class="headerlink" title="维纳的方法"></a>维纳的方法</h3><blockquote>
+<p>ed&#x3D;1+k*φ(N)</p>
+<p>|$e\over φ(N) $-$k\over d$|&#x3D;$1 \over φ(n)$</p>
+<p>φ(N)约等于N,K&#x2F;gd约等于e&#x2F;—&gt;|$e\over N$-$k\over d$|&#x3D;|$k(p+q-1)-1\over Nd$|</p>
+<p>要使上述式子&lt;1&#x2F;(2d^2^) </p>
+<p>p+q&lt;3(N)^0.5^,0&lt;K&lt;d可以推断，|$e\over N$-$k\over d$|&lt;3&#x2F;N)^0.5^</p>
+<p>所以d&lt;3&#x2F;(n)^0.25^</p>
+</blockquote>
+<blockquote>
+<p><em>e<strong>d</strong>g</em>&#x3D;<em>k</em>(<em>p</em>−1)(<em>q</em>−1)+<em>g</em>,<em>k</em>&gt;<em>g</em></p>
+<p>同时除以k，k&#x2F;g&lt;1可以忽略</p>
+<p>⌊<em>k<strong>e</strong>d**g</em>⌋&#x3D;(<em>p</em>−1)(<em>q</em>−1)</p>
+<p>(<em>pq</em>−(<em>p</em>−1)(<em>q</em>−1)+1)&#x2F;2&#x3D;(p+q)&#x2F;2</p>
+<p>($(p+q)\over 2$)^2^-pq&#x3D;($p-q\over 2$)^2^ #可以用这个判断连分数收敛是否为所需的k&#x2F;(dg)</p>
+</blockquote>
+<p>例题sagemath上的连分数扩展函数实现更便捷</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">possible</span>(<span class="hljs-params">e,alist,N</span>):<br>    <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> alist:<br>        <span class="hljs-keyword">if</span> x==<span class="hljs-number">0</span>:<br>            <span class="hljs-keyword">continue</span><br>        phi=(e*x.denominator()-<span class="hljs-number">1</span>)//x.numerator()<br>        <span class="hljs-keyword">if</span> (N-phi+<span class="hljs-number">1</span>)%<span class="hljs-number">2</span>==<span class="hljs-number">0</span> <span class="hljs-keyword">and</span> sqrt(<span class="hljs-built_in">pow</span>((N-phi+<span class="hljs-number">1</span>)//<span class="hljs-number">2</span>,<span class="hljs-number">2</span>)-N).is_integer():<br>            (p,q)=var(<span class="hljs-string">&#x27;p q&#x27;</span>)<br>            x=solve([(p-<span class="hljs-number">1</span>)*(q-<span class="hljs-number">1</span>)==phi,p*q==N],p,q)<br>            <span class="hljs-keyword">return</span> x <br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-keyword">continue</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">wienner_attack</span>(<span class="hljs-params">e,N</span>):<br>    c=continued_fraction(e/N)<span class="hljs-comment">#获取连分数集合</span><br>    alist=c.convergents()<span class="hljs-comment">#利用连分数得到连分数收敛</span><br>    <span class="hljs-keyword">return</span> possible(e,alist,N)<br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">x.denominator():</span><br><span class="hljs-string"></span><br><span class="hljs-string">这个函数返回分数 x 的分母。</span><br><span class="hljs-string">x.numerator():</span><br><span class="hljs-string"></span><br><span class="hljs-string">这个函数返回分数 x 的分子。</span><br><span class="hljs-string">e * x.denominator():</span><br><span class="hljs-string"></span><br><span class="hljs-string">这个部分将 e 乘以 x 的分母。</span><br><span class="hljs-string">e * x.denominator() - 1:</span><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p>这个代码返回的是p和q</p>
+<h3 id="rrrrrrsa–一道题"><a href="#rrrrrrsa–一道题" class="headerlink" title="rrrrrrsa–一道题"></a>rrrrrrsa–一道题</h3><p><img src="https://rockfox0.github.io/picx-images-hosting/26a1d4b9c2b9329f06b882ccf7930df9.54xu78e8w8.webp" srcset="/img/loading.gif" lazyload></p>
+<p>这是一个关于rsa-wiener攻击拓展的推导</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python">P1 = getPrime(<span class="hljs-number">1038</span>)<br>P2 = sympy.nextprime(P1)<br><span class="hljs-keyword">assert</span>(P2 - P1 &lt; <span class="hljs-number">1000</span>)<br><br>Q1 = getPrime(<span class="hljs-number">512</span>)<br>Q2 = sympy.nextprime(Q1)<br><br>N1 = P1 * P1 * Q1<br>N2 = P2 * P2 * Q2<br><br></code></pre></td></tr></table></figure>
+
+<p>刚好可以应用在这里。</p>
+<p>很明显是满足条件的。所以Q1&#x2F;Q2是N1&#x2F;N2的收敛连分数扩展</p>
+<blockquote>
+<p>N1&#x2F;N2&#x3D;(P1&#x2F;P1)^2^*(Q1&#x2F;Q2) </p>
+<p>Q1&#x2F;Q1&gt;N1&#x2F;N2,N1&lt;N2,Q1&lt;Q2</p>
+<p>n1&#x2F;n2&lt;Q1&#x2F;Q2&lt;1,然后我们用</p>
+<p>因为Q1和Q2都是素数，我们可以直接得到Q1和Q2</p>
+<p>并用N1%Q1来判断是否符合条件</p>
+</blockquote>
+<p>解题代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> long_to_bytes, inverse<br><br><span class="hljs-keyword">import</span> gmpy2<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">possible</span>(<span class="hljs-params">alist,N1</span>):<br>    <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> alist:<br>        <span class="hljs-keyword">if</span> x==<span class="hljs-number">0</span>:<br>            <span class="hljs-keyword">continue</span><br>        Q1=x.numerator()<br>        <span class="hljs-keyword">if</span> N1%Q1==<span class="hljs-number">0</span> <span class="hljs-keyword">and</span> Q1!=<span class="hljs-number">1</span>:<br>            Q2=x.denominator()<br>            <span class="hljs-keyword">return</span> Q1,Q2<br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-keyword">continue</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">wienner_attack</span>(<span class="hljs-params">N1,N2</span>):<br>    c=continued_fraction(N1/N2)<span class="hljs-comment">#获取连分数集合</span><br>    alist=c.convergents()<span class="hljs-comment">#利用连分数得到连分数收敛</span><br>    <span class="hljs-keyword">return</span> possible(alist,N1)<br>N1=<br>N2=<br>c1=<br>c2=<br>E1=<br>E2=<br>t=wienner_attack(N1,N2)<br>Q1=t[<span class="hljs-number">0</span>]<br>Q2=t[<span class="hljs-number">1</span>]<br><span class="hljs-built_in">print</span>(Q1)<br><span class="hljs-built_in">print</span>(Q2)<br>P2=gmpy2.iroot(N2//Q2,<span class="hljs-number">2</span>)[<span class="hljs-number">0</span>]<br>P1=gmpy2.iroot(N1//Q1,<span class="hljs-number">2</span>)[<span class="hljs-number">0</span>]<br>phi1=(P1-<span class="hljs-number">1</span>)*P1*(Q1-<span class="hljs-number">1</span>)<br>phi2=(P2-<span class="hljs-number">1</span>)*P2*(Q2-<span class="hljs-number">1</span>)<br>d1=gmpy2.invert(E1,phi1)<br>d2=gmpy2.invert(E2,phi2)<br>m1=gmpy2.powmod(c1,d1,N1)<br>m2=gmpy2.powmod(c2,d2,N2)<br>f1=long_to_bytes(m1)<br>f2=long_to_bytes(m2)<br><span class="hljs-built_in">print</span>(f1,f2)<br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">11628371843051760370952910026406764366191062991235308941262037248377376991693250742343307155422036713746576338866595433599862614339347536916226536644210947</span><br><span class="hljs-string">11628371843051760370952910026406764366191062991235308941262037248377376991693250742343307155422036713746576338866595433599862614339347536916226536644211929</span><br><span class="hljs-string">b&#x27;GWHT&#123;3aadab41754799&#x27; b&#x27;f978669d53e64a3aca&#125;</span><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="扩展维纳"><a href="#扩展维纳" class="headerlink" title="扩展维纳"></a>扩展维纳</h3><p>参考：论文:<a target="_blank" rel="noopener" href="https://dunkirkturbo.github.io/2020/05/04/WriteUp-De1CTF2020-Crypto/howgrave-graham1999.pdf">https://dunkirkturbo.github.io/2020/05/04/WriteUp-De1CTF2020-Crypto/howgrave-graham1999.pdf</a></p>
+<p><a target="_blank" rel="noopener" href="https://ctf-wiki.org/crypto/asymmetric/rsa/d_attacks/rsa_extending_wiener/">ctf-wiki-扩展维纳</a></p>
+<h4 id="维纳的方法-1"><a href="#维纳的方法-1" class="headerlink" title="维纳的方法"></a>维纳的方法</h4><p>这里我们忽略前面提到的q&lt;p&lt;2q的条件。利用其他进行维纳攻击</p>
+<p>这里有个前提，e约等于n,S约等于(n)^0.5^(大概就是2的指数差不多)</p>
+<p>λ(N)&#x3D;lcm(p-1,q-1)….g&#x3D;gcd(p-1,q-1). s&#x3D;1-p-q</p>
+<blockquote>
+<p>$ed-k*λ(N)&#x3D;1$</p>
+<p>$edg-kN&#x3D;g+ks$</p>
+<p>$e\over N$-$k\over dg$&#x3D;($k\over dg$)($s\over N$)+$1\over dN$</p>
+<p><img src="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-01-05-144234.9rjh97w4em.webp" srcset="/img/loading.gif" lazyload></p>
+<p>这里原论文的证明近似的量有点多，不够严谨，不能算是严格的维纳证明，最开始的那个更细节</p>
+</blockquote>
+<h4 id="GUO的方法"><a href="#GUO的方法" class="headerlink" title="GUO的方法"></a>GUO的方法</h4><p>考虑存在两个e。</p>
+<p>$e_1d_1g-k_1(p-1)(p-1)&#x3D;g$</p>
+<p>$e_2d_2g-k_2(p-1)(q-1)&#x3D;g$</p>
+<p>化简可以得到</p>
+<p>$k_2d_1e_1−k_1d_2e_2&#x3D;k_2−k_1$</p>
+<blockquote>
+<p>同时除以$k_2d_1e_2$</p>
+<p>$e_1\over e_2$-$k_1d_2\over k_2d_1$&#x3D;$k_2-k_1\over k_2d_1e_2$</p>
+<p>设$d_i&lt;N^α$</p>
+<p>$k_2-k_1\over k_2d_1e_2$≈N^−(1+α)^</p>
+<p>为了满足上述定理</p>
+<p>2(<em>k</em>2−<em>k</em>1)<em>d</em>1<em>k</em>2&lt;<em>e</em>2</p>
+<p>但是通过$k_1d_2\over k_2 d_1$找到分解N不是很现实，这个扩展结合了上述两种方法利用格来求</p>
+</blockquote>
+<h4 id="扩展维纳攻击"><a href="#扩展维纳攻击" class="headerlink" title="扩展维纳攻击"></a>扩展维纳攻击</h4><p>两个关系：</p>
+<blockquote>
+<p>$d_ige_i−k_iN&#x3D;g+k_is$  —M</p>
+<p>k_id_je_j−k_jd_ie_i&#x3D;k_i−k_j —G<sub>i,j</sub></p>
+</blockquote>
+<p>我们假设$d_i$ 和$k_i $都小于N^αn^，且g很小，s≈N^1&#x2F;2^。可以注意到$W_i$ 和Gi的右侧非常小，实际上分别最多为N^1&#x2F;2+α^ 和N^α^。</p>
+<p>接下来我们可以利用四个等式构造格</p>
+<p>$k_1 k_2&#x3D;k_1 k_2$</p>
+<p>$d_1ge_1−k_1N&#x3D;g+k_1s$</p>
+<p>$k_1d_2e_2−k_2d_1e_1&#x3D;k_1−k_2$</p>
+<p>$d_1d_2g^2e_1e_2−d_1gk_2e_1N−d_2gk_1e_2N+k_1k_2N_2&#x3D;(g+k_1s)(g+k_2s)$</p>
+<p>可以构造如下格</p>
+<p><img src="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-01-05-155922.8l060oyhju.webp" srcset="/img/loading.gif" lazyload alt="屏幕截图-2025-01-05-155922"></p>
+<p>视作A*L&#x3D;B</p>
+<p>根据假设</p>
+<p><img src="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-01-05-155934.4xumd62jsr.webp" srcset="/img/loading.gif" lazyload alt="屏幕截图-2025-01-05-155934"></p>
+<p><img src="https://rockfox0.github.io/picx-images-hosting/eae24001bbe299decdd775bef1ea1800.73u0gaysyt.webp" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>明显|L|≈2N,但是明显N^2α^,N^1&#x2F;2+2α^,N^α2^,N^1+2α^.明显这里不符合定理要求需要构造一下，</p>
+<blockquote>
+<p>$M_1&#x3D;N$^1&#x2F;2^,$M_2&#x3D;N$^1+α^，得到</p>
+<p><img src="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-01-05-161454.83a4c4gc3x.webp" srcset="/img/loading.gif" lazyload alt="屏幕截图-2025-01-05-161454"></p>
+<p>根据上述条件</p>
+<p><em>α</em>≤5&#x2F;14</p>
+<p>把B2当作求出的最短向量。A&#x3D;B*L^-1^。这是我们就能得到A，A[1]&#x2F;A[0]&#x3D;$d_1g\over k_1$</p>
+<p>φ(N)&#x3D;$edg\over k$-$g\over k$&#x3D;$edg\over k$</p>
+</blockquote>
+<h4 id="羊城杯-simple-py"><a href="#羊城杯-simple-py" class="headerlink" title="羊城杯 simple.py"></a>羊城杯 simple.py</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">from</span> Crypto.Cipher <span class="hljs-keyword">import</span> DES<br><span class="hljs-keyword">import</span> gmpy2<br><span class="hljs-keyword">from</span> secret <span class="hljs-keyword">import</span> flag<br><span class="hljs-keyword">import</span> random<br><br>key = <span class="hljs-string">&quot;abcdefgh&quot;</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">des_encrypt</span>(<span class="hljs-params">m</span>):<br>    des = DES.new(key, DES.MODE_ECB)<br>    res = des.encrypt(m)<br>    <span class="hljs-keyword">return</span> res<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">gen_key</span>():<br>    p = getPrime(<span class="hljs-number">2048</span>)<br>    q = getPrime(<span class="hljs-number">2048</span>)<br>    n = p * q<br>    bit = n.bit_length()<br>    phi_n = (p - <span class="hljs-number">1</span>) * (q - <span class="hljs-number">1</span>)<br>    num = random.randint(<span class="hljs-number">1</span>, <span class="hljs-number">100</span>)<br>    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>        u = getPrime(bit / <span class="hljs-number">4</span> - num)<br>        <span class="hljs-keyword">if</span> gmpy2.gcd(u, phi_n) != <span class="hljs-number">1</span>:<br>            <span class="hljs-keyword">continue</span><br>        t = gmpy2.invert(u, phi_n)<br>        e = bytes_to_long(des_encrypt(long_to_bytes(t)))<br>        <span class="hljs-keyword">if</span> gmpy2.gcd(e, phi_n) == <span class="hljs-number">1</span>:<br>            <span class="hljs-keyword">break</span><br>    <span class="hljs-keyword">return</span> (n, e)<br><br>P = getPrime(<span class="hljs-number">1024</span>)<br>Q = getPrime(<span class="hljs-number">1024</span>)<br>N = P * Q<br>E = <span class="hljs-number">65537</span><br>lcm = gmpy2.lcm(P-<span class="hljs-number">1</span>, Q-<span class="hljs-number">1</span>)<br>e1 = gmpy2.invert(getPrime(<span class="hljs-number">730</span>), lcm)<br>e2 = gmpy2.invert(getPrime(<span class="hljs-number">730</span>), lcm)<br>m = bytes_to_long(flag)<br>c = <span class="hljs-built_in">pow</span>(m, E, N)<br><span class="hljs-built_in">print</span> <span class="hljs-string">&quot;N = &quot;</span> + <span class="hljs-built_in">str</span>(N)<br><span class="hljs-built_in">print</span> <span class="hljs-string">&quot;e2 = &quot;</span> + <span class="hljs-built_in">str</span>(e2)<br><span class="hljs-built_in">print</span> <span class="hljs-string">&quot;c = &quot;</span> + <span class="hljs-built_in">str</span>(c)<br>_n, _e = gen_key()<br>_c = <span class="hljs-built_in">pow</span>(e1, _e, _n)<br><span class="hljs-built_in">print</span> <span class="hljs-string">&quot;_n = &quot;</span> + <span class="hljs-built_in">str</span>(_n)<br><span class="hljs-built_in">print</span> <span class="hljs-string">&quot;_e = &quot;</span> + <span class="hljs-built_in">str</span>(_e)<br><span class="hljs-built_in">print</span> <span class="hljs-string">&quot;_c = &quot;</span> + <span class="hljs-built_in">str</span>(_c)<br><br><span class="hljs-comment"># N = 14922959775784066499316528935316325825140011208871830627653191549546959775167708525042423039865322548420928571524120743831693550123563493981797950912895893476200447083386549353336086899064921878582074346791320104106139965010480614879592357793053342577850761108944086318475849882440272688246818022209356852924215237481460229377544297224983887026669222885987323082324044645883070916243439521809702674295469253723616677245762242494478587807402688474176102093482019417118703747411862420536240611089529331148684440513934609412884941091651594861530606086982174862461739604705354416587503836130151492937714365614194583664241</span><br><span class="hljs-comment"># e2 = 27188825731727584656624712988703151030126350536157477591935558508817722580343689565924329442151239649607993377452763119541243174650065563589438911911135278704499670302489754540301886312489410648471922645773506837251600244109619850141762795901696503387880058658061490595034281884089265487336373011424883404499124002441860870291233875045675212355287622948427109362925199018383535259913549859747158348931847041907910313465531703810313472674435425886505383646969400166213185676876969805238803587967334447878968225219769481841748776108219650785975942208190380614555719233460250841332020054797811415069533137170950762289</span><br><span class="hljs-comment"># c = 6472367338832635906896423990323542537663849304314171581554107495210830026660211696089062916158894195561723047864604633460433867838687338370676287160274165915800235253640690510046066541445140501917731026596427080558567366267665887665459901724487706983166070740324307268574128474775026837827907818762764766069631267853742422247229582756256253175941899099898884656334598790711379305490419932664114615010382094572854799421891622789614614720442708271653376485660139560819668239118588069312179293488684403404385715780406937817124588773689921642802703005341324008483201528345805611493251791950304129082313093168732415486813</span><br><span class="hljs-comment"># _n = 440489238264900860776949063845200558734341182253911040104689726634414488997095518284964514078079911856352824174173937251558842251349762631716798307360995414545464514355957499460396352456341058329671470384493547042182238690727766731554287411757022792467324815342497916894285866240516524768645049867582541899123632009100512965460004548382054578461249990158442675234477122521189649316341623637146867589119951831385717513964941787562068891523060843170463600255518728070958509224053460041184869943038887434435024428311063533345514827827485121055022245800823723487812635502090530820946638405345755666124356919178290008475459419571761406117827422883820901663916276191422633940699113760516149002609672230610575442643822241126824287790055264162725209120192661985259423924307785452001927701323647247782658775780117642900694831475681037634691806232211286493187121464506122012889644137364079403183353774265910554863733455161820449073656744610495110838881353269890437984975607744603113572453211439334880155671730821755361054781243639407912133971530394031933785051770725331242932929244719594830548310768937037042243794551163891451545574837838357398072638709907958216067999891842395376953596940377457308329336524488962532620850237570279134567668379</span><br><span class="hljs-comment"># _e = 861605654852236668414010386016782729745549477722901970933220380452652052018502113737968204529790495739233258572209422774257139256367928649554562561889013164344608269555777150446651170697255381344437283003508476336814132594917061838422072660017477530465048729471603537912401826065081663165440462979219418291010867656746870617893935758241591032350010782861988742885918015532494020406350897048575155800941991107973433915573030255070411073793489218782862225921465295055907689734413881263179029741870520797816282420230090879687287575328294171448819803530205292587159921154471289747571107461754730577787617451127061265552788125691266357724955508391085485034126227212788895416902189479587194999818764639403752596165043883295506465916277734482380252399557395621566461322664559344483889187037851178431011220134914560438657522787409632677020269086895142488669203469256629173438313487046130238010206678820035631793666627274457756812810094004185303422637897314225624079032617334487815628021058997628511963565055629435278956251869329025544623291223984190562109149316159243565323565271491356378189561005084676592786453581431393651385181326525455441155960432946682976515756161038293313433862078763004704003356983371787414787104076401121444383911561</span><br><span class="hljs-comment"># _c = 305937839546594439230463861584604201077374759167468410827830943528403007941779658881672477705113617614828611332427199124217887937391378281943856159571057598203709366891547401974326016980711130197275312149966105151573748299654404630150641461765232935912266448303266990247145252052886920248198006212876273661195636104435277145396636985516064154534488750879453474211852461463041960835745695368577903786702607508492658563272121038693371752289017330781719235752018697635304458321008407930986565779826278048082764754367267460637798512780153281325733348999426407049795270044819657399403071013496169060640127279409914638535996355848933378734045908205536540619564723586905257569498716707820544351092379516465943537383422680357333849248129118148543389733395686399565999586899123087310025442994131218237679518267106194962305629529210402269726736072967966518381350920965727690274018080619332676536005722214955949897632990356174168234408837737546230730400434240785496100281815168806724358191550743656843853383646410487436540166360406982096949178466861150173527305369007546917550634679211293496458282787881244581230558011582720632502886494712233308474151958909251857281750741736910202763888790654287328846201724930302778996046434656839999091303411</span><br><br><br></code></pre></td></tr></table></figure>
+
+<p>我们需要先求出e1，再通过e1和e2找到lcm，再通过lcm找到d和m</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs scss">def <span class="hljs-built_in">des_decrypt</span>(m):<br>    des = DES.<span class="hljs-built_in">new</span>(key, DES.MODE_ECB)<br>    res = des.<span class="hljs-built_in">decrypt</span>(m)<br>    return res<br>ciphertext = <span class="hljs-built_in">long_to_bytes</span>(_e)<br>decrypted_data = <span class="hljs-built_in">des_decrypt</span>(ciphertext)<br>_t=<span class="hljs-built_in">bytes_to_long</span>(decrypted_data)<br><span class="hljs-built_in">print</span>(_t)利用这个先求出_t<br></code></pre></td></tr></table></figure>
+
+<p>t &#x3D; gmpy2.invert(u, phi_n)，这里t满足维纳攻击的条件可以利用t求出phi_n再解出_d和e1。_</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs excel">from gmpy2 import invert<br>def possible(e,alist,<span class="hljs-built_in">N</span>)<span class="hljs-symbol">:</span><br>    for x in ali<span class="hljs-symbol">st:</span><br>        <span class="hljs-built_in">if</span> x==<span class="hljs-symbol">0:</span><br>            continue<br>        <span class="hljs-built_in">phi</span>=(e*x.denominator()-<span class="hljs-number">1</span>)//x.numerator()<br>        <span class="hljs-built_in">if</span> (<span class="hljs-built_in">N</span>-<span class="hljs-built_in">phi</span>+<span class="hljs-number">1</span>)%<span class="hljs-number">2</span>==<span class="hljs-number">0</span> <span class="hljs-built_in">and</span> <span class="hljs-built_in">sqrt</span>(pow((<span class="hljs-built_in">N</span>-<span class="hljs-built_in">phi</span>+<span class="hljs-number">1</span>)//<span class="hljs-number">2</span>,<span class="hljs-number">2</span>)-<span class="hljs-built_in">N</span>).is_integer()<span class="hljs-symbol">:</span><br>            (p,q)=<span class="hljs-built_in">var</span>(&#x27;p q&#x27;)<br>            <span class="hljs-built_in">Phi</span>=<span class="hljs-built_in">phi</span><br>            return <span class="hljs-built_in">Phi</span><br>        el<span class="hljs-symbol">se:</span><br>            continue<br>def wienner_attack(e,<span class="hljs-built_in">N</span>)<span class="hljs-symbol">:</span><br>    c=continued_fraction(e/<span class="hljs-built_in">N</span>)#获取连分数集合<br>    alist=c.convergents()#利用连分数得到连分数收敛<br>    return possible(e,alist,<span class="hljs-built_in">N</span>)<br>_<span class="hljs-built_in">t</span>=<br>_c = <br>_<span class="hljs-built_in">n</span> = <br>_e = <br><span class="hljs-built_in">phi</span>=wienner_attack(_<span class="hljs-built_in">t</span>,_<span class="hljs-built_in">n</span>)<br><span class="hljs-symbol">d1</span>=invert(_e,<span class="hljs-built_in">phi</span>)<br><span class="hljs-symbol">e1</span>=pow(_c,<span class="hljs-symbol">d1</span>,_<span class="hljs-built_in">n</span>)<br>print(<span class="hljs-symbol">e1</span>)<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<p>利用e1构造矩阵得到phi在求出m</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs stylus">from gmpy2 import invert<br>from Crypto<span class="hljs-selector-class">.Util</span><span class="hljs-selector-class">.number</span> import bytes_to_long, long_to_bytes<br>c = <br>e2 = <br>e1 = <br>N  = <br><span class="hljs-selector-tag">a</span>  = <span class="hljs-number">5</span>./<span class="hljs-number">14</span><br>M1=N**<span class="hljs-number">0.5</span><br>M2= N **(a+<span class="hljs-number">1</span>)<br>D = <span class="hljs-built_in">diagonal_matrix</span>(ZZ,<span class="hljs-selector-attr">[N,M1,M2,1]</span>)<br>M=<span class="hljs-built_in">matrix</span>(ZZ,<span class="hljs-selector-attr">[[1,-N,0,N**2]</span>,<span class="hljs-selector-attr">[0,e1,-e1,-e1*N]</span>,<span class="hljs-selector-attr">[0,0,e2,-e2*N]</span>,<span class="hljs-selector-attr">[0,0,0,e1*e2]</span>])*D<br>L=M<span class="hljs-selector-class">.LLL</span>()<br>t=<span class="hljs-built_in">vector</span>(ZZ,L<span class="hljs-selector-attr">[0]</span>)<br><span class="hljs-attribute">x</span>=t*M**(-<span class="hljs-number">1</span>)<br>phi = <span class="hljs-built_in">int</span>(<span class="hljs-attribute">x</span>[<span class="hljs-number">1</span>]/x[<span class="hljs-number">0</span>]*e1)<br>d = <span class="hljs-built_in">invert</span>(<span class="hljs-number">0</span>x10001,phi)<br>m=<span class="hljs-built_in">int</span>(<span class="hljs-built_in">pow</span>(c,d,N))<br><span class="hljs-function"><span class="hljs-title">print</span><span class="hljs-params">(long_to_bytes(m)</span></span>)<br><br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/crypto/" class="category-chain-item">crypto</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/crypto/RSA/" class="category-chain-item">RSA</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/crypto/" class="print-no-link">#crypto</a>
+      
+        <a href="/tags/RSA/" class="print-no-link">#RSA</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>DSA签名算法</div>
+      <div>http://example.com/2024/12/29/RSA-wiener/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Beitragsautor</div>
+          <div>fox</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Veröffentlicht am</div>
+          <div>December 29, 2024</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Urheberrechtshinweis</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/12/29/DSA%E7%AD%BE%E5%90%8D%E7%AE%97%E6%B3%95/" title="DSA签名算法">
+                        <span class="hidden-mobile">DSA签名算法</span>
+                        <span class="visible-mobile">Nächster</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Inhaltsverzeichnis</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Stichwort</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog funktioniert am besten mit aktiviertem JavaScript</div>
+  </noscript>
+</body>
+</html>
