@@ -19,25 +19,24 @@
   <meta name="author" content="fox">
   <meta name="keywords" content="菜菜的密码劳弟">
   
-    <meta name="description" content="DH 密钥交换协议在基于对称加密进行安全通信的过程中，通信双方需要持有一个共享的密钥。只有这样，由任何一方加密的信息才能由另一方使用相同的密钥解密。但是在能够安全的通信之前，通信双方应该如何约定一个共享的密钥呢？这就是安全中的经典问题：密钥配送问题（Key Distribution Problem[1]）。 Diffe-Hellman密钥交换协议只是其中一种约定功能共享密钥的方式， DHKE协议简">
+    <meta name="description" content="DASCTF(2024楚慧杯原题杯)的一道抽象lcg做题过程一些吐槽为什么翻遍全网都没有这道题wp，对于真菜的我，手搓有点难泵 做题过程12345678910111213141516171819202122from Crypto.Util.number import *from random import *from secret import flagLENGTH &#x3D; 512RATIO &#x3D; 0.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="DH密钥交换协议">
-<meta property="og:url" content="http://example.com/2024/12/23/DH%20%E5%AF%86%E9%92%A5%E4%BA%A4%E6%8D%A2%E5%8D%8F%E8%AE%AE/index.html">
+<meta property="og:title" content="楚慧杯(原题杯)抽象lcg">
+<meta property="og:url" content="http://example.com/2024/12/24/z3-LCG/index.html">
 <meta property="og:site_name" content="Rockfox的密码记录">
-<meta property="og:description" content="DH 密钥交换协议在基于对称加密进行安全通信的过程中，通信双方需要持有一个共享的密钥。只有这样，由任何一方加密的信息才能由另一方使用相同的密钥解密。但是在能够安全的通信之前，通信双方应该如何约定一个共享的密钥呢？这就是安全中的经典问题：密钥配送问题（Key Distribution Problem[1]）。 Diffe-Hellman密钥交换协议只是其中一种约定功能共享密钥的方式， DHKE协议简">
+<meta property="og:description" content="DASCTF(2024楚慧杯原题杯)的一道抽象lcg做题过程一些吐槽为什么翻遍全网都没有这道题wp，对于真菜的我，手搓有点难泵 做题过程12345678910111213141516171819202122from Crypto.Util.number import *from random import *from secret import flagLENGTH &#x3D; 512RATIO &#x3D; 0.">
 <meta property="og:locale">
-<meta property="og:image" content="https://rockfox0.github.io/picx-images-hosting/v2-39cb492c048f5f2a643368c135626925_1440w.175g9ciqha.webp">
-<meta property="article:published_time" content="2024-12-23T07:59:00.000Z">
-<meta property="article:modified_time" content="2024-12-23T15:33:32.792Z">
+<meta property="article:published_time" content="2024-12-23T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-01-09T12:41:54.614Z">
 <meta property="article:author" content="fox">
 <meta property="article:tag" content="crypto">
-<meta property="article:tag" content="Hexo">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="Lcg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://rockfox0.github.io/picx-images-hosting/v2-39cb492c048f5f2a643368c135626925_1440w.175g9ciqha.webp">
   
   
   
-  <title>DH密钥交换协议 - Rockfox的密码记录</title>
+  <title>楚慧杯(原题杯)抽象lcg - Rockfox的密码记录</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -97,7 +96,7 @@
   <header>
     
 
-<div class="header-inner" style="height: 150vh;">
+<div class="header-inner" style="height: 100vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
@@ -215,7 +214,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="DH密钥交换协议"></span>
+            <span id="subtitle" data-typed-text="楚慧杯(原题杯)抽象lcg"></span>
           
         </div>
 
@@ -226,8 +225,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-12-23 15:59" pubdate>
-          December 23, 2024 pm
+        <time datetime="2024-12-24 00:00" pubdate>
+          December 24, 2024 am
         </time>
       </span>
     
@@ -238,7 +237,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          356 wörter
+          633 wörter
         
       </span>
     
@@ -249,7 +248,7 @@
         
         
         
-          3 minuten
+          6 minuten
         
       </span>
     
@@ -290,58 +289,26 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">DH密钥交换协议</h1>
+            <h1 id="seo-header">楚慧杯(原题杯)抽象lcg</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="DH-密钥交换协议"><a href="#DH-密钥交换协议" class="headerlink" title="DH 密钥交换协议"></a>DH 密钥交换协议</h1><p>在基于<a target="_blank" rel="noopener" href="https://zhida.zhihu.com/search?content_id=221358888&content_type=Article&match_order=1&q=%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86&zhida_source=entity">对称加密</a>进行安全通信的过程中，通信双方需要持有一个共享的密钥。只有这样，由任何一方加密的信息才能由另一方使用相同的密钥解密。但是<strong>在能够安全的通信之前，通信双方应该如何约定一个共享的密钥呢？这就是安全中的经典问题：密钥配送问题（Key Distribution Problem</strong>[<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/599518034#ref_1">1]</a><strong>）</strong>。</p>
-<p>Diffe-Hellman密钥交换协议只是其中一种约定功能共享密钥的方式，</p>
-<h2 id="DHKE协议简介"><a href="#DHKE协议简介" class="headerlink" title="DHKE协议简介"></a>DHKE协议简介</h2><p><strong>DHKE是一种通过公共通道安全地交换加密密钥的数学方法，以Whitfield Diffi</strong>e和Martin Hellman的名字命名。</p>
-<h2 id="数学原理"><a href="#数学原理" class="headerlink" title="数学原理"></a>数学原理</h2><blockquote>
-<p>$c&#x3D;G^e mod P(0&lt;&#x3D;c&lt;P)$</p>
-<p>G是P的原根，满足条件</p>
-<p>{g1modp,g2modp,g3modp,…,gp−1modp}&#x3D;{1,2,3,…,p−1}</p>
-</blockquote>
-<h2 id="DHKE协议的过程"><a href="#DHKE协议的过程" class="headerlink" title="DHKE协议的过程"></a>DHKE协议的过程</h2><p><img src="https://rockfox0.github.io/picx-images-hosting/v2-39cb492c048f5f2a643368c135626925_1440w.175g9ciqha.webp" srcset="/img/loading.gif" lazyload></p>
-<ol>
-<li><p>客户端和服务端生成协商大素数P及其原根G</p>
-</li>
-<li><p>客户端生成私钥和公钥a和A</p>
-<blockquote>
-<p>A&#x3D;G<sup>a</sup> mod p</p>
-</blockquote>
-</li>
-<li><p>将公钥A发送给服务端</p>
-</li>
-<li><p>服务端生成私钥b和公钥B</p>
-</li>
-</ol>
-<blockquote>
-<p>$B&#x3D;G^b mod P$</p>
-</blockquote>
-<ol>
-<li><p>服务端将公钥B发送给客户端</p>
-</li>
-<li><p>客户端已知G,P,A,a,B计算密钥S1</p>
-</li>
-<li><blockquote>
-<p>$S1&#x3D;B^a mod P$ </p>
-</blockquote>
-</li>
-<li><p>服务端已知A B b G P计算共享密钥</p>
-</li>
-</ol>
-<blockquote>
-<p>$S2&#x3D;A^b mod p$</p>
-</blockquote>
-<ol start="9">
-<li>客户端和服务端共享密钥S</li>
-</ol>
-<blockquote>
-<p>$S&#x3D;S1&#x3D;B^a mod P&#x3D;(G^b) mod p&#x3D;A^b mod P&#x3D;S2$</p>
-</blockquote>
-<p>可以知道共享密钥的原理，</p>
+                <h1 id="DASCTF-2024楚慧杯原题杯-的一道抽象lcg做题过程"><a href="#DASCTF-2024楚慧杯原题杯-的一道抽象lcg做题过程" class="headerlink" title="DASCTF(2024楚慧杯原题杯)的一道抽象lcg做题过程"></a>DASCTF(2024楚慧杯原题杯)的一道抽象lcg做题过程</h1><h3 id="一些吐槽"><a href="#一些吐槽" class="headerlink" title="一些吐槽"></a>一些吐槽</h3><p>为什么翻遍全网都没有这道题wp，对于真菜的我，手搓有点难泵</p>
+<h3 id="做题过程"><a href="#做题过程" class="headerlink" title="做题过程"></a>做题过程</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs pytho">from Crypto.Util.number import *<br>from random import *<br>from secret import flag<br><br>LENGTH = 512<br>RATIO = 0.02024<br>M = 2**LENGTH<br>a, b, seed = getPrime(LENGTH), getPrime(LENGTH), getPrime(LENGTH)<br>SEED = seed<br><br><br>x = []<br>for i in range(64):<br>    seed = (a*seed + b) % M<br>    x.append(&quot;&quot;.join([bin(seed)[2:].zfill(LENGTH)[i] if uniform(0,1) &lt; RATIO else &quot;*&quot; for i in range(LENGTH)]))<br><br><br>print(&quot;c =&quot;, bytes_to_long(flag) ^ SEED)<br>print(&quot;a =&quot;,a)<br>print(&quot;b =&quot;,b)<br>print(&quot;x =&quot;,x)<br><br></code></pre></td></tr></table></figure>
+
+<p>尝试模拟一个类似情</p>
+<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs mel">from Crypto.Util.number import *<br>from random import *<br>a = <span class="hljs-number">7048435472566573813031570507837890091364947084306630050544242220147807292350445564322172244244726206563452305566866223414437853917448623276909090327076693</span><br>b = <span class="hljs-number">9204853069421046007176344891235245198607052139715825810823076231566533652655127030214860066312526149219510111657539481375881111759200483396551737326166933</span><br>f=b<span class="hljs-string">&#x27;flag&#123;yoxi_nidi_liangmin&#125;&#x27;</span><br>m=bytes_to_long(f)<br>M=<span class="hljs-number">2</span>**<span class="hljs-number">512</span><br><span class="hljs-keyword">seed</span>=<span class="hljs-number">8656702749867102422219200570484898209691959687594188444284921871713214793286935518322058853234901407306874127174670521978953484935737586264798208150365287</span><br>RATIO=<span class="hljs-number">0.6</span><br>Seed=<span class="hljs-keyword">seed</span><br><span class="hljs-keyword">print</span>(<span class="hljs-keyword">seed</span>)<br>x=[]<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">3</span>):<br>    <span class="hljs-keyword">seed</span> = (a * <span class="hljs-keyword">seed</span> + b) % M<br>    <span class="hljs-keyword">print</span>(<span class="hljs-keyword">seed</span>)<br>    x.append(<span class="hljs-string">&quot;&quot;</span>.join([bin(<span class="hljs-keyword">seed</span>)[<span class="hljs-number">2</span>:].zfill(<span class="hljs-number">512</span>)[i] <span class="hljs-keyword">if</span> <span class="hljs-keyword">uniform</span>(<span class="hljs-number">0</span>,<span class="hljs-number">1</span>) &lt; RATIO <span class="hljs-keyword">else</span> <span class="hljs-string">&quot;*&quot;</span> <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">512</span>)]))<br><span class="hljs-keyword">print</span>(<span class="hljs-keyword">seed</span>)<br><span class="hljs-keyword">print</span>(x)<br>c=m^Seed<br><span class="hljs-keyword">print</span>(c)<br><br></code></pre></td></tr></table></figure>
+
+<p>我把显示数据百分比调高了一点，因为测试如果太低就是出现错误结果。这行代码加密逻辑跟原题一样。过程也很简洁</p>
+<p>我们使用z3约束。由于是才学的z3有的，写的时候也有些问题，比如定义</p>
+<p>BitVec向量在转换的时候会出现类型错误。这是改进后的解开上述脚本的代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> z3 <span class="hljs-keyword">import</span> *<br><br><br>num = [[BitVec(<span class="hljs-string">f&#x27;num[<span class="hljs-subst">&#123;i&#125;</span>,<span class="hljs-subst">&#123;j&#125;</span>]&#x27;</span>, <span class="hljs-number">512</span>) <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>)] <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">3</span>)]<br>a = <br>b = <br>M = <span class="hljs-number">2</span>**<span class="hljs-number">512</span><br><br><br>A = []<br>s=Solver()<br><br><br><br>seed = []<br><br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">3</span>):<br>    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">512</span>):<br>        <span class="hljs-keyword">if</span> A[i][j] == <span class="hljs-string">&#x27;0&#x27;</span>:<br>            s.add(Extract(<span class="hljs-number">511</span>-j, <span class="hljs-number">511</span>-j, num[i][<span class="hljs-number">0</span>]) == <span class="hljs-number">0</span>)<br>        <span class="hljs-keyword">elif</span> A[i][j] == <span class="hljs-string">&#x27;1&#x27;</span>:<br>            s.add(Extract(<span class="hljs-number">511</span>-j, <span class="hljs-number">511</span>-j, num[i][<span class="hljs-number">0</span>]) == <span class="hljs-number">1</span>)<br><br><br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">2</span>):<br>    s.add(num[i+<span class="hljs-number">1</span>][<span class="hljs-number">0</span>] == (a * num[i][<span class="hljs-number">0</span>] + b) % M)<br><br><br><span class="hljs-keyword">if</span> s.check() == sat:<br>    model = s.model()<br>    Seed=model[num[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>]]<br></code></pre></td></tr></table></figure>
+
+<p>接下来看一下题目本身</p>
+<p>64此Lcg递推，得到64个被大部分隐藏的二进制位我们需要求到第一个被递归的再反推出SEED。解密过程看起来还算简单但是，计算也需要时间我的脚本大概算了半个小时。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> z3 <span class="hljs-keyword">import</span> *<br><br><br>num = [[BitVec(<span class="hljs-string">f&#x27;num[<span class="hljs-subst">&#123;i&#125;</span>,<span class="hljs-subst">&#123;j&#125;</span>]&#x27;</span>, <span class="hljs-number">512</span>) <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>)] <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">64</span>)]<span class="hljs-comment">#有点像二维数组，是重点得理解一下,512这里是num[i]一个的大小。我们定义j</span><br><br><br>a = <span class="hljs-number">7048435472566573813031570507837890091364947084306630050544242220147807292350445564322172244244726206563452305566866223414437853917448623276909090327076693</span><br>b = <span class="hljs-number">9204853069421046007176344891235245198607052139715825810823076231566533652655127030214860066312526149219510111657539481375881111759200483396551737326166933</span><br>M = <span class="hljs-number">2</span>**<span class="hljs-number">512</span><br>c = <span class="hljs-number">16881580266371213879199933551551391657843465997606963348664525781336437594162520786815349648165563542125219063481822246500499434326624995868766335675376062002958905249433093212</span><br>A=[]<br>s=Solver()<br><br>seed = []<br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">64</span>):<br>    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">512</span>):<br>        <span class="hljs-keyword">if</span> A[i][j] == <span class="hljs-string">&#x27;0&#x27;</span>:<br>            s.add(Extract(<span class="hljs-number">511</span>-j, <span class="hljs-number">511</span>-j, num[i][<span class="hljs-number">0</span>]) == <span class="hljs-number">0</span>)<br>        <span class="hljs-keyword">elif</span> A[i][j] == <span class="hljs-string">&#x27;1&#x27;</span>:<br>            s.add(Extract(<span class="hljs-number">511</span>-j, <span class="hljs-number">511</span>-j, num[i][<span class="hljs-number">0</span>]) == <span class="hljs-number">1</span>)<span class="hljs-comment">#定义替换位置</span><br><br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">63</span>):<br>    s.add(num[i+<span class="hljs-number">1</span>][<span class="hljs-number">0</span>] == (a * num[i][<span class="hljs-number">0</span>] + b) % M)<br><br><span class="hljs-keyword">if</span> s.check() == sat:<br><br>    model = s.model()<br>    Seed=model[num[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>]]<br>    <span class="hljs-built_in">print</span>(Seed)<br>然后<br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">3109110488358343346016940967694590460203057088734099480714916540569545873216239855284197469883314735576988812243170940490083088872700634135415701390964362</span><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br>a_1 = <span class="hljs-built_in">pow</span>(a, -<span class="hljs-number">1</span>, M)<br>seed = (a_1 * (Seed - b)) % M<br>m = c ^ seed<br><span class="hljs-built_in">print</span>(long_to_bytes(m))<br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">b&#x27;DASCTF&#123;0n\x85\xb8\xffU_know_th3_polynomial_0F_D47a_you_can_m@ke_Use_of_Leak_bits!&#125;&#x27;</span><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br></code></pre></td></tr></table></figure>
+
 
                 
               </div>
@@ -360,8 +327,15 @@
     
       <span class="category-chain">
         
-  <a href="/categories/crypto/" class="category-chain-item">crypto</a>
+  <a href="/categories/z3/" class="category-chain-item">z3</a>
   
+  
+    <span>></span>
+    
+  <a href="/categories/z3/crypto/" class="category-chain-item">crypto</a>
+  
+  
+
   
 
       </span>
@@ -377,7 +351,9 @@
       
         <a href="/tags/crypto/" class="print-no-link">#crypto</a>
       
-        <a href="/tags/Hexo/" class="print-no-link">#Hexo</a>
+        <a href="/tags/python/" class="print-no-link">#python</a>
+      
+        <a href="/tags/Lcg/" class="print-no-link">#Lcg</a>
       
     </div>
   
@@ -389,8 +365,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>DH密钥交换协议</div>
-      <div>http://example.com/2024/12/23/DH 密钥交换协议/</div>
+      <div>楚慧杯(原题杯)抽象lcg</div>
+      <div>http://example.com/2024/12/24/z3-LCG/</div>
     </div>
     <div class="license-meta">
       
@@ -402,7 +378,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Veröffentlicht am</div>
-          <div>December 23, 2024</div>
+          <div>December 24, 2024</div>
         </div>
       
       
@@ -434,9 +410,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/12/24/z3-LCG/" title="楚慧杯(原题杯)抽象lcg">
+                      <a href="/2024/12/24/AES%E5%8A%A0%E5%AF%86%E5%9B%9E%E9%A1%BE%E4%BB%A5%E5%8F%8A%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/" title="AES加密以及代码实现">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">楚慧杯(原题杯)抽象lcg</span>
+                        <span class="hidden-mobile">AES加密以及代码实现</span>
                         <span class="visible-mobile">Vorheriger</span>
                       </a>
                     
@@ -444,8 +420,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/12/23/%E6%A0%BC%E6%A0%BC%E6%A0%BC%E5%AF%86%E7%A0%81/" title="格密码">
-                        <span class="hidden-mobile">格密码</span>
+                      <a href="/2024/12/23/DH%20%E5%AF%86%E9%92%A5%E4%BA%A4%E6%8D%A2%E5%8D%8F%E8%AE%AE/" title="DH密钥交换协议">
+                        <span class="hidden-mobile">DH密钥交换协议</span>
                         <span class="visible-mobile">Nächster</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
