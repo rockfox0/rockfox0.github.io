@@ -19,25 +19,22 @@
   <meta name="author" content="fox">
   <meta name="keywords" content="菜菜的密码劳弟">
   
-    <meta name="description" content="DH 密钥交换协议在基于对称加密进行安全通信的过程中，通信双方需要持有一个共享的密钥。只有这样，由任何一方加密的信息才能由另一方使用相同的密钥解密。但是在能够安全的通信之前，通信双方应该如何约定一个共享的密钥呢？这就是安全中的经典问题：密钥配送问题（Key Distribution Problem[1]）。 Diffe-Hellman密钥交换协议只是其中一种约定功能共享密钥的方式， DHKE协议简">
+    <meta name="description" content="伪随机数生成器(PRNG)前言随机数生成分为伪随机，真随机。真随机是利用现实中的电子元件噪音来生产的。 伪随机数：用真随机数生成种子，用伪随机数生成器生成伪随机数位流 PRNG算法大致分为两类：   专用算法：为生成伪随机位流而专门设计。   基于现有密码算法的算法：密码算法会随机化输入数据。  对称分组密码、 哈希函数 消息验证码    专用算法LCG(线性同余生成器)$x_{n+1}&amp;#x3D">
 <meta property="og:type" content="article">
-<meta property="og:title" content="DH密钥交换协议">
-<meta property="og:url" content="http://example.com/2024/12/23/DH%20%E5%AF%86%E9%92%A5%E4%BA%A4%E6%8D%A2%E5%8D%8F%E8%AE%AE/index.html">
+<meta property="og:title" content="Rockfox的密码记录">
+<meta property="og:url" content="http://example.com/2025/01/11/%E4%BC%AA%E9%9A%8F%E6%9C%BA%E6%95%B0%E7%94%9F%E6%88%90%E5%99%A8(PRNG)/index.html">
 <meta property="og:site_name" content="Rockfox的密码记录">
-<meta property="og:description" content="DH 密钥交换协议在基于对称加密进行安全通信的过程中，通信双方需要持有一个共享的密钥。只有这样，由任何一方加密的信息才能由另一方使用相同的密钥解密。但是在能够安全的通信之前，通信双方应该如何约定一个共享的密钥呢？这就是安全中的经典问题：密钥配送问题（Key Distribution Problem[1]）。 Diffe-Hellman密钥交换协议只是其中一种约定功能共享密钥的方式， DHKE协议简">
+<meta property="og:description" content="伪随机数生成器(PRNG)前言随机数生成分为伪随机，真随机。真随机是利用现实中的电子元件噪音来生产的。 伪随机数：用真随机数生成种子，用伪随机数生成器生成伪随机数位流 PRNG算法大致分为两类：   专用算法：为生成伪随机位流而专门设计。   基于现有密码算法的算法：密码算法会随机化输入数据。  对称分组密码、 哈希函数 消息验证码    专用算法LCG(线性同余生成器)$x_{n+1}&amp;#x3D">
 <meta property="og:locale">
-<meta property="og:image" content="https://rockfox0.github.io/picx-images-hosting/v2-39cb492c048f5f2a643368c135626925_1440w.175g9ciqha.webp">
-<meta property="article:published_time" content="2024-12-23T07:59:00.000Z">
-<meta property="article:modified_time" content="2024-12-23T15:33:32.792Z">
+<meta property="article:published_time" content="2025-01-11T14:57:09.199Z">
+<meta property="article:modified_time" content="2025-01-11T14:57:09.199Z">
 <meta property="article:author" content="fox">
-<meta property="article:tag" content="crypto">
-<meta property="article:tag" content="Hexo">
+<meta property="article:tag" content="菜菜的密码劳弟">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://rockfox0.github.io/picx-images-hosting/v2-39cb492c048f5f2a643368c135626925_1440w.175g9ciqha.webp">
   
   
   
-  <title>DH密钥交换协议 - Rockfox的密码记录</title>
+  <title>Rockfox的密码记录</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -97,7 +94,7 @@
   <header>
     
 
-<div class="header-inner" style="height: 150vh;">
+<div class="header-inner" style="height: 108vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
@@ -209,13 +206,13 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/syc.jpg') no-repeat center center; background-size: cover;">
+     style="background: url('/img/default.jpg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="DH密钥交换协议"></span>
+            <span id="subtitle" data-typed-text=""></span>
           
         </div>
 
@@ -226,8 +223,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-12-23 15:59" pubdate>
-          December 23, 2024 pm
+        <time datetime="2025-01-11 22:57" pubdate>
+          January 11, 2025 pm
         </time>
       </span>
     
@@ -238,7 +235,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          356 words
+          296 words
         
       </span>
     
@@ -290,59 +287,34 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">DH密钥交换协议</h1>
+            <h1 id="seo-header"></h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="DH-密钥交换协议"><a href="#DH-密钥交换协议" class="headerlink" title="DH 密钥交换协议"></a>DH 密钥交换协议</h1><p>在基于<a target="_blank" rel="noopener" href="https://zhida.zhihu.com/search?content_id=221358888&content_type=Article&match_order=1&q=%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86&zhida_source=entity">对称加密</a>进行安全通信的过程中，通信双方需要持有一个共享的密钥。只有这样，由任何一方加密的信息才能由另一方使用相同的密钥解密。但是<strong>在能够安全的通信之前，通信双方应该如何约定一个共享的密钥呢？这就是安全中的经典问题：密钥配送问题（Key Distribution Problem</strong>[<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/599518034#ref_1">1]</a><strong>）</strong>。</p>
-<p>Diffe-Hellman密钥交换协议只是其中一种约定功能共享密钥的方式，</p>
-<h2 id="DHKE协议简介"><a href="#DHKE协议简介" class="headerlink" title="DHKE协议简介"></a>DHKE协议简介</h2><p><strong>DHKE是一种通过公共通道安全地交换加密密钥的数学方法，以Whitfield Diffi</strong>e和Martin Hellman的名字命名。</p>
-<h2 id="数学原理"><a href="#数学原理" class="headerlink" title="数学原理"></a>数学原理</h2><blockquote>
-<p>$c&#x3D;G^e mod P(0&lt;&#x3D;c&lt;P)$</p>
-<p>G是P的原根，满足条件</p>
-<p>{g1modp,g2modp,g3modp,…,gp−1modp}&#x3D;{1,2,3,…,p−1}</p>
-</blockquote>
-<h2 id="DHKE协议的过程"><a href="#DHKE协议的过程" class="headerlink" title="DHKE协议的过程"></a>DHKE协议的过程</h2><p><img src="https://rockfox0.github.io/picx-images-hosting/v2-39cb492c048f5f2a643368c135626925_1440w.175g9ciqha.webp" srcset="/img/loading.gif" lazyload></p>
-<ol>
-<li><p>客户端和服务端生成协商大素数P及其原根G</p>
+                <h1 id="伪随机数生成器-PRNG"><a href="#伪随机数生成器-PRNG" class="headerlink" title="伪随机数生成器(PRNG)"></a>伪随机数生成器(PRNG)</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>随机数生成分为伪随机，真随机。真随机是利用现实中的电子元件噪音来生产的。</p>
+<p>伪随机数：用真随机数生成种子，用伪随机数生成器生成伪随机数位流</p>
+<p>PRNG算法大致分为两类： </p>
+<ul>
+<li><p>专用算法：为生成伪随机位流而专门设计。 </p>
 </li>
-<li><p>客户端生成私钥和公钥a和A</p>
+<li><p>基于现有密码算法的算法：密码算法会随机化输入数据。</p>
+<ul>
+<li>对称分组密码、</li>
+<li>哈希函数</li>
+<li>消息验证码</li>
+</ul>
+</li>
+</ul>
+<h2 id="专用算法"><a href="#专用算法" class="headerlink" title="专用算法"></a>专用算法</h2><h3 id="LCG-线性同余生成器"><a href="#LCG-线性同余生成器" class="headerlink" title="LCG(线性同余生成器)"></a>LCG(线性同余生成器)</h3><p>$x_{n+1}&#x3D;(aX_n+b)mod m$</p>
 <blockquote>
-<p>A&#x3D;G<sup>a</sup> mod p</p>
+<p>m，是模量，a是乘数，b是增量</p>
+<p>$X_n&#x3D;(a^{-1}(X_{n+1}-b))mod m$</p>
+<p>$a≡(X_{n+1}−b)⋅X_n^{−1}(modM)$或$a &#x3D; (X_{n+2} - X_{n+1})(X_{n+1} - X_n)^{-1} (mod m)$</p>
+<p>$b &#x3D; X_{n+1} - aX_n (mod m)$</p>
+<p>设$t_n &#x3D; X_{n+1}- X_n$<br>$t_n &#x3D; (aX_n+b) - (aX_{n-1}+b) &#x3D; at_{n-1}(mod m)$<br>$t_{n+1}t_{n-1} - t_nt_n &#x3D; (aat_{n-1}t_{n-1} - at_{n-1}at_{n-1}) &#x3D; 0 (mod m)$<br>即$T_n &#x3D; t_n+1t_{n-1} - t_nt_n$是m的倍数，求Tn , Tn-1最大公因数即为m<br>$m &#x3D; gcd((t_{n+1}t_{n-1} - t_nt_n) , (t_nt_{n-2} - t_{n-1}t_{n-1}))$</p>
 </blockquote>
-</li>
-<li><p>将公钥A发送给服务端</p>
-</li>
-<li><p>服务端生成私钥b和公钥B</p>
-</li>
-</ol>
-<blockquote>
-<p>$B&#x3D;G^b mod P$</p>
-</blockquote>
-<ol>
-<li><p>服务端将公钥B发送给客户端</p>
-</li>
-<li><p>客户端已知G,P,A,a,B计算密钥S1</p>
-</li>
-<li><blockquote>
-<p>$S1&#x3D;B^a mod P$ </p>
-</blockquote>
-</li>
-<li><p>服务端已知A B b G P计算共享密钥</p>
-</li>
-</ol>
-<blockquote>
-<p>$S2&#x3D;A^b mod p$</p>
-</blockquote>
-<ol start="9">
-<li>客户端和服务端共享密钥S</li>
-</ol>
-<blockquote>
-<p>$S&#x3D;S1&#x3D;B^a mod P&#x3D;(G^b) mod p&#x3D;A^b mod P&#x3D;S2$</p>
-</blockquote>
-<p>可以知道共享密钥的原理，</p>
-
+<h3 id="BBS生成器"><a href="#BBS生成器" class="headerlink" title="BBS生成器"></a>BBS生成器</h3>
                 
               </div>
             
@@ -350,36 +322,6 @@
             <div>
               <div class="post-metas my-3">
   
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/crypto/" class="category-chain-item">crypto</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
-  
-  
-    <div class="post-meta">
-      <i class="iconfont icon-tags"></i>
-      
-        <a href="/tags/crypto/" class="print-no-link">#crypto</a>
-      
-        <a href="/tags/Hexo/" class="print-no-link">#Hexo</a>
-      
-    </div>
   
 </div>
 
@@ -389,8 +331,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>DH密钥交换协议</div>
-      <div>http://example.com/2024/12/23/DH 密钥交换协议/</div>
+      <div></div>
+      <div>http://example.com/2025/01/11/伪随机数生成器(PRNG)/</div>
     </div>
     <div class="license-meta">
       
@@ -402,7 +344,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>December 23, 2024</div>
+          <div>January 11, 2025</div>
         </div>
       
       
@@ -434,18 +376,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/12/24/AES%E5%8A%A0%E5%AF%86%E5%9B%9E%E9%A1%BE%E4%BB%A5%E5%8F%8A%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/" title="AES加密以及代码实现">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">AES加密以及代码实现</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/12/23/ECC_sign_inmd/" title="weil pairing">
-                        <span class="hidden-mobile">weil pairing</span>
+                      <a href="/2025/01/09/z3-LCG/" title="楚慧杯(原题杯)抽象lcg">
+                        <span class="hidden-mobile">楚慧杯(原题杯)抽象lcg</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
