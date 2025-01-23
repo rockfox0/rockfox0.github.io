@@ -1,0 +1,834 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/OIP-C.jpg">
+  <link rel="icon" href="/img/OIP-C.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="fox">
+  <meta name="keywords" content="菜菜的密码劳弟">
+  
+    <meta name="description" content="coppersmith原论文ch19.pdf 借鉴博客：https:&#x2F;&#x2F;jayxv.github.io&#x2F;2020&#x2F;08&#x2F;13&#x2F;%E5%AF%86%E7%A0%81%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B9%8Bcoppersmith&#x2F;  前言  最近经常遇到coppersmith攻击，所以决定还是有必要深入学习一下 coppersmith">
+<meta property="og:type" content="article">
+<meta property="og:title" content="coppersmith方法相关">
+<meta property="og:url" content="http://example.com/2025/01/23/copper/index.html">
+<meta property="og:site_name" content="Rockfox的密码记录">
+<meta property="og:description" content="coppersmith原论文ch19.pdf 借鉴博客：https:&#x2F;&#x2F;jayxv.github.io&#x2F;2020&#x2F;08&#x2F;13&#x2F;%E5%AF%86%E7%A0%81%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B9%8Bcoppersmith&#x2F;  前言  最近经常遇到coppersmith攻击，所以决定还是有必要深入学习一下 coppersmith">
+<meta property="og:locale">
+<meta property="og:image" content="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-01-18-214808.7w6x6ow66y.webp">
+<meta property="og:image" content="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-01-18-215702.5fkorrivy0.webp">
+<meta property="og:image" content="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-01-18-215950.7egvi3oiam.webp">
+<meta property="og:image" content="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-01-18-222154.9nzw1l9ffn.webp">
+<meta property="og:image" content="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-01-22-220410.b902hjivk.webp">
+<meta property="og:image" content="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-01-23-172218.5c12u1ryzi.webp">
+<meta property="article:published_time" content="2025-01-22T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-01-23T13:08:15.434Z">
+<meta property="article:author" content="fox">
+<meta property="article:tag" content="crypto">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-01-18-214808.7w6x6ow66y.webp">
+  
+  
+  
+  <title>coppersmith方法相关 - Rockfox的密码记录</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":40,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 100vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>fox的密码学习记录</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>Links</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/xulun.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="coppersmith方法相关"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-01-23 00:00" pubdate>
+          January 23, 2025 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.3k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          20 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">coppersmith方法相关</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="coppersmith"><a href="#coppersmith" class="headerlink" title="coppersmith"></a>coppersmith</h1><p>原论文<a target="_blank" rel="noopener" href="https://www.math.auckland.ac.nz/~sgal018/crypto-book/ch19.pdf">ch19.pdf</a></p>
+<p>借鉴博客：<a target="_blank" rel="noopener" href="https://jayxv.github.io/2020/08/13/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B9%8Bcoppersmith/">https://jayxv.github.io/2020/08/13/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B9%8Bcoppersmith/</a></p>
+<ul>
+<li>前言</li>
+</ul>
+<p>最近经常遇到coppersmith攻击，所以决定还是有必要深入学习一下</p>
+<h2 id="coppersmith’Method"><a href="#coppersmith’Method" class="headerlink" title="coppersmith’Method"></a>coppersmith’Method</h2><blockquote>
+<p>介绍：coppersmith方法基于格约简和LLL算法来找到一定模数下多项式的小根。其核心思想是将求解模多项式方程的问题转化为一个格中的短向量问题</p>
+</blockquote>
+<blockquote>
+<p>例如F$F(x)&#x3D;x^3+x+123(mod M)$,M&#x3D;77,假设存在x0使得$F(x_0)&#x3D;0$</p>
+<p>并且这个x0小于某个特定值，就可以使用coppersmith算法</p>
+<p>给定模M的多项式$F(x)&#x3D;x^d+a^{d−1}x_{d−1}+⋯+a^1x+a^0$,[必须让$x^d$满足系数为1，可以乘$a_d^{-1}$来配凑。如果ad没有模M逆元，可以拆分为多组。</p>
+<p>假设我们知道$F(x_0)&#x3D;0(mod M)$ ,并且|$x_0$&lt;$M^{1&#x2F;d}$</p>
+<p>假设我们现在能找到G($x_0$)&#x3D;0,不需要取模，我们可以用coppersmith方法把这个F(x)变为G(x)</p>
+</blockquote>
+<p>例如$M&#x3D;17*19&#x3D;323$,$F(x)&#x3D;x^2+33x+215,$,假设一个小根$x_0&#x3D;3$但是在整数</p>
+<p>域下F(3)!&#x3D;0,所以我们要找到G(3)&#x3D;0,</p>
+<blockquote>
+<p>$G(x)&#x3D;9⋅F(x)−M⋅(x+6)&#x3D;9x^2−26x−3$，满足G(3)&#x3D;0,</p>
+<p>这是一元coppersmith的核心思路。</p>
+</blockquote>
+<ul>
+<li>为什么造格能得到较小的G(X)</li>
+</ul>
+<p>设F(x)构造系数矩阵为A,x&#x3D;(x,x,x)</p>
+<p>G(x)系数矩阵,L&#x3D;UA。$A*x&#x3D;(ax+bx+cx)&#x3D;(0)mod(m)$</p>
+<p>$L<em>x&#x3D;U</em>(A<em>X)&#x3D;U</em>(0)&#x3D;0mod(m)$</p>
+<p>依然满足f(x0)&#x3D;0,G(x0)&#x3D;0,mod(m)</p>
+<ul>
+<li>我们现在主要要找x0的界，设X是|x0|的上界</li>
+</ul>
+<p>F(x)可以表示为一个行向量$B_F&#x3D;(a_0,a_1X,a_2X^2,…,a_dX^d)$</p>
+<p>首先我们有F(X),M,B_F,X—-$F(x_0)&#x3D;0(mod M)$</p>
+<p>那么当$|B_F|&lt;M&#x2F;(d+1)^{0.5}$,则有F(x0)&#x3D;0接下来证明它</p>
+<ul>
+<li>引入柯西不等式–1式子</li>
+</ul>
+<p>$(∑^n_{i&#x3D;1}x_iy_i)^2≤(∑^n_{i&#x3D;1}x^2_i)(∑^n_{i&#x3D;1}y^2i)$</p>
+<p><img src="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-01-18-214808.7w6x6ow66y.webp" srcset="/img/loading.gif" lazyload></p>
+<p>所以$-M&lt;F(x_0)&lt;M$ 且F(x0)&#x3D;0 mod M 所以F(X0)&#x3D;0</p>
+<ul>
+<li>确定边界值X</li>
+</ul>
+<p><img src="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-01-18-215702.5fkorrivy0.webp" srcset="/img/loading.gif" lazyload></p>
+<p>X为x0取值上界，这!个矩阵$det(L)&#x3D;M^dX^{d(d+1)&#x2F;2}$</p>
+<p>我们可以利用格基规约找到最小的第一行b’,格的部分不多叙述可以参考写的LLL的速通blog</p>
+<p>之后我们可以得到在满足1式子的条件下</p>
+<p><img src="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-01-18-215950.7egvi3oiam.webp" srcset="/img/loading.gif" lazyload></p>
+<p>可以得到X的大致范围</p>
+<p>示例M&#x3D;10001,多项式$F(x)&#x3D;x^3+10x^2+5000x−222$</p>
+<p>确定$x_0&lt;M^{1&#x2F;6}$,这里省略了相差无几的系数。确定上界为5左右</p>
+<p>我们这是可以构造矩阵然后格基规约。</p>
+<p><img src="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-01-18-222154.9nzw1l9ffn.webp" srcset="/img/loading.gif" lazyload></p>
+<p>第一行便是所需求满足要求的最小$G(x)&#x3D;444+x−20x^2−2x^3$</p>
+<p>接的x0&#x3D;4</p>
+<ul>
+<li>The Full Coppersimth Method</li>
+</ul>
+<p>一个关于提高X大小的方法，有两个方法我们称这种往格里插入的，增加了格的维度而不增加M的多项式为：“x-shift” polynomial，它们是$xF(x),x^2F(x),…,x^kF(x)xF(x)$，显然这些多项式在M下的解也为x0</p>
+<p>针对第二种方案，我们可以利用F(x)F(x)的幂来增加M，因为F(x0)≡0(modM)F，则有$F(x0)^k≡0(modM^ k)$</p>
+<ul>
+<li>另一个定理</li>
+</ul>
+<p>设$0&lt;ϵ&lt;min0.18,1&#x2F;d,F(x)$度为d的首一多项式如果在域下有一个或多个跟x0满足$|x0|&lt;M^{1&#x2F;d-ϵ}$ .那么我们就可以在与d,1&#x2F;ϵ,log(M)相关的多项式时间内找到x0.</p>
+<p>证明有点抽象了论文放这里有空再瞅瞅吧，我直接写下几个脚本用得到的关系式子</p>
+<p>h≈$1\over {dϵ}$ ，dh&#x3D;n表示格的维度。</p>
+<p><img src="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-01-22-220410.b902hjivk.webp" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li>关于已知p部分信息分解n</li>
+</ul>
+<blockquote>
+<p>设$N&#x3D;p∗q$并且有$p&lt;q&lt;2p$，设$0&lt;ϵ&lt;14$4，如果满足关系：$|p−p′|≤$$$1\over{2\sqrt{2}} $$$$N^{1&#x2F;4−ϵ}$$，那么给定N和p’,我们就可以在与log(N)和1&#x2F;ϵ相关的时间复杂度内分解N。原理证明有点奥了</p>
+</blockquote>
+<p>举例:N&#x3D;16803551，p′&#x3D;2830，X&#x3D;10.</p>
+<blockquote>
+<p>设F(x)&#x3D;(x+p’),N,F(x)，xF(x)&#x3D;(x2+p′x)，x2F(x)</p>
+<p>考虑多项式：N,F(X),xF(x),$x^2F(X)$,然后构造格</p>
+</blockquote>
+<p><img src="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-01-23-172218.5c12u1ryzi.webp" srcset="/img/loading.gif" lazyload></p>
+<p>LLL规约后得到第一行的SVP为（105，-1200，800，1000），去除X&#x3D;10可以得到G(x)&#x3D;x3+8x2−120x+105；解的x&#x3D;7，</p>
+<p>这里的N可以看作kp，把它看作是k∗p也许会好理解些：所选取的多项式带入正解x时均在模p下与0同余</p>
+<h3 id="一些题目-单元coppersmith"><a href="#一些题目-单元coppersmith" class="headerlink" title="一些题目(单元coppersmith)"></a>一些题目(单元coppersmith)</h3><h4 id="已知P高位"><a href="#已知P高位" class="headerlink" title="已知P高位"></a>已知P高位</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> getPrime, bytes_to_long, inverse<br><br>flag=<span class="hljs-string">b&#x27;fox&#123;fox want to eat what&#125;&#x27;</span><br>p=getPrime(<span class="hljs-number">512</span>)<br>p_high=(p&gt;&gt;<span class="hljs-number">200</span>)&lt;&lt;<span class="hljs-number">200</span><br><span class="hljs-built_in">print</span>(p_high)<br>q=getPrime(<span class="hljs-number">512</span>)<br>e=<span class="hljs-number">0b10001</span><br>n=p*q<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;p=&quot;</span>,p)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;q=&quot;</span>,q)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;n=&quot;</span>,n)<br>m=bytes_to_long(flag)<br>c=<span class="hljs-built_in">pow</span>(m,e,n)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;c=&quot;</span>,c)<br></code></pre></td></tr></table></figure>
+
+<p>解密代码，这里引用的beta表示N与p的指数关系在(0.4,0.5）而且一般已知p的信息的比特位数要为p本身比特位数的一般以上调整beta可以增加上限X但是会导致时间复杂度增大，,另外其实还要一个ϵ(epsilon)用来约束多项式的根，一般设置在0.01到0.05的样子，也可以在这个现成的函数中设置，越小约束越严格但是也会影响运算时间</p>
+<p>可以在这个脚本实现源码看看，</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> *<br>N=<span class="hljs-number">133710312641113123859964440077377533712342702504367787255182846824724010714496099762855320340674761905445770124260476807002239449704342315985473499561372208925050652507764912706096791716888012136098375017749241890296762979638092647971448134034808167719762321413756060356748672986521523183243757912647146630053</span><br>e=<span class="hljs-number">0b10001</span><br>c= <span class="hljs-number">65557915039839389047479107840683903322175662706377407690136936904175441214121027091201698676495252709350177099515464449769710120030105578393734170368995189857074788448412022342701700787139604106626472335713315769690072453661188617266051033715771747892127805257411819414888757977975890254221744212355033949446</span><br><br>p1=<span class="hljs-number">10588155095945660931536816256842811488117167553129301589697663144204701166787360146714639470812049936139282091010528731135222839016760257988792628488962048</span><br>ZmodN = Zmod(N)<br>P.&lt;x&gt;=PolynomialRing(ZmodN)<br>f=p1+x<br>x0=f.small_roots(X=<span class="hljs-number">2</span>^<span class="hljs-number">200</span>,beta=<span class="hljs-number">0.4</span>)<br>p=p1+x0[<span class="hljs-number">0</span>]<br>p=<span class="hljs-built_in">int</span>(p)<br>q=N//p<br>h=(p-<span class="hljs-number">1</span>)*(q-<span class="hljs-number">1</span>)<br>d = inverse_mod(e,h)<br>m=<span class="hljs-built_in">int</span>(<span class="hljs-built_in">pow</span>(c,d,N))<br><span class="hljs-built_in">print</span>(long_to_bytes(m))<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>补充，如果是求低位可以,&#96;&#96;设f&#x3D;p+x*2^kbits,然后f &#x3D; f.monic()化系数为1</li>
+</ul>
+<h4 id="已知d低位"><a href="#已知d低位" class="headerlink" title="已知d低位"></a>已知d低位</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> getPrime, bytes_to_long, inverse<br><br>flag=<span class="hljs-string">b&#x27;fox&#123;fox want to sleep&#125;&#x27;</span><br>p=getPrime(<span class="hljs-number">512</span>)<br>q=getPrime(<span class="hljs-number">512</span>)<br>e=<span class="hljs-number">49</span><br>n=p*q<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;p=&quot;</span>,p)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;q=&quot;</span>,q)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;n=&quot;</span>,n)<br>m=bytes_to_long(flag)<br>d=inverse(e,(p-<span class="hljs-number">1</span>)*(q-<span class="hljs-number">1</span>))<br>d0=d&amp;((<span class="hljs-number">1</span>&lt;&lt;<span class="hljs-number">512</span>)-<span class="hljs-number">1</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;d0=&quot;</span>,d0)<br>c=<span class="hljs-built_in">pow</span>(m,e,n)<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;c=&quot;</span>,c)<br><br></code></pre></td></tr></table></figure>
+
+<p>已知d的低512位，需要先推导求出p低位然后再利用p低位求法求出p</p>
+<p>![](C:\Users\24055\Pictures\Screenshots\屏幕截图 2025-01-21 214742.png)</p>
+<p>k必然是小于e的所以如果e比较小可以用爆破，而且得到的p0不一定就是低位所以需要和n求公约数计算</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">re</span>(<span class="hljs-params">p0,n</span>):<br>    P.&lt;x&gt; = PolynomialRing(Zmod(n))<br>    pb=p0.nbits()<br>    nb=n.nbits()<br>    f = p0 + x*<span class="hljs-number">2</span>^pb<br>    f = f.monic()<br>    r = f.small_roots(X=<span class="hljs-number">2</span>^(nb//<span class="hljs-number">2</span>-pb),beta=<span class="hljs-number">0.4</span>)<br>    <span class="hljs-keyword">if</span> r:<span class="hljs-comment">#不一定是p0所以需要爆破一下</span><br>        x0 = r[<span class="hljs-number">0</span>]<br>        p = gcd(x0*<span class="hljs-number">2</span>^pb + p0, n)<br>        <span class="hljs-keyword">return</span> ZZ(p)<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">re_p0</span>(<span class="hljs-params">d0,e,n</span>):<br>    X=var(<span class="hljs-string">&#x27;X&#x27;</span>)<br>    <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>,e+<span class="hljs-number">1</span>):<br>        res=solve_mod([e*d0*X == k*n*X + k*X + X-k*X**<span class="hljs-number">2</span> - k*n],<span class="hljs-number">2</span>^d0.nbits())<br>        <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> res:<br>            p0=ZZ(x[<span class="hljs-number">0</span>])<br>            p=re(p0,n)<br>            <span class="hljs-keyword">if</span> p <span class="hljs-keyword">and</span> p!=<span class="hljs-number">1</span>:<br>                <span class="hljs-keyword">return</span> p<br>e=<span class="hljs-number">49</span><br>n= <span class="hljs-number">109414997218017430689750411358870671148755060537823638639312822690278731526747343386131161374178565377568510541067027291819153801268584631898655552531100229691697272740485676268557392576883083322538380985686287633325507643109809662875001865516112341416350089749503409352233344213405771505339817806009334467873</span><br>d0= <span class="hljs-number">6589907493136215112152812078061957297077302140846480772722502061060417041525745970773308362109848374417314681016788951311262599036142398830169352909596817</span><br>c= <span class="hljs-number">52618099026096173424982985915057984673936322178451784029192431909399153643977616885476290932528093004726036699015260255387007582939696987106414732619027888230272826489001101650428442052309028725473145170506018789419664921530741182296203037987680548988272155176048872109505915948350201120031522636544622010733</span><br>p=re_p0(d0,e,n)<br>q=n//p<br>d=inverse_mod(e,(p-<span class="hljs-number">1</span>)*(q-<span class="hljs-number">1</span>))<br>m=<span class="hljs-built_in">pow</span>(c,d,n)<br><span class="hljs-built_in">print</span>(long_to_bytes(m))<br><br>’‘’<br>一般来说e是素数但是我当时应该是写错了题目脚本但是仍然能跑<br>‘’‘<br></code></pre></td></tr></table></figure>
+
+<h4 id="已知d高位"><a href="#已知d高位" class="headerlink" title="已知d高位"></a>已知d高位</h4><p>题目</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> secret <span class="hljs-keyword">import</span> m1<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">task1</span>():<br>    e = <span class="hljs-number">149</span><br>    p = getPrime(<span class="hljs-number">512</span>)<br>    q = getPrime(<span class="hljs-number">512</span>)<br>    n = p * q<br>    d = inverse(e,(p-<span class="hljs-number">1</span>)*(q-<span class="hljs-number">1</span>))<br>    <span class="hljs-keyword">return</span> (<span class="hljs-built_in">pow</span>(m1, e, n), d &gt;&gt; <span class="hljs-number">222</span> &lt;&lt; <span class="hljs-number">222</span>, n)<br>    <br>c1, leak1, n1 = task1()<br><span class="hljs-built_in">print</span>(c1, leak1, n1)<br><span class="hljs-comment"># (89623543982221289730635223555830551523170205418976759060541832483843039074358160566735322009158596405712449020903311144480669706226166537602750967447480664875090686428406188847601970724994074417752345460791736191511081890913041143570455636020205647345764692062144226011846336769477026234106683791286490222089, 138474880017294332349992670187778287774153347391371789199005713563195654993662610111557185709277805165708109047494971468100563949333712521647405765501704478862377527360106399421209690341743821320754482338590671565510629203215009008479290995785318405211007685664887994061938667418220613430135743123498167435264, 146331610798417415036517077006943013321623040860385791423062775325646472298267580898028515394910588437521335092742913111680737790430660749825981979147191282007208147041227246620008377726207734522466015971515317594545750944838673018946440525615131606652748549901880641896940968837669894325535750125282351577689)</span><br><br></code></pre></td></tr></table></figure>
+
+<p>这里l e a k d &#x3D; d &gt; &gt; 222 &lt; &lt; 222 </p>
+<p>和上面计算低位方法类似但是这里得到到p不一定是p高位，这里的省略之类的不算很明白</p>
+<p>有点抽象了，不太理解这里高位的误差。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">full_p</span>(<span class="hljs-params">p_high, n,d_high,bits</span>):<br>    PR.&lt;x&gt; = PolynomialRing(Zmod(n))    <br>    f = x + p_high<br>    f = f.monic()<br>    roots = f.small_roots(X=<span class="hljs-number">2</span>^(bits + <span class="hljs-number">4</span>), beta=<span class="hljs-number">0.4</span>)  <br>    <span class="hljs-keyword">if</span> roots:<br>        x0 = roots[<span class="hljs-number">0</span>]<br>        p = gcd(x0 + p_high, n)<br>        <span class="hljs-keyword">return</span> ZZ(p)<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">p_high</span>(<span class="hljs-params">d_high, e, n,bits</span>):<br>    PR.&lt;X&gt; = PolynomialRing(RealField(<span class="hljs-number">1000</span>))<br>    <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> tqdm(<span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, e+<span class="hljs-number">1</span>)):<br>        f=e * d_high * X - (k*n*X + k*X + X-k*X**<span class="hljs-number">2</span> - k*n)<br>        results = f.roots()<br>        <span class="hljs-keyword">if</span> results:<br>            <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> results:<br>                p_high = <span class="hljs-built_in">int</span>(x[<span class="hljs-number">0</span>])<br>                p = full_p(p_high, n,d_high,bits)<br>                <span class="hljs-keyword">if</span> p <span class="hljs-keyword">and</span> p != <span class="hljs-number">1</span>:<br>                    <span class="hljs-keyword">return</span> p<br><br><br>c1 = <span class="hljs-number">89623543982221289730635223555830551523170205418976759060541832483843039074358160566735322009158596405712449020903311144480669706226166537602750967447480664875090686428406188847601970724994074417752345460791736191511081890913041143570455636020205647345764692062144226011846336769477026234106683791286490222089</span><br>leak1 = <span class="hljs-number">138474880017294332349992670187778287774153347391371789199005713563195654993662610111557185709277805165708109047494971468100563949333712521647405765501704478862377527360106399421209690341743821320754482338590671565510629203215009008479290995785318405211007685664887994061938667418220613430135743123498167435264</span><br>n1 = <span class="hljs-number">146331610798417415036517077006943013321623040860385791423062775325646472298267580898028515394910588437521335092742913111680737790430660749825981979147191282007208147041227246620008377726207734522466015971515317594545750944838673018946440525615131606652748549901880641896940968837669894325535750125282351577689</span><br>e1 = <span class="hljs-number">149</span><br>p1 = p_high(leak1, e1, n1,<span class="hljs-number">222</span>)<br>q1 = n1 // p1<br>d1 = inverse(e1,(p1 - <span class="hljs-number">1</span>) * (p1 - <span class="hljs-number">1</span>))<br>m1 = <span class="hljs-built_in">pow</span>(c1,<span class="hljs-built_in">int</span>(d1),n1)<br><span class="hljs-built_in">print</span>(m1)<br></code></pre></td></tr></table></figure>
+
+<h3 id="SU-rsa"><a href="#SU-rsa" class="headerlink" title="SU_rsa"></a>SU_rsa</h3><p>应该算是比较容易分析的简单rsa</p>
+<p>由于给的是d的高位，直接可以用得到k(这算是一种整除，当时确实没想到这种方法，因为n和p,q,k差值过大所以k可以利用整除求出来)<br>$$<br>k&#x3D;(e<em>d_m-1)&#x2F;&#x2F;n + 1<br>$$<br>由标准关系得到<br>$$<br>k</em>(n-p-q+1)+1&#x3D;&#x3D;e*d\<br>(p+q) &#x3D;(n+1+k^{-1})\mod e<br>$$<br>相当于给出了p%e或者q%e的值，e为256bits，显然small_roots求解一下就行。 </p>
+<p>值得注意的是，这里由于取的低位比较小，已知信息比较少，需要爆破</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> *<br><br>d_m =  <span class="hljs-number">54846367460362174332079522877510670032871200032162046677317492493462931044216323394426650814743565762481796045534803612751698364585822047676578654787832771646295054609274740117061370718708622855577527177104905114099420613343527343145928755498638387667064228376160623881856439218281811203793522182599504560128</span><br>n =  <span class="hljs-number">102371500687797342407596664857291734254917985018214775746292433509077140372871717687125679767929573899320192533126974567980143105445007878861163511159294802350697707435107548927953839625147773016776671583898492755338444338394630801056367836711191009369960379855825277626760709076218114602209903833128735441623</span><br>e =  <span class="hljs-number">112238903025225752449505695131644979150784442753977451850362059850426421356123</span><br>k = (e*d_m-<span class="hljs-number">1</span>)//n + <span class="hljs-number">1</span><br>s = (n+<span class="hljs-number">1</span>+inverse_mod(k, e))%e<br>PR.&lt;x&gt; = PolynomialRing(Zmod(e))<br>f = x^<span class="hljs-number">2</span>-s*x+n<br>p0 = <span class="hljs-built_in">int</span>(f.roots()[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>])<br><span class="hljs-built_in">print</span>(p0)<br><span class="hljs-keyword">import</span> multiprocessing<br><span class="hljs-keyword">import</span> tqdm<br><span class="hljs-keyword">from</span> hashlib <span class="hljs-keyword">import</span> sha256<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">copper_attack</span>(<span class="hljs-params">i</span>):<br>    PR.&lt;x&gt; = PolynomialRing(Zmod(n))<br>    f = e*(<span class="hljs-number">2</span>^<span class="hljs-number">12</span>*x + i) + p0<br>    f = f.monic()<br>    res = f.small_roots(X=<span class="hljs-number">2</span>^<span class="hljs-number">244</span>, beta=<span class="hljs-number">0.499</span>, epsilon=<span class="hljs-number">0.02</span>)<br>    <span class="hljs-keyword">if</span>(res != []):<br>        t = <span class="hljs-built_in">int</span>(res[<span class="hljs-number">0</span>])<br>        p = e*(<span class="hljs-number">2</span>^<span class="hljs-number">12</span>*t + i) + p0<br>        q = n // p<br>        <span class="hljs-keyword">assert</span> p * q == n <span class="hljs-keyword">and</span> isPrime(p) <span class="hljs-keyword">and</span> isPrime(q)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">b&#x27;SUCTF&#123;&#x27;</span>,sha256(<span class="hljs-built_in">str</span>(p).encode()).hexdigest()[:<span class="hljs-number">32</span>],<span class="hljs-string">b&#x27;&#125;&#x27;</span>)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">b&#x27;SUCTF&#123;&#x27;</span>,sha256(<span class="hljs-built_in">str</span>(q).encode()).hexdigest()[:<span class="hljs-number">32</span>],<span class="hljs-string">b&#x27;&#125;&#x27;</span>)<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span><br><br><span class="hljs-keyword">with</span> multiprocessing.Pool(processes=<span class="hljs-number">16</span>) <span class="hljs-keyword">as</span> pool:<br>    <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> tqdm.tqdm(pool.imap(copper_attack, <span class="hljs-built_in">range</span>(<span class="hljs-number">2</span>^<span class="hljs-number">12</span>)), total=<span class="hljs-built_in">int</span>(<span class="hljs-number">2</span>^<span class="hljs-number">12</span>)):<br>        <span class="hljs-keyword">if</span>(_):<br>            <span class="hljs-keyword">break</span><span class="hljs-comment">#多线程</span><br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/python/" class="category-chain-item">python</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/python/crypto/" class="category-chain-item">crypto</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/crypto/" class="print-no-link">#crypto</a>
+      
+        <a href="/tags/python/" class="print-no-link">#python</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>coppersmith方法相关</div>
+      <div>http://example.com/2025/01/23/copper/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>fox</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>January 23, 2025</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/01/11/%E4%BC%AA%E9%9A%8F%E6%9C%BA%E6%95%B0%E7%94%9F%E6%88%90%E5%99%A8(PRNG)/" title="">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

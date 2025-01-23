@@ -27,7 +27,7 @@
 <meta property="og:description" content="Weil paIring 前言  编者对群的了解比较基础，可能一些证明不太会 借鉴crypt03-15.tex.dvi 双线性映射 在数学中，一个双线性映射是由两个向量空间上的元素，生成第三个向量空间上一个元素之函数，并且该函数对每个参数都是线性的。例如矩阵乘法就是一个例子。  线性性   x,x’∈V,y’∈W,以及标量a,b为整数，双线性映射$f:V×W→K$ 必须满足:  $f(ax+bx’">
 <meta property="og:locale">
 <meta property="article:published_time" content="2024-01-16T07:59:00.000Z">
-<meta property="article:modified_time" content="2025-01-16T14:59:57.635Z">
+<meta property="article:modified_time" content="2025-01-23T13:09:38.981Z">
 <meta property="article:author" content="fox">
 <meta property="article:tag" content="Hexo">
 <meta property="article:tag" content="crypto">
@@ -119,7 +119,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/" target="_self">
                 <i class="iconfont icon-home-fill"></i>
-                <span>Startseite</span>
+                <span>Home</span>
               </a>
             </li>
           
@@ -131,7 +131,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/archives/" target="_self">
                 <i class="iconfont icon-archive-fill"></i>
-                <span>Archiv</span>
+                <span>Archives</span>
               </a>
             </li>
           
@@ -143,7 +143,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/categories/" target="_self">
                 <i class="iconfont icon-category-fill"></i>
-                <span>Kategorien</span>
+                <span>Categories</span>
               </a>
             </li>
           
@@ -155,7 +155,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/tags/" target="_self">
                 <i class="iconfont icon-tags-fill"></i>
-                <span>Schlagwörter</span>
+                <span>Tags</span>
               </a>
             </li>
           
@@ -167,7 +167,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/about/" target="_self">
                 <i class="iconfont icon-user-fill"></i>
-                <span>Über</span>
+                <span>About</span>
               </a>
             </li>
           
@@ -179,7 +179,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/links/" target="_self">
                 <i class="iconfont icon-link-fill"></i>
-                <span>Weblinks</span>
+                <span>Links</span>
               </a>
             </li>
           
@@ -236,7 +236,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          970 wörter
+          1.3k words
         
       </span>
     
@@ -247,7 +247,7 @@
         
         
         
-          9 minuten
+          11 mins
         
       </span>
     
@@ -326,7 +326,23 @@
 </ul>
 <p>存在有效的算法对任意的R∈G2，S∈G1，计算e(R, S)的值。</p>
 </blockquote>
-<h2 id="Weil-Pairing"><a href="#Weil-Pairing" class="headerlink" title="Weil Pairing"></a>Weil Pairing</h2><p>$E[m]&#x3D;Z&#x2F;mZ×Z&#x2F;mZ$</p>
+<h2 id="Weil-Pairing"><a href="#Weil-Pairing" class="headerlink" title="Weil Pairing"></a>Weil Pairing</h2><blockquote>
+<ul>
+<li><strong>挠点</strong> 指在椭圆曲线上具有有限阶的点。即存在正整数 m≥1<em>m</em>≥1，使得对于椭圆曲线 E<em>E</em> 上的点 P<em>P</em>，有 mP&#x3D;O<em>m**P</em>&#x3D;<em>O</em>，其中 O<em>O</em> 是曲线的单位元（无穷远点）。点 <em>P</em> 的阶即为    m，此时 P 被称为挠点。</li>
+</ul>
+<p>将所有阶为m的倍数的点集合起来，就构成了m-挠群，定义为</p>
+<p>$E[m]&#x3D;{P∈E：mP&#x3D;O}$</p>
+<p>挠群 E[m] 是椭圆曲线 E 的一个加法子群，其中单位元是无穷远点 O。如果 P,Q∈E[m]，则 P+Q 和 Q−P 也属于 E[m]，说明挠群具有封闭性和存在逆元，因此构成一个群结构.</p>
+<p>当椭圆曲线定义在域 K上时，m-挠群记为 E(K)[m]。例如，定义在 Fp上的 E的 m-挠群写作 E(Fp)[m]</p>
+</blockquote>
+<blockquote>
+<ul>
+<li>除子</li>
+</ul>
+<p>是椭圆曲线上点的形式和，可以看作是一种“加权”点的概念，用于追踪有理函数上的零点和极点。如果在 α1 处有 e 个零点，就记为 $e1[α1]$；如果在 β1处有 d1 个极点，就记为 $−d1[β1$，然后再把它们形式的加起来（不是普通的加法运算）：</p>
+<p>$div(f)&#x3D;e1[α1]+…+e_r[α_r]-d_1[β_1]-…-d_t[β_t]$</p>
+</blockquote>
+<p>$E[m]&#x3D;Z&#x2F;mZ×Z&#x2F;mZ$</p>
 <p>E[m]表示有两个阶为m的循环周期组成。</p>
 <p>选取一组基{$T_1,T_2$}，定义映射：</p>
 <p>det:$E[m]×E[m]→Z&#x2F;mZ$   det$(aT_1+bT_2,cT_1,dT_2)&#x3D;ad−bc$</p>
@@ -349,7 +365,7 @@
 <ul>
 <li>反对称:</li>
 </ul>
-<p> $e_m(S,T)&#x3D;e_m (T,S)^{-1}.$</p>
+<p>$e_m(S,T)&#x3D;e_m (T,S)^{-1}.$</p>
 <ul>
 <li>非退化</li>
 </ul>
@@ -362,6 +378,10 @@
 <li>Compatibility:</li>
 </ul>
 <p>If$ P ∈ E[mn]$ and$ Q ∈ E[n]$, the$n e_{mn}(P, Q) &#x3D; e_n(mP, Q)$.</p>
+<ul>
+<li>阶的性质</li>
+</ul>
+<p>如果P和Q的阶为 o*o,则  $e(P,Q)^o&#x3D;1$</p>
 </blockquote>
 <h3 id="SU-signin"><a href="#SU-signin" class="headerlink" title="SU_signin"></a>SU_signin</h3><h1 id="SU-signin-1"><a href="#SU-signin-1" class="headerlink" title="SU_signin"></a>SU_signin</h1><p>题目源码</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">from</span> secret <span class="hljs-keyword">import</span> flag<br><br>bit_length = <span class="hljs-built_in">len</span>(flag) * <span class="hljs-number">8</span><br><br>p = <span class="hljs-number">0x1a0111ea397fe69a4b1ba7b6434bacd764774b84f38512bf6730d2a0f6b0f6241eabfffeb153ffffb9feffffffffaaab</span><br>K = GF(p)<br>E = EllipticCurve(K, (<span class="hljs-number">0</span>, <span class="hljs-number">4</span>))<br>o = <span class="hljs-number">793479390729215512516507951283169066088130679960393952059283337873017453583023682367384822284289</span><br>n1, n2 = <span class="hljs-number">859267</span>, <span class="hljs-number">52437899</span><br><br><span class="hljs-keyword">while</span>(<span class="hljs-number">1</span>):<br>    G1, G2 = E.random_element(), E.random_element()<br>    <span class="hljs-keyword">if</span>(G1.order() == o <span class="hljs-keyword">and</span> G2.order() == o):<br>        P1, P2 = (o//n1)*G1, (o//n2)*G2<br>        <span class="hljs-keyword">break</span><br><br>cs = [(randrange(<span class="hljs-number">0</span>, o) * P1 + randrange(<span class="hljs-number">0</span>, o) * G2).xy() <span class="hljs-keyword">if</span> i == <span class="hljs-string">&quot;1&quot;</span> <span class="hljs-keyword">else</span> (randrange(<span class="hljs-number">0</span>, o) * G1 + randrange(<span class="hljs-number">0</span>, o) * P2).xy() <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">bin</span>(bytes_to_long(flag))[<span class="hljs-number">2</span>:].zfill(bit_length)]<br><span class="hljs-built_in">print</span>(cs)<br></code></pre></td></tr></table></figure>
@@ -442,20 +462,20 @@
     <div class="license-meta">
       
         <div class="license-meta-item">
-          <div>Beitragsautor</div>
+          <div>Author</div>
           <div>fox</div>
         </div>
       
       
         <div class="license-meta-item license-meta-date">
-          <div>Veröffentlicht am</div>
+          <div>Posted on</div>
           <div>January 16, 2024</div>
         </div>
       
       
       
         <div class="license-meta-item">
-          <div>Urheberrechtshinweis</div>
+          <div>Licensed under</div>
           <div>
             
               
@@ -484,7 +504,7 @@
                       <a href="/2024/12/23/%E6%A0%BC%E6%A0%BC%E6%A0%BC%E5%AF%86%E7%A0%81/" title="格密码">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">格密码</span>
-                        <span class="visible-mobile">Vorheriger</span>
+                        <span class="visible-mobile">Previous</span>
                       </a>
                     
                   </article>
@@ -508,7 +528,7 @@
     <div id="toc">
   <p class="toc-header">
     <i class="iconfont icon-list"></i>
-    <span>Inhaltsverzeichnis</span>
+    <span>Table of Contents</span>
   </p>
   <div class="toc-body" id="toc-body"></div>
 </div>
@@ -570,7 +590,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -578,7 +598,7 @@
       <div class="modal-body mx-3">
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v" for="local-search-input">Stichwort</label>
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
@@ -799,7 +819,7 @@
   
 
   <noscript>
-    <div class="noscript-warning">Blog funktioniert am besten mit aktiviertem JavaScript</div>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
   </noscript>
 </body>
 </html>

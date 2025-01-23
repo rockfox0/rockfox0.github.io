@@ -33,7 +33,7 @@
 <meta property="og:image" content="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2024-12-24-145502.1lbw1l0ect.webp">
 <meta property="og:image" content="https://rockfox0.github.io/picx-images-hosting/Keyadd.1vypuqh6zf.webp">
 <meta property="article:published_time" content="2024-12-23T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-01-09T12:40:17.270Z">
+<meta property="article:modified_time" content="2025-01-23T13:07:33.609Z">
 <meta property="article:author" content="fox">
 <meta property="article:tag" content="crypto">
 <meta property="article:tag" content="python">
@@ -127,7 +127,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/" target="_self">
                 <i class="iconfont icon-home-fill"></i>
-                <span>Startseite</span>
+                <span>Home</span>
               </a>
             </li>
           
@@ -139,7 +139,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/archives/" target="_self">
                 <i class="iconfont icon-archive-fill"></i>
-                <span>Archiv</span>
+                <span>Archives</span>
               </a>
             </li>
           
@@ -151,7 +151,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/categories/" target="_self">
                 <i class="iconfont icon-category-fill"></i>
-                <span>Kategorien</span>
+                <span>Categories</span>
               </a>
             </li>
           
@@ -163,7 +163,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/tags/" target="_self">
                 <i class="iconfont icon-tags-fill"></i>
-                <span>Schlagwörter</span>
+                <span>Tags</span>
               </a>
             </li>
           
@@ -175,7 +175,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/about/" target="_self">
                 <i class="iconfont icon-user-fill"></i>
-                <span>Über</span>
+                <span>About</span>
               </a>
             </li>
           
@@ -187,7 +187,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/links/" target="_self">
                 <i class="iconfont icon-link-fill"></i>
-                <span>Weblinks</span>
+                <span>Links</span>
               </a>
             </li>
           
@@ -244,7 +244,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.1k wörter
+          3.4k words
         
       </span>
     
@@ -255,7 +255,7 @@
         
         
         
-          26 minuten
+          29 mins
         
       </span>
     
@@ -508,6 +508,10 @@
 <p>P代表了DH中的那个大素数</p>
 <p>协商密钥s&#x3D;A^b^ modp。我们可以用python库或者在线网站提取证书内容，我这里直接用在线网站提取。</p>
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-keyword">from</span> Crypto.Util.number import long_to_bytes<br><span class="hljs-keyword">from</span> nacl.hash import sha256<br><br><span class="hljs-attribute">A</span>=2904759796559791913432271862881153382405066619449245072640765589088056204557610156688164735437813811038059974077392278848266560053756599200768336365791717<br><br><span class="hljs-attribute">b</span>=4331114469004424101417452893702925534425506579657643668189751982919697469877978008431455296821274876511281317445036625437218508812066778389432224377969383<br><br><span class="hljs-attribute">P</span>=7126272917341517371021493195431918906260195973018916295547365059382419902222692924409321274266211448465008202837786841249505239162738008847348464904445399<br><span class="hljs-attribute">s</span>=pow(A,b,P)<br><span class="hljs-attribute">key</span>=sha256(long_to_bytes(s))<br>with open(<span class="hljs-string">&quot;C:\\Users\\24055\OneDrive\文档\Crypto200-1_flag.txt (1).enc&quot;</span>,<span class="hljs-string">&quot;rb&quot;</span>) as f:<br>    <span class="hljs-attribute">iv</span>=f.read(16)<br>    <span class="hljs-attribute">cipher</span>=f.read()<br><span class="hljs-attribute">cipher1</span>=cipher.hex()<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;IV:&quot;</span>,iv.hex())<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Cipher1:&quot;</span>,cipher1)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Key:&quot;</span>,key)#之后可以拿到在线网站解密即可<br><span class="hljs-string">&#x27;&#x27;</span><span class="hljs-string">&#x27;</span><br><span class="hljs-string">IV: fe942f31b9579db8905e4202793cd70e</span><br><span class="hljs-string">Cipher1: c206bd30b9339b208876fa125faac03f461db5cd6cf87ddf232ba7ff118d0d25</span><br><span class="hljs-string">Key: b&#x27;</span>bb7d44a422b90bb2b585c1639e46a7a7dff2cca315f564450694295d187b85d8<span class="hljs-string">&#x27;</span><br><span class="hljs-string">&#x27;</span><span class="hljs-string">&#x27;&#x27;</span><br>flag: poctf&#123;uwsp_f1r3_4nd_br1m570n3&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="SU-rsa"><a href="#SU-rsa" class="headerlink" title="SU_rsa"></a>SU_rsa</h3><p>应该算是比较容易分析的简单rsa</p>
+<p>由于给的是d的高位，直接可以用得到k(这算是一种整除，当时确实没想到这种方法，因为n和p,q,k差值过大所以k可以利用整除求出来)<br>$$<br>k&#x3D;(e<em>d_m-1)&#x2F;&#x2F;n + 1<br>$$<br>由标准关系得到<br>$$<br>k</em>(n-p-q+1)+1&#x3D;&#x3D;e*d\<br>(p+q) &#x3D;(n+1+k^{-1})\mod e<br>$$<br>相当于给出了p%e或者q%e的值，e为256bits，显然small_roots求解一下就行。 </p>
+<p>值得注意的是，这里由于取的低位比较小，已知信息比较少，需要爆破</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> *<br><br>d_m =  <span class="hljs-number">54846367460362174332079522877510670032871200032162046677317492493462931044216323394426650814743565762481796045534803612751698364585822047676578654787832771646295054609274740117061370718708622855577527177104905114099420613343527343145928755498638387667064228376160623881856439218281811203793522182599504560128</span><br>n =  <span class="hljs-number">102371500687797342407596664857291734254917985018214775746292433509077140372871717687125679767929573899320192533126974567980143105445007878861163511159294802350697707435107548927953839625147773016776671583898492755338444338394630801056367836711191009369960379855825277626760709076218114602209903833128735441623</span><br>e =  <span class="hljs-number">112238903025225752449505695131644979150784442753977451850362059850426421356123</span><br>k = (e*d_m-<span class="hljs-number">1</span>)//n + <span class="hljs-number">1</span><br>s = (n+<span class="hljs-number">1</span>+inverse_mod(k, e))%e<br>PR.&lt;x&gt; = PolynomialRing(Zmod(e))<br>f = x^<span class="hljs-number">2</span>-s*x+n<br>p0 = <span class="hljs-built_in">int</span>(f.roots()[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>])<br><span class="hljs-built_in">print</span>(p0)<br><span class="hljs-keyword">import</span> multiprocessing<br><span class="hljs-keyword">import</span> tqdm<br><span class="hljs-keyword">from</span> hashlib <span class="hljs-keyword">import</span> sha256<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">copper_attack</span>(<span class="hljs-params">i</span>):<br>    PR.&lt;x&gt; = PolynomialRing(Zmod(n))<br>    f = e*(<span class="hljs-number">2</span>^<span class="hljs-number">12</span>*x + i) + p0<br>    f = f.monic()<br>    res = f.small_roots(X=<span class="hljs-number">2</span>^<span class="hljs-number">244</span>, beta=<span class="hljs-number">0.499</span>, epsilon=<span class="hljs-number">0.02</span>)<br>    <span class="hljs-keyword">if</span>(res != []):<br>        t = <span class="hljs-built_in">int</span>(res[<span class="hljs-number">0</span>])<br>        p = e*(<span class="hljs-number">2</span>^<span class="hljs-number">12</span>*t + i) + p0<br>        q = n // p<br>        <span class="hljs-keyword">assert</span> p * q == n <span class="hljs-keyword">and</span> isPrime(p) <span class="hljs-keyword">and</span> isPrime(q)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">b&#x27;SUCTF&#123;&#x27;</span>,sha256(<span class="hljs-built_in">str</span>(p).encode()).hexdigest()[:<span class="hljs-number">32</span>],<span class="hljs-string">b&#x27;&#125;&#x27;</span>)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">b&#x27;SUCTF&#123;&#x27;</span>,sha256(<span class="hljs-built_in">str</span>(q).encode()).hexdigest()[:<span class="hljs-number">32</span>],<span class="hljs-string">b&#x27;&#125;&#x27;</span>)<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span><br><br><span class="hljs-keyword">with</span> multiprocessing.Pool(processes=<span class="hljs-number">16</span>) <span class="hljs-keyword">as</span> pool:<br>    <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> tqdm.tqdm(pool.imap(copper_attack, <span class="hljs-built_in">range</span>(<span class="hljs-number">2</span>^<span class="hljs-number">12</span>)), total=<span class="hljs-built_in">int</span>(<span class="hljs-number">2</span>^<span class="hljs-number">12</span>)):<br>        <span class="hljs-keyword">if</span>(_):<br>            <span class="hljs-keyword">break</span><span class="hljs-comment">#多线程</span><br></code></pre></td></tr></table></figure>
 
                 
               </div>
@@ -570,20 +574,20 @@
     <div class="license-meta">
       
         <div class="license-meta-item">
-          <div>Beitragsautor</div>
+          <div>Author</div>
           <div>fox</div>
         </div>
       
       
         <div class="license-meta-item license-meta-date">
-          <div>Veröffentlicht am</div>
+          <div>Posted on</div>
           <div>December 24, 2024</div>
         </div>
       
       
       
         <div class="license-meta-item">
-          <div>Urheberrechtshinweis</div>
+          <div>Licensed under</div>
           <div>
             
               
@@ -612,7 +616,7 @@
                       <a href="/2024/12/29/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982024%E4%B8%AD%E5%9B%BD%E5%89%A9%E4%BD%99%E5%AE%9A%E7%90%86%E5%A4%8D%E7%8E%B0/" title="CRT中国剩余定理复现">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">CRT中国剩余定理复现</span>
-                        <span class="visible-mobile">Vorheriger</span>
+                        <span class="visible-mobile">Previous</span>
                       </a>
                     
                   </article>
@@ -621,7 +625,7 @@
                     
                       <a href="/2024/12/23/DH%20%E5%AF%86%E9%92%A5%E4%BA%A4%E6%8D%A2%E5%8D%8F%E8%AE%AE/" title="DH密钥交换协议">
                         <span class="hidden-mobile">DH密钥交换协议</span>
-                        <span class="visible-mobile">Nächster</span>
+                        <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
                     
@@ -642,7 +646,7 @@
     <div id="toc">
   <p class="toc-header">
     <i class="iconfont icon-list"></i>
-    <span>Inhaltsverzeichnis</span>
+    <span>Table of Contents</span>
   </p>
   <div class="toc-body" id="toc-body"></div>
 </div>
@@ -704,7 +708,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -712,7 +716,7 @@
       <div class="modal-body mx-3">
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v" for="local-search-input">Stichwort</label>
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
@@ -933,7 +937,7 @@
   
 
   <noscript>
-    <div class="noscript-warning">Blog funktioniert am besten mit aktiviertem JavaScript</div>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
   </noscript>
 </body>
 </html>
