@@ -19,22 +19,24 @@
   <meta name="author" content="fox">
   <meta name="keywords" content="菜菜的密码劳弟">
   
-    <meta name="description" content="伪随机数生成器(PRNG)前言随机数生成分为伪随机，真随机。真随机是利用现实中的电子元件噪音来生产的。 伪随机数：用真随机数生成种子，用伪随机数生成器生成伪随机数位流 PRNG算法大致分为两类：   专用算法：为生成伪随机位流而专门设计。   基于现有密码算法的算法：密码算法会随机化输入数据。  对称分组密码、 哈希函数 消息验证码    专用算法LCG(线性同余生成器)$x_{n+1}&amp;#x3D">
+    <meta name="description" content="DASCTF(2024楚慧杯原题杯)的一道抽象lcg做题过程一些吐槽为什么翻遍全网都没有这道题wp，对于真菜的我，手搓有点难泵 做题过程12345678910111213141516171819202122from Crypto.Util.number import *from random import *from secret import flagLENGTH &#x3D; 512RATIO &#x3D; 0.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Rockfox的密码记录">
-<meta property="og:url" content="http://example.com/2025/01/11/%E4%BC%AA%E9%9A%8F%E6%9C%BA%E6%95%B0%E7%94%9F%E6%88%90%E5%99%A8(PRNG)/index.html">
+<meta property="og:title" content="楚慧杯(原题杯)抽象lcg">
+<meta property="og:url" content="http://example.com/2025/01/09/z3-LCG/index.html">
 <meta property="og:site_name" content="Rockfox的密码记录">
-<meta property="og:description" content="伪随机数生成器(PRNG)前言随机数生成分为伪随机，真随机。真随机是利用现实中的电子元件噪音来生产的。 伪随机数：用真随机数生成种子，用伪随机数生成器生成伪随机数位流 PRNG算法大致分为两类：   专用算法：为生成伪随机位流而专门设计。   基于现有密码算法的算法：密码算法会随机化输入数据。  对称分组密码、 哈希函数 消息验证码    专用算法LCG(线性同余生成器)$x_{n+1}&amp;#x3D">
+<meta property="og:description" content="DASCTF(2024楚慧杯原题杯)的一道抽象lcg做题过程一些吐槽为什么翻遍全网都没有这道题wp，对于真菜的我，手搓有点难泵 做题过程12345678910111213141516171819202122from Crypto.Util.number import *from random import *from secret import flagLENGTH &#x3D; 512RATIO &#x3D; 0.">
 <meta property="og:locale">
-<meta property="article:published_time" content="2025-01-11T14:57:09.199Z">
-<meta property="article:modified_time" content="2025-01-11T14:57:09.199Z">
+<meta property="article:published_time" content="2025-01-08T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-01-09T13:52:46.261Z">
 <meta property="article:author" content="fox">
-<meta property="article:tag" content="菜菜的密码劳弟">
+<meta property="article:tag" content="crypto">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="Lcg">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>Rockfox的密码记录</title>
+  <title>楚慧杯(原题杯)抽象lcg - Rockfox的密码记录</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -94,7 +96,7 @@
   <header>
     
 
-<div class="header-inner" style="height: 108vh;">
+<div class="header-inner" style="height: 100vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
@@ -206,13 +208,13 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.jpg') no-repeat center center; background-size: cover;">
+     style="background: url('/img/syc.jpg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text=""></span>
+            <span id="subtitle" data-typed-text="楚慧杯(原题杯)抽象lcg"></span>
           
         </div>
 
@@ -223,8 +225,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-01-11 22:57" pubdate>
-          January 11, 2025 pm
+        <time datetime="2025-01-09 00:00" pubdate>
+          January 9, 2025 am
         </time>
       </span>
     
@@ -235,7 +237,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          296 vortoj
+          639 vortoj
         
       </span>
     
@@ -246,7 +248,7 @@
         
         
         
-          3 minutoj
+          6 minutoj
         
       </span>
     
@@ -287,34 +289,28 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header"></h1>
+            <h1 id="seo-header">楚慧杯(原题杯)抽象lcg</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="伪随机数生成器-PRNG"><a href="#伪随机数生成器-PRNG" class="headerlink" title="伪随机数生成器(PRNG)"></a>伪随机数生成器(PRNG)</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>随机数生成分为伪随机，真随机。真随机是利用现实中的电子元件噪音来生产的。</p>
-<p>伪随机数：用真随机数生成种子，用伪随机数生成器生成伪随机数位流</p>
-<p>PRNG算法大致分为两类： </p>
-<ul>
-<li><p>专用算法：为生成伪随机位流而专门设计。 </p>
-</li>
-<li><p>基于现有密码算法的算法：密码算法会随机化输入数据。</p>
-<ul>
-<li>对称分组密码、</li>
-<li>哈希函数</li>
-<li>消息验证码</li>
-</ul>
-</li>
-</ul>
-<h2 id="专用算法"><a href="#专用算法" class="headerlink" title="专用算法"></a>专用算法</h2><h3 id="LCG-线性同余生成器"><a href="#LCG-线性同余生成器" class="headerlink" title="LCG(线性同余生成器)"></a>LCG(线性同余生成器)</h3><p>$x_{n+1}&#x3D;(aX_n+b)mod m$</p>
+                <h1 id="DASCTF-2024楚慧杯原题杯-的一道抽象lcg做题过程"><a href="#DASCTF-2024楚慧杯原题杯-的一道抽象lcg做题过程" class="headerlink" title="DASCTF(2024楚慧杯原题杯)的一道抽象lcg做题过程"></a>DASCTF(2024楚慧杯原题杯)的一道抽象lcg做题过程</h1><h3 id="一些吐槽"><a href="#一些吐槽" class="headerlink" title="一些吐槽"></a>一些吐槽</h3><p>为什么翻遍全网都没有这道题wp，对于真菜的我，手搓有点难泵</p>
+<h3 id="做题过程"><a href="#做题过程" class="headerlink" title="做题过程"></a>做题过程</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs pytho">from Crypto.Util.number import *<br>from random import *<br>from secret import flag<br><br>LENGTH = 512<br>RATIO = 0.02024<br>M = 2**LENGTH<br>a, b, seed = getPrime(LENGTH), getPrime(LENGTH), getPrime(LENGTH)<br>SEED = seed<br><br><br>x = []<br>for i in range(64):<br>    seed = (a*seed + b) % M<br>    x.append(&quot;&quot;.join([bin(seed)[2:].zfill(LENGTH)[i] if uniform(0,1) &lt; RATIO else &quot;*&quot; for i in range(LENGTH)]))<br><br><br>print(&quot;c =&quot;, bytes_to_long(flag) ^ SEED)<br>print(&quot;a =&quot;,a)<br>print(&quot;b =&quot;,b)<br>print(&quot;x =&quot;,x)<br><br></code></pre></td></tr></table></figure>
+
+<p>尝试模拟一个类似情</p>
+<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs mel">from Crypto.Util.number import *<br>from random import *<br>a = <span class="hljs-number">7048435472566573813031570507837890091364947084306630050544242220147807292350445564322172244244726206563452305566866223414437853917448623276909090327076693</span><br>b = <span class="hljs-number">9204853069421046007176344891235245198607052139715825810823076231566533652655127030214860066312526149219510111657539481375881111759200483396551737326166933</span><br>f=b<span class="hljs-string">&#x27;flag&#123;yoxi_nidi_liangmin&#125;&#x27;</span><br>m=bytes_to_long(f)<br>M=<span class="hljs-number">2</span>**<span class="hljs-number">512</span><br><span class="hljs-keyword">seed</span>=<span class="hljs-number">8656702749867102422219200570484898209691959687594188444284921871713214793286935518322058853234901407306874127174670521978953484935737586264798208150365287</span><br>RATIO=<span class="hljs-number">0.6</span><br>Seed=<span class="hljs-keyword">seed</span><br><span class="hljs-keyword">print</span>(<span class="hljs-keyword">seed</span>)<br>x=[]<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">3</span>):<br>    <span class="hljs-keyword">seed</span> = (a * <span class="hljs-keyword">seed</span> + b) % M<br>    <span class="hljs-keyword">print</span>(<span class="hljs-keyword">seed</span>)<br>    x.append(<span class="hljs-string">&quot;&quot;</span>.join([bin(<span class="hljs-keyword">seed</span>)[<span class="hljs-number">2</span>:].zfill(<span class="hljs-number">512</span>)[i] <span class="hljs-keyword">if</span> <span class="hljs-keyword">uniform</span>(<span class="hljs-number">0</span>,<span class="hljs-number">1</span>) &lt; RATIO <span class="hljs-keyword">else</span> <span class="hljs-string">&quot;*&quot;</span> <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">512</span>)]))<br><span class="hljs-keyword">print</span>(<span class="hljs-keyword">seed</span>)<br><span class="hljs-keyword">print</span>(x)<br>c=m^Seed<br><span class="hljs-keyword">print</span>(c)<br><br></code></pre></td></tr></table></figure>
+
+<p>我把显示数据百分比调高了一点，因为测试如果太低就是出现错误结果。这行代码加密逻辑跟原题一样。过程也很简洁</p>
+<p>我们使用z3约束。由于是才学的z3有的，写的时候也有些问题，比如定义</p>
+<p>BitVec向量在转换的时候会出现类型错误。这是改进后的解开上述脚本的代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> z3 <span class="hljs-keyword">import</span> *<br><br><br>num = [[BitVec(<span class="hljs-string">f&#x27;num[<span class="hljs-subst">&#123;i&#125;</span>,<span class="hljs-subst">&#123;j&#125;</span>]&#x27;</span>, <span class="hljs-number">512</span>) <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>)] <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">3</span>)]<br>a = <br>b = <br>M = <span class="hljs-number">2</span>**<span class="hljs-number">512</span><br><br><br>A = []<br>s=Solver()<br><br><br><br>seed = []<br><br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">3</span>):<br>    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">512</span>):<br>        <span class="hljs-keyword">if</span> A[i][j] == <span class="hljs-string">&#x27;0&#x27;</span>:<br>            s.add(Extract(<span class="hljs-number">511</span>-j, <span class="hljs-number">511</span>-j, num[i][<span class="hljs-number">0</span>]) == <span class="hljs-number">0</span>)<br>        <span class="hljs-keyword">elif</span> A[i][j] == <span class="hljs-string">&#x27;1&#x27;</span>:<br>            s.add(Extract(<span class="hljs-number">511</span>-j, <span class="hljs-number">511</span>-j, num[i][<span class="hljs-number">0</span>]) == <span class="hljs-number">1</span>)<br><br><br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">2</span>):<br>    s.add(num[i+<span class="hljs-number">1</span>][<span class="hljs-number">0</span>] == (a * num[i][<span class="hljs-number">0</span>] + b) % M)<br><br><br><span class="hljs-keyword">if</span> s.check() == sat:<br>    model = s.model()<br>    Seed=model[num[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>]]<br></code></pre></td></tr></table></figure>
+
+<p>接下来看一下题目本身</p>
+<p>64此Lcg递推，得到64个被大部分隐藏的二进制位我们需要求到第一个被递归的再反推出SEED。解密过程看起来还算简单但是，计算也需要时间我的脚本大概算了半个小时。<br>补充</p>
 <blockquote>
-<p>m，是模量，a是乘数，b是增量</p>
-<p>$X_n&#x3D;(a^{-1}(X_{n+1}-b))mod m$</p>
-<p>$a≡(X_{n+1}−b)⋅X_n^{−1}(modM)$或$a &#x3D; (X_{n+2} - X_{n+1})(X_{n+1} - X_n)^{-1} (mod m)$</p>
-<p>$b &#x3D; X_{n+1} - aX_n (mod m)$</p>
-<p>设$t_n &#x3D; X_{n+1}- X_n$<br>$t_n &#x3D; (aX_n+b) - (aX_{n-1}+b) &#x3D; at_{n-1}(mod m)$<br>$t_{n+1}t_{n-1} - t_nt_n &#x3D; (aat_{n-1}t_{n-1} - at_{n-1}at_{n-1}) &#x3D; 0 (mod m)$<br>即$T_n &#x3D; t_n+1t_{n-1} - t_nt_n$是m的倍数，求Tn , Tn-1最大公因数即为m<br>$m &#x3D; gcd((t_{n+1}t_{n-1} - t_nt_n) , (t_nt_{n-2} - t_{n-1}t_{n-1}))$</p>
+<p>Extract这一部分是定义起始和结束位置</p>
 </blockquote>
-<h3 id="BBS生成器"><a href="#BBS生成器" class="headerlink" title="BBS生成器"></a>BBS生成器</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> z3 <span class="hljs-keyword">import</span> *<br><br><br>num = [BitVec(<span class="hljs-string">f&#x27;num[<span class="hljs-subst">&#123;i&#125;</span>]&#x27;</span>, <span class="hljs-number">512</span>) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">64</span>)]<span class="hljs-comment">#有点像二维数组，是重点得理解一下,512这里是num[i]一个的大小。我们定义j</span><br><br><br>a = <span class="hljs-number">7048435472566573813031570507837890091364947084306630050544242220147807292350445564322172244244726206563452305566866223414437853917448623276909090327076693</span><br>b = <span class="hljs-number">9204853069421046007176344891235245198607052139715825810823076231566533652655127030214860066312526149219510111657539481375881111759200483396551737326166933</span><br>M = <span class="hljs-number">2</span>**<span class="hljs-number">512</span><br>c = <span class="hljs-number">168815802663712138791999335515513916578434659976069633486645257813364375941625207868153496481655635421252190634818222465004994343266249958687663356753760620029589052494330932123212</span><br>A=[]<br><br>s=Solver()<br><br>seed = []<br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">64</span>):<br>    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">512</span>):<br>        <span class="hljs-keyword">if</span> A[i][j] == <span class="hljs-string">&#x27;0&#x27;</span>:<br>            s.add(Extract(<span class="hljs-number">511</span>-j, <span class="hljs-number">511</span>-j, num[i]) == <span class="hljs-number">0</span>)<br>        <span class="hljs-keyword">elif</span> A[i][j] == <span class="hljs-string">&#x27;1&#x27;</span>:<br>            s.add(Extract(<span class="hljs-number">511</span>-j, <span class="hljs-number">511</span>-j, num[i]) == <span class="hljs-number">1</span>)<span class="hljs-comment">#定义替换位置</span><br><br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">63</span>):<br>    s.add(num[i+<span class="hljs-number">1</span>] == (a * num[i] + b) % M)<br><br><span class="hljs-keyword">if</span> s.check() == sat:<br><br>    model = s.model()<br>    Seed=model[num[<span class="hljs-number">0</span>]]<br>    <span class="hljs-built_in">print</span>(Seed)<br>然后<br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">3109110488358343346016940967694590460203057088734099480714916540569545873216239855284197469883314735576988812243170940490083088872700634135415701390964362</span><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br>a_1 = <span class="hljs-built_in">pow</span>(a, -<span class="hljs-number">1</span>, M)<br>seed = (a_1 * (Seed - b)) % M<br>m = c ^ seed<br><span class="hljs-built_in">print</span>(long_to_bytes(m))<br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">b&#x27;DASCTF&#123;0n\x85\xb8\xffU_know_th3_polynomial_0F_D47a_you_can_m@ke_Use_of_Leak_bits!&#125;&#x27;</span><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br></code></pre></td></tr></table></figure>
                 
               </div>
             
@@ -322,6 +318,45 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/z3/" class="category-chain-item">z3</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/z3/crypto/" class="category-chain-item">crypto</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/crypto/" class="print-no-link">#crypto</a>
+      
+        <a href="/tags/python/" class="print-no-link">#python</a>
+      
+        <a href="/tags/Lcg/" class="print-no-link">#Lcg</a>
+      
+    </div>
   
 </div>
 
@@ -331,8 +366,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div></div>
-      <div>http://example.com/2025/01/11/伪随机数生成器(PRNG)/</div>
+      <div>楚慧杯(原题杯)抽象lcg</div>
+      <div>http://example.com/2025/01/09/z3-LCG/</div>
     </div>
     <div class="license-meta">
       
@@ -344,7 +379,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Postigita</div>
-          <div>January 11, 2025</div>
+          <div>January 9, 2025</div>
         </div>
       
       
@@ -376,9 +411,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/01/23/copper/" title="coppersmith方法相关">
+                      <a href="/2025/01/11/%E4%BC%AA%E9%9A%8F%E6%9C%BA%E6%95%B0%E7%94%9F%E6%88%90%E5%99%A8(PRNG)/" title="">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">coppersmith方法相关</span>
+                        <span class="hidden-mobile"></span>
                         <span class="visible-mobile">Antaŭa afiŝo</span>
                       </a>
                     
@@ -386,8 +421,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/01/09/z3-LCG/" title="楚慧杯(原题杯)抽象lcg">
-                        <span class="hidden-mobile">楚慧杯(原题杯)抽象lcg</span>
+                      <a href="/2024/12/29/DSA%E7%AD%BE%E5%90%8D%E7%AE%97%E6%B3%95/" title="DSA签名算法">
+                        <span class="hidden-mobile">DSA签名算法</span>
                         <span class="visible-mobile">Sekva afiŝo</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
