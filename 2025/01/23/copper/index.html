@@ -32,8 +32,9 @@
 <meta property="og:image" content="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-01-18-222154.9nzw1l9ffn.webp">
 <meta property="og:image" content="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-01-22-220410.b902hjivk.webp">
 <meta property="og:image" content="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-01-23-172218.5c12u1ryzi.webp">
+<meta property="og:image" content="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-01-21-214742.2ks0rr9581.webp">
 <meta property="article:published_time" content="2025-01-22T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-01-23T13:08:15.434Z">
+<meta property="article:modified_time" content="2025-01-27T14:20:58.061Z">
 <meta property="article:author" content="fox">
 <meta property="article:tag" content="crypto">
 <meta property="article:tag" content="python">
@@ -126,7 +127,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/" target="_self">
                 <i class="iconfont icon-home-fill"></i>
-                <span>Startseite</span>
+                <span>Home</span>
               </a>
             </li>
           
@@ -138,7 +139,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/archives/" target="_self">
                 <i class="iconfont icon-archive-fill"></i>
-                <span>Archiv</span>
+                <span>Archives</span>
               </a>
             </li>
           
@@ -150,7 +151,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/categories/" target="_self">
                 <i class="iconfont icon-category-fill"></i>
-                <span>Kategorien</span>
+                <span>Categories</span>
               </a>
             </li>
           
@@ -162,7 +163,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/tags/" target="_self">
                 <i class="iconfont icon-tags-fill"></i>
-                <span>Schlagwörter</span>
+                <span>Tags</span>
               </a>
             </li>
           
@@ -174,7 +175,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/about/" target="_self">
                 <i class="iconfont icon-user-fill"></i>
-                <span>Über</span>
+                <span>About</span>
               </a>
             </li>
           
@@ -186,7 +187,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/links/" target="_self">
                 <i class="iconfont icon-link-fill"></i>
-                <span>Weblinks</span>
+                <span>Links</span>
               </a>
             </li>
           
@@ -243,7 +244,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.3k wörter
+          2.3k words
         
       </span>
     
@@ -254,7 +255,7 @@
         
         
         
-          20 minuten
+          20 mins
         
       </span>
     
@@ -394,8 +395,8 @@
 <h4 id="已知d低位"><a href="#已知d低位" class="headerlink" title="已知d低位"></a>已知d低位</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> getPrime, bytes_to_long, inverse<br><br>flag=<span class="hljs-string">b&#x27;fox&#123;fox want to sleep&#125;&#x27;</span><br>p=getPrime(<span class="hljs-number">512</span>)<br>q=getPrime(<span class="hljs-number">512</span>)<br>e=<span class="hljs-number">49</span><br>n=p*q<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;p=&quot;</span>,p)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;q=&quot;</span>,q)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;n=&quot;</span>,n)<br>m=bytes_to_long(flag)<br>d=inverse(e,(p-<span class="hljs-number">1</span>)*(q-<span class="hljs-number">1</span>))<br>d0=d&amp;((<span class="hljs-number">1</span>&lt;&lt;<span class="hljs-number">512</span>)-<span class="hljs-number">1</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;d0=&quot;</span>,d0)<br>c=<span class="hljs-built_in">pow</span>(m,e,n)<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;c=&quot;</span>,c)<br><br></code></pre></td></tr></table></figure>
 
 <p>已知d的低512位，需要先推导求出p低位然后再利用p低位求法求出p</p>
-<p>![](C:\Users\24055\Pictures\Screenshots\屏幕截图 2025-01-21 214742.png)</p>
-<p>k必然是小于e的所以如果e比较小可以用爆破，而且得到的p0不一定就是低位所以需要和n求公约数计算</p>
+<p><img src="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-01-21-214742.2ks0rr9581.webp" srcset="/img/loading.gif" lazyload></p>
+<p>k必然是小于e的所以()如果e比较小可以用爆破，而且得到的p0不一定就是低位所以需要和n求公约数计算</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">re</span>(<span class="hljs-params">p0,n</span>):<br>    P.&lt;x&gt; = PolynomialRing(Zmod(n))<br>    pb=p0.nbits()<br>    nb=n.nbits()<br>    f = p0 + x*<span class="hljs-number">2</span>^pb<br>    f = f.monic()<br>    r = f.small_roots(X=<span class="hljs-number">2</span>^(nb//<span class="hljs-number">2</span>-pb),beta=<span class="hljs-number">0.4</span>)<br>    <span class="hljs-keyword">if</span> r:<span class="hljs-comment">#不一定是p0所以需要爆破一下</span><br>        x0 = r[<span class="hljs-number">0</span>]<br>        p = gcd(x0*<span class="hljs-number">2</span>^pb + p0, n)<br>        <span class="hljs-keyword">return</span> ZZ(p)<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">re_p0</span>(<span class="hljs-params">d0,e,n</span>):<br>    X=var(<span class="hljs-string">&#x27;X&#x27;</span>)<br>    <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>,e+<span class="hljs-number">1</span>):<br>        res=solve_mod([e*d0*X == k*n*X + k*X + X-k*X**<span class="hljs-number">2</span> - k*n],<span class="hljs-number">2</span>^d0.nbits())<br>        <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> res:<br>            p0=ZZ(x[<span class="hljs-number">0</span>])<br>            p=re(p0,n)<br>            <span class="hljs-keyword">if</span> p <span class="hljs-keyword">and</span> p!=<span class="hljs-number">1</span>:<br>                <span class="hljs-keyword">return</span> p<br>e=<span class="hljs-number">49</span><br>n= <span class="hljs-number">109414997218017430689750411358870671148755060537823638639312822690278731526747343386131161374178565377568510541067027291819153801268584631898655552531100229691697272740485676268557392576883083322538380985686287633325507643109809662875001865516112341416350089749503409352233344213405771505339817806009334467873</span><br>d0= <span class="hljs-number">6589907493136215112152812078061957297077302140846480772722502061060417041525745970773308362109848374417314681016788951311262599036142398830169352909596817</span><br>c= <span class="hljs-number">52618099026096173424982985915057984673936322178451784029192431909399153643977616885476290932528093004726036699015260255387007582939696987106414732619027888230272826489001101650428442052309028725473145170506018789419664921530741182296203037987680548988272155176048872109505915948350201120031522636544622010733</span><br>p=re_p0(d0,e,n)<br>q=n//p<br>d=inverse_mod(e,(p-<span class="hljs-number">1</span>)*(q-<span class="hljs-number">1</span>))<br>m=<span class="hljs-built_in">pow</span>(c,d,n)<br><span class="hljs-built_in">print</span>(long_to_bytes(m))<br><br>’‘’<br>一般来说e是素数但是我当时应该是写错了题目脚本但是仍然能跑<br>‘’‘<br></code></pre></td></tr></table></figure>
 
 <h4 id="已知d高位"><a href="#已知d高位" class="headerlink" title="已知d高位"></a>已知d高位</h4><p>题目</p>
@@ -410,8 +411,6 @@
 <p>由于给的是d的高位，直接可以用得到k(这算是一种整除，当时确实没想到这种方法，因为n和p,q,k差值过大所以k可以利用整除求出来)<br>$$<br>k&#x3D;(e<em>d_m-1)&#x2F;&#x2F;n + 1<br>$$<br>由标准关系得到<br>$$<br>k</em>(n-p-q+1)+1&#x3D;&#x3D;e*d\<br>(p+q) &#x3D;(n+1+k^{-1})\mod e<br>$$<br>相当于给出了p%e或者q%e的值，e为256bits，显然small_roots求解一下就行。 </p>
 <p>值得注意的是，这里由于取的低位比较小，已知信息比较少，需要爆破</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> *<br><br>d_m =  <span class="hljs-number">54846367460362174332079522877510670032871200032162046677317492493462931044216323394426650814743565762481796045534803612751698364585822047676578654787832771646295054609274740117061370718708622855577527177104905114099420613343527343145928755498638387667064228376160623881856439218281811203793522182599504560128</span><br>n =  <span class="hljs-number">102371500687797342407596664857291734254917985018214775746292433509077140372871717687125679767929573899320192533126974567980143105445007878861163511159294802350697707435107548927953839625147773016776671583898492755338444338394630801056367836711191009369960379855825277626760709076218114602209903833128735441623</span><br>e =  <span class="hljs-number">112238903025225752449505695131644979150784442753977451850362059850426421356123</span><br>k = (e*d_m-<span class="hljs-number">1</span>)//n + <span class="hljs-number">1</span><br>s = (n+<span class="hljs-number">1</span>+inverse_mod(k, e))%e<br>PR.&lt;x&gt; = PolynomialRing(Zmod(e))<br>f = x^<span class="hljs-number">2</span>-s*x+n<br>p0 = <span class="hljs-built_in">int</span>(f.roots()[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>])<br><span class="hljs-built_in">print</span>(p0)<br><span class="hljs-keyword">import</span> multiprocessing<br><span class="hljs-keyword">import</span> tqdm<br><span class="hljs-keyword">from</span> hashlib <span class="hljs-keyword">import</span> sha256<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">copper_attack</span>(<span class="hljs-params">i</span>):<br>    PR.&lt;x&gt; = PolynomialRing(Zmod(n))<br>    f = e*(<span class="hljs-number">2</span>^<span class="hljs-number">12</span>*x + i) + p0<br>    f = f.monic()<br>    res = f.small_roots(X=<span class="hljs-number">2</span>^<span class="hljs-number">244</span>, beta=<span class="hljs-number">0.499</span>, epsilon=<span class="hljs-number">0.02</span>)<br>    <span class="hljs-keyword">if</span>(res != []):<br>        t = <span class="hljs-built_in">int</span>(res[<span class="hljs-number">0</span>])<br>        p = e*(<span class="hljs-number">2</span>^<span class="hljs-number">12</span>*t + i) + p0<br>        q = n // p<br>        <span class="hljs-keyword">assert</span> p * q == n <span class="hljs-keyword">and</span> isPrime(p) <span class="hljs-keyword">and</span> isPrime(q)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">b&#x27;SUCTF&#123;&#x27;</span>,sha256(<span class="hljs-built_in">str</span>(p).encode()).hexdigest()[:<span class="hljs-number">32</span>],<span class="hljs-string">b&#x27;&#125;&#x27;</span>)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">b&#x27;SUCTF&#123;&#x27;</span>,sha256(<span class="hljs-built_in">str</span>(q).encode()).hexdigest()[:<span class="hljs-number">32</span>],<span class="hljs-string">b&#x27;&#125;&#x27;</span>)<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span><br><br><span class="hljs-keyword">with</span> multiprocessing.Pool(processes=<span class="hljs-number">16</span>) <span class="hljs-keyword">as</span> pool:<br>    <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> tqdm.tqdm(pool.imap(copper_attack, <span class="hljs-built_in">range</span>(<span class="hljs-number">2</span>^<span class="hljs-number">12</span>)), total=<span class="hljs-built_in">int</span>(<span class="hljs-number">2</span>^<span class="hljs-number">12</span>)):<br>        <span class="hljs-keyword">if</span>(_):<br>            <span class="hljs-keyword">break</span><span class="hljs-comment">#多线程</span><br></code></pre></td></tr></table></figure>
-
-
                 
               </div>
             
@@ -471,20 +470,20 @@
     <div class="license-meta">
       
         <div class="license-meta-item">
-          <div>Beitragsautor</div>
+          <div>Author</div>
           <div>fox</div>
         </div>
       
       
         <div class="license-meta-item license-meta-date">
-          <div>Veröffentlicht am</div>
+          <div>Posted on</div>
           <div>January 23, 2025</div>
         </div>
       
       
       
         <div class="license-meta-item">
-          <div>Urheberrechtshinweis</div>
+          <div>Licensed under</div>
           <div>
             
               
@@ -516,7 +515,7 @@
                     
                       <a href="/2025/01/11/%E4%BC%AA%E9%9A%8F%E6%9C%BA%E6%95%B0%E7%94%9F%E6%88%90%E5%99%A8(PRNG)/" title="">
                         <span class="hidden-mobile"></span>
-                        <span class="visible-mobile">Nächster</span>
+                        <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
                     
@@ -537,7 +536,7 @@
     <div id="toc">
   <p class="toc-header">
     <i class="iconfont icon-list"></i>
-    <span>Inhaltsverzeichnis</span>
+    <span>Table of Contents</span>
   </p>
   <div class="toc-body" id="toc-body"></div>
 </div>
@@ -599,7 +598,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -607,7 +606,7 @@
       <div class="modal-body mx-3">
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v" for="local-search-input">Stichwort</label>
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
@@ -828,7 +827,7 @@
   
 
   <noscript>
-    <div class="noscript-warning">Blog funktioniert am besten mit aktiviertem JavaScript</div>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
   </noscript>
 </body>
 </html>
