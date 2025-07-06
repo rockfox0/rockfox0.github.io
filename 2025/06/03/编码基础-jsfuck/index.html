@@ -19,23 +19,22 @@
   <meta name="author" content="fox">
   <meta name="keywords" content="菜菜的密码劳弟">
   
-    <meta name="description" content="Weil paIring 前言  编者对群的了解比较基础，可能一些证明不太会 借鉴crypt03-15.tex.dvi 双线性映射 在数学中，一个双线性映射是由两个向量空间上的元素，生成第三个向量空间上一个元素之函数，并且该函数对每个参数都是线性的。例如矩阵乘法就是一个例子。  线性性   x,x’∈V,y’∈W,以及标量a,b为整数，双线性映射$f:V×W→K$ 必须满足:  $f(ax+bx’">
+    <meta name="description" content="摩斯电码（Morse Code📘 一、什么是摩斯电码？摩斯电码是一种利用点（.）和划（-）组成的编码方式，用于表示文本信息。最初设计用于电报通信，现常用于航空、求救信号（如 “SOS”）、无线通信等场合。  🧠 二、编码原理 每个字母和数字由一组点和划构成： 点（.）：短信号 划（-）：长信号   字符间用空格分隔 单词间用 &#x2F; 分隔  ✅ 示例对应表：   字符 摩斯码    A .-">
 <meta property="og:type" content="article">
-<meta property="og:title" content="weil pairing">
-<meta property="og:url" content="http://example.com/2024/01/16/ECC_sign_inmd/index.html">
+<meta property="og:title" content="Rockfox的密码记录">
+<meta property="og:url" content="http://example.com/2025/06/03/%E7%BC%96%E7%A0%81%E5%9F%BA%E7%A1%80-jsfuck/index.html">
 <meta property="og:site_name" content="Rockfox的密码记录">
-<meta property="og:description" content="Weil paIring 前言  编者对群的了解比较基础，可能一些证明不太会 借鉴crypt03-15.tex.dvi 双线性映射 在数学中，一个双线性映射是由两个向量空间上的元素，生成第三个向量空间上一个元素之函数，并且该函数对每个参数都是线性的。例如矩阵乘法就是一个例子。  线性性   x,x’∈V,y’∈W,以及标量a,b为整数，双线性映射$f:V×W→K$ 必须满足:  $f(ax+bx’">
+<meta property="og:description" content="摩斯电码（Morse Code📘 一、什么是摩斯电码？摩斯电码是一种利用点（.）和划（-）组成的编码方式，用于表示文本信息。最初设计用于电报通信，现常用于航空、求救信号（如 “SOS”）、无线通信等场合。  🧠 二、编码原理 每个字母和数字由一组点和划构成： 点（.）：短信号 划（-）：长信号   字符间用空格分隔 单词间用 &#x2F; 分隔  ✅ 示例对应表：   字符 摩斯码    A .-">
 <meta property="og:locale">
-<meta property="article:published_time" content="2024-01-16T07:59:00.000Z">
-<meta property="article:modified_time" content="2025-01-23T13:09:38.981Z">
+<meta property="article:published_time" content="2025-06-03T12:11:00.727Z">
+<meta property="article:modified_time" content="2025-06-03T13:04:17.912Z">
 <meta property="article:author" content="fox">
-<meta property="article:tag" content="Hexo">
-<meta property="article:tag" content="crypto">
+<meta property="article:tag" content="菜菜的密码劳弟">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>weil pairing - Rockfox的密码记录</title>
+  <title>Rockfox的密码记录</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -95,7 +94,7 @@
   <header>
     
 
-<div class="header-inner" style="height: 150vh;">
+<div class="header-inner" style="height: 108vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
@@ -207,13 +206,13 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/syc.jpg') no-repeat center center; background-size: cover;">
+     style="background: url('/img/default.jpg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="weil pairing"></span>
+            <span id="subtitle" data-typed-text=""></span>
           
         </div>
 
@@ -224,8 +223,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-01-16 15:59" pubdate>
-          January 16, 2024 pm
+        <time datetime="2025-06-03 20:11" pubdate>
+          June 3, 2025 pm
         </time>
       </span>
     
@@ -236,7 +235,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.3k words
+          511 words
         
       </span>
     
@@ -247,7 +246,7 @@
         
         
         
-          11 mins
+          5 mins
         
       </span>
     
@@ -288,120 +287,157 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">weil pairing</h1>
+            <h1 id="seo-header"></h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="Weil-paIring"><a href="#Weil-paIring" class="headerlink" title="Weil paIring"></a>Weil paIring</h1><ul>
-<li>前言</li>
+                <h1 id="摩斯电码（Morse-Code"><a href="#摩斯电码（Morse-Code" class="headerlink" title="摩斯电码（Morse Code"></a>摩斯电码（Morse Code</h1><h2 id="📘-一、什么是摩斯电码？"><a href="#📘-一、什么是摩斯电码？" class="headerlink" title="📘 一、什么是摩斯电码？"></a>📘 一、什么是摩斯电码？</h2><p>摩斯电码是一种利用点（<code>.</code>）和划（<code>-</code>）组成的编码方式，用于表示文本信息。最初设计用于电报通信，现常用于航空、求救信号（如 “SOS”）、无线通信等场合。</p>
+<hr>
+<h2 id="🧠-二、编码原理"><a href="#🧠-二、编码原理" class="headerlink" title="🧠 二、编码原理"></a>🧠 二、编码原理</h2><ul>
+<li>每个字母和数字由一组点和划构成：<ul>
+<li>点（<code>.</code>）：短信号</li>
+<li>划（<code>-</code>）：长信号</li>
 </ul>
-<p>编者对群的了解比较基础，可能一些证明不太会</p>
-<p>借鉴<a target="_blank" rel="noopener" href="https://link.springer.com/content/pdf/10.1007/s00145-004-0315-8.pdf">crypt03-15.tex.dvi</a></p>
-<h2 id="双线性映射"><a href="#双线性映射" class="headerlink" title="双线性映射"></a>双线性映射</h2><ul>
-<li><p>在数学中，一个双线性映射是由两个<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%90%91%E9%87%8F%E7%A9%BA%E9%97%B4">向量空间</a>上的元素，生成第三个向量空间上一个元素之函数，并且该函数对每个参数都是线性的。例如<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E7%9F%A9%E9%98%B5">矩阵</a>乘法就是一个例子。</p>
 </li>
-<li><p>线性性</p>
-</li>
+<li>字符间用空格分隔</li>
+<li>单词间用 <code>/</code> 分隔</li>
 </ul>
-<p>x,x’∈<strong>V</strong>,y’∈<strong>W</strong>,以及标量a,b为整数，双线性映射$f:V×W→K$</p>
-<p>必须满足:</p>
+<h3 id="✅-示例对应表："><a href="#✅-示例对应表：" class="headerlink" title="✅ 示例对应表："></a>✅ 示例对应表：</h3><table>
+<thead>
+<tr>
+<th>字符</th>
+<th>摩斯码</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A</td>
+<td>.-</td>
+</tr>
+<tr>
+<td>B</td>
+<td>-…</td>
+</tr>
+<tr>
+<td>C</td>
+<td>-.-.</td>
+</tr>
+<tr>
+<td>D</td>
+<td>-..</td>
+</tr>
+<tr>
+<td>E</td>
+<td>.</td>
+</tr>
+<tr>
+<td>F</td>
+<td>..-.</td>
+</tr>
+<tr>
+<td>G</td>
+<td>–.</td>
+</tr>
+<tr>
+<td>H</td>
+<td>….</td>
+</tr>
+<tr>
+<td>I</td>
+<td>..</td>
+</tr>
+<tr>
+<td>J</td>
+<td>.—</td>
+</tr>
+<tr>
+<td>K</td>
+<td>-.-</td>
+</tr>
+<tr>
+<td>L</td>
+<td>.-..</td>
+</tr>
+<tr>
+<td>M</td>
+<td>–</td>
+</tr>
+<tr>
+<td>N</td>
+<td>-.</td>
+</tr>
+<tr>
+<td>O</td>
+<td>—</td>
+</tr>
+<tr>
+<td>P</td>
+<td>.–.</td>
+</tr>
+<tr>
+<td>Q</td>
+<td>–.-</td>
+</tr>
+<tr>
+<td>R</td>
+<td>.-.</td>
+</tr>
+<tr>
+<td>S</td>
+<td>…</td>
+</tr>
+<tr>
+<td>T</td>
+<td>-</td>
+</tr>
+<tr>
+<td>U</td>
+<td>..-</td>
+</tr>
+<tr>
+<td>V</td>
+<td>…-</td>
+</tr>
+<tr>
+<td>W</td>
+<td>.–</td>
+</tr>
+<tr>
+<td>X</td>
+<td>-..-</td>
+</tr>
+<tr>
+<td>Y</td>
+<td>-.–</td>
+</tr>
+<tr>
+<td>Z</td>
+<td>–..</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="🔨-编码过程（英文-→-摩斯）"><a href="#🔨-编码过程（英文-→-摩斯）" class="headerlink" title="🔨 编码过程（英文 → 摩斯）"></a>🔨 编码过程（英文 → 摩斯）</h2><h3 id="示例：编码-I-LOVE-YOU"><a href="#示例：编码-I-LOVE-YOU" class="headerlink" title="示例：编码 I LOVE YOU"></a>示例：编码 <code>I LOVE YOU</code></h3><ol>
+<li>将字母大写（摩斯电码不区分大小写）  </li>
+<li>查表获取每个字母的摩斯表示  </li>
+<li>用空格分隔字符，用 <code>/</code> 分隔单词</li>
+</ol>
+<p><strong>结果：</strong></p>
 <blockquote>
-<p>$f(ax+bx’,y)&#x3D;af(x,y)+bf(x’,y)$<br>$f(x,ay+by’)&#x3D;af(x,y)+bf(x,y’)$</p>
+<p>I     → ..<br>LOVE  → .-.. — …- .<br>YOU   → -.– — ..-<br>最终结果：.. &#x2F; .-.. — …- . &#x2F; -.– — ..-</p>
 </blockquote>
-<p><strong>双线性配对的性质</strong>:设映射e:</p>
+<hr>
+<h2 id="🔓解码过程（摩斯-→-英文）"><a href="#🔓解码过程（摩斯-→-英文）" class="headerlink" title="🔓解码过程（摩斯 → 英文）"></a>🔓解码过程（摩斯 → 英文）</h2><h3 id="示例：解码"><a href="#示例：解码" class="headerlink" title="示例：解码 .... . .-.. .-.. ---"></a>示例：解码 <code>.... . .-.. .-.. ---</code></h3><ol>
+<li>按空格分隔字符，按 <code>/</code> 分隔单词  </li>
+<li>查表反向翻译每组摩斯码  </li>
+<li>拼接结果字符串</li>
+</ol>
+<p><strong>结果：</strong></p>
 <blockquote>
-<p>双线性映射可以用五元组(p,G1,G2,GT,e)来描述，G1，G2，GT是三个素数阶乘法循环群，阶数皆为p，定义在这三个三个群上的一个映射关系e：G1*G2 —&gt;GT，满足以下性质：</p>
-<ul>
-<li>双线性性</li>
-</ul>
-<p>对于任意$a，b∈Zp$ ,有，有，有$e(Ra, Sb) &#x3D; e(R, S)ab$</p>
-<p>e(P,Q+R)&#x3D;e(P,Q)*e(P,R)</p>
-<ul>
-<li>非退化性：</li>
-</ul>
-<p>存在R∈G2，S∈G1，使得e(R, S) ≠ 1（1∈G2代表G2群的单位元）</p>
-<ul>
-<li>可计算性质</li>
-</ul>
-<p>存在有效的算法对任意的R∈G2，S∈G1，计算e(R, S)的值。</p>
+<p>…. → H<br>.    → E<br>.-.. → L<br>.-.. → L<br>—  → O<br>输出：HELLO</p>
 </blockquote>
-<h2 id="Weil-Pairing"><a href="#Weil-Pairing" class="headerlink" title="Weil Pairing"></a>Weil Pairing</h2><blockquote>
-<ul>
-<li><strong>挠点</strong> 指在椭圆曲线上具有有限阶的点。即存在正整数 m≥1<em>m</em>≥1，使得对于椭圆曲线 E<em>E</em> 上的点 P<em>P</em>，有 mP&#x3D;O<em>m**P</em>&#x3D;<em>O</em>，其中 O<em>O</em> 是曲线的单位元（无穷远点）。点 <em>P</em> 的阶即为    m，此时 P 被称为挠点。</li>
-</ul>
-<p>将所有阶为m的倍数的点集合起来，就构成了m-挠群，定义为</p>
-<p>$E[m]&#x3D;{P∈E：mP&#x3D;O}$</p>
-<p>挠群 E[m] 是椭圆曲线 E 的一个加法子群，其中单位元是无穷远点 O。如果 P,Q∈E[m]，则 P+Q 和 Q−P 也属于 E[m]，说明挠群具有封闭性和存在逆元，因此构成一个群结构.</p>
-<p>当椭圆曲线定义在域 K上时，m-挠群记为 E(K)[m]。例如，定义在 Fp上的 E的 m-挠群写作 E(Fp)[m]</p>
-</blockquote>
-<blockquote>
-<ul>
-<li>除子</li>
-</ul>
-<p>是椭圆曲线上点的形式和，可以看作是一种“加权”点的概念，用于追踪有理函数上的零点和极点。如果在 α1 处有 e 个零点，就记为 $e1[α1]$；如果在 β1处有 d1 个极点，就记为 $−d1[β1$，然后再把它们形式的加起来（不是普通的加法运算）：</p>
-<p>$div(f)&#x3D;e1[α1]+…+e_r[α_r]-d_1[β_1]-…-d_t[β_t]$</p>
-</blockquote>
-<p>$E[m]&#x3D;Z&#x2F;mZ×Z&#x2F;mZ$</p>
-<p>E[m]表示有两个阶为m的循环周期组成。</p>
-<p>选取一组基{$T_1,T_2$}，定义映射：</p>
-<p>det:$E[m]×E[m]→Z&#x2F;mZ$   det$(aT_1+bT_2,cT_1,dT_2)&#x3D;ad−bc$</p>
-<p>这一段原理验证借鉴的别人的博客和论文(抽象代数大概看了基础群环域也还是看不太懂，以后学到一定程度了再看看)</p>
-<p>设P,Q∈E[m],也就是说P和Q是群E上阶为m的点。f<sub>P</sub>和f<sub>Q </sub> </p>
-<p>$div(f_p)&#x3D;m[P]-m[O]$,$div(f_Q)&#x3D;m[Q]-m[O]$</p>
-<p>可知 <em>f</em>∘[<em>m</em>] 与 <em>g**m</em> 有相同的除子, 因此在差一个常数的意义下 <em>f</em>∘[<em>m</em>]&#x3D;$g^m$. 对任意 <em>S</em>∈<em>E</em>[<em>m</em>] 及 <em>X</em>∈<em>E</em>, 我们有</p>
-<p>$g(X+S)m&#x3D;f([m]X+[m]S)&#x3D;f([m]X)&#x3D;g(X)^m.$</p>
-<p>因此对任意 <em>X</em> 有 g(X+S)&#x2F;g(X) 都是 <em>m</em>-次单位根, 且 <em>E</em>→P1 不是满射, 只能是常值映射. 因此</p>
-<blockquote>
-<p>$e_m:E[m]×E[m]→u_m, $</p>
-<p>$*e_m S,T&#x3D;g(X)\over g(X+S)$</p>
-</blockquote>
-<h3 id="Weil-配对有如下性质："><a href="#Weil-配对有如下性质：" class="headerlink" title="Weil 配对有如下性质："></a>Weil 配对有如下性质：</h3><blockquote>
-<ul>
-<li>双线性：</li>
-</ul>
-<p>$e_m(S_1+S_2,T)&#x3D;e_m(S_1,T)e_m(S2,T),e_m(S,T_1+T_2)&#x3D;e_m(S,T_1)+e_m(S,T_2)$</p>
-<p>$e_m(s_1^a,T^b)^{ab}$</p>
-<ul>
-<li>反对称:</li>
-</ul>
-<p>$e_m(S,T)&#x3D;e_m (T,S)^{-1}.$</p>
-<ul>
-<li>非退化</li>
-</ul>
-<p>若对任意 <em>S</em>∈<em>E</em>[<em>m</em>] 有 $e_m$(S*,*T)&#x3D;1, 则有 <em>T</em>&#x3D;<em>O</em>.</p>
-<ul>
-<li>Galois不变:</li>
-</ul>
-<p>对任意 a∈GKˉK, 有 $e_m(S,T)^a&#x3D;e_m(S^a,T^a).$</p>
-<ul>
-<li>Compatibility:</li>
-</ul>
-<p>If$ P ∈ E[mn]$ and$ Q ∈ E[n]$, the$n e_{mn}(P, Q) &#x3D; e_n(mP, Q)$.</p>
-<ul>
-<li>阶的性质</li>
-</ul>
-<p>如果P和Q的阶为 o*o,则  $e(P,Q)^o&#x3D;1$</p>
-</blockquote>
-<h3 id="SU-signin"><a href="#SU-signin" class="headerlink" title="SU_signin"></a>SU_signin</h3><h1 id="SU-signin-1"><a href="#SU-signin-1" class="headerlink" title="SU_signin"></a>SU_signin</h1><p>题目源码</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">from</span> secret <span class="hljs-keyword">import</span> flag<br><br>bit_length = <span class="hljs-built_in">len</span>(flag) * <span class="hljs-number">8</span><br><br>p = <span class="hljs-number">0x1a0111ea397fe69a4b1ba7b6434bacd764774b84f38512bf6730d2a0f6b0f6241eabfffeb153ffffb9feffffffffaaab</span><br>K = GF(p)<br>E = EllipticCurve(K, (<span class="hljs-number">0</span>, <span class="hljs-number">4</span>))<br>o = <span class="hljs-number">793479390729215512516507951283169066088130679960393952059283337873017453583023682367384822284289</span><br>n1, n2 = <span class="hljs-number">859267</span>, <span class="hljs-number">52437899</span><br><br><span class="hljs-keyword">while</span>(<span class="hljs-number">1</span>):<br>    G1, G2 = E.random_element(), E.random_element()<br>    <span class="hljs-keyword">if</span>(G1.order() == o <span class="hljs-keyword">and</span> G2.order() == o):<br>        P1, P2 = (o//n1)*G1, (o//n2)*G2<br>        <span class="hljs-keyword">break</span><br><br>cs = [(randrange(<span class="hljs-number">0</span>, o) * P1 + randrange(<span class="hljs-number">0</span>, o) * G2).xy() <span class="hljs-keyword">if</span> i == <span class="hljs-string">&quot;1&quot;</span> <span class="hljs-keyword">else</span> (randrange(<span class="hljs-number">0</span>, o) * G1 + randrange(<span class="hljs-number">0</span>, o) * P2).xy() <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">bin</span>(bytes_to_long(flag))[<span class="hljs-number">2</span>:].zfill(bit_length)]<br><span class="hljs-built_in">print</span>(cs)<br></code></pre></td></tr></table></figure>
+<hr>
+<h2 id="🐍-五、Python-代码实现"><a href="#🐍-五、Python-代码实现" class="headerlink" title="🐍 五、Python 代码实现"></a>🐍 五、Python 代码实现</h2><h3 id="1️⃣-英文-→-摩斯（编码）"><a href="#1️⃣-英文-→-摩斯（编码）" class="headerlink" title="1️⃣ 英文 → 摩斯（编码）"></a>1️⃣ 英文 → 摩斯（编码）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs python">MORSE_CODE_DICT = &#123;<br>    <span class="hljs-string">&#x27;A&#x27;</span>: <span class="hljs-string">&#x27;.-&#x27;</span>, <span class="hljs-string">&#x27;B&#x27;</span>: <span class="hljs-string">&#x27;-...&#x27;</span>, <span class="hljs-string">&#x27;C&#x27;</span>: <span class="hljs-string">&#x27;-.-.&#x27;</span>, <span class="hljs-string">&#x27;D&#x27;</span>: <span class="hljs-string">&#x27;-..&#x27;</span>,  <span class="hljs-string">&#x27;E&#x27;</span>: <span class="hljs-string">&#x27;.&#x27;</span>,<br>    <span class="hljs-string">&#x27;F&#x27;</span>: <span class="hljs-string">&#x27;..-.&#x27;</span>,<span class="hljs-string">&#x27;G&#x27;</span>: <span class="hljs-string">&#x27;--.&#x27;</span>,  <span class="hljs-string">&#x27;H&#x27;</span>: <span class="hljs-string">&#x27;....&#x27;</span>,<span class="hljs-string">&#x27;I&#x27;</span>: <span class="hljs-string">&#x27;..&#x27;</span>,   <span class="hljs-string">&#x27;J&#x27;</span>: <span class="hljs-string">&#x27;.---&#x27;</span>,<br>    <span class="hljs-string">&#x27;K&#x27;</span>: <span class="hljs-string">&#x27;-.-&#x27;</span>,<span class="hljs-string">&#x27;L&#x27;</span>: <span class="hljs-string">&#x27;.-..&#x27;</span>, <span class="hljs-string">&#x27;M&#x27;</span>: <span class="hljs-string">&#x27;--&#x27;</span>,  <span class="hljs-string">&#x27;N&#x27;</span>: <span class="hljs-string">&#x27;-.&#x27;</span>,   <span class="hljs-string">&#x27;O&#x27;</span>: <span class="hljs-string">&#x27;---&#x27;</span>,<br>    <span class="hljs-string">&#x27;P&#x27;</span>: <span class="hljs-string">&#x27;.--.&#x27;</span>,<span class="hljs-string">&#x27;Q&#x27;</span>: <span class="hljs-string">&#x27;--.-&#x27;</span>, <span class="hljs-string">&#x27;R&#x27;</span>: <span class="hljs-string">&#x27;.-.&#x27;</span>, <span class="hljs-string">&#x27;S&#x27;</span>: <span class="hljs-string">&#x27;...&#x27;</span>,  <span class="hljs-string">&#x27;T&#x27;</span>: <span class="hljs-string">&#x27;-&#x27;</span>,<br>    <span class="hljs-string">&#x27;U&#x27;</span>: <span class="hljs-string">&#x27;..-&#x27;</span>,<span class="hljs-string">&#x27;V&#x27;</span>: <span class="hljs-string">&#x27;...-&#x27;</span>, <span class="hljs-string">&#x27;W&#x27;</span>: <span class="hljs-string">&#x27;.--&#x27;</span>, <span class="hljs-string">&#x27;X&#x27;</span>: <span class="hljs-string">&#x27;-..-&#x27;</span>, <span class="hljs-string">&#x27;Y&#x27;</span>: <span class="hljs-string">&#x27;-.--&#x27;</span>,<br>    <span class="hljs-string">&#x27;Z&#x27;</span>: <span class="hljs-string">&#x27;--..&#x27;</span>,<span class="hljs-string">&#x27;1&#x27;</span>: <span class="hljs-string">&#x27;.----&#x27;</span>,<span class="hljs-string">&#x27;2&#x27;</span>: <span class="hljs-string">&#x27;..---&#x27;</span>,<span class="hljs-string">&#x27;3&#x27;</span>: <span class="hljs-string">&#x27;...--&#x27;</span>,<span class="hljs-string">&#x27;4&#x27;</span>: <span class="hljs-string">&#x27;....-&#x27;</span>,<br>    <span class="hljs-string">&#x27;5&#x27;</span>: <span class="hljs-string">&#x27;.....&#x27;</span>,<span class="hljs-string">&#x27;6&#x27;</span>: <span class="hljs-string">&#x27;-....&#x27;</span>,<span class="hljs-string">&#x27;7&#x27;</span>: <span class="hljs-string">&#x27;--...&#x27;</span>,<span class="hljs-string">&#x27;8&#x27;</span>: <span class="hljs-string">&#x27;---..&#x27;</span>,<span class="hljs-string">&#x27;9&#x27;</span>: <span class="hljs-string">&#x27;----.&#x27;</span>,<br>    <span class="hljs-string">&#x27;0&#x27;</span>: <span class="hljs-string">&#x27;-----&#x27;</span>,<span class="hljs-string">&#x27; &#x27;</span>: <span class="hljs-string">&#x27;/&#x27;</span><br>&#125;<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">encode_morse</span>(<span class="hljs-params">text</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27; &#x27;</span>.join(MORSE_CODE_DICT.get(ch.upper(), <span class="hljs-string">&#x27;&#x27;</span>) <span class="hljs-keyword">for</span> ch <span class="hljs-keyword">in</span> text)<br>REVERSE_DICT = &#123;v: k <span class="hljs-keyword">for</span> k, v <span class="hljs-keyword">in</span> MORSE_CODE_DICT.items()&#125;<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">decode_morse</span>(<span class="hljs-params">code</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27; &#x27;</span>.join(<br>        <span class="hljs-string">&#x27;&#x27;</span>.join(REVERSE_DICT.get(c, <span class="hljs-string">&#x27;&#x27;</span>) <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> word.split())<br>        <span class="hljs-keyword">for</span> word <span class="hljs-keyword">in</span> code.split(<span class="hljs-string">&#x27; / &#x27;</span>))<br><span class="hljs-built_in">print</span>(encode_morse(<span class="hljs-string">&quot;HELLO WORLD&quot;</span>))<br><span class="hljs-built_in">print</span>(decode_morse(<span class="hljs-string">&#x27;.... . .-.. .-.. --- / .-- --- .-. .-.. -..&#x27;</span>))<br></code></pre></td></tr></table></figure>
 
-<p>第一眼看上去就是普通的ECC，但是这里给了两组阶相容的G1，G2</p>
-<p>然后生成P1和P2的阶分别为n1和n2</p>
-<p>然后如果二进制位为1，(randrange(0, o) * P1 + randrange(0, o) * G2)&#x3D;w</p>
-<p>如果二进制位为0，(randrange(0, o) * G1 + randrange(0, o) * P2)&#x3D;u</p>
-<p>n1*w&#x3D;W,</p>
-<p>n2*u&#x3D;U</p>
-<blockquote>
-<p>E(W,G2)&#x3D;1,E(U,G1)&#x3D;1</p>
-</blockquote>
-<p>所以可以利用G1和G2判断，这里G1和G2也是未知的，我们假设cs[0]&#x3D;0,cs[1]&#x3D;1</p>
-<blockquote>
-<p>G1&#x3D;n2*Cs[0] *</p>
-<p><em>G2&#x3D;n1</em>Cs[1]</p>
-</blockquote>
-<p>最后如下脚本解出</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> ast<br><span class="hljs-keyword">from</span> binteger <span class="hljs-keyword">import</span> Bin<br><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> long_to_bytes<br><br>p = <span class="hljs-number">0x1A0111EA397FE69A4B1BA7B6434BACD764774B84F38512BF6730D2A0F6B0F6241EABFFFEB153FFFFB9FEFFFFFFFFAAAB</span><br>K = GF(p)<br>E = EllipticCurve(K, (<span class="hljs-number">0</span>, <span class="hljs-number">4</span>))<br>n1, n2 = <span class="hljs-number">859267</span>, <span class="hljs-number">52437899</span><br>C1=E(<span class="hljs-number">3352313779859460801486003925032655136993856710790727105363441252341552956083285634840018349420910752791594969280380</span>, <span class="hljs-number">2427629935062136228505338781822031098060538648527098540077074467697895064173228853125697497410079713420476853660385</span>)<br>C2=E(<span class="hljs-number">2032510133375718031059693186824253736676017099152335002107480680688541061384422204257433121826049241452388039124165</span>, <span class="hljs-number">2686417581815542117120994330320923056212034586374942390097827699544930213612843423746022765194966762867963235937975</span>)<br>G1=n2*C1<br>G2=n1*C2<br>o=<span class="hljs-number">793479390729215512516507951283169066088130679960393952059283337873017453583023682367384822284289</span><br><br>P1, P2 = (o//n1)*G1, (o//n2)*G2<br>cs = []<br>a = <span class="hljs-string">b&#x27;&#x27;</span><br><span class="hljs-keyword">for</span> q <span class="hljs-keyword">in</span> cs:<br>    x,y=q<br>    Q=E(x,y)<br>    Q1=n1*Q<br>    <span class="hljs-keyword">if</span> Q1.weil_pairing(G2, o)==<span class="hljs-number">1</span>:<br>        a=a+<span class="hljs-string">b&#x27;1&#x27;</span><br>    <span class="hljs-keyword">else</span>:<br>        a=a+<span class="hljs-string">b&#x27;0&#x27;</span><br><span class="hljs-built_in">print</span>(a)<br>flag = long_to_bytes(<span class="hljs-built_in">int</span>(a,<span class="hljs-number">2</span>))<br><span class="hljs-built_in">print</span>(flag)<br>‘’‘<br><span class="hljs-string">b&#x27;01010011010101010100001101010100010001100111101101010111011001010011000101100011011011110110110101100101010111110101111101010100001100000101111101011111010100110101010101000011010101000100011001011111010111110011001000110000001100100011010101111101&#x27;</span><br><span class="hljs-string">b&#x27;SUCTF&#123;We1come__T0__SUCTF__2025&#125;&#x27;</span><span class="hljs-string">&#x27;</span><br><span class="hljs-string">’‘’</span><br></code></pre></td></tr></table></figure>
 
                 
               </div>
@@ -410,43 +446,6 @@
             <div>
               <div class="post-metas my-3">
   
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/crypto/" class="category-chain-item">crypto</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/crypto/ecc/" class="category-chain-item">ecc</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
-  
-  
-    <div class="post-meta">
-      <i class="iconfont icon-tags"></i>
-      
-        <a href="/tags/Hexo/" class="print-no-link">#Hexo</a>
-      
-        <a href="/tags/crypto/" class="print-no-link">#crypto</a>
-      
-    </div>
   
 </div>
 
@@ -456,8 +455,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>weil pairing</div>
-      <div>http://example.com/2024/01/16/ECC_sign_inmd/</div>
+      <div></div>
+      <div>http://example.com/2025/06/03/编码基础-jsfuck/</div>
     </div>
     <div class="license-meta">
       
@@ -469,7 +468,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>January 16, 2024</div>
+          <div>June 3, 2025</div>
         </div>
       
       
@@ -501,15 +500,15 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/04/23/MD5%E7%AE%97%E6%B3%95/" title="MD5算法原理以及实现">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">MD5算法原理以及实现</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
+                    
+                      <a href="/2025/06/03/2025-6-1%20JQCTFone-line-crypto%20165730/" title="">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
                     
                   </article>
                 </div>

@@ -1,0 +1,1035 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/OIP-C.jpg">
+  <link rel="icon" href="/img/OIP-C.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="fox">
+  <meta name="keywords" content="菜菜的密码劳弟">
+  
+    <meta name="description" content="Openssl使用-1这一章介绍一些基础的命令。openssl用的地方有点多，分两张写 openssl的安装和配置Win32&#x2F;Win64 OpenSSL Installer for Windows - Shining Light Productions 下载地址  使用这里是别人配置好的安装包 下好之后点击安装，之后就傻瓜式点点点。  配置环境变量    这样就配置好了  lunix下配">
+<meta property="og:type" content="article">
+<meta property="og:title" content="openssl使用-1">
+<meta property="og:url" content="http://example.com/2024/12/24/openssl/index.html">
+<meta property="og:site_name" content="Rockfox的密码记录">
+<meta property="og:description" content="Openssl使用-1这一章介绍一些基础的命令。openssl用的地方有点多，分两张写 openssl的安装和配置Win32&#x2F;Win64 OpenSSL Installer for Windows - Shining Light Productions 下载地址  使用这里是别人配置好的安装包 下好之后点击安装，之后就傻瓜式点点点。  配置环境变量    这样就配置好了  lunix下配">
+<meta property="og:locale">
+<meta property="og:image" content="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-07-07-000005.7i0nyoqjt3.webp">
+<meta property="og:image" content="c:/Users/24055/AppData/Roaming/Typora/typora-user-images/image-20250707002024482.png">
+<meta property="og:image" content="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-07-07-001850.icegseekn.webp">
+<meta property="og:image" content="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-07-07-035712.73u87titiz.webp">
+<meta property="og:image" content="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-07-07-041814.51efjrkrhc.webp">
+<meta property="og:image" content="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-07-07-042322.8s3l509qhh.webp">
+<meta property="og:image" content="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-07-07-042644.5c19cx072h.webp">
+<meta property="og:image" content="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-07-07-043657.9o02kgjrgw.webp">
+<meta property="og:image" content="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-07-07-044805.6wr0cdvygr.webp">
+<meta property="og:image" content="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-07-07-045136.3k8ai0hfmt.webp">
+<meta property="article:published_time" content="2024-12-23T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-07-06T21:58:56.989Z">
+<meta property="article:author" content="fox">
+<meta property="article:tag" content="crypto">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="tools">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-07-07-000005.7i0nyoqjt3.webp">
+  
+  
+  
+  <title>openssl使用-1 - Rockfox的密码记录</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":40,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 100vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>fox的密码学习记录</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>Links</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/syc.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="openssl使用-1"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-12-24 00:00" pubdate>
+          December 24, 2024 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.3k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          20 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">openssl使用-1</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Openssl使用-1"><a href="#Openssl使用-1" class="headerlink" title="Openssl使用-1"></a>Openssl使用-1</h1><p>这一章介绍一些基础的命令。openssl用的地方有点多，分两张写</p>
+<h2 id="openssl的安装和配置"><a href="#openssl的安装和配置" class="headerlink" title="openssl的安装和配置"></a>openssl的安装和配置</h2><p><a target="_blank" rel="noopener" href="https://slproweb.com/products/Win32OpenSSL.html">Win32&#x2F;Win64 OpenSSL Installer for Windows - Shining Light Productions</a></p>
+<p>下载地址</p>
+<p><img src="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-07-07-000005.7i0nyoqjt3.webp" srcset="/img/loading.gif" lazyload></p>
+<p>使用这里是别人配置好的安装包</p>
+<p>下好之后点击安装，之后就傻瓜式点点点。</p>
+<ul>
+<li>配置环境变量</li>
+</ul>
+<p><img src="C:/Users/24055/AppData/Roaming/Typora/typora-user-images/image-20250707002024482.png" srcset="/img/loading.gif" lazyload alt="image-20250707002024482"></p>
+<p><img src="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-07-07-001850.icegseekn.webp" srcset="/img/loading.gif" lazyload alt="image-20250707002030726"></p>
+<p>这样就配置好了</p>
+<ul>
+<li>lunix下配置</li>
+</ul>
+<p>Lunix配置比较简单这里就省略了嘿嘿。。。</p>
+<h2 id="使用教程"><a href="#使用教程" class="headerlink" title="使用教程"></a>使用教程</h2><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>OpenSSL 是一个功能强大的开源工具，用于实现安全通信的加密协议。它提供了 <strong>加密算法、密钥生成、证书管理、SSL&#x2F;TLS 协议实现</strong> 等一系列功能，广泛用于 Web 服务器、安全邮件、VPN、代码签名等领域。</p>
+<h2 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h2><ol>
+<li>查看版本</li>
+</ol>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">C</span>:\Users\<span class="hljs-number">24055</span>&gt;openssl version<br><span class="hljs-attribute">OpenSSL</span> <span class="hljs-number">3</span>.<span class="hljs-number">5</span>.<span class="hljs-number">1</span> <span class="hljs-number">1</span> Jul <span class="hljs-number">2025</span> (Library: OpenSSL <span class="hljs-number">3</span>.<span class="hljs-number">5</span>.<span class="hljs-number">1</span> <span class="hljs-number">1</span> Jul <span class="hljs-number">2025</span>)<br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>生成随机数</li>
+</ol>
+<p>用 <code>openssl rand</code> 命令生成随机字节</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs xml"><br>openssl rand [选项] <span class="hljs-tag">&lt;<span class="hljs-name">字节数</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>例如，生成 16 字节随机数据（以二进制输出）：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><br><span class="hljs-attribute">openssl</span> rand <span class="hljs-number">16</span> &gt; random.bin<br></code></pre></td></tr></table></figure>
+
+<p>生成 16 字节随机数据（以十六进制输出）：</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs perl">openssl <span class="hljs-keyword">rand</span> -<span class="hljs-keyword">hex</span> <span class="hljs-number">16</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<p>生成 Base64 编码的随机数openssl rand -base64</p>
+<p>输出类似：</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abnf"><span class="hljs-attribute">t3jv5Q9Qs9k1J9YTqxBfGQ</span><span class="hljs-operator">=</span><span class="hljs-operator">=</span><br></code></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>摘要函数</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sh">(openssl) fox@localhost:/mnt/c/Users/24055$ vi ms.txt<br>(openssl) fox@localhost:/mnt/c/Users/24055$ openssl dgst -SHA256 -hex ms.txt<br>SHA2-256(ms.txt)= e5e94ea36193df8f2b31f31cd50ab0db3affbf28cd8c0b6158355e5104a7b8d1<br></code></pre></td></tr></table></figure>
+
+<p>使用SHA-235将ms.txt内的文本进行摘要函数计算。之后进行hex编码尽管hex是默认的编码方式</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sh">(openssl) fox@localhost:/mnt/c/Users/24055$ openssl dgst -SHA256 -out dgst.d ms.txt<br>(openssl) fox@localhost:/mnt/c/Users/24055$ vi dgst.d<br></code></pre></td></tr></table></figure>
+
+<p>hash后的内容写入文件dgst.d中 -out <filename> 指定摘要输出文件</p>
+<h3 id="数字签名"><a href="#数字签名" class="headerlink" title="数字签名"></a>数字签名</h3><ol>
+<li>生成rsa公钥和私钥</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">openssl genpkey -algorithm RSA -out rsa.key -pkeyopt rsa_keygen_bits:2048<br></code></pre></td></tr></table></figure>
+
+<p><code>openssl genpkey</code><br> OpenSSL 生成私钥的命令，是比旧命令 <code>genrsa</code> 更通用、推荐的新命令。</p>
+<p><code>-algorithm RSA</code><br> 指定生成的是 RSA 算法的密钥对。</p>
+<p><code>-out rsa.key</code><br> 将生成的私钥保存到名为 <code>rsa.key</code> 的文件中。</p>
+<p><code>-pkeyopt rsa_keygen_bits:2048</code><br> 私钥生成参数，指定密钥长度为 2048 位（2048-bit RSA 密钥）。</p>
+<p><img src="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-07-07-035712.73u87titiz.webp" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs sh">(openssl) fox@localhost:/mnt/c/Users/24055$ openssl dgst -sha256 -sign rsa.key -out signature.sign msg.txt<br>(openssl) fox@localhost:/mnt/c/Users/24055$ <span class="hljs-built_in">cat</span> signature.sign<br>�<span class="hljs-string">&quot;�e�E��l4�tCyR�`�=@f</span><br><span class="hljs-string">                     ]���       ܔ�m�0�����٣�?-</span><br><span class="hljs-string">����ے(�,&amp;�␦5k�뾉��_h�-��,?&amp;K��NO9��,s��7B��o��w�ڇv&#x27;������</span><br><span class="hljs-string">                                                         T9*]`)�Z�N��d8*P_�0Y�BN5���ĸ</span><br><span class="hljs-string">                                                                                     N�89��</span><br><span class="hljs-string">                                                                                           �Q�U���|M���@�LYӺ��T7���8ulj֯�dh�M�@$�m/&amp;���+�����O���F�      B�P���oP���aI�_NB(openssl) (openssl) fox@localhost:/mnt/c/Users/24055$</span><br></code></pre></td></tr></table></figure>
+
+<p>我们用</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs elixir">(openssl) fox<span class="hljs-variable">@localhost</span><span class="hljs-symbol">:/mnt/c/Users/</span><span class="hljs-number">24055</span><span class="hljs-variable">$ </span>openssl dgst -sha256 -sign rsa.key -out signature.sign msg.txt<br></code></pre></td></tr></table></figure>
+
+<p>加密签名。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sh">(openssl) fox@localhost:/mnt/c/Users/24055$ openssl rsa -<span class="hljs-keyword">in</span> rsa.key -pubout -out rsa_pu<br>b.key<br><br></code></pre></td></tr></table></figure>
+
+<p>生成对应的公钥在rsa_pub.key</p>
+<p>然后用它验证签名。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sh">(openssl) fox@localhost:/mnt/c/Users/24055$ openssl dgst -sha256 -verify rsa_pub.key -signature signature.sign msg.txt<br>Verified OK#验证成功显示<br></code></pre></td></tr></table></figure>
+
+<p> 🔹 <code>openssl</code></p>
+<p>调用 OpenSSL 命令行工具。</p>
+<hr>
+<p> 🔹 <code>dgst</code></p>
+<p>是 OpenSSL 的“digest”子命令，用于处理<strong>哈希摘要相关操作</strong>，包括计算、签名、验证等。</p>
+<hr>
+<p> 🔹 <code>-sha256</code></p>
+<p>表示用 <strong>SHA-256 哈希算法</strong>对输入文件 <code>msg.txt</code> 进行摘要。<br> 数字签名的流程中一般先做摘要，所以必须指定摘要算法（和签名时用的一致）。</p>
+<hr>
+<p> 🔹 <code>-verify rsa_pub.key</code></p>
+<p>表示使用 <code>rsa_pub.key</code> 这个文件中保存的<strong>RSA公钥</strong>进行验证。<br> 公钥的作用是：<strong>验证签名是否合法</strong>（也就是验证这份签名是否是由私钥对 msg.txt 的 SHA256 摘要签的名）</p>
+<h3 id="对称加密算法"><a href="#对称加密算法" class="headerlink" title="对称加密算法"></a>对称加密算法</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sh">openssl enc -aes-128-cbc -e -a -p -pbkdf2 -<span class="hljs-keyword">in</span> msg.txt -out<br> cipher.enc<br></code></pre></td></tr></table></figure>
+
+<p>🔹 <code>enc</code></p>
+<p>是 OpenSSL 的加密&#x2F;解密模块，支持对称加密算法（AES、DES、BF 等）进行加密&#x2F;解密操作。</p>
+<hr>
+<p> 🔹 <code>-aes-128-cbc</code></p>
+<p>指定加密算法为 <strong>AES（高级加密标准）128位密钥，使用 CBC 模式（Cipher Block Chaining）</strong>。</p>
+<ul>
+<li><code>128</code>：表示使用 128 位密钥（16 字节）。</li>
+<li><code>cbc</code>：表示使用“密文块链接模式”，需要 IV（初始化向量）。</li>
+</ul>
+<hr>
+<p> 🔹 <code>-e</code></p>
+<p>表示 <strong>加密模式</strong>（encrypt），相对应的解密是 <code>-d</code>。</p>
+<hr>
+<p> 🔹 <code>-a</code></p>
+<p>表示对加密结果进行 <strong>Base64 编码</strong>，使输出是可打印字符（文本文件也能存储），否则默认是二进制格式。</p>
+<hr>
+<p> 🔹 <code>-p</code></p>
+<p>加上这个参数会在加密时<strong>打印出所用的 key 和 IV</strong>（以十六进制显示），用于调试或记录。</p>
+<hr>
+<p> 🔹 <code>-pbkdf2</code></p>
+<p>表示使用 <strong>PBKDF2 密钥派生函数</strong>从口令中派生出加密密钥（而不是旧版默认的 EVP_BytesToKey，它已经不安全了）。<strong>现代 OpenSSL 建议强烈加上这个选项</strong>。</p>
+<ul>
+<li>简单来说，如果你输入口令 <code>mypassword</code>，OpenSSL 不会直接用它做密钥，而是用 PBKDF2 做拉伸（加盐 + 多轮 hash）来生成强密码。</li>
+</ul>
+<p><img src="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-07-07-041814.51efjrkrhc.webp" srcset="/img/loading.gif" lazyload></p>
+<blockquote>
+<p>在执行加密时，会让输入password，并不是实际加密的密钥。实际加密的密钥是根据输入的password，利用kdf算法（如pbkdf2）生成的。实际密钥和偏移值可以使用-p选项，在加密后输出。</p>
+<p>同时，也可以通过-K key指定实际使用的密钥。</p>
+<p>在加密的时候会默认加入随机值盐salt，使得每次加密的生成密钥和加密值不一致，增加爆破难度。可以使用-nosalt选项不使用盐，通过-p可以发现，password一致时，每次生成的key都一样的。</p>
+<p>同样的，也可以使用-S salt指定使用的盐而不使用随机值。</p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sh">openssl enc -aes-128-cbc -d -a -p -pbkdf2 -<span class="hljs-keyword">in</span> cipher.enc -<br>out plain.d<br></code></pre></td></tr></table></figure>
+
+<p>现在我们使用-d来解密，解密过程中我们需要输入我们之前输入的。</p>
+<p><img src="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-07-07-042322.8s3l509qhh.webp" srcset="/img/loading.gif" lazyload alt="image-20250707042323266"></p>
+<ul>
+<li>-aes-128-cbc指定解密算法。</li>
+<li>-d表示解密</li>
+<li>-a指定先进行base64解码，再进行解密。</li>
+<li>-pbkdf2表示加密时的密钥使用pbkdf2算法生成。</li>
+<li>-p表示解密后，输出实际使用的盐、密钥和偏移值到标准输出。</li>
+</ul>
+<p><img src="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-07-07-042644.5c19cx072h.webp" srcset="/img/loading.gif" lazyload alt="image-20250707042644981"></p>
+<h3 id="密钥处理"><a href="#密钥处理" class="headerlink" title="密钥处理"></a>密钥处理</h3><ol>
+<li>生成rsa公私钥</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">openssl genrsa -out rsa.pem 1024<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>genrsa</li>
+</ul>
+<p>表示生成rsa私钥</p>
+<p><img src="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-07-07-043657.9o02kgjrgw.webp" srcset="/img/loading.gif" lazyload alt="image-20250707043659450"></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">openssl rsa -<span class="hljs-keyword">in</span> rsa.pem -pubout -out rsa_pub.pem<br></code></pre></td></tr></table></figure>
+
+<p>导出公钥</p>
+<ul>
+<li>-in指定输入的私钥文件。</li>
+<li>-pubout：默认输出为私钥，利用该选项指定输出为公钥。</li>
+</ul>
+<blockquote>
+<p>-in -out 默认都是私钥，当输入或输出为公钥时，要分别加上-pubin、-pubout。若输入已经加上-pubin时，若输出也为公钥-pubout一般不用加，因为输入为公钥，输出默认也为公钥。</p>
+<p>该原则适用于以下所有openssl rsa指令。</p>
+</blockquote>
+<ol start="2">
+<li>密钥格式转化</li>
+</ol>
+<p>默认生成和输入的都是Pem格式，他们之间咳哟转化</p>
+<blockquote>
+<ol>
+<li>PEM格式</li>
+</ol>
+<ul>
+<li><p><strong>全称</strong>：Privacy-Enhanced Mail</p>
+</li>
+<li><p><strong>文件内容</strong>：是经过Base64编码的文本格式，内容是可打印的ASCII字符。</p>
+</li>
+<li><p><strong>结构</strong>：有明确的头尾标识，比如私钥通常是：</p>
+</li>
+</ul>
+ <figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs vbnet">-----BEGIN RSA <span class="hljs-keyword">PRIVATE</span> <span class="hljs-keyword">KEY</span>-----<br>（Base64编码的数据）<br>-----<span class="hljs-keyword">END</span> RSA <span class="hljs-keyword">PRIVATE</span> <span class="hljs-keyword">KEY</span>-----<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>用途</strong>：广泛用于各种证书和密钥文件，尤其是在Linux、OpenSSL环境中常见。</p>
+</li>
+<li><p><strong>优点</strong>：</p>
+</li>
+<li><p>易于在文本文件中传输和阅读</p>
+</li>
+<li><p>支持添加注释、分隔符</p>
+</li>
+<li><p><strong>文件扩展名</strong>：<code>.pem</code>、<code>.crt</code>、<code>.cer</code>、<code>.key</code>（不完全统一）</p>
+</li>
+</ul>
+<hr>
+<ol start="2">
+<li>DER格式</li>
+</ol>
+<ul>
+<li><strong>全称</strong>：Distinguished Encoding Rules</li>
+<li><strong>文件内容</strong>：二进制格式，没有经过Base64编码，直接存储二进制数据。</li>
+<li><strong>结构</strong>：纯二进制，不能直接用文本编辑器打开阅读。</li>
+<li><strong>用途</strong>：通常用于Java平台和某些二进制传输协议，或者Windows系统的某些证书。</li>
+<li><strong>优点</strong>：</li>
+<li>紧凑，不需要编码，文件体积较小</li>
+<li><strong>文件扩展名</strong>：<code>.der</code>、<code>.cer</code>（也可能是.pem的二进制形式）</li>
+</ul>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">openssl rsa -pubin -<span class="hljs-keyword">in</span> rsa_pub.pem -outform DER -out rsa_pub.der<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">openssl rsa -<span class="hljs-keyword">in</span> rsa.pem -outform DER -out rsa.der<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-07-07-044805.6wr0cdvygr.webp" srcset="/img/loading.gif" lazyload alt="image-20250707044822133"></p>
+<ul>
+<li>-outform 指定输出格式。</li>
+<li>-pubin：默认输入为私钥，利用该选项指定输入为公钥。</li>
+</ul>
+<ol start="3">
+<li>查看密钥参数</li>
+</ol>
+<h3 id="RSA私钥中的关键参数解释"><a href="#RSA私钥中的关键参数解释" class="headerlink" title="RSA私钥中的关键参数解释"></a>RSA私钥中的关键参数解释</h3><table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>含义与作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Private-Key: (1024 bit, 2 primes)</strong></td>
+<td>表示这是一个1024位的RSA密钥，使用了两个大质数（RSA标准）</td>
+</tr>
+<tr>
+<td><strong>modulus (n)</strong></td>
+<td>模数 n &#x3D; p × q，是RSA公钥和私钥的核心参数，所有加解密计算都围绕它进行。</td>
+</tr>
+<tr>
+<td><strong>publicExponent (e)</strong></td>
+<td>公钥指数 e，通常是 65537 (0x10001)，是公钥加密和签名验证时使用的指数。</td>
+</tr>
+<tr>
+<td><strong>privateExponent (d)</strong></td>
+<td>私钥指数 d，用于私钥解密和签名，满足 <code>(e × d) mod φ(n) = 1</code>，其中φ是欧拉函数。</td>
+</tr>
+<tr>
+<td><strong>prime1 (p)</strong></td>
+<td>大质数 p，模数 n 的一个质因子。</td>
+</tr>
+<tr>
+<td><strong>prime2 (q)</strong></td>
+<td>大质数 q，模数 n 的另一个质因子。</td>
+</tr>
+<tr>
+<td><strong>exponent1 (d mod (p-1))</strong></td>
+<td>私钥指数 d 对 p-1 取模的结果。用于加速私钥运算（中国剩余定理CRT优化）</td>
+</tr>
+<tr>
+<td><strong>exponent2 (d mod (q-1))</strong></td>
+<td>私钥指数 d 对 q-1 取模的结果。也用于CRT优化，提高运算效率。</td>
+</tr>
+<tr>
+<td><strong>coefficient (q^(-1) mod p)</strong></td>
+<td>q 关于 p 的模逆，即 q 的逆元 mod p。CRT计算时用到，用于组合两个模运算的结果，提升解密速度。</td>
+</tr>
+</tbody></table>
+<p><img src="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-07-07-045136.3k8ai0hfmt.webp" srcset="/img/loading.gif" lazyload alt="image-20250707045143443"></p>
+<ul>
+<li>-text指明输出密钥的组件</li>
+<li>-noout指明不输出编码的密钥</li>
+</ul>
+<h3 id="非对称算法"><a href="#非对称算法" class="headerlink" title="非对称算法"></a>非对称算法</h3><p>这里以rsa为例子</p>
+<ol>
+<li>加密</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">openssl pkeyutl -encrypt -<span class="hljs-keyword">in</span> msg.txt -pubin -inkey rsa_pub.pem -out rsa_chiper.enc<br></code></pre></td></tr></table></figure>
+
+<p>pkeyutl 不仅支持rsa， OpenSSL 的公钥实用工具（用于公钥加密&#x2F;解密等操作）</p>
+<p>rsautl相比过于简单老旧</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">openssl pkeyutl -encrypt -<span class="hljs-keyword">in</span> msg.txt -pubin -inkey rsa_pub.pem -out rsa_chiper.enc -pkeyopt rsa_padding_mode:oaep -pkeyopt rsa_oaep_md:sha256<br></code></pre></td></tr></table></figure>
+
+<p>这里是加了新的填充方式和sha256</p>
+<ul>
+<li>encrypt 表示加密</li>
+<li>in 要加密的文件</li>
+<li>pubin：默认输入私有密钥，表示输入密钥为公钥</li>
+<li>inkey 指明加密的公钥文件</li>
+<li>out输出的加密文件</li>
+<li>-pkeyopt rsa_padding_mode:oaep指明填充模式为oaep</li>
+<li>-pkeyopt rsa_oaep_md:sha256指明oaep使用的摘要算法为SHA256</li>
+</ul>
+<ol start="2">
+<li>解密</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sh">(openssl) fox@localhost:~/fox/text$ openssl pkeyutl -decrypt -<span class="hljs-keyword">in</span> rsa_chiper.enc -inkey rsa.pem -out rsa_plain.d<br>(openssl) fox@localhost:~/fox/text$ <span class="hljs-built_in">cat</span> rsa_plain.d<br>Icandoit<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>decrypt表示解密</li>
+</ul>
+<ol start="3">
+<li><p>签名</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">openssl dgst -sha256 -binary -out hash.dgst msg.txt<br></code></pre></td></tr></table></figure>
+
+<p>先生成hash文件。这个要求验签的适合只能是binary格式o</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">openssl pkeyutl -sign -inkey rsa.pem -<span class="hljs-keyword">in</span> hash.dgst -out signature.sign<br></code></pre></td></tr></table></figure>
+
+<p>-sign</p>
+<p>表示签名操作</p>
+</li>
+<li><p>验签</p>
+</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sh">openssl pkeyutl -verify -pubin -inkey rsa_pub.pem -<span class="hljs-keyword">in</span> hash.dgst -sigfile signature.sign<br><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>verify</li>
+</ul>
+<p>表示验签。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/TLS/" class="category-chain-item">TLS</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/TLS/crypto/" class="category-chain-item">crypto</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/crypto/" class="print-no-link">#crypto</a>
+      
+        <a href="/tags/algorithm/" class="print-no-link">#algorithm</a>
+      
+        <a href="/tags/tools/" class="print-no-link">#tools</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>openssl使用-1</div>
+      <div>http://example.com/2024/12/24/openssl/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>fox</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>December 24, 2024</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/12/24/AES%E5%8A%A0%E5%AF%86%E5%9B%9E%E9%A1%BE%E4%BB%A5%E5%8F%8A%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/" title="AES加密以及代码实现">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">AES加密以及代码实现</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/12/23/DH%20%E5%AF%86%E9%92%A5%E4%BA%A4%E6%8D%A2%E5%8D%8F%E8%AE%AE/" title="DH密钥交换协议">
+                        <span class="hidden-mobile">DH密钥交换协议</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

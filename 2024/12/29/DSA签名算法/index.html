@@ -28,7 +28,7 @@
 <meta property="og:locale">
 <meta property="og:image" content="https://raw.githubusercontent.com/rockfox0/picx-images-hosting/master/dsa1.7lk2cajx72.webp">
 <meta property="article:published_time" content="2024-12-29T04:00:00.000Z">
-<meta property="article:modified_time" content="2024-12-29T09:23:22.499Z">
+<meta property="article:modified_time" content="2025-07-02T07:32:47.606Z">
 <meta property="article:author" content="fox">
 <meta property="article:tag" content="crypto">
 <meta name="twitter:card" content="summary_large_image">
@@ -309,7 +309,7 @@
 <ul>
 <li><strong>相关参数</strong></li>
 </ul>
-<p>p:一个素模数，其值满足:2^ (L-1)&lt;p&lt;2^L,  L是64的倍数满足512&lt;&#x3D;L&lt;&#x3D;1024</p>
+<p>p:一个素模数，其值满足:$2^ {L-1}&lt;p&lt;2^L,$  L是64的倍数满足512&lt;&#x3D;L&lt;&#x3D;1024</p>
 <p>q:(p-1)的素数因子，其值满足2^159^&lt;p&lt;2^160^ 即q长度为160.</p>
 <p>g:g&#x3D;pow(h,(p-1)&#x2F;q,p).h满足1&lt;h&lt;p-1 的任意整数，从而有pow(h,(p-1)&#x2F;q,p)&gt;1</p>
 <p>x:私钥。x为一个伪随机或随机生成的整数，其值满足0&lt;x&lt;q</p>
@@ -318,11 +318,11 @@
 <li><strong>DSA签名过程:</strong></li>
 </ul>
 <ol>
-<li>产生一个随机数k，其值大小满足0&lt;k&lt;q</li>
+<li>产生一个随机数k，其值大小满足0&lt;k&lt;q。</li>
 <li>计算r&#x3D;pow(g,k,p) mod p,其值满足r&gt;0</li>
-<li>计算S&#x3D;（K^(-1)(SHA(M)+x*r))mod q,其值满足s&gt;0</li>
+<li>计算$S&#x3D;（K^{-1}(SHA(M)+x*r))mod q$,其值满足s&gt;0</li>
 </ol>
-<p>k^(-1)表示整数k关于某个模的逆元。k在每次签名都重新生成</p>
+<p>$k^{-1}$表示整数k关于某个模的逆元。k在每次签名都重新生成</p>
 <p>sha(M):M的hash值，M为待签名的明文，sha是一个单向散列函数。SHA(M)是一个长为160bites的字符串。</p>
 <p>4。 最终签名是证书对(r,s)，它们和M一起发送到验证方</p>
 <ol start="5">
@@ -337,7 +337,7 @@
 <p>v&#x3D;(g^u1^y^u2^(mod p))(mod q)</p>
 <p>验证v&#x3D;r</p>
 <p>r&#x3D;pow(g,k,p)(mod q)</p>
-<p>我们要证v&#x3D;r， 只需证明gu1⋅yu2≡gk(modp)mod q</p>
+<p>我们要证v&#x3D;r， 只需证明$g^{u1}⋅y^{u2}≡g^k(modp)mod q$</p>
 </blockquote>
 <img src="https://raw.githubusercontent.com/rockfox0/picx-images-hosting/master/dsa1.7lk2cajx72.webp" srcset="/img/loading.gif" lazyload style="zoom:33%;" />
 
