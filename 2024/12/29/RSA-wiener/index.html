@@ -34,7 +34,7 @@
 <meta property="og:image" content="https://rockfox0.github.io/picx-images-hosting/eae24001bbe299decdd775bef1ea1800.73u0gaysyt.webp">
 <meta property="og:image" content="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-01-05-161454.83a4c4gc3x.webp">
 <meta property="article:published_time" content="2024-12-29T04:00:00.000Z">
-<meta property="article:modified_time" content="2025-01-07T11:51:33.396Z">
+<meta property="article:modified_time" content="2025-07-14T10:39:05.841Z">
 <meta property="article:author" content="fox">
 <meta property="article:tag" content="crypto">
 <meta property="article:tag" content="RSA">
@@ -127,7 +127,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/" target="_self">
                 <i class="iconfont icon-home-fill"></i>
-                <span>Startseite</span>
+                <span>Hejmpaĝo</span>
               </a>
             </li>
           
@@ -139,7 +139,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/archives/" target="_self">
                 <i class="iconfont icon-archive-fill"></i>
-                <span>Archiv</span>
+                <span>Arkivoj</span>
               </a>
             </li>
           
@@ -151,7 +151,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/categories/" target="_self">
                 <i class="iconfont icon-category-fill"></i>
-                <span>Kategorien</span>
+                <span>Kategorio</span>
               </a>
             </li>
           
@@ -163,7 +163,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/tags/" target="_self">
                 <i class="iconfont icon-tags-fill"></i>
-                <span>Schlagwörter</span>
+                <span>Etikedoj</span>
               </a>
             </li>
           
@@ -175,7 +175,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/about/" target="_self">
                 <i class="iconfont icon-user-fill"></i>
-                <span>Über</span>
+                <span>Pri</span>
               </a>
             </li>
           
@@ -187,7 +187,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/links/" target="_self">
                 <i class="iconfont icon-link-fill"></i>
-                <span>Weblinks</span>
+                <span>Ligoj</span>
               </a>
             </li>
           
@@ -244,7 +244,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.2k wörter
+          2.6k vortoj
         
       </span>
     
@@ -255,7 +255,7 @@
         
         
         
-          19 minuten
+          22 minutoj
         
       </span>
     
@@ -363,6 +363,17 @@
 </blockquote>
 <p>解题代码</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> long_to_bytes, inverse<br><br><span class="hljs-keyword">import</span> gmpy2<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">possible</span>(<span class="hljs-params">alist,N1</span>):<br>    <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> alist:<br>        <span class="hljs-keyword">if</span> x==<span class="hljs-number">0</span>:<br>            <span class="hljs-keyword">continue</span><br>        Q1=x.numerator()<br>        <span class="hljs-keyword">if</span> N1%Q1==<span class="hljs-number">0</span> <span class="hljs-keyword">and</span> Q1!=<span class="hljs-number">1</span>:<br>            Q2=x.denominator()<br>            <span class="hljs-keyword">return</span> Q1,Q2<br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-keyword">continue</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">wienner_attack</span>(<span class="hljs-params">N1,N2</span>):<br>    c=continued_fraction(N1/N2)<span class="hljs-comment">#获取连分数集合</span><br>    alist=c.convergents()<span class="hljs-comment">#利用连分数得到连分数收敛</span><br>    <span class="hljs-keyword">return</span> possible(alist,N1)<br>N1=<br>N2=<br>c1=<br>c2=<br>E1=<br>E2=<br>t=wienner_attack(N1,N2)<br>Q1=t[<span class="hljs-number">0</span>]<br>Q2=t[<span class="hljs-number">1</span>]<br><span class="hljs-built_in">print</span>(Q1)<br><span class="hljs-built_in">print</span>(Q2)<br>P2=gmpy2.iroot(N2//Q2,<span class="hljs-number">2</span>)[<span class="hljs-number">0</span>]<br>P1=gmpy2.iroot(N1//Q1,<span class="hljs-number">2</span>)[<span class="hljs-number">0</span>]<br>phi1=(P1-<span class="hljs-number">1</span>)*P1*(Q1-<span class="hljs-number">1</span>)<br>phi2=(P2-<span class="hljs-number">1</span>)*P2*(Q2-<span class="hljs-number">1</span>)<br>d1=gmpy2.invert(E1,phi1)<br>d2=gmpy2.invert(E2,phi2)<br>m1=gmpy2.powmod(c1,d1,N1)<br>m2=gmpy2.powmod(c2,d2,N2)<br>f1=long_to_bytes(m1)<br>f2=long_to_bytes(m2)<br><span class="hljs-built_in">print</span>(f1,f2)<br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">11628371843051760370952910026406764366191062991235308941262037248377376991693250742343307155422036713746576338866595433599862614339347536916226536644210947</span><br><span class="hljs-string">11628371843051760370952910026406764366191062991235308941262037248377376991693250742343307155422036713746576338866595433599862614339347536916226536644211929</span><br><span class="hljs-string">b&#x27;GWHT&#123;3aadab41754799&#x27; b&#x27;f978669d53e64a3aca&#125;</span><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="rrrrsa-—-l3hctf"><a href="#rrrrsa-—-l3hctf" class="headerlink" title="rrrrsa — l3hctf"></a>rrrrsa — l3hctf</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sage.<span class="hljs-built_in">all</span> <span class="hljs-keyword">import</span> *<br><br><span class="hljs-keyword">from</span> secret <span class="hljs-keyword">import</span> flag<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">generate_vulnerable_key</span>(<span class="hljs-params">bits=<span class="hljs-number">1024</span></span>):<br>    p_bits = bits // <span class="hljs-number">2</span><br>    q_bits = bits - p_bits<br><br>    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>        p = random_prime(<span class="hljs-number">2</span>**(p_bits), lbound=<span class="hljs-number">2</span>**(p_bits-<span class="hljs-number">1</span>))<br>        q = random_prime(<span class="hljs-number">2</span>**(q_bits), lbound=<span class="hljs-number">2</span>**(q_bits-<span class="hljs-number">1</span>))<br>        <span class="hljs-keyword">if</span> p != q <span class="hljs-keyword">and</span> p &gt; q <span class="hljs-keyword">and</span> p &lt; <span class="hljs-number">2</span>*q:<br>            <span class="hljs-keyword">break</span><br>            <br>    N = p * q<br>    phi = (p**<span class="hljs-number">4</span> - <span class="hljs-number">1</span>) * (q**<span class="hljs-number">4</span> - <span class="hljs-number">1</span>)<br><br>    d_bits = <span class="hljs-number">1024</span><br>    d_bound = <span class="hljs-number">2</span>**d_bits<br><br>    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>        d_small = randint(<span class="hljs-number">2</span>, d_bound)<br>        d = phi - d_small<br>        <span class="hljs-keyword">if</span> gcd(d, phi) == <span class="hljs-number">1</span>:<br>            <span class="hljs-keyword">if</span> d_small.bit_length() == <span class="hljs-number">1021</span>:<br>                <span class="hljs-keyword">break</span><br><br>    e = inverse_mod(d, phi)<br>    <br>    <span class="hljs-keyword">return</span> N, e<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">encrypt</span>(<span class="hljs-params">m, N, e</span>):<br>    n = <span class="hljs-number">4</span><br>    r = <span class="hljs-number">2</span><br>    R = Integers(N)<br>    P = PolynomialRing(R, <span class="hljs-string">&#x27;t&#x27;</span>)<br>    t = P.gen()<br>    Q = P.quotient(t**n - r)<br><br>    m_poly = Q([m, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>])<br><br>    c_poly = m_poly ** e<br><br>    <span class="hljs-keyword">return</span> c_poly.lift()<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    N, e = generate_vulnerable_key()<br>    m = <span class="hljs-built_in">int</span>.from_bytes(flag, <span class="hljs-string">&#x27;big&#x27;</span>)<br>    c = encrypt(m, N, e)<br><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;N = <span class="hljs-subst">&#123;N&#125;</span>&quot;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;e = <span class="hljs-subst">&#123;e&#125;</span>&quot;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;c = <span class="hljs-subst">&#123;c&#125;</span>&quot;</span>)<br><br><span class="hljs-comment"># N = 99697845285265879829811232968100099666254250525000506525475952592468738395250956460890611762459685140661035795964867321445992110528627232335703962897072608767840783176553829502743629914407970206513639916759403399986924602596286330464348286080258986075962271511105387188070309852907253486162504945490429185609</span><br><span class="hljs-comment"># e = 74900336437853271512557457581304251523854378376434438153117909482138661618901386551154807447783262736408028580620771857416463085746907317126876189023636958838207330193074215769008709076254356539808209005917645822989554532710565445155350102802675594603406077862472881027575871589046600011223990947361848608637247276816477996863812313225929441545045479384803449990623969591150979899801722841101938868710054151839628803383603849632857020369527380816687165487370957857737696187061619496102857237814447790678611448197153594917852504509869007597997670022501500067854210261136878917620198551551460145853528269270832725348151160651020188255399136483482428499340574623409209151124687319668989144444549871527949104436734300277004316939985015286758651969045396343970037328043635061226100170529991733947365830164811844853806681198818875837903563263114249814483901121700854712406832325690101810786429930813776784979083590353027191492894890551838308899148551566437532914838098811643805243593419063566975400775134981190248113477610235165151367913498299241375039256652674679958159505112725441797566678743542054295794919839551675786573113798857814005058856054462008797386322048089657472710775620574463924678367455233801970310210504653908307254926827</span><br><span class="hljs-comment"># c = 98460941530646528059934657633016619266170844887697553075379408285596784682803952762901219607460711533547279478564732097775812539176991062440097573591978613933775149262760936643842229597070673855940231912579258721734434631479496590694499265794576610924303262676255858387586947276246725949970866534023718638879</span><br><br></code></pre></td></tr></table></figure>
+
+
+
+<p>利用维纳攻击，这里可以推一下，<br>$$<br>ed-1&#x3D;k*(phi)\<br>\frac{e}{phi}-\frac{k}{d}&#x3D;\frac{1}{d*phi}\<br>\frac{e}{n^4}-\frac{k}{(d-ds)}≈\frac{e}{phi}-\frac{k}{d-ds}\<br>\frac{e}{n^4}-\frac{k}{ds} &gt;\frac{1}{2ds^2}<br>$$</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sage.<span class="hljs-built_in">all</span> <span class="hljs-keyword">import</span> *<br><br>N = <span class="hljs-number">99697845285265879829811232968100099666254250525000506525475952592468738395250956460890611762459685140661035795964867321445992110528627232335703962897072608767840783176553829502743629914407970206513639916759403399986924602596286330464348286080258986075962271511105387188070309852907253486162504945490429185609</span><br>e = <span class="hljs-number">74900336437853271512557457581304251523854378376434438153117909482138661618901386551154807447783262736408028580620771857416463085746907317126876189023636958838207330193074215769008709076254356539808209005917645822989554532710565445155350102802675594603406077862472881027575871589046600011223990947361848608637247276816477996863812313225929441545045479384803449990623969591150979899801722841101938868710054151839628803383603849632857020369527380816687165487370957857737696187061619496102857237814447790678611448197153594917852504509869007597997670022501500067854210261136878917620198551551460145853528269270832725348151160651020188255399136483482428499340574623409209151124687319668989144444549871527949104436734300277004316939985015286758651969045396343970037328043635061226100170529991733947365830164811844853806681198818875837903563263114249814483901121700854712406832325690101810786429930813776784979083590353027191492894890551838308899148551566437532914838098811643805243593419063566975400775134981190248113477610235165151367913498299241375039256652674679958159505112725441797566678743542054295794919839551675786573113798857814005058856054462008797386322048089657472710775620574463924678367455233801970310210504653908307254926827</span><br>c = <span class="hljs-number">98460941530646528059934657633016619266170844887697553075379408285596784682803952762901219607460711533547279478564732097775812539176991062440097573591978613933775149262760936643842229597070673855940231912579258721734434631479496590694499265794576610924303262676255858387586947276246725949970866534023718638879</span><br>A = N**<span class="hljs-number">4</span><br><br>cf = continued_fraction(e / A)<br>conv_gen = cf.convergents()<br>N2 = N**<span class="hljs-number">2</span><br>N2p1 = N2 + <span class="hljs-number">1</span><br>target_val = N2p1**<span class="hljs-number">2</span>  <span class="hljs-comment"># (N^2 + 1)^2</span><br><br>found = <span class="hljs-literal">False</span><br><span class="hljs-keyword">for</span> c_frac <span class="hljs-keyword">in</span> conv_gen:<br>    k = c_frac.numerator()<br>    d_small = c_frac.denominator()<br>    bl = d_small.bit_length()<br>    <span class="hljs-keyword">if</span>(bl!=<span class="hljs-number">1021</span>):<br>        <span class="hljs-keyword">continue</span><br>    <span class="hljs-built_in">print</span>(bl)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Trying convergent: k=<span class="hljs-subst">&#123;k&#125;</span>, d_small=<span class="hljs-subst">&#123;d_small&#125;</span>, bits=<span class="hljs-subst">&#123;bl&#125;</span>&quot;</span>)<br>    <br>    c_val = e * d_small + <span class="hljs-number">1</span><br>    <br>    phi_cand = c_val // k<br>    diff = target_val - phi_cand<br>    <span class="hljs-keyword">if</span>(is_square(diff)==<span class="hljs-number">0</span>):<br>        <span class="hljs-keyword">continue</span><br>    <br>    E = sqrtD // <span class="hljs-number">2</span><br>    <span class="hljs-keyword">for</span> t_val <span class="hljs-keyword">in</span> [<span class="hljs-number">2</span>*N + E]:<br>        <span class="hljs-keyword">if</span> t_val &lt;= <span class="hljs-number">0</span>:<br>            <span class="hljs-keyword">continue</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> is_square(t_val):<br>            <span class="hljs-keyword">continue</span><br>        <br>        s_val = isqrt(t_val)<br>        <span class="hljs-keyword">if</span> s_val**<span class="hljs-number">2</span> != t_val:<br>            <span class="hljs-keyword">continue</span><br>        <br>        <span class="hljs-comment">#x^2 - s_val*x + N = 0 </span><br>        R.&lt;x&gt; = PolynomialRing(ZZ)<br>        poly = x**<span class="hljs-number">2</span> - s_val*x + N<br>        roots = poly.roots(multiplicities=<span class="hljs-literal">False</span>)<br>        <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(roots) != <span class="hljs-number">2</span>:<br>            <span class="hljs-keyword">continue</span><br>        p, q = roots<br>        <span class="hljs-keyword">if</span> p * q != N:<br>            <span class="hljs-keyword">continue</span><br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;N factorized successfully!&quot;</span>)<br>        found = <span class="hljs-literal">True</span><br>        <span class="hljs-keyword">break</span><br>    <span class="hljs-keyword">if</span> found:<br>        <span class="hljs-keyword">break</span><br>phi = (p**<span class="hljs-number">4</span> - <span class="hljs-number">1</span>) * (q**<span class="hljs-number">4</span> - <span class="hljs-number">1</span>)<br><br>d = inverse_mod(e, phi)<br>m = <span class="hljs-built_in">pow</span>(c, d, N)<br>flag_bytes = <span class="hljs-built_in">int</span>(m).to_bytes((m.bit_length() + <span class="hljs-number">7</span>) // <span class="hljs-number">8</span>, <span class="hljs-string">&#x27;big&#x27;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Flag:&quot;</span>, flag_bytes.decode())<br></code></pre></td></tr></table></figure>
+
+
+
+
 
 <h3 id="扩展维纳"><a href="#扩展维纳" class="headerlink" title="扩展维纳"></a>扩展维纳</h3><p>参考：论文:<a target="_blank" rel="noopener" href="https://dunkirkturbo.github.io/2020/05/04/WriteUp-De1CTF2020-Crypto/howgrave-graham1999.pdf">https://dunkirkturbo.github.io/2020/05/04/WriteUp-De1CTF2020-Crypto/howgrave-graham1999.pdf</a></p>
 <p><a target="_blank" rel="noopener" href="https://ctf-wiki.org/crypto/asymmetric/rsa/d_attacks/rsa_extending_wiener/">ctf-wiki-扩展维纳</a></p>
@@ -492,20 +503,20 @@
     <div class="license-meta">
       
         <div class="license-meta-item">
-          <div>Beitragsautor</div>
+          <div>Aŭtoro</div>
           <div>fox</div>
         </div>
       
       
         <div class="license-meta-item license-meta-date">
-          <div>Veröffentlicht am</div>
+          <div>Postigita</div>
           <div>December 29, 2024</div>
         </div>
       
       
       
         <div class="license-meta-item">
-          <div>Urheberrechtshinweis</div>
+          <div>Lizenta</div>
           <div>
             
               
@@ -534,7 +545,7 @@
                       <a href="/2024/12/29/DSA%E7%AD%BE%E5%90%8D%E7%AE%97%E6%B3%95/" title="DSA签名算法">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">DSA签名算法</span>
-                        <span class="visible-mobile">Vorheriger</span>
+                        <span class="visible-mobile">Antaŭa afiŝo</span>
                       </a>
                     
                   </article>
@@ -543,7 +554,7 @@
                     
                       <a href="/2024/12/29/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982024%E4%B8%AD%E5%9B%BD%E5%89%A9%E4%BD%99%E5%AE%9A%E7%90%86%E5%A4%8D%E7%8E%B0/" title="CRT中国剩余定理复现">
                         <span class="hidden-mobile">CRT中国剩余定理复现</span>
-                        <span class="visible-mobile">Nächster</span>
+                        <span class="visible-mobile">Sekva afiŝo</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
                     
@@ -564,7 +575,7 @@
     <div id="toc">
   <p class="toc-header">
     <i class="iconfont icon-list"></i>
-    <span>Inhaltsverzeichnis</span>
+    <span>Enhavtabelo</span>
   </p>
   <div class="toc-body" id="toc-body"></div>
 </div>
@@ -626,7 +637,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Serĉi</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -634,7 +645,7 @@
       <div class="modal-body mx-3">
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v" for="local-search-input">Stichwort</label>
+          <label data-error="x" data-success="v" for="local-search-input">ŝlosivorto</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
@@ -855,7 +866,7 @@
   
 
   <noscript>
-    <div class="noscript-warning">Blog funktioniert am besten mit aktiviertem JavaScript</div>
+    <div class="noscript-warning">Blogo funkcias plej bone kun JavaScript ebligita</div>
   </noscript>
 </body>
 </html>
