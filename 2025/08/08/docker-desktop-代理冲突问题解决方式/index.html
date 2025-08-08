@@ -19,22 +19,24 @@
   <meta name="author" content="fox">
   <meta name="keywords" content="菜菜的密码劳弟">
   
-    <meta name="description" content="伪随机数生成器(PRNG)前言随机数生成分为伪随机，真随机。真随机是利用现实中的电子元件噪音来生产的。 伪随机数：用真随机数生成种子，用伪随机数生成器生成伪随机数位流 PRNG算法大致分为两类：   专用算法：为生成伪随机位流而专门设计。   基于现有密码算法的算法：密码算法会随机化输入数据。  对称分组密码、 哈希函数 消息验证码    专用算法LCG(线性同余生成器)$x_{n+1}&amp;#x3D">
+    <meta name="description" content="docker 代理冲突问题的解决docker的配置在网上已经有很多，大多数用的是配置镜像的方法，但是有的盆友可能和我一样发现不开代理登录不上去docker–desktop，登录上去之后呢，拉去镜像会出现这个问题。 123docker pull nginxUsing default tag: latestError response from daemon: failed to resolve re">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Rockfox的密码记录">
-<meta property="og:url" content="http://example.com/2025/01/11/%E4%BC%AA%E9%9A%8F%E6%9C%BA%E6%95%B0%E7%94%9F%E6%88%90%E5%99%A8(PRNG)/index.html">
+<meta property="og:title" content="docker-desktop 代理冲突问题解决方式">
+<meta property="og:url" content="http://example.com/2025/08/08/docker-desktop-%E4%BB%A3%E7%90%86%E5%86%B2%E7%AA%81%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E5%BC%8F/index.html">
 <meta property="og:site_name" content="Rockfox的密码记录">
-<meta property="og:description" content="伪随机数生成器(PRNG)前言随机数生成分为伪随机，真随机。真随机是利用现实中的电子元件噪音来生产的。 伪随机数：用真随机数生成种子，用伪随机数生成器生成伪随机数位流 PRNG算法大致分为两类：   专用算法：为生成伪随机位流而专门设计。   基于现有密码算法的算法：密码算法会随机化输入数据。  对称分组密码、 哈希函数 消息验证码    专用算法LCG(线性同余生成器)$x_{n+1}&amp;#x3D">
+<meta property="og:description" content="docker 代理冲突问题的解决docker的配置在网上已经有很多，大多数用的是配置镜像的方法，但是有的盆友可能和我一样发现不开代理登录不上去docker–desktop，登录上去之后呢，拉去镜像会出现这个问题。 123docker pull nginxUsing default tag: latestError response from daemon: failed to resolve re">
 <meta property="og:locale">
-<meta property="article:published_time" content="2025-01-11T14:57:09.199Z">
-<meta property="article:modified_time" content="2025-01-11T14:57:09.199Z">
+<meta property="og:image" content="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-08-08-220336.7lkb75nvtm.png">
+<meta property="article:published_time" content="2025-08-08T13:39:37.000Z">
+<meta property="article:modified_time" content="2025-08-08T15:06:27.178Z">
 <meta property="article:author" content="fox">
-<meta property="article:tag" content="菜菜的密码劳弟">
+<meta property="article:tag" content="工具配置">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-08-08-220336.7lkb75nvtm.png">
   
   
   
-  <title>Rockfox的密码记录</title>
+  <title>docker-desktop 代理冲突问题解决方式 - Rockfox的密码记录</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -212,7 +214,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text=""></span>
+            <span id="subtitle" data-typed-text="docker-desktop 代理冲突问题解决方式"></span>
           
         </div>
 
@@ -223,8 +225,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-01-11 22:57" pubdate>
-          January 11, 2025 pm
+        <time datetime="2025-08-08 21:39" pubdate>
+          August 8, 2025 pm
         </time>
       </span>
     
@@ -235,7 +237,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          296 wörter
+          211 wörter
         
       </span>
     
@@ -246,7 +248,7 @@
         
         
         
-          3 minuten
+          2 minuten
         
       </span>
     
@@ -287,34 +289,26 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header"></h1>
+            <h1 id="seo-header">docker-desktop 代理冲突问题解决方式</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="伪随机数生成器-PRNG"><a href="#伪随机数生成器-PRNG" class="headerlink" title="伪随机数生成器(PRNG)"></a>伪随机数生成器(PRNG)</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>随机数生成分为伪随机，真随机。真随机是利用现实中的电子元件噪音来生产的。</p>
-<p>伪随机数：用真随机数生成种子，用伪随机数生成器生成伪随机数位流</p>
-<p>PRNG算法大致分为两类： </p>
+                <h1 id="docker-代理冲突问题的解决"><a href="#docker-代理冲突问题的解决" class="headerlink" title="docker 代理冲突问题的解决"></a>docker 代理冲突问题的解决</h1><p>docker的配置在网上已经有很多，大多数用的是配置镜像的方法，但是有的盆友可能和我一样发现不开代理登录不上去docker–desktop，登录上去之后呢，拉去镜像会出现这个问题。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">docker pull nginx<br>Using default tag: latest<br>Error response <span class="hljs-keyword">from</span> daemon: failed to resolve reference <span class="hljs-string">&quot;docker.io/library/nginx:latest&quot;</span>: failed to do request: Head <span class="hljs-string">&quot;https://hub-mirror.c.163.com/v2/library/nginx/manifests/latest?ns=docker.io&quot;</span>: proxyconnect tcp: dial tcp <span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span>:<span class="hljs-number">7897</span>: connect: connection refused<br></code></pre></td></tr></table></figure>
+
+<p>因为用clash-verge这样的软件进入代理之后，会自动设置</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">HTTP_PROXY</span>=<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">7897</span><br><br><span class="hljs-attr">HTTP_PROXYs</span>=<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">7897</span><br></code></pre></td></tr></table></figure>
+
+<p>然鹅这样是拉去不了镜像的，一个很好的解决方法是，</p>
 <ul>
-<li><p>专用算法：为生成伪随机位流而专门设计。 </p>
-</li>
-<li><p>基于现有密码算法的算法：密码算法会随机化输入数据。</p>
-<ul>
-<li>对称分组密码、</li>
-<li>哈希函数</li>
-<li>消息验证码</li>
-</ul>
+<li><p>关掉系统代理，开启虚拟网卡模式，这样的坏处可能就是下东西卡了点。</p>
+<p><img src="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-08-08-220336.7lkb75nvtm.png" srcset="/img/loading.gif" lazyload alt="image-20250808221124189"></p>
 </li>
 </ul>
-<h2 id="专用算法"><a href="#专用算法" class="headerlink" title="专用算法"></a>专用算法</h2><h3 id="LCG-线性同余生成器"><a href="#LCG-线性同余生成器" class="headerlink" title="LCG(线性同余生成器)"></a>LCG(线性同余生成器)</h3><p>$x_{n+1}&#x3D;(aX_n+b)mod m$</p>
-<blockquote>
-<p>m，是模量，a是乘数，b是增量</p>
-<p>$X_n&#x3D;(a^{-1}(X_{n+1}-b))mod m$</p>
-<p>$a≡(X_{n+1}−b)⋅X_n^{−1}(modM)$或$a &#x3D; (X_{n+2} - X_{n+1})(X_{n+1} - X_n)^{-1} (mod m)$</p>
-<p>$b &#x3D; X_{n+1} - aX_n (mod m)$</p>
-<p>设$t_n &#x3D; X_{n+1}- X_n$<br>$t_n &#x3D; (aX_n+b) - (aX_{n-1}+b) &#x3D; at_{n-1}(mod m)$<br>$t_{n+1}t_{n-1} - t_nt_n &#x3D; (aat_{n-1}t_{n-1} - at_{n-1}at_{n-1}) &#x3D; 0 (mod m)$<br>即$T_n &#x3D; t_n+1t_{n-1} - t_nt_n$是m的倍数，求Tn , Tn-1最大公因数即为m<br>$m &#x3D; gcd((t_{n+1}t_{n-1} - t_nt_n) , (t_nt_{n-2} - t_{n-1}t_{n-1}))$</p>
-</blockquote>
-<h3 id="BBS生成器"><a href="#BBS生成器" class="headerlink" title="BBS生成器"></a>BBS生成器</h3>
+<p>在clashverge里面可以调整。</p>
+<p>之后就可以拉去了</p>
+
                 
               </div>
             
@@ -322,6 +316,13 @@
             <div>
               <div class="post-metas my-3">
   
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%B7%A5%E5%85%B7%E9%85%8D%E7%BD%AE/" class="print-no-link">#工具配置</a>
+      
+    </div>
   
 </div>
 
@@ -331,8 +332,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div></div>
-      <div>http://example.com/2025/01/11/伪随机数生成器(PRNG)/</div>
+      <div>docker-desktop 代理冲突问题解决方式</div>
+      <div>http://example.com/2025/08/08/docker-desktop-代理冲突问题解决方式/</div>
     </div>
     <div class="license-meta">
       
@@ -344,7 +345,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Veröffentlicht am</div>
-          <div>January 11, 2025</div>
+          <div>August 8, 2025</div>
         </div>
       
       
@@ -376,18 +377,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/01/23/copper/" title="coppersmith方法相关">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">coppersmith方法相关</span>
-                        <span class="visible-mobile">Vorheriger</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/01/09/z3-LCG/" title="楚慧杯(原题杯)抽象lcg">
-                        <span class="hidden-mobile">楚慧杯(原题杯)抽象lcg</span>
+                      <a href="/2025/07/20/%E8%BF%87%E7%A8%8B%E8%A7%A3%E6%9E%90/" title="CVE-2021-3711的原理解析以及简单复现">
+                        <span class="hidden-mobile">CVE-2021-3711的原理解析以及简单复现</span>
                         <span class="visible-mobile">Nächster</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
