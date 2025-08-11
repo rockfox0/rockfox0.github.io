@@ -19,20 +19,22 @@
   <meta name="author" content="fox">
   <meta name="keywords" content="菜菜的密码劳弟">
   
-    <meta name="description" content="这是FOx的密码和其他开发互联网开发学习记录">
+    <meta name="description" content="LMT&amp;ZJH 粒子爱心 + 点击字母    body {     margin: 0;     background: black;     overflow: hidden;   }   canvas {     display: block;   }      const canvas &#x3D; document.getElementById(&quot;canvas&quot;); const ctx &#x3D;">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Rockfox的密码记录">
-<meta property="og:url" content="http://example.com/page/3/index.html">
+<meta property="og:title" content="page.title">
+<meta property="og:url" content="http://example.com/sourcelmt_heart/index.html">
 <meta property="og:site_name" content="Rockfox的密码记录">
-<meta property="og:description" content="这是FOx的密码和其他开发互联网开发学习记录">
+<meta property="og:description" content="LMT&amp;ZJH 粒子爱心 + 点击字母    body {     margin: 0;     background: black;     overflow: hidden;   }   canvas {     display: block;   }      const canvas &#x3D; document.getElementById(&quot;canvas&quot;); const ctx &#x3D;">
 <meta property="og:locale">
+<meta property="article:published_time" content="2025-08-11T19:17:32.611Z">
+<meta property="article:modified_time" content="2025-08-11T19:17:32.611Z">
 <meta property="article:author" content="fox">
 <meta property="article:tag" content="菜菜的密码劳弟">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>Rockfox的密码记录</title>
+  <title>page.title - Rockfox的密码记录</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -86,7 +88,7 @@
   <header>
     
 
-<div class="header-inner" style="height: 100vh;">
+<div class="header-inner" style="height: 80vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
@@ -198,13 +200,13 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.jpg') no-repeat center center; background-size: cover;">
+     style="background: url('/img/R-C.jpg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="一天竟然有24个小时！！！"></span>
+            <span id="subtitle" data-typed-text="page.title"></span>
           
         </div>
 
@@ -228,91 +230,241 @@
     
       <div class="container nopadding-x-md">
         <div id="board"
-          style="margin-top: 0">
+          >
           
           <div class="container">
             <div class="row">
               <div class="col-12 col-md-10 m-auto">
                 
 
+<article class="page-content">
+  <!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8" />
+<title>LMT&ZJH 粒子爱心 + 点击字母</title>
+<style>
+  body {
+    margin: 0;
+    background: black;
+    overflow: hidden;
+  }
+  canvas {
+    display: block;
+  }
+</style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<script>
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+let W, H;
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+window.addEventListener("resize", resize);
+resize();
 
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2024/01/16/ECC_sign_inmd/" target="_self">
-          weil pairing
-        </a>
-      </h2>
+const particles = [];
+const targetPoints = [];
+const stars = [];
 
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2024/01/16/ECC_sign_inmd/" target="_self">
-        <div>
-          Weil paIring 前言  编者对群的了解比较基础，可能一些证明不太会 借鉴crypt03-15.tex.dvi 双线性映射 在数学中，一个双线性映射是由两个向量空间上的元素，生成第三个向量空间上一个元素之函数，并且该函数对每个参数都是线性的。例如矩阵乘法就是一个例子。  线性性   x,x’∈V,y’∈W,以及标量a,b为整数，双线性映射$f:V×W→K$ 必须满足:  $f(ax+bx’
-        </div>
-      </a>
+const letters = ['L', 'M', 'T', 'Z', 'J', 'H'];
+const floatingTexts = [];
 
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2024-01-16 15:59" pubdate>
-              2024-01-16
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
+// 星空背景
+for (let i = 0; i < 200; i++) {
+  stars.push({
+    x: Math.random() * W,
+    y: Math.random() * H,
+    r: Math.random() * 1.5,
+    s: Math.random() * 0.5 + 0.2
+  });
+}
 
-<span class="category-chains">
+// 采集形状像素点（文字或爱心）
+function collectPoints(drawShape) {
+  const tempCanvas = document.createElement("canvas");
+  const tempCtx = tempCanvas.getContext("2d");
+  tempCanvas.width = W;
+  tempCanvas.height = H;
+
+  drawShape(tempCtx);
+
+  const imgData = tempCtx.getImageData(0, 0, W, H).data;
+  const points = [];
+  for (let y = 0; y < H; y += 3) {
+    for (let x = 0; x < W; x += 3) {
+      const index = (y * W + x) * 4;
+      if (imgData[index + 3] > 128) {
+        points.push({ x, y });
+      }
+    }
+  }
+  return points;
+}
+
+// 绘制文字
+function drawText(ctx) {
+  ctx.fillStyle = "white";
+  ctx.font = "bold 160px Arial";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText("LMT&ZJH", W / 2, H / 2 - 250);
+}
+
+// 绘制爱心
+function drawHeart(ctx) {
+  ctx.fillStyle = "white";
+  ctx.beginPath();
+  ctx.translate(W / 2, H / 2);
+  ctx.scale(60, 60);
+  ctx.moveTo(0, -2);
+  ctx.bezierCurveTo(2, -4, 4, 0, 0, 3);
+  ctx.bezierCurveTo(-4, 0, -2, -4, 0, -2);
+  ctx.fill();
+}
+
+// 获取目标点
+const textPoints = collectPoints(drawText);
+const heartPoints = collectPoints(drawHeart);
+targetPoints.push(...textPoints, ...heartPoints);
+
+// 粒子类
+class Particle {
+  constructor(x, y, tx, ty) {
+    this.x = x;
+    this.y = y;
+    this.tx = tx;
+    this.ty = ty;
+    this.vx = 0;
+    this.vy = 0;
+    this.color = `hsl(${Math.random() * 360},100%,60%)`;
+  }
+  update() {
+    this.vx += (this.tx - this.x) * 0.004;
+    this.vy += (this.ty - this.y) * 0.004;
+    this.vx *= 0.9;
+    this.vy *= 0.9;
+    this.x += this.vx;
+    this.y += this.vy;
+  }
+  draw() {
+    ctx.fillStyle = this.color;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, 2.2, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+
+// 点击生成漂浮字母类
+class FloatingText {
+  constructor(x, y, letter) {
+    this.x = x;
+    this.y = y;
+    this.letter = letter;
+    this.alpha = 1;
+    this.size = 30 + Math.random() * 20;
+    this.colorHue = Math.random() * 360;
+    this.vy = 0.7 + Math.random() * 0.3; // 向上漂浮速度
+  }
+  update() {
+    this.y -= this.vy;
+    this.alpha -= 0.01;
+  }
+  draw() {
+    ctx.font = `bold ${this.size}px Arial`;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillStyle = `hsla(${this.colorHue}, 100%, 70%, ${this.alpha})`;
+    ctx.shadowColor = `hsla(${this.colorHue}, 100%, 70%, ${this.alpha})`;
+    ctx.shadowBlur = 10;
+    ctx.fillText(this.letter, this.x, this.y);
+    ctx.shadowBlur = 0;
+  }
+  isDead() {
+    return this.alpha <= 0;
+  }
+}
+
+// 初始化粒子
+targetPoints.forEach(p => {
+  particles.push(
+    new Particle(Math.random() * W, Math.random() * H, p.x, p.y)
+  );
+});
+
+let scatter = false;
+setInterval(() => {
+  scatter = !scatter;
+  if (scatter) {
+    particles.forEach(p => {
+      p.tx = Math.random() * W;
+      p.ty = Math.random() * H;
+    });
+  } else {
+    targetPoints.forEach((t, i) => {
+      particles[i].tx = t.x;
+      particles[i].ty = t.y;
+    });
+  }
+}, 3000);
+
+// 点击事件，生成漂浮字母
+canvas.addEventListener("click", e => {
+  const rect = canvas.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  const letter = letters[Math.floor(Math.random() * letters.length)];
+  floatingTexts.push(new FloatingText(x, y, letter));
+});
+
+// 星空背景
+function drawStars() {
+  ctx.fillStyle = "black";
+  ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = "white";
+  stars.forEach(star => {
+    ctx.beginPath();
+    ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
+    ctx.fill();
+    star.x += star.s;
+    if (star.x > W) star.x = 0;
+  });
+}
+
+// 动画循环
+function animate() {
+  drawStars();
+
+  particles.forEach(p => {
+    p.update();
+    p.draw();
+  });
+
+  // 更新和绘制漂浮文字，清理消失的
+  for (let i = floatingTexts.length - 1; i >= 0; i--) {
+    const ft = floatingTexts[i];
+    ft.update();
+    ft.draw();
+    if (ft.isDead()) {
+      floatingTexts.splice(i, 1);
+    }
+  }
+
+  requestAnimationFrame(animate);
+}
+animate();
+</script>
+</body>
+</html>
+
+
   
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/crypto/" class="category-chain-item">crypto</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/crypto/ecc/" class="category-chain-item">ecc</a>
-  
-  
 
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Hexo/">#Hexo</a>
-            
-              <a href="/tags/crypto/">#crypto</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-
-
-  <nav aria-label="navigation">
-    <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/page/2/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/#board">2</a><span class="page-number current">3</span>
-    </span>
-  </nav>
+</article>
 
 
 
