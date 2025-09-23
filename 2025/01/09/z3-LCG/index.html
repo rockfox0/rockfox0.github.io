@@ -27,7 +27,7 @@
 <meta property="og:description" content="DASCTF(2024楚慧杯原题杯)的一道抽象lcg做题过程一些吐槽为什么翻遍全网都没有这道题wp，对于真菜的我，手搓有点难泵 做题过程12345678910111213141516171819202122from Crypto.Util.number import *from random import *from secret import flagLENGTH &#x3D; 512RATIO &#x3D; 0.">
 <meta property="og:locale">
 <meta property="article:published_time" content="2025-01-08T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-03-05T13:36:07.963Z">
+<meta property="article:modified_time" content="2025-09-15T04:11:05.739Z">
 <meta property="article:author" content="fox">
 <meta property="article:tag" content="crypto">
 <meta property="article:tag" content="python">
@@ -120,7 +120,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/" target="_self">
                 <i class="iconfont icon-home-fill"></i>
-                <span>Startseite</span>
+                <span>Home</span>
               </a>
             </li>
           
@@ -132,7 +132,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/archives/" target="_self">
                 <i class="iconfont icon-archive-fill"></i>
-                <span>Archiv</span>
+                <span>Archives</span>
               </a>
             </li>
           
@@ -144,7 +144,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/categories/" target="_self">
                 <i class="iconfont icon-category-fill"></i>
-                <span>Kategorien</span>
+                <span>Categories</span>
               </a>
             </li>
           
@@ -156,7 +156,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/tags/" target="_self">
                 <i class="iconfont icon-tags-fill"></i>
-                <span>Schlagwörter</span>
+                <span>Tags</span>
               </a>
             </li>
           
@@ -168,7 +168,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/about/" target="_self">
                 <i class="iconfont icon-user-fill"></i>
-                <span>Über</span>
+                <span>About</span>
               </a>
             </li>
           
@@ -180,7 +180,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/links/" target="_self">
                 <i class="iconfont icon-link-fill"></i>
-                <span>Weblinks</span>
+                <span>Links</span>
               </a>
             </li>
           
@@ -237,7 +237,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          639 wörter
+          655 words
         
       </span>
     
@@ -248,7 +248,7 @@
         
         
         
-          6 minuten
+          6 mins
         
       </span>
     
@@ -311,6 +311,9 @@
 <p>Extract这一部分是定义起始和结束位置</p>
 </blockquote>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> z3 <span class="hljs-keyword">import</span> *<br><br><br>num = [BitVec(<span class="hljs-string">f&#x27;num[<span class="hljs-subst">&#123;i&#125;</span>]&#x27;</span>, <span class="hljs-number">512</span>) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">64</span>)]<span class="hljs-comment">#有点像二维数组，是重点得理解一下,512这里是num[i]一个的大小。我们定义j</span><br><br><br>a = <span class="hljs-number">7048435472566573813031570507837890091364947084306630050544242220147807292350445564322172244244726206563452305566866223414437853917448623276909090327076693</span><br>b = <span class="hljs-number">9204853069421046007176344891235245198607052139715825810823076231566533652655127030214860066312526149219510111657539481375881111759200483396551737326166933</span><br>M = <span class="hljs-number">2</span>**<span class="hljs-number">512</span><br>c = <span class="hljs-number">168815802663712138791999335515513916578434659976069633486645257813364375941625207868153496481655635421252190634818222465004994343266249958687663356753760620029589052494330932123212</span><br>A=[]<br><br>s=Solver()<br><br>seed = []<br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">64</span>):<br>    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">512</span>):<br>        <span class="hljs-keyword">if</span> A[i][j] == <span class="hljs-string">&#x27;0&#x27;</span>:<br>            s.add(Extract(<span class="hljs-number">511</span>-j, <span class="hljs-number">511</span>-j, num[i]) == <span class="hljs-number">0</span>)<br>        <span class="hljs-keyword">elif</span> A[i][j] == <span class="hljs-string">&#x27;1&#x27;</span>:<br>            s.add(Extract(<span class="hljs-number">511</span>-j, <span class="hljs-number">511</span>-j, num[i]) == <span class="hljs-number">1</span>)<span class="hljs-comment">#定义替换位置</span><br><br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">63</span>):<br>    s.add(num[i+<span class="hljs-number">1</span>] == (a * num[i] + b) % M)<br><br><span class="hljs-keyword">if</span> s.check() == sat:<br><br>    model = s.model()<br>    Seed=model[num[<span class="hljs-number">0</span>]]<br>    <span class="hljs-built_in">print</span>(Seed)<br>然后<br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">3109110488358343346016940967694590460203057088734099480714916540569545873216239855284197469883314735576988812243170940490083088872700634135415701390964362</span><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br>a_1 = <span class="hljs-built_in">pow</span>(a, -<span class="hljs-number">1</span>, M)<br>seed = (a_1 * (Seed - b)) % M<br>m = c ^ seed<br><span class="hljs-built_in">print</span>(long_to_bytes(m))<br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">b&#x27;DASCTF&#123;0n\x85\xb8\xffU_know_th3_polynomial_0F_D47a_you_can_m@ke_Use_of_Leak_bits!&#125;&#x27;</span><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p>[b1 &#x3D; 7460389551079554387122271298325611265784698986736547147823340219048332254455805157908674848837957142308219634256824129290019180206444308088064508250516905,<br> num[0] &#x3D; 10599409846929758704844986735870774340904454393976179873952790083232713828736193252683701451023941027317069154823211494649607196952725636764499584998762813,<br> a1 &#x3D; 10228317474636303335053552404814053657805411067027231406728234220672759592055253789577953699468140093930405966764784406346333080866081688685493755751657173,<br> num[1] &#x3D; 24715322907153490101674157028995424681990970744363521182307796271708772855332488892418033987973193397256803702333506924197248506511038425386617004996006]</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abnf"><span class="hljs-attribute">seed</span>   <span class="hljs-operator">=</span> <span class="hljs-number">648254584003525981818930468973202332901541704221939528419904023118741124029145595498816604196232397997140883705942729644556700319454263171710181925557358</span><br></code></pre></td></tr></table></figure>
                 
               </div>
             
@@ -372,20 +375,20 @@
     <div class="license-meta">
       
         <div class="license-meta-item">
-          <div>Beitragsautor</div>
+          <div>Author</div>
           <div>fox</div>
         </div>
       
       
         <div class="license-meta-item license-meta-date">
-          <div>Veröffentlicht am</div>
+          <div>Posted on</div>
           <div>January 9, 2025</div>
         </div>
       
       
       
         <div class="license-meta-item">
-          <div>Urheberrechtshinweis</div>
+          <div>Licensed under</div>
           <div>
             
               
@@ -414,7 +417,7 @@
                       <a href="/2025/01/11/%E4%BC%AA%E9%9A%8F%E6%9C%BA%E6%95%B0%E7%94%9F%E6%88%90%E5%99%A8(PRNG)/" title="">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile"></span>
-                        <span class="visible-mobile">Vorheriger</span>
+                        <span class="visible-mobile">Previous</span>
                       </a>
                     
                   </article>
@@ -423,7 +426,7 @@
                     
                       <a href="/2024/12/29/DSA%E7%AD%BE%E5%90%8D%E7%AE%97%E6%B3%95/" title="DSA签名算法">
                         <span class="hidden-mobile">DSA签名算法</span>
-                        <span class="visible-mobile">Nächster</span>
+                        <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
                     
@@ -444,7 +447,7 @@
     <div id="toc">
   <p class="toc-header">
     <i class="iconfont icon-list"></i>
-    <span>Inhaltsverzeichnis</span>
+    <span>Table of Contents</span>
   </p>
   <div class="toc-body" id="toc-body"></div>
 </div>
@@ -506,7 +509,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -514,7 +517,7 @@
       <div class="modal-body mx-3">
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v" for="local-search-input">Stichwort</label>
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
@@ -735,7 +738,7 @@
   
 
   <noscript>
-    <div class="noscript-warning">Blog funktioniert am besten mit aktiviertem JavaScript</div>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
   </noscript>
 </body>
 </html>

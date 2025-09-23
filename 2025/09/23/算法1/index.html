@@ -1,0 +1,749 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/OIP-C.jpg">
+  <link rel="icon" href="/img/OIP-C.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="fox">
+  <meta name="keywords" content="菜菜的密码劳弟">
+  
+    <meta name="description" content="前言   湾区杯的密码题虽然很像之前在楚惠杯遇到的题目，但是明显约束更少，而且z3工具虽然是专为线性约束诞生，但是不适合用来做多解。还是得学一下动态规划等等算法，希望以后不当脚本小子，TT  递归 所有的编程课程都会给你将这个，个人有一些脚本小子，没怎么使用过这方面的。递归（英语：Recursion），又译为递回，在数学与计算机科学中，是指在函数的定义中使用函数自身的方法。递归一词还较常用于描述">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法基础1">
+<meta property="og:url" content="http://example.com/2025/09/23/%E7%AE%97%E6%B3%951/index.html">
+<meta property="og:site_name" content="Rockfox的密码记录">
+<meta property="og:description" content="前言   湾区杯的密码题虽然很像之前在楚惠杯遇到的题目，但是明显约束更少，而且z3工具虽然是专为线性约束诞生，但是不适合用来做多解。还是得学一下动态规划等等算法，希望以后不当脚本小子，TT  递归 所有的编程课程都会给你将这个，个人有一些脚本小子，没怎么使用过这方面的。递归（英语：Recursion），又译为递回，在数学与计算机科学中，是指在函数的定义中使用函数自身的方法。递归一词还较常用于描述">
+<meta property="og:locale">
+<meta property="article:published_time" content="2025-09-23T04:00:00.000Z">
+<meta property="article:modified_time" content="2025-09-23T10:52:38.912Z">
+<meta property="article:author" content="fox">
+<meta property="article:tag" content="crypto">
+<meta property="article:tag" content="io">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>算法基础1 - Rockfox的密码记录</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":40,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 100vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>fox的密码学习记录</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>Links</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/syc.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="算法基础1"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-09-23 12:00" pubdate>
+          September 23, 2025 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.3k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          19 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">算法基础1</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <ul>
+<li>前言</li>
+</ul>
+<blockquote>
+<p>湾区杯的密码题虽然很像之前在楚惠杯遇到的题目，但是明显约束更少，而且z3工具虽然是专为线性约束诞生，但是不适合用来做多解。还是得学一下动态规划等等算法，希望以后不当脚本小子，TT</p>
+</blockquote>
+<h2 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h2><ul>
+<li><p>所有的编程课程都会给你将这个，个人有一些脚本小子，没怎么使用过这方面的。<br><strong>递归</strong>（英语：Recursion），又译为<strong>递回</strong>，在<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%95%B0%E5%AD%A6" title="数学">数学</a>与<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6" title="计算机科学">计算机科学</a>中，是指在<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%87%BD%E6%95%B0" title="函数">函数</a>的定义中使用函数自身的方法。递归一词还较常用于描述以<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%87%AA%E7%9B%B8%E4%BC%BC" title="自相似">自相似</a>方法重复事物的过程。例如，当两面镜子相互之间近似平行时，镜中嵌套的图像是以无限递归的形式出现的。也可以理解为自我复制的过程。</p>
+</li>
+<li><p>在最开始的时候我一般把递归理解称一种套娃。现在我也是这么想的，但是在长时间的学习会发现，如果只是对一个东西的大致概念有理解，看得懂也就是顶天了，想要实操，必须对其有一定的深入理解。</p>
+</li>
+<li><p>示例</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main  <br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span>  <br>  <br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">rcn</span><span class="hljs-params">(n <span class="hljs-type">int</span>)</span></span> <span class="hljs-type">int</span> &#123;  <br>    <span class="hljs-keyword">if</span> n == <span class="hljs-number">0</span> || n == <span class="hljs-number">1</span> &#123;  <br>       <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>  <br>    &#125; <span class="hljs-keyword">else</span> &#123;  <br>       a := n * rcn(n<span class="hljs-number">-1</span>)  <br>       <span class="hljs-keyword">return</span> a  <br>    &#125;  <br>&#125;  <br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;  <br>    a := rcn(<span class="hljs-number">5</span>)  <br>    fmt.Println(a)  <br>  <br>&#125;<br></code></pre></td></tr></table></figure>
+<p>通过调试我们可以发现，递归是把函数先一次次的运算到底部界限，再一步步的倒退回去。具体可以参考一下堆的先进后出。<br>![[Pasted image 20250918002534.png]]<br>在这里打两个断点，调试过程中你会发现，<br>n….1变化之后再继续弹出a的，<br>$f(n)&#x3D;n*(n-1)<em>(n-2)</em>…<em>1$<br>$f(n)&#x3D;n</em>f(n-1)$<br>$f(n-1)&#x3D;(n-1)<em>f(n-2)$<br>以此类推到，n-1。.可以发现这其实比较像小学二年级学过的数列。<br>$f(3)&#x3D;3</em>f(2)$ ……<br>然后计算f(1)…,f(2),…f(n)<br>接下来我们用经典的扩展欧几里得算法作为示例</p>
+</li>
+<li><p>先推理出递归的大致结构</p>
+</li>
+</ul>
+<blockquote>
+<p>扩展欧几里得是基于，$gcd(a,b)&#x3D;gcd(b,r)$ 其中 $r&#x3D;a(mod~b)$<br>肯定有$a<em>x+b</em>y&#x3D;gcd(a,b)$ ，那么有<br>$b<em>x_1+(a-qb)<em>y_1&#x3D;gcd(a,b)$<br>$a</em>y_1+b</em>(x_1-qy_1)$ &#x3D;gcd(a,b)<br>所以$x&#x3D;y_1,y&#x3D;x_1-qy_1$<br>我们可以先一步步递归到最后一步，再倒回去得到x,y。</p>
+</blockquote>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">extend_gcd</span><span class="hljs-params">(a, b <span class="hljs-type">int</span>)</span></span> (<span class="hljs-type">int</span>, <span class="hljs-type">int</span>, <span class="hljs-type">int</span>) &#123;  <br>    <span class="hljs-keyword">if</span> b == <span class="hljs-number">0</span> &#123;  <br>       <span class="hljs-keyword">return</span> a, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>  <br>    &#125;  <br>    gcd, x1, y1 := extend_gcd(b, a%b)  <br>    x := y1  <br>    y := x1 - (a/b)*y1  <br>    <span class="hljs-keyword">return</span> gcd, x, y  <br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="DFS-深度搜索"><a href="#DFS-深度搜索" class="headerlink" title="DFS(深度搜索)"></a>DFS(深度搜索)</h2><p>来自wiki的介绍。</p>
+<blockquote>
+<p>DFS全称Depth First Search ,中文名是深度优先搜索，是一种用于遍历或搜索属或图的算法。所谓深度优先，就是说每次都尝试向更深的节点走。<br>当然还有一个东西叫广度优先(BFS),没有遇到过挖个坑</p>
+</blockquote>
+<h3 id="过程解析"><a href="#过程解析" class="headerlink" title="过程解析"></a>过程解析</h3><p>DFS的特在是建立在栈之上的，DFS本身可以通过栈的先进后出的特性来实现的，这里我们利用递归栈的特性来实现。这个是基于数据结构的图论的，福克斯这方面比较菜，理解的话是用调试对这理解的。<br>tips:当你看不懂一个代码的时候使用调试功能。<br>我们还是利用一个栗子</p>
+<h4 id="示例题目"><a href="#示例题目" class="headerlink" title="示例题目"></a>示例题目</h4><p>给定一个整数n,将数字1~n排成一排，将会有很多排列方法。<br>现在请你按照字典序将所有的排列方法输出<br>我们利用递归的结构。一步一步的得到结果之后达到底部后再回溯。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main  <br>  <br><span class="hljs-keyword">import</span> (  <br>    <span class="hljs-string">&quot;fmt&quot;</span>  <br>    <span class="hljs-string">&quot;strings&quot;</span>)  <br>  <br><span class="hljs-keyword">const</span> N = <span class="hljs-number">10</span>  <br>  <br><span class="hljs-keyword">var</span> (  <br>    ans     [N]<span class="hljs-type">int</span>  <span class="hljs-comment">// 暂存一个排列  </span><br>    mark    [N]<span class="hljs-type">bool</span> <span class="hljs-comment">// 标记用过的数  </span><br>    n       <span class="hljs-type">int</span>  <br>    results []<span class="hljs-type">string</span> <span class="hljs-comment">//  </span><br>)  <br>  <br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">dfs</span><span class="hljs-params">(u <span class="hljs-type">int</span>)</span></span> &#123;  <br>    <span class="hljs-comment">// 到达末尾，保存一个排列  </span><br>    <span class="hljs-keyword">if</span> u == n &#123;  <br>       <span class="hljs-keyword">var</span> b strings.Builder  <br>       <span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; n; i++ &#123;  <br>          fmt.Fprintf(&amp;b, <span class="hljs-string">&quot;%d &quot;</span>, ans[i])  #将数组写入字符串b<br>       &#125;  <br>       results = <span class="hljs-built_in">append</span>(results, b.String())  <br>       <span class="hljs-keyword">return</span>  <br>    &#125;  <br>  <br>    <span class="hljs-keyword">for</span> i := <span class="hljs-number">1</span>; i &lt;= n; i++ &#123;  <br>       <span class="hljs-keyword">if</span> !mark[i] &#123;  <br>          mark[i] = <span class="hljs-literal">true</span>  <br>          ans[u] = i  <br>          dfs(u + <span class="hljs-number">1</span>)  <br>          <span class="hljs-comment">// 复原  </span><br>          mark[i] = <span class="hljs-literal">false</span>  <br>          ans[u] = <span class="hljs-number">0</span>  <br>       &#125;  <br>    &#125;  <br>&#125;  <br>  <br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;  <br>    fmt.Scan(&amp;n)  <br>    dfs(<span class="hljs-number">0</span>)  #(初始化长度为<span class="hljs-number">0</span>)<br>  <br>    <span class="hljs-comment">// 统一输出  </span><br>    <span class="hljs-keyword">for</span> _, line := <span class="hljs-keyword">range</span> results &#123;  <br>       fmt.Println(line)  <br>    &#125;  <br>&#125;<br></code></pre></td></tr></table></figure>
+<p>利用递归的特性实现深度搜索，当u&#x3D;n开始退回，退回有合适的条件继续搜索。</p>
+<h2 id="湾区杯-PRNG"><a href="#湾区杯-PRNG" class="headerlink" title="湾区杯-PRNG"></a>湾区杯-PRNG</h2><figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><code class="hljs dns">from Crypto.Util.number import *<br>from Crypto.Cipher import AES<br>from Crypto.Util.Padding import pad<br>from hashlib import md5<br>from secret import flag<br>import random<br><br>assert flag.startswith(b&quot;flag&#123;&quot;)<br><br><br>class LCG:<br>    def __init__(self, seed, a, b, m):<br>        self.seed = seed<br>        self.a = a<br>        self.b = b<br>        self.m = m<br><br>    def next(self):<br>        self.seed = (self.seed**<span class="hljs-number">2</span> * self.a + self.b) % self.m<br>        return self.seed<br><br><br>p = <span class="hljs-number">2</span>**<span class="hljs-number">512</span><br>a = getPrime(<span class="hljs-number">512</span>)<br>b = getPrime(<span class="hljs-number">512</span>)<br>seed = getRandomRange(<span class="hljs-number">1</span>, p)<br>cipher = AES.new(key=md5(long_to_bytes(seed)).digest(), mode=AES.MODE_CTR)<br>L = LCG(seed, a, b, p)<br><br>def replace_with_question_marks(input_str, probability):<br>    if not input_str:<br>        return input_str<br>    length = len(input_str)<br>    indices = set()<br>    while len(indices) &lt; int(length * probability):<br>        indices.add(random.randint(<span class="hljs-number">0</span>, length - <span class="hljs-number">1</span>))<br><br>    output_str = list(input_str)<br>    for index in indices:<br>        output_str[index] = &quot;?&quot;<br><br>    return &quot;&quot;.join(output_str)<br><br><br>def replace_some_content():<br>    bin_a = bin(a)[<span class="hljs-number">2</span>:].zfill(<span class="hljs-number">512</span>)<br>    bin_b = bin(b)[<span class="hljs-number">2</span>:].zfill(<span class="hljs-number">512</span>)<br>    bin_first_next = bin(L.next())[<span class="hljs-number">2</span>:].zfill(<span class="hljs-number">512</span>)<br>    bin_second_next = bin(L.next())[<span class="hljs-number">2</span>:].zfill(<span class="hljs-number">512</span>)<br><br>    bin_a_replaced = replace_with_question_marks(bin_a, <span class="hljs-number">0</span>.<span class="hljs-number">19</span>)<br>    bin_b_replaced = replace_with_question_marks(bin_b, <span class="hljs-number">0</span>.<span class="hljs-number">19</span>)<br>    bin_first_next_replaced = replace_with_question_marks(bin_first_next, <span class="hljs-number">0</span>.<span class="hljs-number">19</span>)<br>    bin_second_next_replaced = replace_with_question_marks(bin_second_next, <span class="hljs-number">0</span>.<span class="hljs-number">19</span>)<br><br>    print(bin_a_replaced)<br>    print(bin_b_replaced)<br>    print(bin_first_next_replaced)<br>    print(bin_second_next_replaced)<br>    print(cipher.encrypt(pad(flag, <span class="hljs-number">16</span>)))<br>    print(cipher.nonce)<br><br><br>replace_some_content()<br><br><br># a = &quot;<span class="hljs-number">1100001101001</span>?<span class="hljs-number">101111100</span>?<span class="hljs-number">01110001010011</span>?<span class="hljs-number">1</span>???<span class="hljs-number">11</span>???<span class="hljs-number">01000011100101010100101</span>??<span class="hljs-number">011?01?00</span>?<span class="hljs-number">0?000110000</span>?<span class="hljs-number">01?01010</span>?<span class="hljs-number">10101</span>?<span class="hljs-number">1101010100010011</span>?<span class="hljs-number">101010010000</span>?<span class="hljs-number">10110</span>??<span class="hljs-number">10100?000</span>?<span class="hljs-number">1</span>?<span class="hljs-number">11</span>?<span class="hljs-number">10</span>???<span class="hljs-number">0</span>?<span class="hljs-number">1111</span>?<span class="hljs-number">1000100100</span>?<span class="hljs-number">1110111010?0</span>?<span class="hljs-number">01</span>?<span class="hljs-number">00?11?0011</span>?<span class="hljs-number">0101101</span>?<span class="hljs-number">100000?1</span>??<span class="hljs-number">0101010?1</span>?<span class="hljs-number">101?1001</span>?<span class="hljs-number">0011110</span>??<span class="hljs-number">0000000</span>?<span class="hljs-number">00100</span>?<span class="hljs-number">1010011100001111111001</span>?<span class="hljs-number">10</span>?<span class="hljs-number">001</span>??<span class="hljs-number">0110001111</span>?<span class="hljs-number">100110000110011011</span>?<span class="hljs-number">111101?1</span>??<span class="hljs-number">1010101101?01</span>?<span class="hljs-number">0000011</span>?<span class="hljs-number">1111001</span>?<span class="hljs-number">000111</span>??<span class="hljs-number">1</span>??<span class="hljs-number">00010</span>?<span class="hljs-number">10011001</span>?<span class="hljs-number">000110000</span>??<span class="hljs-number">10</span>?<span class="hljs-number">10100000100</span>?<span class="hljs-number">10?1101111?101</span>?<span class="hljs-number">001</span>??<span class="hljs-number">00?01111</span>???<span class="hljs-number">01</span>??<span class="hljs-number">1?10100</span>??<span class="hljs-number">0101?011</span>?<span class="hljs-number">1000?011101</span>?<span class="hljs-number">110</span>???<span class="hljs-number">0110111011</span>?<span class="hljs-number">101</span>?<span class="hljs-number">1</span>&quot;<br># b = &quot;<span class="hljs-number">1000</span>?<span class="hljs-number">11?0111000</span>?<span class="hljs-number">1001</span>??<span class="hljs-number">11</span>?<span class="hljs-number">1100?001</span>?<span class="hljs-number">0</span>?<span class="hljs-number">0111011011100</span>?<span class="hljs-number">0?110?11111</span>?<span class="hljs-number">1?0?111100</span>?<span class="hljs-number">0111</span>???<span class="hljs-number">01?001100</span>?<span class="hljs-number">000?001</span>??<span class="hljs-number">0110</span>??<span class="hljs-number">0</span>?<span class="hljs-number">001000000110</span>?<span class="hljs-number">0100?01100</span>?<span class="hljs-number">001000011</span>?<span class="hljs-number">01001000011010100</span>?<span class="hljs-number">01110000001</span>??<span class="hljs-number">0000111</span>???<span class="hljs-number">101101?0100</span>?<span class="hljs-number">011</span>??<span class="hljs-number">010011?0</span>?<span class="hljs-number">100?0?111100</span>?<span class="hljs-number">00110000111</span>?<span class="hljs-number">10</span>???<span class="hljs-number">0?01?100</span>?<span class="hljs-number">1100</span>?<span class="hljs-number">0111001?11</span>?<span class="hljs-number">1110?011</span>?<span class="hljs-number">100101101?10</span>?<span class="hljs-number">0</span>??<span class="hljs-number">00010011?101</span>?<span class="hljs-number">111?110001100</span>?<span class="hljs-number">0</span>??<span class="hljs-number">0</span>?<span class="hljs-number">10</span>?<span class="hljs-number">11100100111</span>?<span class="hljs-number">100100001?0</span>?<span class="hljs-number">00000</span>??<span class="hljs-number">1101001</span>?<span class="hljs-number">010</span>?<span class="hljs-number">110000110</span>?<span class="hljs-number">0001101000010011001100</span>?<span class="hljs-number">010</span>?<span class="hljs-number">100000100001</span>?<span class="hljs-number">10100101110010000</span>?<span class="hljs-number">0111?0001</span>??<span class="hljs-number">1</span>?<span class="hljs-number">001100000010000</span>?<span class="hljs-number">011000</span>??<span class="hljs-number">0</span>?<span class="hljs-number">10?1001000100</span>???<span class="hljs-number">1100111?11</span>?<span class="hljs-number">11011010100</span>?&quot;<br># c1 = &quot;<span class="hljs-number">1100101001100</span>???<span class="hljs-number">1</span>??<span class="hljs-number">101100</span>?<span class="hljs-number">00101111</span>?<span class="hljs-number">000001011</span>?<span class="hljs-number">0</span>??<span class="hljs-number">0</span>?<span class="hljs-number">0</span>?<span class="hljs-number">1</span>??<span class="hljs-number">11?0001?1</span>?<span class="hljs-number">01111?0</span>?<span class="hljs-number">1100011101</span>?<span class="hljs-number">01011</span>??<span class="hljs-number">110011100001100100</span>???<span class="hljs-number">000101</span>?<span class="hljs-number">1011010100111110</span>?<span class="hljs-number">11?010111101</span>?<span class="hljs-number">0</span>?<span class="hljs-number">0110</span>?<span class="hljs-number">0100001</span>?<span class="hljs-number">000?1011</span>?<span class="hljs-number">111111111000001</span>?<span class="hljs-number">100000001011</span>?<span class="hljs-number">0110111</span>?<span class="hljs-number">11010010100</span>?<span class="hljs-number">10011110000</span>?<span class="hljs-number">0101</span>??<span class="hljs-number">1</span>?<span class="hljs-number">00001111010110</span>?<span class="hljs-number">00110001111011001</span>?<span class="hljs-number">0010110101100011111</span>?<span class="hljs-number">01?0000?0</span>?<span class="hljs-number">0011?0?101</span>??<span class="hljs-number">1111100?11</span>?<span class="hljs-number">11100010</span>???<span class="hljs-number">1?0?1?11</span>?<span class="hljs-number">1100</span>?<span class="hljs-number">1100010</span>?<span class="hljs-number">1111111011</span>?<span class="hljs-number">100100111?11</span>?<span class="hljs-number">11?1101?1</span>?<span class="hljs-number">1100111?01</span>?<span class="hljs-number">01111?11?0</span>??<span class="hljs-number">1111</span>?<span class="hljs-number">001000</span>?<span class="hljs-number">0000</span>?<span class="hljs-number">1</span>?<span class="hljs-number">010</span>?<span class="hljs-number">100111101</span>?<span class="hljs-number">01011?1?1</span>?<span class="hljs-number">111</span>?<span class="hljs-number">01</span>???<span class="hljs-number">01?1111?01</span>?????<span class="hljs-number">0</span>?<span class="hljs-number">001011000111010010</span>?<span class="hljs-number">111101</span>&quot;<br># c2 = &quot;<span class="hljs-number">00000000011</span>?<span class="hljs-number">1000110011</span>?<span class="hljs-number">001</span>???<span class="hljs-number">10011010?0</span>?<span class="hljs-number">01</span>?<span class="hljs-number">11010011010</span>??<span class="hljs-number">10010111</span>?<span class="hljs-number">1111?1000</span>?<span class="hljs-number">1</span>??<span class="hljs-number">11</span>?<span class="hljs-number">1111</span>??<span class="hljs-number">111</span>?<span class="hljs-number">1010001001111</span>?<span class="hljs-number">10?0111001</span>??<span class="hljs-number">101</span>?<span class="hljs-number">10000000101111110111</span>??<span class="hljs-number">11111?0?0</span>??<span class="hljs-number">10</span>?<span class="hljs-number">0101</span>?<span class="hljs-number">111001101000101</span>?<span class="hljs-number">00010?111</span>?<span class="hljs-number">1100111?0</span>?<span class="hljs-number">1110?1111</span>?<span class="hljs-number">0110</span>?<span class="hljs-number">11010110001100000111101</span>?<span class="hljs-number">010010</span>??<span class="hljs-number">0</span>??<span class="hljs-number">101?1001000</span>?<span class="hljs-number">010101?01110</span>?<span class="hljs-number">01001010001</span>?<span class="hljs-number">0</span>?<span class="hljs-number">01</span>?<span class="hljs-number">00</span>?<span class="hljs-number">0110100100</span>??<span class="hljs-number">10</span>?<span class="hljs-number">00</span>??<span class="hljs-number">1010111010010</span>??<span class="hljs-number">1?100110</span>?????<span class="hljs-number">01001</span>?<span class="hljs-number">001110101111</span>?<span class="hljs-number">1</span>?<span class="hljs-number">00?0?00101</span>?<span class="hljs-number">101?0?101</span>?<span class="hljs-number">110011?1</span>?<span class="hljs-number">00111100</span>??<span class="hljs-number">1</span>?<span class="hljs-number">1?00?1110</span>?<span class="hljs-number">010?110?00</span>?<span class="hljs-number">010011010001101</span>?<span class="hljs-number">00110101?1</span>??<span class="hljs-number">0010</span>?<span class="hljs-number">101111000</span>?<span class="hljs-number">11011101011</span>?<span class="hljs-number">0010010110000000110110101</span>??<span class="hljs-number">1</span>?<span class="hljs-number">011</span>?&quot;<br># enc = b&#x27;\xcb\xe0wY\xe3\\\xf7\xc8\x89/\x1c\xdb^P\xc09\xca\xcf\xe7\xa7\xa4\xb5\xaeQ\xc8K\xabg_\x8e\xfa?\xdc\xce9\xd7\x0en&quot;?\xc0\n\xe0hT+\xc0\x81&#x27;<br># nonce = b&#x27;n\x13\xd1\xdf\xb6]\xb5\xf7&#x27;<br></code></pre></td></tr></table></figure>
+<p>利用深搜加剪枝优化求解。<br>这里参考了一下小绿草密码ye的算法将，自己手搓了一遍。不过用z3也能做我试了一下但是效率会慢一些，不过我做的时候忘记給求二次剩余加上all_roots&#x3D;True了。绷不住了。但是z3确实不适合做这种求全解爆破的。</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><code class="hljs dns">import itertools  <br>import random  <br>from Crypto.Cipher import AES  <br>from Crypto.Util.number import *  <br>from hashlib import md5  <br>from sympy import sqrt_mod  <br>a = &quot;<span class="hljs-number">1100001101001</span>?<span class="hljs-number">101111100</span>?<span class="hljs-number">01110001010011</span>?<span class="hljs-number">1</span>???<span class="hljs-number">11</span>???<span class="hljs-number">01000011100101010100101</span>??<span class="hljs-number">011?01?00</span>?<span class="hljs-number">0?000110000</span>?<span class="hljs-number">01?01010</span>?<span class="hljs-number">10101</span>?<span class="hljs-number">1101010100010011</span>?<span class="hljs-number">101010010000</span>?<span class="hljs-number">10110</span>??<span class="hljs-number">10100?000</span>?<span class="hljs-number">1</span>?<span class="hljs-number">11</span>?<span class="hljs-number">10</span>???<span class="hljs-number">0</span>?<span class="hljs-number">1111</span>?<span class="hljs-number">1000100100</span>?<span class="hljs-number">1110111010?0</span>?<span class="hljs-number">01</span>?<span class="hljs-number">00?11?0011</span>?<span class="hljs-number">0101101</span>?<span class="hljs-number">100000?1</span>??<span class="hljs-number">0101010?1</span>?<span class="hljs-number">101?1001</span>?<span class="hljs-number">0011110</span>??<span class="hljs-number">0000000</span>?<span class="hljs-number">00100</span>?<span class="hljs-number">1010011100001111111001</span>?<span class="hljs-number">10</span>?<span class="hljs-number">001</span>??<span class="hljs-number">0110001111</span>?<span class="hljs-number">100110000110011011</span>?<span class="hljs-number">111101?1</span>??<span class="hljs-number">1010101101?01</span>?<span class="hljs-number">0000011</span>?<span class="hljs-number">1111001</span>?<span class="hljs-number">000111</span>??<span class="hljs-number">1</span>??<span class="hljs-number">00010</span>?<span class="hljs-number">10011001</span>?<span class="hljs-number">000110000</span>??<span class="hljs-number">10</span>?<span class="hljs-number">10100000100</span>?<span class="hljs-number">10?1101111?101</span>?<span class="hljs-number">001</span>??<span class="hljs-number">00?01111</span>???<span class="hljs-number">01</span>??<span class="hljs-number">1?10100</span>??<span class="hljs-number">0101?011</span>?<span class="hljs-number">1000?011101</span>?<span class="hljs-number">110</span>???<span class="hljs-number">0110111011</span>?<span class="hljs-number">101</span>?<span class="hljs-number">1</span>&quot;  <br>b = &quot;<span class="hljs-number">1000</span>?<span class="hljs-number">11?0111000</span>?<span class="hljs-number">1001</span>??<span class="hljs-number">11</span>?<span class="hljs-number">1100?001</span>?<span class="hljs-number">0</span>?<span class="hljs-number">0111011011100</span>?<span class="hljs-number">0?110?11111</span>?<span class="hljs-number">1?0?111100</span>?<span class="hljs-number">0111</span>???<span class="hljs-number">01?001100</span>?<span class="hljs-number">000?001</span>??<span class="hljs-number">0110</span>??<span class="hljs-number">0</span>?<span class="hljs-number">001000000110</span>?<span class="hljs-number">0100?01100</span>?<span class="hljs-number">001000011</span>?<span class="hljs-number">01001000011010100</span>?<span class="hljs-number">01110000001</span>??<span class="hljs-number">0000111</span>???<span class="hljs-number">101101?0100</span>?<span class="hljs-number">011</span>??<span class="hljs-number">010011?0</span>?<span class="hljs-number">100?0?111100</span>?<span class="hljs-number">00110000111</span>?<span class="hljs-number">10</span>???<span class="hljs-number">0?01?100</span>?<span class="hljs-number">1100</span>?<span class="hljs-number">0111001?11</span>?<span class="hljs-number">1110?011</span>?<span class="hljs-number">100101101?10</span>?<span class="hljs-number">0</span>??<span class="hljs-number">00010011?101</span>?<span class="hljs-number">111?110001100</span>?<span class="hljs-number">0</span>??<span class="hljs-number">0</span>?<span class="hljs-number">10</span>?<span class="hljs-number">11100100111</span>?<span class="hljs-number">100100001?0</span>?<span class="hljs-number">00000</span>??<span class="hljs-number">1101001</span>?<span class="hljs-number">010</span>?<span class="hljs-number">110000110</span>?<span class="hljs-number">0001101000010011001100</span>?<span class="hljs-number">010</span>?<span class="hljs-number">100000100001</span>?<span class="hljs-number">10100101110010000</span>?<span class="hljs-number">0111?0001</span>??<span class="hljs-number">1</span>?<span class="hljs-number">001100000010000</span>?<span class="hljs-number">011000</span>??<span class="hljs-number">0</span>?<span class="hljs-number">10?1001000100</span>???<span class="hljs-number">1100111?11</span>?<span class="hljs-number">11011010100</span>?&quot;  <br>c1 = &quot;<span class="hljs-number">1100101001100</span>???<span class="hljs-number">1</span>??<span class="hljs-number">101100</span>?<span class="hljs-number">00101111</span>?<span class="hljs-number">000001011</span>?<span class="hljs-number">0</span>??<span class="hljs-number">0</span>?<span class="hljs-number">0</span>?<span class="hljs-number">1</span>??<span class="hljs-number">11?0001?1</span>?<span class="hljs-number">01111?0</span>?<span class="hljs-number">1100011101</span>?<span class="hljs-number">01011</span>??<span class="hljs-number">110011100001100100</span>???<span class="hljs-number">000101</span>?<span class="hljs-number">1011010100111110</span>?<span class="hljs-number">11?010111101</span>?<span class="hljs-number">0</span>?<span class="hljs-number">0110</span>?<span class="hljs-number">0100001</span>?<span class="hljs-number">000?1011</span>?<span class="hljs-number">111111111000001</span>?<span class="hljs-number">100000001011</span>?<span class="hljs-number">0110111</span>?<span class="hljs-number">11010010100</span>?<span class="hljs-number">10011110000</span>?<span class="hljs-number">0101</span>??<span class="hljs-number">1</span>?<span class="hljs-number">00001111010110</span>?<span class="hljs-number">00110001111011001</span>?<span class="hljs-number">0010110101100011111</span>?<span class="hljs-number">01?0000?0</span>?<span class="hljs-number">0011?0?101</span>??<span class="hljs-number">1111100?11</span>?<span class="hljs-number">11100010</span>???<span class="hljs-number">1?0?1?11</span>?<span class="hljs-number">1100</span>?<span class="hljs-number">1100010</span>?<span class="hljs-number">1111111011</span>?<span class="hljs-number">100100111?11</span>?<span class="hljs-number">11?1101?1</span>?<span class="hljs-number">1100111?01</span>?<span class="hljs-number">01111?11?0</span>??<span class="hljs-number">1111</span>?<span class="hljs-number">001000</span>?<span class="hljs-number">0000</span>?<span class="hljs-number">1</span>?<span class="hljs-number">010</span>?<span class="hljs-number">100111101</span>?<span class="hljs-number">01011?1?1</span>?<span class="hljs-number">111</span>?<span class="hljs-number">01</span>???<span class="hljs-number">01?1111?01</span>?????<span class="hljs-number">0</span>?<span class="hljs-number">001011000111010010</span>?<span class="hljs-number">111101</span>&quot;  <br>c2 = &quot;<span class="hljs-number">00000000011</span>?<span class="hljs-number">1000110011</span>?<span class="hljs-number">001</span>???<span class="hljs-number">10011010?0</span>?<span class="hljs-number">01</span>?<span class="hljs-number">11010011010</span>??<span class="hljs-number">10010111</span>?<span class="hljs-number">1111?1000</span>?<span class="hljs-number">1</span>??<span class="hljs-number">11</span>?<span class="hljs-number">1111</span>??<span class="hljs-number">111</span>?<span class="hljs-number">1010001001111</span>?<span class="hljs-number">10?0111001</span>??<span class="hljs-number">101</span>?<span class="hljs-number">10000000101111110111</span>??<span class="hljs-number">11111?0?0</span>??<span class="hljs-number">10</span>?<span class="hljs-number">0101</span>?<span class="hljs-number">111001101000101</span>?<span class="hljs-number">00010?111</span>?<span class="hljs-number">1100111?0</span>?<span class="hljs-number">1110?1111</span>?<span class="hljs-number">0110</span>?<span class="hljs-number">11010110001100000111101</span>?<span class="hljs-number">010010</span>??<span class="hljs-number">0</span>??<span class="hljs-number">101?1001000</span>?<span class="hljs-number">010101?01110</span>?<span class="hljs-number">01001010001</span>?<span class="hljs-number">0</span>?<span class="hljs-number">01</span>?<span class="hljs-number">00</span>?<span class="hljs-number">0110100100</span>??<span class="hljs-number">10</span>?<span class="hljs-number">00</span>??<span class="hljs-number">1010111010010</span>??<span class="hljs-number">1?100110</span>?????<span class="hljs-number">01001</span>?<span class="hljs-number">001110101111</span>?<span class="hljs-number">1</span>?<span class="hljs-number">00?0?00101</span>?<span class="hljs-number">101?0?101</span>?<span class="hljs-number">110011?1</span>?<span class="hljs-number">00111100</span>??<span class="hljs-number">1</span>?<span class="hljs-number">1?00?1110</span>?<span class="hljs-number">010?110?00</span>?<span class="hljs-number">010011010001101</span>?<span class="hljs-number">00110101?1</span>??<span class="hljs-number">0010</span>?<span class="hljs-number">101111000</span>?<span class="hljs-number">11011101011</span>?<span class="hljs-number">0010010110000000110110101</span>??<span class="hljs-number">1</span>?<span class="hljs-number">011</span>?&quot;  <br>enc = b&#x27;\xcb\xe0wY\xe3\\\xf7\xc8\x89/\x1c\xdb^P\xc09\xca\xcf\xe7\xa7\xa4\xb5\xaeQ\xc8K\xabg_\x8e\xfa?\xdc\xce9\xd7\x0en&quot;?\xc0\n\xe0hT+\xc0\x81&#x27;  <br>nonce = b&#x27;n\x13\xd1\xdf\xb6]\xb5\xf7&#x27;  <br>import itertools  <br>  <br>p = <span class="hljs-number">2</span> ** <span class="hljs-number">512</span>  <br><span class="hljs-keyword">A</span> = [a, b, c1, c2]  <br>b = b[:-<span class="hljs-number">1</span>] + &#x27;<span class="hljs-number">1</span>&#x27;  <br>LL=[]  <br>  <br>def dfs(bbbb):  <br>    i = len(bbbb[<span class="hljs-number">0</span>]) + <span class="hljs-number">1</span>  <br>    if len(bbbb[<span class="hljs-number">0</span>]) == <span class="hljs-number">512</span>:  <br>        LL.append(bbbb)  <br>    else:  <br>        tmp=[]  <br>        for c in <span class="hljs-keyword">A</span>:  <br>            if (c[-i]==&#x27;?&#x27;):  <br>                tmp.append([&#x27;<span class="hljs-number">0</span>&#x27;,&#x27;<span class="hljs-number">1</span>&#x27;])  <br>            else:  <br>                tmp.append([None])  <br>        for G in itertools.product(*tmp):  <br>            L = []  <br>            for j,k in enumerate(G):  <br>                if k is None:  <br>                    L.append(<span class="hljs-keyword">A</span>[j][-i]+bbbb[j])  <br>                else:  <br>                    L.append(k+bbbb[j])  <br>            func=lambda x: int(x, <span class="hljs-number">2</span>)  <br>            a, b, c1, c2 = map(func, L)  <br>            if (a * c1**<span class="hljs-number">2</span> + b) % <span class="hljs-number">2</span>**i == c2:  <br>                dfs(L)  <br>  <br>  <br>  <br>dfs([&quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;])  <br>for a,b,c1,c2 in LL:  <br>    a = int(a, <span class="hljs-number">2</span>)  <br>    b = int(b, <span class="hljs-number">2</span>)  <br>    c1 = int(c1, <span class="hljs-number">2</span>)  <br>    c2 = int(c2, <span class="hljs-number">2</span>)  <br>    ss = (c1 - b) * pow(a, -<span class="hljs-number">1</span>, <span class="hljs-number">2</span> ** <span class="hljs-number">512</span>) % <span class="hljs-number">2</span> ** <span class="hljs-number">512</span>  <br>    s=sqrt_mod(ss,<span class="hljs-number">2</span>**<span class="hljs-number">512</span>,all_roots=True)  <br>    for seed in s:  <br>        cipher = AES.new(key=md5(long_to_bytes(seed)).digest(), mode=AES.MODE_CTR, nonce=nonce)  <br>        res = cipher.decrypt(enc)  <br>        if b&quot;flag&quot; in res:  <br>            print(res)<br></code></pre></td></tr></table></figure>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/crypto/" class="category-chain-item">crypto</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/crypto/%E7%AE%97%E6%B3%95/" class="category-chain-item">算法</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/crypto/" class="print-no-link">#crypto</a>
+      
+        <a href="/tags/io/" class="print-no-link">#io</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>算法基础1</div>
+      <div>http://example.com/2025/09/23/算法1/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>fox</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>September 23, 2025</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/09/12/%E5%8F%8C%E7%BA%BF%E7%BA%BF%E6%80%A7%E9%85%8D%E5%AF%B9%E5%8F%8A%E7%9B%B8%E5%85%B3%E9%A2%98%E7%9B%AE/" title="">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
