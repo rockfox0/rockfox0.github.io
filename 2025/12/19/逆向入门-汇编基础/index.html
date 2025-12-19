@@ -1,0 +1,924 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/OIP-C.jpg">
+  <link rel="icon" href="/img/OIP-C.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="fox">
+  <meta name="keywords" content="菜菜的密码劳弟">
+  
+    <meta name="description" content="前几天开始尝试学习逆向,这两天差不多看了汇编基础的只是,尽力摆脱ida只会f5的状态. 逆向入门-汇编基础基础解释123456789101112131415;hello.asmsection .data#用于初始化声明数据message db &quot;hello,world&quot;, 0Ah#定义字msg_len equ $-message#section .text# 用于存放程序指令g">
+<meta property="og:type" content="article">
+<meta property="og:title" content="逆向入门-汇编基础">
+<meta property="og:url" content="http://example.com/2025/12/19/%E9%80%86%E5%90%91%E5%85%A5%E9%97%A8-%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="Rockfox的密码记录">
+<meta property="og:description" content="前几天开始尝试学习逆向,这两天差不多看了汇编基础的只是,尽力摆脱ida只会f5的状态. 逆向入门-汇编基础基础解释123456789101112131415;hello.asmsection .data#用于初始化声明数据message db &quot;hello,world&quot;, 0Ah#定义字msg_len equ $-message#section .text# 用于存放程序指令g">
+<meta property="og:locale">
+<meta property="article:published_time" content="2025-12-18T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-19T20:43:59.112Z">
+<meta property="article:author" content="fox">
+<meta property="article:tag" content="re">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>逆向入门-汇编基础 - Rockfox的密码记录</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":40,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 100vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>fox的密码学习记录</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Startseite</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archiv</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Kategorien</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Schlagwörter</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>Über</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>Weblinks</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/syc.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="逆向入门-汇编基础"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-12-19 00:00" pubdate>
+          December 19, 2025 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.4k wörter
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          20 minuten
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">逆向入门-汇编基础</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>前几天开始尝试学习逆向,这两天差不多看了汇编基础的只是,尽力摆脱ida只会f5的状态.</p>
+<h1 id="逆向入门-汇编基础"><a href="#逆向入门-汇编基础" class="headerlink" title="逆向入门-汇编基础"></a>逆向入门-汇编基础</h1><h3 id="基础解释"><a href="#基础解释" class="headerlink" title="基础解释"></a>基础解释</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c">;hello.<span class="hljs-keyword">asm</span><br>section .data#用于初始化声明数据<br>message db <span class="hljs-string">&quot;hello,world&quot;</span>, <span class="hljs-number">0</span>Ah#定义字<br>msg_len equ $-message<span class="hljs-meta">#</span><br><span class="hljs-meta">section .text# 用于存放程序指令</span><br>global _start<br>_start:<br>mov rax,<span class="hljs-number">1</span><br>mov rdi,<span class="hljs-number">1</span><br>mov rsi,message<br>mov rdx,msg_len<br>syscall<br>mov rax,<span class="hljs-number">60</span><br>mov rdi,<span class="hljs-number">0</span><br>syscall<br></code></pre></td></tr></table></figure>
+
+<p>这是最基础的输出hello-world的汇编代码,这里对其做出解释<br>可以看出分成了三段,data初始化全局变量,bss段存放未初始化的全局变量,最后test段存放指令<br>现在来看看test段,global作为全局声明让_start能被其他链接器调用 </p>
+<h2 id="计算机基础"><a href="#计算机基础" class="headerlink" title="计算机基础"></a>计算机基础</h2><h3 id="程序"><a href="#程序" class="headerlink" title="程序"></a>程序</h3><h4 id="静态的程序"><a href="#静态的程序" class="headerlink" title="静态的程序"></a>静态的程序</h4><p>当一个程序还是可执行文件时,他是一个静态的实体包含</p>
+<ul>
+<li>文件头:标识标识这是一个可执行文件。程序执行的第一行代码的位置,告知系统下面的 <code>.text</code>、<code>.data</code> 在文件的什么地方。</li>
+<li>只读数据段:存储常量const</li>
+<li>代码段(code\text):cpu能够执行的命令</li>
+<li>Data段:存放已经初始化的全局变量和静态变量</li>
+<li>bss段,存放未初始化的全局变量,静态变量取值为0</li>
+<li>符号表:函数名变量名及其对应的地址</li>
+<li>重定位信息:告诉连接器那些地址在运行的时候需要修正</li>
+<li>调试信息:用于调试的时候与源代码行号映射<br>当然这只是常用的,其实还有什么<code>.dynstr</code> (动态字符串表)之类的<br>而一个运行中的程序就是进程</li>
+</ul>
+<h4 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h4><ul>
+<li>内核</li>
+<li>未映射区域</li>
+<li>共享库</li>
+<li>堆(heap):由用户自己开辟管理的空间,地址向高生长</li>
+<li>text段:存放的机器指令</li>
+<li>data段和bss段同上</li>
+<li>栈(stack):向低地址生长,后进献出,存放了返回地址局部变量,函数参数,保存的寄存器,临时的值.</li>
+</ul>
+<h4 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h4><p>线程是cpu的最小执行单位,一个进程可以有多个线程也可以只有一个线程,一个进程的线程间共享堆和text,bss,data段. 拥有独立的栈,程序计数器,寄存器和状态.</p>
+<h3 id="虚拟内存"><a href="#虚拟内存" class="headerlink" title="虚拟内存"></a>虚拟内存</h3><p>为了安全性,程序是无法直接调用物理内存的.都是通过虚拟内存间接的调用的内存的,虚拟内存里面存放虚拟地址,虚拟内存本身没有任何存储的作用<br>虚拟内存本身是按页表来分的,同理物理内存也有自己的页表,并且利用了多级页表,他们之间通过MMU来进行映射.</p>
+<h3 id="寄存器"><a href="#寄存器" class="headerlink" title="寄存器"></a>寄存器</h3><p>根据存储器分级</p>
+<table>
+<thead>
+<tr>
+<th><strong>层级</strong></th>
+<th><strong>硬件名称</strong></th>
+<th><strong>速度</strong></th>
+<th><strong>容量</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>寄存器</strong></td>
+<td>CPU 寄存器</td>
+<td>极快（指令级）</td>
+<td>几百字节</td>
+</tr>
+<tr>
+<td><strong>L1 缓存</strong></td>
+<td>CPU 内部缓存</td>
+<td>非常快</td>
+<td>几十 KB</td>
+</tr>
+<tr>
+<td><strong>L2 缓存</strong></td>
+<td>CPU 内部缓存</td>
+<td>快</td>
+<td>几 MB</td>
+</tr>
+<tr>
+<td><strong>L3 缓存</strong></td>
+<td>CPU 共享缓存</td>
+<td>中等</td>
+<td>几十 MB</td>
+</tr>
+<tr>
+<td><strong>内存</strong></td>
+<td>RAM (内存条)</td>
+<td>慢（相对于 CPU）</td>
+<td>几 GB &#x2F; 几十 GB</td>
+</tr>
+<tr>
+<td><strong>硬盘</strong></td>
+<td>SSD &#x2F; HDD</td>
+<td>极慢</td>
+<td>几 TB</td>
+</tr>
+</tbody></table>
+<h2 id="汇编基础-只会一点点-真的很基础"><a href="#汇编基础-只会一点点-真的很基础" class="headerlink" title="汇编基础(只会一点点,真的很基础)"></a>汇编基础(只会一点点,真的很基础)</h2><h3 id="指令和伪指令"><a href="#指令和伪指令" class="headerlink" title="指令和伪指令"></a>指令和伪指令</h3><ul>
+<li><strong>指令 (Instructions):</strong><ul>
+<li>这些是直接翻译成机器码的操作码，CPU会实际执行它们。</li>
+<li>它们代表了CPU可以执行的基本操作，如数据传送 (<code>MOV)、算术运算 (</code>ADD<code>, </code>SUB<code>)、逻辑运算 (</code>AND<code>, </code>OR<code>)、控制流 (</code>JMP<code>, </code>CALL&#96;) 等。</li>
+<li>示例：<code>mov rax, 1</code>, <code>add ebx, ecx</code>, <code>jmp my_label</code><br><strong>伪指令 (Directives &#x2F; Pseudo-instructions):</strong></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs lasso">这些是给汇编器 (NASM)的指令，用于控制汇编过程，它们本身不直接翻译成CPU执行的机器码，但会影响最终生成的机器码或目标文件的结构。<br>  示例：<br>    section .<span class="hljs-built_in">data</span>: 告诉NASM接下来的内容属于数据节。<br>      <span class="hljs-string">`db`</span>, <span class="hljs-string">`dw`</span>, <span class="hljs-string">`dd`</span>, <span class="hljs-string">`dq`</span>: 定义数据并分配空间。<br>      <span class="hljs-string">`resb`</span>, <span class="hljs-string">`resw`</span>, <span class="hljs-string">`resd`</span>, <span class="hljs-string">`resq`</span>: 在BSS节预留空间。<br>      <span class="hljs-string">`equ`</span>: 定义常量符号。<br>      <span class="hljs-string">`global`</span>: 将符号导出，使其对链接器可见。<br>      <span class="hljs-string">`extern`</span>: 声明一个外部符号 (在其他文件中定义，链接时解析)。<br>      <span class="hljs-string">`%define`</span>: 定义宏 (类似于C中的<span class="hljs-string">`#define`</span>)。<br>      <span class="hljs-string">`%include`</span>: 包含另一个文件的内容。<br></code></pre></td></tr></table></figure>
+<p>在我理解看来指令是对内存或者数据的直接操作<br>伪指令更偏向于定义.</p>
+<h3 id="data段"><a href="#data段" class="headerlink" title="data段"></a>data段</h3><p>初始化全局数据,这里我们使用一系列伪指令来定义数据的大小和类型,并用标签(类似与变量)来命名</p>
+<ul>
+<li>标签<br>标签是自定义的符号,代表这个数据在内存中的起始地址.链接器可以通过解析标签来访问数据</li>
+<li><code>DB</code> (Define Byte): 定义一个或多个字节 (8位)。</li>
+<li><code>DW</code> (Define Word): 定义一个或多个字 (16位)。</li>
+<li><code>DD</code> (Define Double Word): 定义一个或多个双字 (32位)。</li>
+<li><code>DQ</code> (Define Quad Word): 定义一个或多个四字 (64位)。</li>
+<li><code>DT</code> (Define Ten Bytes): 定义一个十字节数 (用于浮点数)。</li>
+<li><code>DO</code> (Define Octa Word): 定义一个八字 (128位)。</li>
+</ul>
+<p><strong>示例：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c">section .data<br>    myByte      db <span class="hljs-number">0x41</span>         ; 定义一个字节，初始值为十六进制 <span class="hljs-number">41</span> (<span class="hljs-string">&#x27;A&#x27;</span>)<br>    myWord      dw <span class="hljs-number">12345</span>        ; 定义一个字，初始值为十进制 <span class="hljs-number">12345</span><br>    myDouble    dd <span class="hljs-number">3.14159</span>      ; NASM允许用浮点数初始化DD (会被转换为<span class="hljs-number">32</span>位IEEE浮点表示)<br>                                ; (注意：这只是初始化，不是声明浮点类型，实际处理需FPU/SSE指令)<br>    myQuad      dq <span class="hljs-number">0x123456789ABCDEF0</span> ; 定义一个<span class="hljs-number">64</span>位整数<br>    message     db <span class="hljs-string">&quot;Hello, World!&quot;</span>, <span class="hljs-number">0</span> ; 定义一个字符串，以空字符(<span class="hljs-number">0</span>)结尾 (C风格字符串)<br>    messageLen  equ $-message        ; <span class="hljs-string">&#x27;equ&#x27;</span> 定义一个常量符号，<span class="hljs-string">&#x27;$&#x27;</span>表示当前地址<br>                                     ; <span class="hljs-string">&#x27;$-message&#x27;</span> 计算从message标签开始到当前位置的长度<br>    <span class="hljs-built_in">array</span>       db <span class="hljs-number">10</span>, <span class="hljs-number">20</span>, <span class="hljs-number">30</span>, <span class="hljs-number">40</span>, <span class="hljs-number">50</span> ; 定义一个字节数组<br></code></pre></td></tr></table></figure>
+<p>这里的message是一个字符串以0结尾和C语言的字符串一样.</p>
+<h3 id="bss段"><a href="#bss段" class="headerlink" title="bss段"></a>bss段</h3><p><code>.bss</code> 节用于声明那些在程序启动时不需要特定初始值（通常默认为0）的变量。这有助于减小可执行文件在磁盘上的大小。</p>
+<p>NASM提供了以下伪指令在 <code>.bss</code> 节中预留空间：</p>
+<ul>
+<li><code>RESB</code> (Reserve Byte): 预留指定数量的字节。</li>
+<li><code>RES</code> (Reserve Word): 预留指定数量的字。</li>
+<li><code>RESD</code> (Reserve Double Word): 预留指定数量的双字。</li>
+<li><code>RESQ</code> (Reserve Quad Word): 预留指定数量的四字。<br><strong>示例：</strong></li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">section .bss<br>    buffer      resb <span class="hljs-number">256</span>        ; 预留<span class="hljs-number">256</span>字节的空间，标签为 buffer<br>    userAge     resw <span class="hljs-number">1</span>          ; 预留<span class="hljs-number">1</span>个字 (<span class="hljs-number">2</span>字节) 的空间，标签为 userAge<br>    matrix      resd <span class="hljs-number">100</span>        ; 预留<span class="hljs-number">100</span>个双字 (<span class="hljs-number">400</span>字节) 的空间，标签为 matrix<br></code></pre></td></tr></table></figure>
+<p>程序在加载是为预留这块分配的内存空间并清零</p>
+<h3 id="text节"><a href="#text节" class="headerlink" title="text节"></a>text节</h3><p>这里就是存放可执行指令的地方.<br>这里我们只介绍基础指令的操作.我才开始一般边做变搜哈哈哈</p>
+<h3 id="函数调用"><a href="#函数调用" class="headerlink" title="函数调用"></a>函数调用</h3><p>一般来说利用call来进行函数跳转,但是在跳转前,我们一般会考虑函数的传入的值<br>在x86-64 Linux中，发起系统调用是通过 <code>syscall</code> 指令完成的。在执行 <code>syscall</code> 之前，我们需要按照特定的约定将参数放入指定的寄存器中：</p>
+<table>
+<thead>
+<tr>
+<th>寄存器</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>RAX</code></td>
+<td>系统调用号</td>
+</tr>
+<tr>
+<td><code>RDI</code></td>
+<td>第一个参数</td>
+</tr>
+<tr>
+<td><code>RSI</code></td>
+<td>第二个参数</td>
+</tr>
+<tr>
+<td><code>RDX</code></td>
+<td>第三个参数</td>
+</tr>
+<tr>
+<td><code>R0</code></td>
+<td>第四个参数</td>
+</tr>
+<tr>
+<td><code>R8</code></td>
+<td>第五个参数</td>
+</tr>
+<tr>
+<td><code>R9</code></td>
+<td>第六个参数</td>
+</tr>
+<tr>
+<td><strong>返回值</strong></td>
+<td>通常在 <code>RAX</code> 中</td>
+</tr>
+</tbody></table>
+<p><strong>常用的系统调用号 (x86-64 Linux)</strong>:</p>
+<ul>
+<li><code>1</code>: <code>sys_write</code> (写入文件描述符，如标准输出)</li>
+<li><code>0</code>: <code>sys_read</code> (从文件描述符读取)</li>
+<li><code>60</code>: <code>sys_exit</code> (终止程序)<br><strong>函数调用</strong><br>不过一般来说,我们写代码的时候都是从库中比如include</stdio>里面调用的输入输出函数,或者我们自己编写的函数都是直接call函数的入口地址.</li>
+</ul>
+<h4 id="数据传输指令"><a href="#数据传输指令" class="headerlink" title="数据传输指令"></a>数据传输指令</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c">mov rax, rbx<br>mov rax, [rbp<span class="hljs-number">-8</span>]<br>mov [rsp], rax<br></code></pre></td></tr></table></figure>
+<p><code>MOV</code> (Move) 指令是最是最基本的数据传送指令。它的功能是将源操作数 (source operand) 的内容复制到目标操作数 (destination operand)。<br>语法</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-keyword">MOV</span> destination, source<br></code></pre></td></tr></table></figure>
+<p>tips:<code>MOV [mem1], [mem2]</code> ; 错误：不允许内存到内存的直接传送</p>
+<table>
+<thead>
+<tr>
+<th>目标 (Destination)</th>
+<th>源 (Source)</th>
+<th>示例 (x86-64)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>寄存器</td>
+<td>寄存器</td>
+<td><code>MOV RAX RBX</code></td>
+</tr>
+<tr>
+<td>寄存器</td>
+<td>立即数</td>
+<td><code>MOV RCX, 100</code></td>
+</tr>
+<tr>
+<td>寄存器</td>
+<td>内存</td>
+<td><code>MOV RDX, [myVariable]</code></td>
+</tr>
+<tr>
+<td>内存</td>
+<td>寄存器</td>
+<td><code>MOV[myVariable], RAX</code></td>
+</tr>
+<tr>
+<td>内存</td>
+<td>立即数</td>
+<td><code>MOV QWORD [myVar], 0FFFFh</code></td>
+</tr>
+</tbody></table>
+<p><code>LEA</code> (Load Effective Address) 指令计算源操作数（必须是内存操作数）的有效地址，并将该地址加载到目标操作数（必须是通用寄存器），而<strong>不实际访问该内存地址容</strong>。<strong>语法:</strong><br><code>LEA destination_register, [memory_address_expression]</code></p>
+<ol>
+<li>获取一个内存位置的地址，而不是其内容。</li>
+<li>执行复杂的算术运算。<code>LEA</code> 可以利用寻址模式中的加法和乘法（比例因子）来进行通用的算术计算，有时比使用一系列 <code>ADD</code> 和 <code>MUL</code>&#x2F;<code>UL</code>&#x2F;<code>IMUL</code> 指令更高效。</li>
+</ol>
+<h4 id="栈操作指令"><a href="#栈操作指令" class="headerlink" title="栈操作指令"></a>栈操作指令</h4><p><code>PUSH source</code> 指令执行以下操作：</p>
+<ol>
+<li><p>将栈指针 (<code>RSP</code>&#x2F;<code>ESP</code>&#x2F;<code>SP</code>) 减去操作数的大小（2字节、4字节或8字节）。</p>
+</li>
+<li><p>将源操作数的内容复制到新的栈顶位置（由更新后的 <code>RSP</code>&#x2F;<code>ESP</code>&#x2F;<code>SP</code> 指向）。<br><code>POP destination</code> 指令执行以下操作：</p>
+</li>
+<li><p>将当前栈顶位置（由 <code>RSP</code>&#x2F;<code>ESP</code>&#x2F;<code>SP</code> 指向）的内容复制到目标操作数。</p>
+</li>
+<li><p>将栈指针 (<code>RSP</code>&#x2F;<code>ESP</code>&#x2F;<code>SP</code>) 加上操作数的大小。</p>
+</li>
+</ol>
+<h4 id="控制流指令"><a href="#控制流指令" class="headerlink" title="控制流指令"></a>控制流指令</h4><p>call</p>
+<ul>
+<li><p><strong>把下一条指令地址压栈</strong>（return address）</p>
+</li>
+<li><p><strong>跳转到目标地址</strong>（RIP 改为 target<br>把RIP压入栈,push RIP<br>再把RIP指向要调用的函数RIP &#x3D; func<br>retun</p>
+</li>
+<li><p>把rip弹出栈给rip赋上rsp指向的内存</p>
+</li>
+</ul>
+<h2 id="下集预告"><a href="#下集预告" class="headerlink" title="下集预告"></a>下集预告</h2><p>不可能差分分析?,也许吧<br>代码混淆<br>最近考完试了可以着手出题和准备联队面试了.赶脚有点迷茫,xxl<br>…………<br><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Wu1sBpEwu/?spm_id_from=333.337.search-card.all.click">https://www.bilibili.com/video/BV1Wu1sBpEwu/?spm_id_from=333.337.search-card.all.click</a><br> 推荐音乐</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/reserve/" class="category-chain-item">reserve</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/re/" class="print-no-link">#re</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>逆向入门-汇编基础</div>
+      <div>http://example.com/2025/12/19/逆向入门-汇编基础/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Beitragsautor</div>
+          <div>fox</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Veröffentlicht am</div>
+          <div>December 19, 2025</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Urheberrechtshinweis</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/11/26/feistel%E7%BB%93%E6%9E%84%E5%92%8Cspn%E7%BB%93%E6%9E%84%E5%88%86%E7%BB%84%E5%AF%86%E7%A0%81%E5%B7%AE%E5%88%86%E5%88%86%E6%9E%90/" title="feistel和spn结构的差分分析">
+                        <span class="hidden-mobile">feistel和spn结构的差分分析</span>
+                        <span class="visible-mobile">Nächster</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Inhaltsverzeichnis</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Stichwort</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog funktioniert am besten mit aktiviertem JavaScript</div>
+  </noscript>
+</body>
+</html>
