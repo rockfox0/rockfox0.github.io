@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/105e4e1aa217620e7ebfa31a2c894845dd2ca1df">
 <meta property="og:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/56e89d12fd609dc39d5c6919c2d9c47252dbf829">
 <meta property="article:published_time" content="2024-12-29T04:00:00.000Z">
-<meta property="article:modified_time" content="2025-03-05T13:35:34.380Z">
+<meta property="article:modified_time" content="2025-03-05T21:35:36.000Z">
 <meta property="article:author" content="fox">
 <meta property="article:tag" content="crypto">
 <meta name="twitter:card" content="summary_large_image">
@@ -336,8 +336,8 @@
 <p>t<sub>i</sub>&#x3D;M<sub>i</sub><sup>-1</sup>即他们互为倒数</p>
 <p>可以得到t<sub>i</sub>*m<sub>i</sub>&#x3D;1mod(m<sub>i</sub>)</p>
 <p>可以得到</p>
-<p><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/105e4e1aa217620e7ebfa31a2c894845dd2ca1df" srcset="/img/loading.gif" lazyload alt="{\displaystyle x=a_{1}t_{1}M_{1}+a_{2}t_{2}M_{2}+\cdots +a_{n}t_{n}M_{n}+kM=kM+\sum _{i=1}^{n}a_{i}t_{i}M_{i},\quad k\in \mathbb {Z} .}"></p>
-<p>如果对x去模M则就有<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/56e89d12fd609dc39d5c6919c2d9c47252dbf829" srcset="/img/loading.gif" lazyload alt="{\displaystyle x=\sum _{i=1}^{n}a_{i}t_{i}M_{i}.}">唯一解，也是最小解</p>
+<p><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/105e4e1aa217620e7ebfa31a2c894845dd2ca1df" srcset="/img/loading.gif" lazyload alt="{\displaystyle x&#x3D;a_{1}t_{1}M_{1}+a_{2}t_{2}M_{2}+\cdots +a_{n}t_{n}M_{n}+kM&#x3D;kM+\sum _{i&#x3D;1}^{n}a_{i}t_{i}M_{i},\quad k\in \mathbb {Z} .}"></p>
+<p>如果对x去模M则就有<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/56e89d12fd609dc39d5c6919c2d9c47252dbf829" srcset="/img/loading.gif" lazyload alt="{\displaystyle x&#x3D;\sum _{i&#x3D;1}^{n}a_{i}t_{i}M_{i}.}">唯一解，也是最小解</p>
 <p>做题WP</p>
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-keyword">from</span> Crypto.Util.number import *<br><span class="hljs-keyword">from</span><span class="hljs-built_in"> secret </span>import flag<br><br>p = [getPrime(1024) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(4)]<br>A = random_matrix(ZZ,4,4)<br>x = vector(p)<br>C = A*x<br>m = bytes_to_long(flag)<br>C_list = [m^2 % p[i] <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> p]<br><br><span class="hljs-built_in">print</span>(A.list())<br><span class="hljs-built_in">print</span>(C.list())<br><span class="hljs-built_in">print</span>(C_list)<br></code></pre></td></tr></table></figure>
 

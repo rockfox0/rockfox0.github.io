@@ -19,15 +19,15 @@
   <meta name="author" content="fox">
   <meta name="keywords" content="菜菜的密码劳弟">
   
-    <meta name="description" content="摩斯电码（Morse Code📘 一、什么是摩斯电码？摩斯电码是一种利用点（.）和划（-）组成的编码方式，用于表示文本信息。最初设计用于电报通信，现常用于航空、求救信号（如 “SOS”）、无线通信等场合。  🧠 二、编码原理 每个字母和数字由一组点和划构成： 点（.）：短信号 划（-）：长信号   字符间用空格分隔 单词间用 &#x2F; 分隔  ✅ 示例对应表：   字符 摩斯码    A .-">
+    <meta name="description" content="伪随机数生成器(PRNG)前言随机数生成分为伪随机，真随机。真随机是利用现实中的电子元件噪音来生产的。 伪随机数：用真随机数生成种子，用伪随机数生成器生成伪随机数位流 PRNG算法大致分为两类：   专用算法：为生成伪随机位流而专门设计。   基于现有密码算法的算法：密码算法会随机化输入数据。  对称分组密码、 哈希函数 消息验证码    专用算法LCG(线性同余生成器)$x_{n+1}&amp;#x3D">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Rockfox的密码记录">
-<meta property="og:url" content="http://example.com/2025/06/03/%E7%BC%96%E7%A0%81%E5%9F%BA%E7%A1%80-jsfuck/index.html">
+<meta property="og:url" content="http://example.com/2026/03/25/%E4%BC%AA%E9%9A%8F%E6%9C%BA%E6%95%B0%E7%94%9F%E6%88%90%E5%99%A8(PRNG)/index.html">
 <meta property="og:site_name" content="Rockfox的密码记录">
-<meta property="og:description" content="摩斯电码（Morse Code📘 一、什么是摩斯电码？摩斯电码是一种利用点（.）和划（-）组成的编码方式，用于表示文本信息。最初设计用于电报通信，现常用于航空、求救信号（如 “SOS”）、无线通信等场合。  🧠 二、编码原理 每个字母和数字由一组点和划构成： 点（.）：短信号 划（-）：长信号   字符间用空格分隔 单词间用 &#x2F; 分隔  ✅ 示例对应表：   字符 摩斯码    A .-">
+<meta property="og:description" content="伪随机数生成器(PRNG)前言随机数生成分为伪随机，真随机。真随机是利用现实中的电子元件噪音来生产的。 伪随机数：用真随机数生成种子，用伪随机数生成器生成伪随机数位流 PRNG算法大致分为两类：   专用算法：为生成伪随机位流而专门设计。   基于现有密码算法的算法：密码算法会随机化输入数据。  对称分组密码、 哈希函数 消息验证码    专用算法LCG(线性同余生成器)$x_{n+1}&amp;#x3D">
 <meta property="og:locale">
-<meta property="article:published_time" content="2025-06-03T12:11:00.727Z">
-<meta property="article:modified_time" content="2025-06-03T13:04:17.912Z">
+<meta property="article:published_time" content="2026-03-25T13:43:00.752Z">
+<meta property="article:modified_time" content="2025-01-11T22:57:10.000Z">
 <meta property="article:author" content="fox">
 <meta property="article:tag" content="菜菜的密码劳弟">
 <meta name="twitter:card" content="summary_large_image">
@@ -223,8 +223,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-06-03 20:11" pubdate>
-          June 3, 2025 pm
+        <time datetime="2026-03-25 21:43" pubdate>
+          March 25, 2026 pm
         </time>
       </span>
     
@@ -235,7 +235,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          511 wörter
+          296 wörter
         
       </span>
     
@@ -246,7 +246,7 @@
         
         
         
-          5 minuten
+          3 minuten
         
       </span>
     
@@ -292,153 +292,29 @@
             
               <div class="markdown-body">
                 
-                <h1 id="摩斯电码（Morse-Code"><a href="#摩斯电码（Morse-Code" class="headerlink" title="摩斯电码（Morse Code"></a>摩斯电码（Morse Code</h1><h2 id="📘-一、什么是摩斯电码？"><a href="#📘-一、什么是摩斯电码？" class="headerlink" title="📘 一、什么是摩斯电码？"></a>📘 一、什么是摩斯电码？</h2><p>摩斯电码是一种利用点（<code>.</code>）和划（<code>-</code>）组成的编码方式，用于表示文本信息。最初设计用于电报通信，现常用于航空、求救信号（如 “SOS”）、无线通信等场合。</p>
-<hr>
-<h2 id="🧠-二、编码原理"><a href="#🧠-二、编码原理" class="headerlink" title="🧠 二、编码原理"></a>🧠 二、编码原理</h2><ul>
-<li>每个字母和数字由一组点和划构成：<ul>
-<li>点（<code>.</code>）：短信号</li>
-<li>划（<code>-</code>）：长信号</li>
+                <h1 id="伪随机数生成器-PRNG"><a href="#伪随机数生成器-PRNG" class="headerlink" title="伪随机数生成器(PRNG)"></a>伪随机数生成器(PRNG)</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>随机数生成分为伪随机，真随机。真随机是利用现实中的电子元件噪音来生产的。</p>
+<p>伪随机数：用真随机数生成种子，用伪随机数生成器生成伪随机数位流</p>
+<p>PRNG算法大致分为两类： </p>
+<ul>
+<li><p>专用算法：为生成伪随机位流而专门设计。 </p>
+</li>
+<li><p>基于现有密码算法的算法：密码算法会随机化输入数据。</p>
+<ul>
+<li>对称分组密码、</li>
+<li>哈希函数</li>
+<li>消息验证码</li>
 </ul>
 </li>
-<li>字符间用空格分隔</li>
-<li>单词间用 <code>/</code> 分隔</li>
 </ul>
-<h3 id="✅-示例对应表："><a href="#✅-示例对应表：" class="headerlink" title="✅ 示例对应表："></a>✅ 示例对应表：</h3><table>
-<thead>
-<tr>
-<th>字符</th>
-<th>摩斯码</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>A</td>
-<td>.-</td>
-</tr>
-<tr>
-<td>B</td>
-<td>-…</td>
-</tr>
-<tr>
-<td>C</td>
-<td>-.-.</td>
-</tr>
-<tr>
-<td>D</td>
-<td>-..</td>
-</tr>
-<tr>
-<td>E</td>
-<td>.</td>
-</tr>
-<tr>
-<td>F</td>
-<td>..-.</td>
-</tr>
-<tr>
-<td>G</td>
-<td>–.</td>
-</tr>
-<tr>
-<td>H</td>
-<td>….</td>
-</tr>
-<tr>
-<td>I</td>
-<td>..</td>
-</tr>
-<tr>
-<td>J</td>
-<td>.—</td>
-</tr>
-<tr>
-<td>K</td>
-<td>-.-</td>
-</tr>
-<tr>
-<td>L</td>
-<td>.-..</td>
-</tr>
-<tr>
-<td>M</td>
-<td>–</td>
-</tr>
-<tr>
-<td>N</td>
-<td>-.</td>
-</tr>
-<tr>
-<td>O</td>
-<td>—</td>
-</tr>
-<tr>
-<td>P</td>
-<td>.–.</td>
-</tr>
-<tr>
-<td>Q</td>
-<td>–.-</td>
-</tr>
-<tr>
-<td>R</td>
-<td>.-.</td>
-</tr>
-<tr>
-<td>S</td>
-<td>…</td>
-</tr>
-<tr>
-<td>T</td>
-<td>-</td>
-</tr>
-<tr>
-<td>U</td>
-<td>..-</td>
-</tr>
-<tr>
-<td>V</td>
-<td>…-</td>
-</tr>
-<tr>
-<td>W</td>
-<td>.–</td>
-</tr>
-<tr>
-<td>X</td>
-<td>-..-</td>
-</tr>
-<tr>
-<td>Y</td>
-<td>-.–</td>
-</tr>
-<tr>
-<td>Z</td>
-<td>–..</td>
-</tr>
-</tbody></table>
-<hr>
-<h2 id="🔨-编码过程（英文-→-摩斯）"><a href="#🔨-编码过程（英文-→-摩斯）" class="headerlink" title="🔨 编码过程（英文 → 摩斯）"></a>🔨 编码过程（英文 → 摩斯）</h2><h3 id="示例：编码-I-LOVE-YOU"><a href="#示例：编码-I-LOVE-YOU" class="headerlink" title="示例：编码 I LOVE YOU"></a>示例：编码 <code>I LOVE YOU</code></h3><ol>
-<li>将字母大写（摩斯电码不区分大小写）  </li>
-<li>查表获取每个字母的摩斯表示  </li>
-<li>用空格分隔字符，用 <code>/</code> 分隔单词</li>
-</ol>
-<p><strong>结果：</strong></p>
+<h2 id="专用算法"><a href="#专用算法" class="headerlink" title="专用算法"></a>专用算法</h2><h3 id="LCG-线性同余生成器"><a href="#LCG-线性同余生成器" class="headerlink" title="LCG(线性同余生成器)"></a>LCG(线性同余生成器)</h3><p>$x_{n+1}&#x3D;(aX_n+b)mod m$</p>
 <blockquote>
-<p>I     → ..<br>LOVE  → .-.. — …- .<br>YOU   → -.– — ..-<br>最终结果：.. &#x2F; .-.. — …- . &#x2F; -.– — ..-</p>
+<p>m，是模量，a是乘数，b是增量</p>
+<p>$X_n&#x3D;(a^{-1}(X_{n+1}-b))mod m$</p>
+<p>$a≡(X_{n+1}−b)⋅X_n^{−1}(modM)$或$a &#x3D; (X_{n+2} - X_{n+1})(X_{n+1} - X_n)^{-1} (mod m)$</p>
+<p>$b &#x3D; X_{n+1} - aX_n (mod m)$</p>
+<p>设$t_n &#x3D; X_{n+1}- X_n$<br>$t_n &#x3D; (aX_n+b) - (aX_{n-1}+b) &#x3D; at_{n-1}(mod m)$<br>$t_{n+1}t_{n-1} - t_nt_n &#x3D; (aat_{n-1}t_{n-1} - at_{n-1}at_{n-1}) &#x3D; 0 (mod m)$<br>即$T_n &#x3D; t_n+1t_{n-1} - t_nt_n$是m的倍数，求Tn , Tn-1最大公因数即为m<br>$m &#x3D; gcd((t_{n+1}t_{n-1} - t_nt_n) , (t_nt_{n-2} - t_{n-1}t_{n-1}))$</p>
 </blockquote>
-<hr>
-<h2 id="🔓解码过程（摩斯-→-英文）"><a href="#🔓解码过程（摩斯-→-英文）" class="headerlink" title="🔓解码过程（摩斯 → 英文）"></a>🔓解码过程（摩斯 → 英文）</h2><h3 id="示例：解码"><a href="#示例：解码" class="headerlink" title="示例：解码 .... . .-.. .-.. ---"></a>示例：解码 <code>.... . .-.. .-.. ---</code></h3><ol>
-<li>按空格分隔字符，按 <code>/</code> 分隔单词  </li>
-<li>查表反向翻译每组摩斯码  </li>
-<li>拼接结果字符串</li>
-</ol>
-<p><strong>结果：</strong></p>
-<blockquote>
-<p>…. → H<br>.    → E<br>.-.. → L<br>.-.. → L<br>—  → O<br>输出：HELLO</p>
-</blockquote>
-<hr>
-<h2 id="🐍-五、Python-代码实现"><a href="#🐍-五、Python-代码实现" class="headerlink" title="🐍 五、Python 代码实现"></a>🐍 五、Python 代码实现</h2><h3 id="1️⃣-英文-→-摩斯（编码）"><a href="#1️⃣-英文-→-摩斯（编码）" class="headerlink" title="1️⃣ 英文 → 摩斯（编码）"></a>1️⃣ 英文 → 摩斯（编码）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs python">MORSE_CODE_DICT = &#123;<br>    <span class="hljs-string">&#x27;A&#x27;</span>: <span class="hljs-string">&#x27;.-&#x27;</span>, <span class="hljs-string">&#x27;B&#x27;</span>: <span class="hljs-string">&#x27;-...&#x27;</span>, <span class="hljs-string">&#x27;C&#x27;</span>: <span class="hljs-string">&#x27;-.-.&#x27;</span>, <span class="hljs-string">&#x27;D&#x27;</span>: <span class="hljs-string">&#x27;-..&#x27;</span>,  <span class="hljs-string">&#x27;E&#x27;</span>: <span class="hljs-string">&#x27;.&#x27;</span>,<br>    <span class="hljs-string">&#x27;F&#x27;</span>: <span class="hljs-string">&#x27;..-.&#x27;</span>,<span class="hljs-string">&#x27;G&#x27;</span>: <span class="hljs-string">&#x27;--.&#x27;</span>,  <span class="hljs-string">&#x27;H&#x27;</span>: <span class="hljs-string">&#x27;....&#x27;</span>,<span class="hljs-string">&#x27;I&#x27;</span>: <span class="hljs-string">&#x27;..&#x27;</span>,   <span class="hljs-string">&#x27;J&#x27;</span>: <span class="hljs-string">&#x27;.---&#x27;</span>,<br>    <span class="hljs-string">&#x27;K&#x27;</span>: <span class="hljs-string">&#x27;-.-&#x27;</span>,<span class="hljs-string">&#x27;L&#x27;</span>: <span class="hljs-string">&#x27;.-..&#x27;</span>, <span class="hljs-string">&#x27;M&#x27;</span>: <span class="hljs-string">&#x27;--&#x27;</span>,  <span class="hljs-string">&#x27;N&#x27;</span>: <span class="hljs-string">&#x27;-.&#x27;</span>,   <span class="hljs-string">&#x27;O&#x27;</span>: <span class="hljs-string">&#x27;---&#x27;</span>,<br>    <span class="hljs-string">&#x27;P&#x27;</span>: <span class="hljs-string">&#x27;.--.&#x27;</span>,<span class="hljs-string">&#x27;Q&#x27;</span>: <span class="hljs-string">&#x27;--.-&#x27;</span>, <span class="hljs-string">&#x27;R&#x27;</span>: <span class="hljs-string">&#x27;.-.&#x27;</span>, <span class="hljs-string">&#x27;S&#x27;</span>: <span class="hljs-string">&#x27;...&#x27;</span>,  <span class="hljs-string">&#x27;T&#x27;</span>: <span class="hljs-string">&#x27;-&#x27;</span>,<br>    <span class="hljs-string">&#x27;U&#x27;</span>: <span class="hljs-string">&#x27;..-&#x27;</span>,<span class="hljs-string">&#x27;V&#x27;</span>: <span class="hljs-string">&#x27;...-&#x27;</span>, <span class="hljs-string">&#x27;W&#x27;</span>: <span class="hljs-string">&#x27;.--&#x27;</span>, <span class="hljs-string">&#x27;X&#x27;</span>: <span class="hljs-string">&#x27;-..-&#x27;</span>, <span class="hljs-string">&#x27;Y&#x27;</span>: <span class="hljs-string">&#x27;-.--&#x27;</span>,<br>    <span class="hljs-string">&#x27;Z&#x27;</span>: <span class="hljs-string">&#x27;--..&#x27;</span>,<span class="hljs-string">&#x27;1&#x27;</span>: <span class="hljs-string">&#x27;.----&#x27;</span>,<span class="hljs-string">&#x27;2&#x27;</span>: <span class="hljs-string">&#x27;..---&#x27;</span>,<span class="hljs-string">&#x27;3&#x27;</span>: <span class="hljs-string">&#x27;...--&#x27;</span>,<span class="hljs-string">&#x27;4&#x27;</span>: <span class="hljs-string">&#x27;....-&#x27;</span>,<br>    <span class="hljs-string">&#x27;5&#x27;</span>: <span class="hljs-string">&#x27;.....&#x27;</span>,<span class="hljs-string">&#x27;6&#x27;</span>: <span class="hljs-string">&#x27;-....&#x27;</span>,<span class="hljs-string">&#x27;7&#x27;</span>: <span class="hljs-string">&#x27;--...&#x27;</span>,<span class="hljs-string">&#x27;8&#x27;</span>: <span class="hljs-string">&#x27;---..&#x27;</span>,<span class="hljs-string">&#x27;9&#x27;</span>: <span class="hljs-string">&#x27;----.&#x27;</span>,<br>    <span class="hljs-string">&#x27;0&#x27;</span>: <span class="hljs-string">&#x27;-----&#x27;</span>,<span class="hljs-string">&#x27; &#x27;</span>: <span class="hljs-string">&#x27;/&#x27;</span><br>&#125;<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">encode_morse</span>(<span class="hljs-params">text</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27; &#x27;</span>.join(MORSE_CODE_DICT.get(ch.upper(), <span class="hljs-string">&#x27;&#x27;</span>) <span class="hljs-keyword">for</span> ch <span class="hljs-keyword">in</span> text)<br>REVERSE_DICT = &#123;v: k <span class="hljs-keyword">for</span> k, v <span class="hljs-keyword">in</span> MORSE_CODE_DICT.items()&#125;<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">decode_morse</span>(<span class="hljs-params">code</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27; &#x27;</span>.join(<br>        <span class="hljs-string">&#x27;&#x27;</span>.join(REVERSE_DICT.get(c, <span class="hljs-string">&#x27;&#x27;</span>) <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> word.split())<br>        <span class="hljs-keyword">for</span> word <span class="hljs-keyword">in</span> code.split(<span class="hljs-string">&#x27; / &#x27;</span>))<br><span class="hljs-built_in">print</span>(encode_morse(<span class="hljs-string">&quot;HELLO WORLD&quot;</span>))<br><span class="hljs-built_in">print</span>(decode_morse(<span class="hljs-string">&#x27;.... . .-.. .-.. --- / .-- --- .-. .-.. -..&#x27;</span>))<br></code></pre></td></tr></table></figure>
-
-
+<h3 id="BBS生成器"><a href="#BBS生成器" class="headerlink" title="BBS生成器"></a>BBS生成器</h3>
                 
               </div>
             
@@ -456,7 +332,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div></div>
-      <div>http://example.com/2025/06/03/编码基础-jsfuck/</div>
+      <div>http://example.com/2026/03/25/伪随机数生成器(PRNG)/</div>
     </div>
     <div class="license-meta">
       
@@ -468,7 +344,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Veröffentlicht am</div>
-          <div>June 3, 2025</div>
+          <div>March 25, 2026</div>
         </div>
       
       
@@ -500,9 +376,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/07/06/openssl/" title="openssl使用-1">
+                      <a href="/2026/03/25/%E7%BC%96%E7%A0%81%E5%9F%BA%E7%A1%80-jsfuck/" title="">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">openssl使用-1</span>
+                        <span class="hidden-mobile"></span>
                         <span class="visible-mobile">Vorheriger</span>
                       </a>
                     
@@ -510,7 +386,7 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/06/03/2025-6-1%20JQCTFone-line-crypto%20165730/" title="">
+                      <a href="/2026/03/25/%E5%8F%8C%E7%BA%BF%E7%BA%BF%E6%80%A7%E9%85%8D%E5%AF%B9%E5%8F%8A%E7%9B%B8%E5%85%B3%E9%A2%98%E7%9B%AE/" title="">
                         <span class="hidden-mobile"></span>
                         <span class="visible-mobile">Nächster</span>
                         <i class="iconfont icon-arrowright"></i>
