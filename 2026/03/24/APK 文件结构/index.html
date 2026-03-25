@@ -1,0 +1,813 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/OIP-C.jpg">
+  <link rel="icon" href="/img/OIP-C.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="fox">
+  <meta name="keywords" content="菜菜的密码劳弟">
+  
+    <meta name="description" content="学安卓有一段时间了,不过学的很慢,打算先花一天整理一下之前学的参考:安卓逆向基础知识之apk文件结构  结构 lib: 存放其他语言编写的so(动态链接库)   META-INF:用于存放数字签名相关   resources.arsc:暂时没怎么用过,用于存放编译打包厚度资源关系映射.同时还会生成一个R类指出id   res :存放经过编译后的资源文件   assets:存放不需要编译的资源文件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="apk文件结构">
+<meta property="og:url" content="http://example.com/2026/03/24/APK%20%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/index.html">
+<meta property="og:site_name" content="Rockfox的密码记录">
+<meta property="og:description" content="学安卓有一段时间了,不过学的很慢,打算先花一天整理一下之前学的参考:安卓逆向基础知识之apk文件结构  结构 lib: 存放其他语言编写的so(动态链接库)   META-INF:用于存放数字签名相关   resources.arsc:暂时没怎么用过,用于存放编译打包厚度资源关系映射.同时还会生成一个R类指出id   res :存放经过编译后的资源文件   assets:存放不需要编译的资源文件">
+<meta property="og:locale">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/rockfox0/foximages/mine/%E6%88%AA%E5%9B%BE%202026-03-24%2015-07-20.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/rockfox0/foximages/mine/320828c05018485bb6b631f971fc1e93~tplv-k3u1fbpfcp-zoom-in-crop-mark_1512_0_0_0.awebp">
+<meta property="article:published_time" content="2026-03-23T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-03-25T15:20:54.408Z">
+<meta property="article:author" content="fox">
+<meta property="article:tag" content="reserve">
+<meta property="article:tag" content="android">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/rockfox0/foximages/mine/%E6%88%AA%E5%9B%BE%202026-03-24%2015-07-20.png">
+  
+  
+  
+  <title>apk文件结构 - Rockfox的密码记录</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":40,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 100vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>fox的密码学习记录</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Startseite</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archiv</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Kategorien</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Schlagwörter</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>Über</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>Weblinks</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/xulun.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="apk文件结构"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-03-24 00:00" pubdate>
+          March 24, 2026 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.8k wörter
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          23 minuten
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">apk文件结构</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <ul>
+<li>学安卓有一段时间了,不过学的很慢,打算先花一天整理一下之前学的<br>参考:<a target="_blank" rel="noopener" href="https://bbs.kanxue.com/thread-278112-1.htm#msg_header_h3_1">安卓逆向基础知识之apk文件结构</a></li>
+</ul>
+<h2 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h2><blockquote>
+<p>lib: 存放其他语言编写的so(动态链接库)</p>
+</blockquote>
+<blockquote>
+<p>META-INF:用于存放数字签名相关</p>
+</blockquote>
+<blockquote>
+<p>resources.arsc:暂时没怎么用过,用于存放编译打包厚度资源关系映射.同时还会生成一个R类指出id</p>
+</blockquote>
+<blockquote>
+<p>res :存放经过编译后的资源文件</p>
+</blockquote>
+<blockquote>
+<p>assets:存放不需要编译的资源文件</p>
+</blockquote>
+<p>下面进行一些讲解,可能不是很详细</p>
+<h2 id="lib"><a href="#lib" class="headerlink" title="lib"></a>lib</h2><p>一般子文件名会表明使用环境要求,例如(x86_64)适用于arm-v8(64)和arm-v7(32).<br>一般在编写的时候,直接在本地调用so里面的函数,多数项目里面很多逻辑都是写在c语言c++或者其他更适合这个项目的语言.再编译成so文件,还有一些加固,反调试逻辑,或者图形处理,游戏开发之类的</p>
+<p>所以学习arm汇编还是有必要的.还有一些native层的开发相关的比如jni之类的.给自己画饼ing…..</p>
+<h2 id="META-INF"><a href="#META-INF" class="headerlink" title="META-INF"></a>META-INF</h2><p><img src="https://cdn.jsdelivr.net/gh/rockfox0/foximages/mine/%E6%88%AA%E5%9B%BE%202026-03-24%2015-07-20.png" srcset="/img/loading.gif" lazyload alt="%E6%88%AA%E5%9B%BE%202026-03-24%2015-07-20.png"><br>META-INF存储的是数字签名相关的,如图所示,一般有以下三个文件,.rsa文件,.SF文件,MF文件<br>根据签名使用的非对称加密算法可能也有其他比如DSA文件<br>这里使用的是传统的v1签名方案,还有v1,2,v3结合等等,2026年还出了v4签名方案<br>可以通过</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">apksigner verify --verbose --print-certs your.apk<br></code></pre></td></tr></table></figure>
+<p>来判断你的apk用了哪些签名<br>这里有很多详细的介绍:<a target="_blank" rel="noopener" href="https://source.android.com/docs/security/features/apksigning/v2?hl=zh-cn">安卓官网</a><br>v1签名的方案是基于jar签名的:</p>
+<ol>
+<li>MF文件里面存放的是整个apk的文件中出去自身文件外,所有文件的哈希摘要.这样就能保证在更改文件内容后,验证是否文件是否更改</li>
+<li>SF文件存储了MF文件的整个数字摘要,以及其中每个条目的二次摘要<br>Signature-Version: 1.0</li>
+</ol>
+<p>Created-By: 10.0.2 (Oracle Corporation)</p>
+<p>SHA1-Digest-Manifest: 3sfFzBcS0MeMB74RumtN3kWp1Fs&#x3D;</p>
+<p>SHA1-Digest-Manifest-Main-Attributes: kUARMfQJQjPfkkzCl&#x2F;B9BYe5L4w&#x3D;<br>比如这里<br>第一个是整个 文件的内容进行摘要<br>第二个是逐个内容进行摘要,前面的主属性区域(就是描述内容)+各个条目摘要</p>
+<ol>
+<li>.rsa()这类文件,包含开发者对用私钥对sf文件签名后的数字签名以及签名的时候使用的数字证书<br>当然仅仅是这三个文件,大项目肯定是不够用的,他们也有其他的方法保证文件未被篡改.不过这里就不说了,暂时没学.V2&#x2F;v3方案遇到了再说,V2就是塞到了APK压缩包的<br>为了保护 APK 内容，APK 包含以下 4 个部分：<ol>
+<li>ZIP 条目的内容（从偏移量 0 处开始一直到 APK 签名分块的起始位置）</li>
+<li>APK 签名分块</li>
+<li>ZIP 中央目录</li>
+<li>ZIP 中央目录结尾<br>APK塞在APK签名分块用于验证1,3,4部分</li>
+</ol>
+</li>
+</ol>
+<h2 id="AndroidManifest配置文件-应用清单概览"><a href="#AndroidManifest配置文件-应用清单概览" class="headerlink" title="AndroidManifest配置文件(应用清单概览)"></a>AndroidManifest配置文件(应用清单概览)</h2><p>其实就是个说明书,提供应用数据,gredlew打包的时候会用到</p>
+<ol>
+<li>manifes标签<br> 根标签,位于最外层<br> manifest标签是AndroidManifest.xml文件的根标签，它包含了应用程序的基本信息，如包名、版本号、SDK版本、应用程序的名称和图标等等。</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">manifest</span> <span class="hljs-attr">xmlns:android</span>=<span class="hljs-string">&quot;http://schemas.android.com/apk/res/android&quot;</span></span><br><span class="hljs-tag">   <span class="hljs-attr">android:versionCode</span>=<span class="hljs-string">&quot;70302&quot;</span></span><br><span class="hljs-tag">   <span class="hljs-attr">android:versionName</span>=<span class="hljs-string">&quot;7.3.2&quot;</span></span><br><span class="hljs-tag">   <span class="hljs-attr">android:installLocation</span>=<span class="hljs-string">&quot;auto&quot;</span></span><br><span class="hljs-tag">   <span class="hljs-attr">android:compileSdkVersion</span>=<span class="hljs-string">&quot;28&quot;</span></span><br><span class="hljs-tag">   <span class="hljs-attr">android:compileSdkVersionCodename</span>=<span class="hljs-string">&quot;9&quot;</span></span><br><span class="hljs-tag">   <span class="hljs-attr">package</span>=<span class="hljs-string">&quot;com.imangi.templerun2&quot;</span></span><br><span class="hljs-tag">   <span class="hljs-attr">platformBuildVersionCode</span>=<span class="hljs-string">&quot;28&quot;</span></span><br><span class="hljs-tag">   <span class="hljs-attr">platformBuildVersionName</span>=<span class="hljs-string">&quot;9&quot;</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>package=&quot;com.imangi.templerun2&quot;</code><br>  应用包名，相当于应用的唯一标识。</li>
+<li><code>android:versionCode=&quot;70302&quot;</code><br>  内部版本号，给系统和商店判断升级用，数字越大版本越新。</li>
+<li><code>android:versionName=&quot;7.3.2&quot;</code><br>  给用户看的版本名。</li>
+<li><code>android:installLocation=&quot;auto&quot;</code><br>  安装位置由系统自动决定。</li>
+<li><code>android:compileSdkVersion=&quot;28&quot;</code><br>  表示这个 APK 是按 <strong>Android 9 &#x2F; API 28</strong> 的 SDK 编译的。</li>
+<li><code>android:compileSdkVersionCodename=&quot;9&quot;</code><br>  对应上面的 Android 9。</li>
+<li><code>platformBuildVersionCode=&quot;28&quot;</code><br>  打包时的平台版本代码，也是 API 28。</li>
+<li><code>platformBuildVersionName=&quot;9&quot;</code><br>  打包时的平台版本名，Android 9。</li>
+<li><code>xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</code><br>  这是命名空间声明，表示后面所有 <code>android:</code> 开头的属性都属于 Android 官方定义。</li>
+</ul>
+<ol start="2">
+<li><p>application<br> 包含应用程序的主要标签,包含应用程序所有组件的.在这个标签中也可以设置程序的主题和和允许备份,硬件加速,网络安全配置,之类.设置应用的全局属性<br> <strong>. 应用基本信息</strong><br> 控制应用整体外观和入口级信息，例如：<br> <code>name</code>、<code>label</code>、<code>icon</code>、<code>logo</code>、<code>banner</code>、<code>description</code>、<code>theme</code>、<code>appCategory</code>、<code>isGame</code>。</p>
+<p> <strong>2. 进程与任务行为</strong><br> 控制应用运行在哪个进程、任务栈如何表现，例如：<br> <code>process</code>、<code>taskAffinity</code>、<code>allowTaskReparenting</code>、<code>hasCode</code>、<code>persistent</code>、<code>vmSafeMode</code>、<code>largeHeap</code>。</p>
+<p> <strong>3. 备份与数据恢复</strong><br> 控制是否允许备份、如何备份、恢复时的规则，例如：<br> <code>allowBackup</code>、<code>backupAgent</code>、<code>fullBackupContent</code>、<code>fullBackupOnly</code>、<code>restoreAnyVersion</code>、<code>killAfterRestore</code>、<code>dataExtractionRules</code>。</p>
+<p> <strong>4. 安全与网络</strong><br> 控制明文流量、网络安全配置、权限相关默认行为，例如：<br> <code>usesCleartextTraffic</code>、<code>networkSecurityConfig</code>、<code>permission</code>、<code>requestLegacyExternalStorage</code>。</p>
+<p> <strong>5. 调试与系统行为</strong><br> 控制是否可调试、是否启用某些运行时能力，例如：<br> <code>debuggable</code>、<code>testOnly</code>、<code>extractNativeLibs</code>、<code>allowNativeHeapPointerTagging</code>、<code>profileable</code>、<code>profileableByShell</code><br> 参考,当然这些只是科普向,详情我也没看,<br> 同时也提供了应用程序了所有组件,比如activity(非常重要,控制界面)<br> 一般来说会遇到这四个组件</p>
+<ul>
+<li><strong>Activity</strong>：界面页面<br>  比如登录页、设置页、游戏主界面。</li>
+<li><strong>Service</strong>：后台服务<br>  比如后台播放音乐、下载任务、推送处理。</li>
+<li><strong>BroadcastReceiver</strong>：广播接收器<br>  用来接收系统或应用发出的消息，比如开机完成、网络变化。</li>
+<li><strong>ContentProvider</strong>：内容提供者<br>  用来给别的应用或本应用共享数据，比如文件、数据库内容。</li>
+</ul>
+</li>
+<li><p>activity标签<br>定义一个Activity(Android应用的界面)组件,包含Activity的基本信息,比如显示界面,响应用户操作管理页面生命周期(后面会讲一下),页面跳转<br>示例:</p>
+</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">activity</span></span><br><span class="hljs-tag">   <span class="hljs-attr">android:theme</span>=<span class="hljs-string">&quot;@android:style/Theme.Translucent&quot;</span></span><br><span class="hljs-tag">   <span class="hljs-attr">android:name</span>=<span class="hljs-string">&quot;com.bytedance.sdk.openadsdk.stub.activity.Stub_Standard_Activity_T&quot;</span></span><br><span class="hljs-tag">   <span class="hljs-attr">android:exported</span>=<span class="hljs-string">&quot;false&quot;</span></span><br><span class="hljs-tag">   <span class="hljs-attr">android:launchMode</span>=<span class="hljs-string">&quot;standard&quot;</span></span><br><span class="hljs-tag">   <span class="hljs-attr">android:configChanges</span>=<span class="hljs-string">&quot;screenSize|orientation|navigation|keyboardHidden&quot;</span></span><br><span class="hljs-tag">   <span class="hljs-attr">android:windowSoftInputMode</span>=<span class="hljs-string">&quot;adjustResize|stateHidden&quot;</span>/&gt;</span><br></code></pre></td></tr></table></figure>
+<p>对应类名:<code>com.bytedance.sdk.openadsdk.stub.activity.Stub_Standard_Activity_T</code><br>使用主题<br>android:theme&#x3D;”@android:style&#x2F;Theme.Translucent”<br>是否对外开放<br>android:exported&#x3D;”false”(仅限本应用调用)<br>启动模式<br>android:launchMode&#x3D;”standard”默认<br>每次穷东新建一个activity实例,不强制复用旧页面<br>android:configChanges&#x3D;”screenSize|orientation|navigation|keyboardHidden”<br>页面发生变化的时候(变化有屏幕切换,横竖屏幕切换,导航切换,键盘切换)页面自己处理,系统不要默认重建他<br>android:windowSoftInputMode&#x3D;”adjustResize|stateHidden”<br>弹出软件盘的时候,页面自动放缩,页面启动是时候软键盘默认隐藏<br>其实就是字面意思这些,(英语水平决定我的学习速度2333,补考没过,有点难绷………………………..)<br>3. receiver标签<br>	用于静态注册BroadcastReceiver(广播接收器),动态注册于apk代码中实现,静态注册因为是在androidmainfest.xml里面,广播接受不依赖于activity结束而结束,应用程序进程的关闭也系统也能知道有这么一个接受器,动态静态使用场景不同<br>		关于广播机制这些文章有详细的讲解,临时看的我估计也讲不明白:<br>			<a target="_blank" rel="noopener" href="https://bbs.kanxue.com/thread-269309-1.htm#%EF%BC%882%EF%BC%89%E5%B9%BF%E6%92%AD%E6%9C%BA%E5%88%B6%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF">广播机制的应用场景</a><br>			<a target="_blank" rel="noopener" href="https://developer.android.com/develop/background-work/background-tasks/broadcasts?hl=zh-cn#context-registered-receivers">文档</a><br>4. service标签<br>		service组件:Service（服务）是 Android 四大组件之一，属于一种在后台运行、无用户界面的长生命周期组件。它主要用于处理不需用户交互的长期任务（如后台音乐播放、大文件下载、网络请求）。Service 默认在主线程运行，但即使被切换到后台甚至应用被关闭，Service 仍能保持状态运行.<br>		内容太多,没看完,官方文档对于服务组建的描述很详细<br>		<a target="_blank" rel="noopener" href="https://developer.android.com/develop/background-work/services?hl=zh-cn">service概览</a><br>5. provider标签<br>	定义一个Content Provider( 内容提供者)组件,仅仅只是看概念还是太干燥了,后续还是得开个开发专栏浅浅看一下.<br>	内容提供程序管理对中央数据存储区的访问。提供程序是 Android 应用的一部分，通常提供自己的界面来处理数据。不过，content provider 主要由其他应用使用，这些应用使用提供程序客户端对象来访问提供程序。提供程序与提供程序客户端共同提供一致的标准数据界面，该界面还可处理进程间通信并保护数据访问的安全性。<br>6. uses-permission标签<br>	定义所需权限,启动的时候会要求索取.如访问网络、读取SD卡等等。在应用程序安装时，系统会提示用户授权这些权限。<br>7. uess-feature标签<br>	 定义应用需要的硬件或者软件特性,如摄像头GPS等等</p>
+<h2 id="resources-arsc文件"><a href="#resources-arsc文件" class="headerlink" title="resources.arsc文件"></a>resources.arsc文件</h2><p>在编译过程中由aapt2生成,类似于符号表,有点像,里面存储的资源的索引和映射关系.把资源文件名和类型,值等信息映射到R.java中定义的整数id上,代码中可以通过R类来引用<br>在编译过程中由aapt2生成,类似于符号表,有点像,里面存储的资源的索引和映射关系.把资源文件名和类型,值等信息映射到R.java中定义的整数id上,代码中可以通过R类来引用</p>
+<p>下面是apk的打包编译流程</p>
+<p><img src="https://cdn.jsdelivr.net/gh/rockfox0/foximages/mine/320828c05018485bb6b631f971fc1e93~tplv-k3u1fbpfcp-zoom-in-crop-mark_1512_0_0_0.awebp" srcset="/img/loading.gif" lazyload><br>没找到好一点的图,可以大致看看打包的流程<br>参考:<a target="_blank" rel="noopener" href="https://juejin.cn/post/6986448355962404877#heading-1">掘金</a></p>
+<ul>
+<li>打包资源文件：通过aapt工具将res目录下的文件打包生成R.java文件和resources.arsc资源文件</li>
+<li>处理aidl files：如果有aidl接口，通过aidl工具打包成java接口类(不同进程间通信)</li>
+<li>java Compiler：javac编译，将R.java，源码文件，aidl.java编译为class文件</li>
+<li>dex：源码.class,第三方jar包等class文件通过dx工具生成dex文件</li>
+<li>apkbuilder:apkbuilder将所有的资源编译过的和不需要编译的，dex文件，arsc资源文件打包成一个完整的apk文件</li>
+<li>jarsigner：以上生成的是一个没有签名的apk文件，这里通过jarsigner工具对该apk进行签名，从而得到一个带签名的apk文件</li>
+<li>zipalign：对齐，将apk包中所有的资源文件距离文件起始偏移为4的整数倍，这样运行时可以减少内存的开销</li>
+</ul>
+<h2 id="res-文件"><a href="#res-文件" class="headerlink" title="res 文件"></a>res 文件</h2><p>资源目录文件.里面有很多子目录,存放不同的内容<br>参考这个<a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/resources/providing-resources?hl=zh-cn">应用资源概览</a><br>资源文件不知道怎么补充</p>
+<h2 id="classes-dex"><a href="#classes-dex" class="headerlink" title="classes.dex"></a>classes.dex</h2><p>dex文件ART下的可执行文件格式,本身是由class生成的,里面有该应用所有的java类.<br>没啥好说的.后续选到详细说明</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/reserve/" class="category-chain-item">reserve</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/reserve/android/" class="category-chain-item">android</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/reserve/" class="print-no-link">#reserve</a>
+      
+        <a href="/tags/android/" class="print-no-link">#android</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>apk文件结构</div>
+      <div>http://example.com/2026/03/24/APK 文件结构/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Beitragsautor</div>
+          <div>fox</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Veröffentlicht am</div>
+          <div>March 24, 2026</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Urheberrechtshinweis</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2026/03/25/2025-6-1%20JQCTFone-line-crypto%20165730/" title="">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">Vorheriger</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/01/06/%E4%BB%A3%E7%A0%81%E6%B7%B7%E6%B7%86/" title="代码混淆(smc和flower)">
+                        <span class="hidden-mobile">代码混淆(smc和flower)</span>
+                        <span class="visible-mobile">Nächster</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Inhaltsverzeichnis</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Stichwort</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog funktioniert am besten mit aktiviertem JavaScript</div>
+  </noscript>
+</body>
+</html>
