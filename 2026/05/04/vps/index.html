@@ -1,0 +1,916 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/OIP-C.jpg">
+  <link rel="icon" href="/img/OIP-C.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="fox">
+  <meta name="keywords" content="菜菜的密码劳弟">
+  
+    <meta name="description" content="裸 VPS 使用 sing-box 搭建 VMess 代理教程本文档适用于裸 VPS 手动部署 sing-box，不使用面板、不使用域名、不使用 TLS、不使用 Reality。 配置方案： 1VMess + TCP + none + alterId 0 + 端口 18080  不过这个vps需要找那种有国内线路的,一般很多国外服务器国内无法直连,网速也偏慢.  注意：VMess 明文 TCP 不">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Rockfox的密码记录">
+<meta property="og:url" content="http://example.com/2026/05/04/vps/index.html">
+<meta property="og:site_name" content="Rockfox的密码记录">
+<meta property="og:description" content="裸 VPS 使用 sing-box 搭建 VMess 代理教程本文档适用于裸 VPS 手动部署 sing-box，不使用面板、不使用域名、不使用 TLS、不使用 Reality。 配置方案： 1VMess + TCP + none + alterId 0 + 端口 18080  不过这个vps需要找那种有国内线路的,一般很多国外服务器国内无法直连,网速也偏慢.  注意：VMess 明文 TCP 不">
+<meta property="og:locale">
+<meta property="article:published_time" content="2026-05-03T18:30:21.539Z">
+<meta property="article:modified_time" content="2026-05-03T18:30:21.540Z">
+<meta property="article:author" content="fox">
+<meta property="article:tag" content="菜菜的密码劳弟">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Rockfox的密码记录</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":40,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 108vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>fox的密码学习记录</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Startseite</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archiv</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Kategorien</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Schlagwörter</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>Über</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>Weblinks</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text=""></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-05-04 02:30" pubdate>
+          May 4, 2026 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.9k wörter
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          16 minuten
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header"></h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="裸-VPS-使用-sing-box-搭建-VMess-代理教程"><a href="#裸-VPS-使用-sing-box-搭建-VMess-代理教程" class="headerlink" title="裸 VPS 使用 sing-box 搭建 VMess 代理教程"></a>裸 VPS 使用 sing-box 搭建 VMess 代理教程</h1><p>本文档适用于裸 VPS 手动部署 sing-box，不使用面板、不使用域名、不使用 TLS、不使用 Reality。</p>
+<p>配置方案：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">VMess + TCP + none + alterId 0 + 端口 18080<br></code></pre></td></tr></table></figure>
+
+<p>不过这个vps需要找那种有国内线路的,一般很多国外服务器国内无法直连,网速也偏慢.</p>
+<blockquote>
+<p>注意：VMess 明文 TCP 不适合长期高强度使用。长期使用建议改成 VLESS + Reality 或其他带 TLS&#x2F;伪装的方案。</p>
+</blockquote>
+<hr>
+<h2 id="一、准备条件"><a href="#一、准备条件" class="headerlink" title="一、准备条件"></a>一、准备条件</h2><p>推荐系统：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs text">Debian 11<br>Debian 12<br>Ubuntu 20.04<br>Ubuntu 22.04<br>Ubuntu 24.04<br></code></pre></td></tr></table></figure>
+
+<p>需要放行端口：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">TCP 18080<br></code></pre></td></tr></table></figure>
+
+<p>需要客户端：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs text">v2rayN<br>v2rayNG<br>NekoBox<br>Shadowrocket<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="二、登录-VPS"><a href="#二、登录-VPS" class="headerlink" title="二、登录 VPS"></a>二、登录 VPS</h2><p>本地电脑执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ssh root@你的VPS_IP<br></code></pre></td></tr></table></figure>
+
+<p>例如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ssh root@154.44.1.72<br></code></pre></td></tr></table></figure>
+
+<p>如果遇到 SSH 指纹变更警告：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!<br></code></pre></td></tr></table></figure>
+
+<p>可以先删除旧指纹：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ssh-keygen -f ~/.ssh/known_hosts -R <span class="hljs-string">&#x27;你的VPS_IP&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p>然后重新连接：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ssh root@你的VPS_IP<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="三、更新系统并安装基础工具"><a href="#三、更新系统并安装基础工具" class="headerlink" title="三、更新系统并安装基础工具"></a>三、更新系统并安装基础工具</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">apt update<br>apt install -y curl <span class="hljs-built_in">sudo</span> nano ufw<br></code></pre></td></tr></table></figure>
+
+<p>如果是 Debian 10 buster，<code>apt update</code> 可能出现 404。可以临时切换到 archive 源：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cp</span> /etc/apt/sources.list /etc/apt/sources.list.bak<br><br><span class="hljs-built_in">cat</span> &gt; /etc/apt/sources.list &lt;&lt;<span class="hljs-string">&#x27;EOF&#x27;</span><br>deb http://archive.debian.org/debian buster main contrib non-free<br>deb http://archive.debian.org/debian buster-updates main contrib non-free<br>deb http://archive.debian.org/debian-security buster/updates main contrib non-free<br>EOF<br><br><span class="hljs-built_in">cat</span> &gt; /etc/apt/apt.conf.d/99archive &lt;&lt;<span class="hljs-string">&#x27;EOF&#x27;</span><br>Acquire::Check-Valid-Until <span class="hljs-string">&quot;false&quot;</span>;<br>EOF<br><br>apt clean<br><span class="hljs-built_in">rm</span> -rf /var/lib/apt/lists/*<br>apt update<br>apt install -y curl <span class="hljs-built_in">sudo</span> nano ufw<br></code></pre></td></tr></table></figure>
+
+<p>如果是新 VPS，更推荐直接在服务商后台重装：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">Debian 12<br>Ubuntu 22.04<br>Ubuntu 24.04<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="四、安装-sing-box"><a href="#四、安装-sing-box" class="headerlink" title="四、安装 sing-box"></a>四、安装 sing-box</h2><p>添加 sing-box 官方 APT 源：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">mkdir</span> -p /etc/apt/keyrings<br><br>curl -fsSL https://sing-box.app/gpg.key -o /etc/apt/keyrings/sagernet.asc<br><span class="hljs-built_in">chmod</span> a+r /etc/apt/keyrings/sagernet.asc<br><br><span class="hljs-built_in">cat</span> &gt; /etc/apt/sources.list.d/sagernet.sources &lt;&lt;<span class="hljs-string">&#x27;EOF&#x27;</span><br>Types: deb<br>URIs: https://deb.sagernet.org/<br>Suites: *<br>Components: *<br>Enabled: <span class="hljs-built_in">yes</span><br>Signed-By: /etc/apt/keyrings/sagernet.asc<br>EOF<br></code></pre></td></tr></table></figure>
+
+<p>更新并安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">apt update<br>apt install -y sing-box<br></code></pre></td></tr></table></figure>
+
+<p>检查版本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sing-box version<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="五、生成-UUID"><a href="#五、生成-UUID" class="headerlink" title="五、生成 UUID"></a>五、生成 UUID</h2><p>VMess 需要一个 UUID。</p>
+<p>执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cat</span> /proc/sys/kernel/random/uuid<br></code></pre></td></tr></table></figure>
+
+<p>示例输出：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">6ed43346-b4bc-4761-bf80-2fc0be4e8950<br></code></pre></td></tr></table></figure>
+
+<p>后面的配置里需要用这个 UUID。</p>
+<hr>
+<h2 id="六、写入-sing-box-配置"><a href="#六、写入-sing-box-配置" class="headerlink" title="六、写入 sing-box 配置"></a>六、写入 sing-box 配置</h2><p>创建配置目录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">mkdir</span> -p /etc/sing-box<br></code></pre></td></tr></table></figure>
+
+<p>编辑配置文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">nano /etc/sing-box/config.json<br></code></pre></td></tr></table></figure>
+
+<p>粘贴下面配置：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;log&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;level&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;info&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;timestamp&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><br>  <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;inbounds&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>    <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;vmess&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;tag&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;vmess-in&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;listen&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;0.0.0.0&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;listen_port&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">18080</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;users&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>        <span class="hljs-punctuation">&#123;</span><br>          <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;my-vps&quot;</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-attr">&quot;uuid&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;6ed43346-b4bc-4761-bf80-2fc0be4e8950&quot;</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-attr">&quot;alterId&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><br>        <span class="hljs-punctuation">&#125;</span><br>      <span class="hljs-punctuation">]</span><br>    <span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;outbounds&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>    <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;direct&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;tag&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;direct&quot;</span><br>    <span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;route&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;final&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;direct&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>需要修改的地方：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">uuid：改成你自己生成的 UUID<br>listen_port：默认 18080，可以按需修改<br>name：只是备注，可以随便写<br></code></pre></td></tr></table></figure>
+
+<p>保存退出：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">Ctrl + O<br>Enter<br>Ctrl + X<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="七、检查配置并启动-sing-box"><a href="#七、检查配置并启动-sing-box" class="headerlink" title="七、检查配置并启动 sing-box"></a>七、检查配置并启动 sing-box</h2><p>检查配置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sing-box check -c /etc/sing-box/config.json<br></code></pre></td></tr></table></figure>
+
+<p>如果没有报错，启动服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">systemctl <span class="hljs-built_in">enable</span> sing-box<br>systemctl restart sing-box<br>systemctl status sing-box<br></code></pre></td></tr></table></figure>
+
+<p>如果看到：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">active (running)<br></code></pre></td></tr></table></figure>
+
+<p>说明 sing-box 已经启动成功。</p>
+<p>查看实时日志：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">journalctl -u sing-box --output <span class="hljs-built_in">cat</span> -f<br></code></pre></td></tr></table></figure>
+
+<p>退出日志查看：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">Ctrl + C<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="八、确认端口是否监听"><a href="#八、确认端口是否监听" class="headerlink" title="八、确认端口是否监听"></a>八、确认端口是否监听</h2><p>执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ss -tulnp | grep 18080<br></code></pre></td></tr></table></figure>
+
+<p>正常应看到类似：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">tcp LISTEN 0 4096 0.0.0.0:18080 0.0.0.0:* users:((&quot;sing-box&quot;,pid=xxxx,fd=xx))<br></code></pre></td></tr></table></figure>
+
+<p>重点确认：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">LISTEN<br>0.0.0.0:18080<br>sing-box<br></code></pre></td></tr></table></figure>
+
+<p>如果没有输出，说明 sing-box 没有监听成功，需要检查配置和日志。</p>
+<hr>
+<h2 id="九、放行防火墙端口"><a href="#九、放行防火墙端口" class="headerlink" title="九、放行防火墙端口"></a>九、放行防火墙端口</h2><p>如果 VPS 使用 ufw：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">ufw allow 18080/tcp<br>ufw reload<br>ufw status<br></code></pre></td></tr></table></figure>
+
+<p>如果显示：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">Status: inactive<br></code></pre></td></tr></table></figure>
+
+<p>说明 ufw 没有启用，不一定是问题。</p>
+<p>但还需要去 VPS 服务商后台检查安全组或防火墙。</p>
+<p>添加入站规则：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">协议：TCP<br>端口：18080<br>来源：0.0.0.0/0<br></code></pre></td></tr></table></figure>
+
+<p>常见后台入口名称：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs text">Firewall<br>Security Group<br>防火墙<br>安全组<br>入站规则<br>Inbound Rules<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="十、本地测试端口是否开放"><a href="#十、本地测试端口是否开放" class="headerlink" title="十、本地测试端口是否开放"></a>十、本地测试端口是否开放</h2><p>需要在本地电脑测试，不是在 VPS 上测试。</p>
+<h3 id="macOS-Linux"><a href="#macOS-Linux" class="headerlink" title="macOS &#x2F; Linux"></a>macOS &#x2F; Linux</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">nc -vz 你的VPS_IP 18080<br></code></pre></td></tr></table></figure>
+
+<p>例如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">nc -vz 154.44.1.72 18080<br></code></pre></td></tr></table></figure>
+
+<p>成功结果：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">Connection to 154.44.1.72 18080 port [tcp/*] succeeded!<br></code></pre></td></tr></table></figure>
+
+<h3 id="Windows-PowerShell"><a href="#Windows-PowerShell" class="headerlink" title="Windows PowerShell"></a>Windows PowerShell</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-built_in">Test-NetConnection</span> 你的VPS_IP <span class="hljs-literal">-Port</span> <span class="hljs-number">18080</span><br></code></pre></td></tr></table></figure>
+
+<p>成功结果：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">TcpTestSucceeded : True<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="十一、v2rayN-客户端配置"><a href="#十一、v2rayN-客户端配置" class="headerlink" title="十一、v2rayN 客户端配置"></a>十一、v2rayN 客户端配置</h2><p>添加服务器，协议选择：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">VMess<br></code></pre></td></tr></table></figure>
+
+<p>填写参数：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs text">别名：my-vps<br>地址：你的VPS_IP<br>端口：18080<br>用户 ID：你的 UUID<br>额外 ID / alterId：0<br>加密方式 / security：auto<br>传输协议 / network：tcp<br>伪装类型 / type：none<br>host：空<br>path：空<br>TLS：不启用 / none / 空<br>Mux：Off<br></code></pre></td></tr></table></figure>
+
+<p>示例：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs text">地址：154.44.1.72<br>端口：18080<br>UUID：6ed43346-b4bc-4761-bf80-2fc0be4e8950<br>alterId：0<br>security：auto<br>network：tcp<br>type：none<br>TLS：空<br>Mux：Off<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="十二、VMess-导入链接示例"><a href="#十二、VMess-导入链接示例" class="headerlink" title="十二、VMess 导入链接示例"></a>十二、VMess 导入链接示例</h2><p>如果你的配置是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">IP：154.44.1.72<br>端口：18080<br>UUID：6ed43346-b4bc-4761-bf80-2fc0be4e8950<br></code></pre></td></tr></table></figure>
+
+<p>可以使用下面的导入链接：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">vmess://eyJ2IjoiMiIsInBzIjoibXktdnBzIiwiYWRkIjoiMTU0LjQ0LjEuNzIiLCJwb3J0IjoiMTgwODAiLCJpZCI6IjZlZDQzMzQ2LWI0YmMtNDc2MS1iZjgwLTJmYzBiZTRlODk1MCIsImFpZCI6IjAiLCJzY3kiOiJhdXRvIiwibmV0IjoidGNwIiwidHlwZSI6Im5vbmUiLCJob3N0IjoiIiwicGF0aCI6IiIsInRscyI6IiJ9<br></code></pre></td></tr></table></figure>
+
+<p>如果 IP、端口或 UUID 不同，需要重新生成 VMess 链接。</p>
+<hr>
+<h2 id="十三、测试代理是否生效"><a href="#十三、测试代理是否生效" class="headerlink" title="十三、测试代理是否生效"></a>十三、测试代理是否生效</h2><p>v2rayN 中操作：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs text">1. 选择节点<br>2. 设为活动服务器<br>3. 开启系统代理<br>4. 路由模式选择全局<br>5. 点击测试真连接<br></code></pre></td></tr></table></figure>
+
+<p>本地电脑测试出口 IP：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">curl ipinfo.io<br></code></pre></td></tr></table></figure>
+
+<p>如果显示的是 VPS IP，例如：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;ip&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;154.44.1.72&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;city&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Los Angeles&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;region&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;California&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;country&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;US&quot;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>说明本地流量已经走 VPS。</p>
+<hr>
+<h2 id="十四、常见排障命令"><a href="#十四、常见排障命令" class="headerlink" title="十四、常见排障命令"></a>十四、常见排障命令</h2><h3 id="查看服务状态"><a href="#查看服务状态" class="headerlink" title="查看服务状态"></a>查看服务状态</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">systemctl status sing-box<br></code></pre></td></tr></table></figure>
+
+<h3 id="查看最近日志"><a href="#查看最近日志" class="headerlink" title="查看最近日志"></a>查看最近日志</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">journalctl -u sing-box --output <span class="hljs-built_in">cat</span> -e<br></code></pre></td></tr></table></figure>
+
+<h3 id="查看实时日志"><a href="#查看实时日志" class="headerlink" title="查看实时日志"></a>查看实时日志</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">journalctl -u sing-box --output <span class="hljs-built_in">cat</span> -f<br></code></pre></td></tr></table></figure>
+
+<h3 id="检查端口监听"><a href="#检查端口监听" class="headerlink" title="检查端口监听"></a>检查端口监听</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ss -tulnp | grep 18080<br></code></pre></td></tr></table></figure>
+
+<h3 id="检查配置文件"><a href="#检查配置文件" class="headerlink" title="检查配置文件"></a>检查配置文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sing-box check -c /etc/sing-box/config.json<br></code></pre></td></tr></table></figure>
+
+<h3 id="查看-sing-box-实际读取哪个配置文件"><a href="#查看-sing-box-实际读取哪个配置文件" class="headerlink" title="查看 sing-box 实际读取哪个配置文件"></a>查看 sing-box 实际读取哪个配置文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">systemctl <span class="hljs-built_in">cat</span> sing-box<br></code></pre></td></tr></table></figure>
+
+<p>如果看到：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">ExecStart=... sing-box run -c /etc/sing-box/config.json<br></code></pre></td></tr></table></figure>
+
+<p>说明服务读取的是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">/etc/sing-box/config.json<br></code></pre></td></tr></table></figure>
+
+<p>如果看到：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">ExecStart=... sing-box run -c /etc/sing-box.json<br></code></pre></td></tr></table></figure>
+
+<p>说明服务读取的是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">/etc/sing-box.json<br></code></pre></td></tr></table></figure>
+
+<p>此时需要把配置写到实际读取的路径，或者修改 systemd 服务文件。</p>
+<hr>
+<h2 id="十五、修改配置后的标准重启流程"><a href="#十五、修改配置后的标准重启流程" class="headerlink" title="十五、修改配置后的标准重启流程"></a>十五、修改配置后的标准重启流程</h2><p>每次修改配置后，按下面顺序执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">sing-box check -c /etc/sing-box/config.json<br>systemctl restart sing-box<br>systemctl status sing-box<br>ss -tulnp | grep 18080<br></code></pre></td></tr></table></figure>
+
+<p>如果要看连接日志：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">journalctl -u sing-box --output <span class="hljs-built_in">cat</span> -f<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="十六、常见问题"><a href="#十六、常见问题" class="headerlink" title="十六、常见问题"></a>十六、常见问题</h2><h3 id="1-apt-update-报-buster-404"><a href="#1-apt-update-报-buster-404" class="headerlink" title="1. apt update 报 buster 404"></a>1. <code>apt update</code> 报 buster 404</h3><p>原因：Debian 10 buster 已经过期，主源不再提供 Release 文件。</p>
+<p>解决方法：切换到 archive 源，或者重装 Debian 12 &#x2F; Ubuntu 22.04。</p>
+<hr>
+<h3 id="2-ss-tulnp-grep-18080-没有输出"><a href="#2-ss-tulnp-grep-18080-没有输出" class="headerlink" title="2. ss -tulnp | grep 18080 没有输出"></a>2. <code>ss -tulnp | grep 18080</code> 没有输出</h3><p>说明 sing-box 没有监听端口。</p>
+<p>检查：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">sing-box check -c /etc/sing-box/config.json<br>systemctl status sing-box<br>journalctl -u sing-box --output <span class="hljs-built_in">cat</span> -e<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="3-本地-nc-测试端口失败"><a href="#3-本地-nc-测试端口失败" class="headerlink" title="3. 本地 nc 测试端口失败"></a>3. 本地 <code>nc</code> 测试端口失败</h3><p>可能原因：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs text">1. sing-box 没启动<br>2. VPS 防火墙没放行<br>3. 服务商安全组没放行<br>4. 配置文件不是 systemd 实际读取的文件<br>5. 端口写错<br></code></pre></td></tr></table></figure>
+
+<p>检查：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">ss -tulnp | grep 18080<br>systemctl <span class="hljs-built_in">cat</span> sing-box<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="4-v2rayN-连不上"><a href="#4-v2rayN-连不上" class="headerlink" title="4. v2rayN 连不上"></a>4. v2rayN 连不上</h3><p>检查客户端参数是否和服务端一致：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs text">协议：VMess<br>地址：VPS IP<br>端口：18080<br>UUID：服务端配置里的 uuid<br>alterId：0<br>security：auto<br>network：tcp<br>type：none<br>TLS：不启用<br>Mux：Off<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="5-代理通了，但某些网站提示地区不支持"><a href="#5-代理通了，但某些网站提示地区不支持" class="headerlink" title="5. 代理通了，但某些网站提示地区不支持"></a>5. 代理通了，但某些网站提示地区不支持</h3><p>这通常不是 sing-box 配置问题，而是网站对出口 IP、ASN、账号地区、Cookie、风控策略的判断。</p>
+<p>可以测试出口 IP：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">curl ipinfo.io<br></code></pre></td></tr></table></figure>
+
+<p>重点看：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs text">ip<br>country<br>region<br>org<br></code></pre></td></tr></table></figure>
+
+<p>如果出口 IP 已经是 VPS IP，说明代理链路正常。</p>
+<hr>
+<h2 id="十七、完整客户端参数模板"><a href="#十七、完整客户端参数模板" class="headerlink" title="十七、完整客户端参数模板"></a>十七、完整客户端参数模板</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs text">协议：VMess<br>地址：你的 VPS IP<br>端口：18080<br>UUID：服务端 config.json 里的 uuid<br>alterId：0<br>加密：auto<br>传输：tcp<br>伪装：none<br>TLS：不启用<br>Mux：Off<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="十八、完整服务端配置模板"><a href="#十八、完整服务端配置模板" class="headerlink" title="十八、完整服务端配置模板"></a>十八、完整服务端配置模板</h2><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;log&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;level&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;info&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;timestamp&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><br>  <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;inbounds&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>    <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;vmess&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;tag&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;vmess-in&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;listen&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;0.0.0.0&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;listen_port&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">18080</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;users&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>        <span class="hljs-punctuation">&#123;</span><br>          <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;my-vps&quot;</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-attr">&quot;uuid&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;这里填写你的UUID&quot;</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-attr">&quot;alterId&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><br>        <span class="hljs-punctuation">&#125;</span><br>      <span class="hljs-punctuation">]</span><br>    <span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;outbounds&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>    <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;direct&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;tag&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;direct&quot;</span><br>    <span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;route&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;final&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;direct&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="十九、总结"><a href="#十九、总结" class="headerlink" title="十九、总结"></a>十九、总结</h2><p>这套配置的核心是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs text">sing-box 服务端：VMess 入站<br>客户端：VMess TCP<br>端口：18080<br>alterId：0<br>TLS：关闭<br>传输伪装：none<br></code></pre></td></tr></table></figure>
+
+<p>最小可用条件：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs text">1. sing-box 正常运行<br>2. VPS 监听 18080<br>3. 安全组放行 TCP 18080<br>4. 客户端 IP、端口、UUID、alterId 完全一致<br>5. 客户端开启系统代理或全局代理<br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div></div>
+      <div>http://example.com/2026/05/04/vps/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Beitragsautor</div>
+          <div>fox</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Veröffentlicht am</div>
+          <div>May 4, 2026</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Urheberrechtshinweis</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/03/26/activity%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" title="activity生命周期-每日小记">
+                        <span class="hidden-mobile">activity生命周期-每日小记</span>
+                        <span class="visible-mobile">Nächster</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Inhaltsverzeichnis</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Stichwort</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog funktioniert am besten mit aktiviertem JavaScript</div>
+  </noscript>
+</body>
+</html>
