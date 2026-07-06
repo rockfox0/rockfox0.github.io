@@ -22,7 +22,7 @@
     <meta name="description" content="手脱upxupx壳是什么一个基础的压缩壳,这里就以 elf的upx 加壳为示例来做.当然仅仅作为练手还是不错的.因为我的拖延,也花费了些许的时间. upx 的压缩和解压upx壳的压缩分为四个步骤. pack1生成新的elf header.先生成能生成的一个elf header的框架 pack2压缩原始PT_LOAD的内容,先用压缩算法预处理里面的内容,再把PT_LOAD压缩成UPX block,最">
 <meta property="og:type" content="article">
 <meta property="og:title" content="手动脱壳--elf64 的upx">
-<meta property="og:url" content="http://example.com/2025/07/06/upx/index.html">
+<meta property="og:url" content="http://example.com/2026/07/06/upx/index.html">
 <meta property="og:site_name" content="Rockfox的密码记录">
 <meta property="og:description" content="手脱upxupx壳是什么一个基础的压缩壳,这里就以 elf的upx 加壳为示例来做.当然仅仅作为练手还是不错的.因为我的拖延,也花费了些许的时间. upx 的压缩和解压upx壳的压缩分为四个步骤. pack1生成新的elf header.先生成能生成的一个elf header的框架 pack2压缩原始PT_LOAD的内容,先用压缩算法预处理里面的内容,再把PT_LOAD压缩成UPX block,最">
 <meta property="og:locale">
@@ -31,8 +31,8 @@
 <meta property="og:image" content="https://rockfox0.github.io/picx-images-hosting/Pasted-image-20260706182834.6t7svmz0l9.webp">
 <meta property="og:image" content="https://rockfox0.github.io/picx-images-hosting/Pasted-image-20260706191724.5fl9rlnzs5.webp">
 <meta property="og:image" content="https://rockfox0.github.io/picx-images-hosting/Pasted-image-20260706195819.2h8zo3ftq9.webp">
-<meta property="article:published_time" content="2025-07-06T04:00:00.000Z">
-<meta property="article:modified_time" content="2026-07-06T12:10:49.857Z">
+<meta property="article:published_time" content="2026-07-06T04:00:00.000Z">
+<meta property="article:modified_time" content="2026-07-06T12:14:26.058Z">
 <meta property="article:author" content="fox">
 <meta property="article:tag" content="reverse">
 <meta name="twitter:card" content="summary_large_image">
@@ -124,7 +124,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/" target="_self">
                 <i class="iconfont icon-home-fill"></i>
-                <span>Startseite</span>
+                <span>Inicio</span>
               </a>
             </li>
           
@@ -136,7 +136,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/archives/" target="_self">
                 <i class="iconfont icon-archive-fill"></i>
-                <span>Archiv</span>
+                <span>Archivo</span>
               </a>
             </li>
           
@@ -148,7 +148,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/categories/" target="_self">
                 <i class="iconfont icon-category-fill"></i>
-                <span>Kategorien</span>
+                <span>Categorías</span>
               </a>
             </li>
           
@@ -160,7 +160,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/tags/" target="_self">
                 <i class="iconfont icon-tags-fill"></i>
-                <span>Schlagwörter</span>
+                <span>Etiquetas</span>
               </a>
             </li>
           
@@ -172,7 +172,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/about/" target="_self">
                 <i class="iconfont icon-user-fill"></i>
-                <span>Über</span>
+                <span>Acerca</span>
               </a>
             </li>
           
@@ -184,7 +184,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/links/" target="_self">
                 <i class="iconfont icon-link-fill"></i>
-                <span>Weblinks</span>
+                <span>Enlaces</span>
               </a>
             </li>
           
@@ -229,8 +229,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-07-06 12:00" pubdate>
-          July 6, 2025 pm
+        <time datetime="2026-07-06 12:00" pubdate>
+          July 6, 2026 pm
         </time>
       </span>
     
@@ -241,7 +241,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.5k wörter
+          1.5k palabras
         
       </span>
     
@@ -252,7 +252,7 @@
         
         
         
-          13 minuten
+          13 minutos
         
       </span>
     
@@ -306,7 +306,7 @@
 <h4 id="pack4"><a href="#pack4" class="headerlink" title="pack4"></a>pack4</h4><p>回填之前没写完的elf header 然后写入PackHeader &#x2F; trailer<br>最后得到upx的文件的结构</p>
 <figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs coq">ELF header  <br><span class="hljs-keyword">Program</span> headers  <br>UPX 元数据  <br>压缩数据  <br>UPX stub  <br>UPX 字符串  <br>PackHeader / trailer<br></code></pre></td></tr></table></figure>
 
-<h3 id="解压缩"><a href="#解压缩" class="headerlink" title="解压缩"></a>解压缩</h3><p> 大体上来说,就是 打开文件 .内存映射,修改全线,清除多于空间<br><img src="https://rockfox0.github.io/picx-images-hosting/Pasted-image-20260706174407.8l0rqji4xa.webp" srcset="/img/loading.gif" lazyload alt="Pasted-image-20260706174407"><br> 这里有两个load,第一个是 需要解压的数据区.第二个是stub所在的区域</p>
+<h3 id="解压缩"><a href="#解压缩" class="headerlink" title="解压缩"></a>解压缩</h3><p> 大体上来说,就是 打开文件 .内存映射,修改全线,清除多于空间<br><img src="https://rockfox0.github.io/picx-images-hosting/Pasted-image-20260706174407.8l0rqji4xa.webp" srcset="/img/loading.gif" lazyload><br> 这里有两个load,第一个是 需要解压的数据区.第二个是stub所在的区域</p>
 <ol>
 <li>进入 stub<br>之后先call进入图示位置<br><img src="https://rockfox0.github.io/picx-images-hosting/Pasted-image-20260706181008.4ubm5atgud.webp" srcset="/img/loading.gif" lazyload alt="Pasted-image-20260706181008"><br>这里打开文件自身</li>
 </ol>
@@ -371,31 +371,31 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>手动脱壳--elf64 的upx</div>
-      <div>http://example.com/2025/07/06/upx/</div>
+      <div>http://example.com/2026/07/06/upx/</div>
     </div>
     <div class="license-meta">
       
         <div class="license-meta-item">
-          <div>Beitragsautor</div>
+          <div>Autor</div>
           <div>fox</div>
         </div>
       
       
         <div class="license-meta-item license-meta-date">
-          <div>Veröffentlicht am</div>
-          <div>July 6, 2025</div>
+          <div>Publicado el</div>
+          <div>July 6, 2026</div>
         </div>
       
       
       
         <div class="license-meta-item">
-          <div>Urheberrechtshinweis</div>
+          <div>Licencia bajo</div>
           <div>
             
               
               
                 <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
-                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                  <span class="hint--top hint--rounded" aria-label="BY - Atribución">
                     <i class="iconfont icon-cc-by"></i>
                   </span>
                 </a>
@@ -415,19 +415,13 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/07/20/%E8%BF%87%E7%A8%8B%E8%A7%A3%E6%9E%90/" title="CVE-2021-3711的原理解析以及简单复现">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">CVE-2021-3711的原理解析以及简单复现</span>
-                        <span class="visible-mobile">Vorheriger</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/07/06/openssl/" title="openssl使用-1">
-                        <span class="hidden-mobile">openssl使用-1</span>
-                        <span class="visible-mobile">Nächster</span>
+                      <a href="/2026/06/28/pwn-retolibc/" title="二进制安全-elf文件结构和动态链接">
+                        <span class="hidden-mobile">二进制安全-elf文件结构和动态链接</span>
+                        <span class="visible-mobile">Siguiente</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
                     
@@ -448,7 +442,7 @@
     <div id="toc">
   <p class="toc-header">
     <i class="iconfont icon-list"></i>
-    <span>Inhaltsverzeichnis</span>
+    <span>Tabla de Contenidos</span>
   </p>
   <div class="toc-body" id="toc-body"></div>
 </div>
@@ -510,7 +504,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Buscar</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -518,7 +512,7 @@
       <div class="modal-body mx-3">
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v" for="local-search-input">Stichwort</label>
+          <label data-error="x" data-success="v" for="local-search-input">Palabra clave</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
@@ -739,7 +733,7 @@
   
 
   <noscript>
-    <div class="noscript-warning">Blog funktioniert am besten mit aktiviertem JavaScript</div>
+    <div class="noscript-warning">El blog funciona mejor con JavaScript habilitado</div>
   </noscript>
 </body>
 </html>
