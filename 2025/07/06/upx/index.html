@@ -1,0 +1,745 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/OIP-C.jpg">
+  <link rel="icon" href="/img/OIP-C.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="fox">
+  <meta name="keywords" content="菜菜的密码劳弟">
+  
+    <meta name="description" content="手脱upxupx壳是什么一个基础的压缩壳,这里就以 elf的upx 加壳为示例来做.当然仅仅作为练手还是不错的.因为我的拖延,也花费了些许的时间. upx 的压缩和解压upx壳的压缩分为四个步骤. pack1生成新的elf header.先生成能生成的一个elf header的框架 pack2压缩原始PT_LOAD的内容,先用压缩算法预处理里面的内容,再把PT_LOAD压缩成UPX block,最">
+<meta property="og:type" content="article">
+<meta property="og:title" content="手动脱壳--elf64 的upx">
+<meta property="og:url" content="http://example.com/2025/07/06/upx/index.html">
+<meta property="og:site_name" content="Rockfox的密码记录">
+<meta property="og:description" content="手脱upxupx壳是什么一个基础的压缩壳,这里就以 elf的upx 加壳为示例来做.当然仅仅作为练手还是不错的.因为我的拖延,也花费了些许的时间. upx 的压缩和解压upx壳的压缩分为四个步骤. pack1生成新的elf header.先生成能生成的一个elf header的框架 pack2压缩原始PT_LOAD的内容,先用压缩算法预处理里面的内容,再把PT_LOAD压缩成UPX block,最">
+<meta property="og:locale">
+<meta property="og:image" content="https://rockfox0.github.io/picx-images-hosting/Pasted-image-20260706174407.8l0rqji4xa.webp">
+<meta property="og:image" content="https://rockfox0.github.io/picx-images-hosting/Pasted-image-20260706181008.4ubm5atgud.webp">
+<meta property="og:image" content="https://rockfox0.github.io/picx-images-hosting/Pasted-image-20260706182834.6t7svmz0l9.webp">
+<meta property="og:image" content="https://rockfox0.github.io/picx-images-hosting/Pasted-image-20260706191724.5fl9rlnzs5.webp">
+<meta property="og:image" content="https://rockfox0.github.io/picx-images-hosting/Pasted-image-20260706195819.2h8zo3ftq9.webp">
+<meta property="article:published_time" content="2025-07-06T04:00:00.000Z">
+<meta property="article:modified_time" content="2026-07-06T12:10:49.857Z">
+<meta property="article:author" content="fox">
+<meta property="article:tag" content="reverse">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://rockfox0.github.io/picx-images-hosting/Pasted-image-20260706174407.8l0rqji4xa.webp">
+  
+  
+  
+  <title>手动脱壳--elf64 的upx - Rockfox的密码记录</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":40,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 150vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>fox的密码学习记录</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Startseite</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archiv</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Kategorien</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Schlagwörter</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>Über</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>Weblinks</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/syc.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="手动脱壳--elf64 的upx"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-07-06 12:00" pubdate>
+          July 6, 2025 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.5k wörter
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          13 minuten
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">手动脱壳--elf64 的upx</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="手脱upx"><a href="#手脱upx" class="headerlink" title="手脱upx"></a>手脱upx</h1><h2 id="upx壳是什么"><a href="#upx壳是什么" class="headerlink" title="upx壳是什么"></a>upx壳是什么</h2><p>一个基础的压缩壳,这里就以 elf的upx 加壳为示例来做.当然仅仅作为练手还是不错的.因为我的拖延,也花费了些许的时间.</p>
+<h2 id="upx-的压缩和解压"><a href="#upx-的压缩和解压" class="headerlink" title="upx 的压缩和解压"></a>upx 的压缩和解压</h2><h3 id="upx壳的压缩"><a href="#upx壳的压缩" class="headerlink" title="upx壳的压缩"></a>upx壳的压缩</h3><p>分为四个步骤.</p>
+<h4 id="pack1"><a href="#pack1" class="headerlink" title="pack1"></a>pack1</h4><p>生成新的elf header.先生成能生成的一个elf header的框架</p>
+<h4 id="pack2"><a href="#pack2" class="headerlink" title="pack2"></a>pack2</h4><p>压缩原始PT_LOAD的内容,先用压缩算法预处理里面的内容,再把PT_LOAD压缩成UPX block,最后写入当前packed 数据区</p>
+<h4 id="pack3"><a href="#pack3" class="headerlink" title="pack3"></a>pack3</h4><p>追加upx的stub.用于后续解压缩</p>
+<h4 id="pack4"><a href="#pack4" class="headerlink" title="pack4"></a>pack4</h4><p>回填之前没写完的elf header 然后写入PackHeader &#x2F; trailer<br>最后得到upx的文件的结构</p>
+<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs coq">ELF header  <br><span class="hljs-keyword">Program</span> headers  <br>UPX 元数据  <br>压缩数据  <br>UPX stub  <br>UPX 字符串  <br>PackHeader / trailer<br></code></pre></td></tr></table></figure>
+
+<h3 id="解压缩"><a href="#解压缩" class="headerlink" title="解压缩"></a>解压缩</h3><p> 大体上来说,就是 打开文件 .内存映射,修改全线,清除多于空间<br><img src="https://rockfox0.github.io/picx-images-hosting/Pasted-image-20260706174407.8l0rqji4xa.webp" srcset="/img/loading.gif" lazyload alt="Pasted-image-20260706174407"><br> 这里有两个load,第一个是 需要解压的数据区.第二个是stub所在的区域</p>
+<ol>
+<li>进入 stub<br>之后先call进入图示位置<br><img src="https://rockfox0.github.io/picx-images-hosting/Pasted-image-20260706181008.4ubm5atgud.webp" srcset="/img/loading.gif" lazyload alt="Pasted-image-20260706181008"><br>这里打开文件自身</li>
+</ol>
+<p><img src="https://rockfox0.github.io/picx-images-hosting/Pasted-image-20260706182834.6t7svmz0l9.webp" srcset="/img/loading.gif" lazyload alt="Pasted-image-20260706182834"><br>这后面还有四个数据个数据<br>0x100:原始压缩块的偏移<br>0x0bef: 第二阶段解压后的长度<br>0x0801: 第二阶段压缩后长度<br>0x02 : 采用的解压算法<br>这些都是与 解压所stage2相关的<br>之后通过stage2继续解压原程序.之后可以就开始调用mmap 内存映射,之后再改这段内存的权限<br>之后jmp r13开始真正的还原整个程序具体流程就不说了<br>基本就是解压缩类似的流程,<br>mmap ,然后 mprotect设定全线,再清除之前多余的内存.</p>
+<h2 id="手动dump-脱壳"><a href="#手动dump-脱壳" class="headerlink" title="手动dump 脱壳"></a>手动dump 脱壳</h2><p>我们先找到oep,我是采用反复调试来找的. 一直f8 多调试几次.在发先,syscall 0b这个系统调用号的时候,应该是快到了,因为在清楚之前的冗余内存了.之后其实都是动态链接相关的内容.之后再到了<br><img src="https://rockfox0.github.io/picx-images-hosting/Pasted-image-20260706191724.5fl9rlnzs5.webp" srcset="/img/loading.gif" lazyload alt="Pasted-image-20260706191724"><br>这里就是oep,不过如果直接在这里dump肯定会出问题,因为oep这里,动态链接相关的内容已经被修改了.比如.got .init_array .data里面的函数指针,参考前面的动态链接的内容,.</p>
+<h3 id="dump"><a href="#dump" class="headerlink" title="dump"></a>dump</h3><p>先看看gdb的dump脚本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-string">&quot;&quot;&quot;GDB command: dump-elf-loads RUNTIME_EHDR OUTPUT.&quot;&quot;&quot;</span><br><br><span class="hljs-keyword">import</span> os<br><span class="hljs-keyword">import</span> shlex<br><span class="hljs-keyword">import</span> struct<br><br><span class="hljs-keyword">import</span> gdb<br><br><br>PT_LOAD = <span class="hljs-number">1</span><br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">read_memory</span>(<span class="hljs-params">address, size</span>):<br>    inferior = gdb.selected_inferior()<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">bytes</span>(inferior.read_memory(address, size))<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">rebuild</span>(<span class="hljs-params">runtime_ehdr, output_path</span>):<br>    ehdr = read_memory(runtime_ehdr, <span class="hljs-number">0x40</span>)<br>    <span class="hljs-keyword">if</span> ehdr[:<span class="hljs-number">4</span>] != <span class="hljs-string">b&quot;\x7fELF&quot;</span> <span class="hljs-keyword">or</span> ehdr[<span class="hljs-number">4</span>:<span class="hljs-number">6</span>] != <span class="hljs-string">b&quot;\x02\x01&quot;</span>:<br>        <span class="hljs-keyword">raise</span> gdb.GdbError(<span class="hljs-string">&quot;address is not a little-endian ELF64 header&quot;</span>)<br><br>    e_phoff = struct.unpack_from(<span class="hljs-string">&quot;&lt;Q&quot;</span>, ehdr, <span class="hljs-number">0x20</span>)[<span class="hljs-number">0</span>]<br>    e_phentsize = struct.unpack_from(<span class="hljs-string">&quot;&lt;H&quot;</span>, ehdr, <span class="hljs-number">0x36</span>)[<span class="hljs-number">0</span>]<br>    e_phnum = struct.unpack_from(<span class="hljs-string">&quot;&lt;H&quot;</span>, ehdr, <span class="hljs-number">0x38</span>)[<span class="hljs-number">0</span>]<br>    <span class="hljs-keyword">if</span> e_phentsize &lt; <span class="hljs-number">0x38</span> <span class="hljs-keyword">or</span> <span class="hljs-keyword">not</span> <span class="hljs-number">0</span> &lt; e_phnum &lt; <span class="hljs-number">0x1000</span>:<br>        <span class="hljs-keyword">raise</span> gdb.GdbError(<span class="hljs-string">&quot;invalid program header table&quot;</span>)<br><br>    phdrs = []<br>    <span class="hljs-keyword">for</span> index <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(e_phnum):<br>        address = runtime_ehdr + e_phoff + index * e_phentsize<br>        phdrs.append(struct.unpack(<span class="hljs-string">&quot;&lt;IIQQQQQQ&quot;</span>, read_memory(address, <span class="hljs-number">0x38</span>)))<br><br>    header_loads = [<br>        ph <span class="hljs-keyword">for</span> ph <span class="hljs-keyword">in</span> phdrs <span class="hljs-keyword">if</span> ph[<span class="hljs-number">0</span>] == PT_LOAD <span class="hljs-keyword">and</span> ph[<span class="hljs-number">2</span>] == <span class="hljs-number">0</span><br>    ]<br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> header_loads:<br>        <span class="hljs-keyword">raise</span> gdb.GdbError(<span class="hljs-string">&quot;no PT_LOAD contains the ELF header&quot;</span>)<br><br>    load_bias = runtime_ehdr - header_loads[<span class="hljs-number">0</span>][<span class="hljs-number">3</span>]<br>    loads = [ph <span class="hljs-keyword">for</span> ph <span class="hljs-keyword">in</span> phdrs <span class="hljs-keyword">if</span> ph[<span class="hljs-number">0</span>] == PT_LOAD]<br>    output_size = <span class="hljs-built_in">max</span>(ph[<span class="hljs-number">2</span>] + ph[<span class="hljs-number">5</span>] <span class="hljs-keyword">for</span> ph <span class="hljs-keyword">in</span> loads)<br>    output = <span class="hljs-built_in">bytearray</span>(output_size)<br><br>    <span class="hljs-keyword">for</span> index, ph <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(loads):<br>        _, flags, file_offset, vaddr, _, filesz, memsz, align = ph<br>        source = load_bias + vaddr<br>        output[file_offset:file_offset + filesz] = read_memory(source, filesz)<br>        gdb.write(<br>            <span class="hljs-string">&quot;LOAD[%d] memory=0x%x file=0x%x filesz=0x%x memsz=0x%x &quot;</span><br>            <span class="hljs-string">&quot;flags=0x%x align=0x%x\n&quot;</span><br>            % (index, source, file_offset, filesz, memsz, flags, align)<br>        )<br><br>    <span class="hljs-comment"># Section headers are not loaded by PT_LOAD and are optional at runtime.</span><br>    struct.pack_into(<span class="hljs-string">&quot;&lt;Q&quot;</span>, output, <span class="hljs-number">0x28</span>, <span class="hljs-number">0</span>)<br>    struct.pack_into(<span class="hljs-string">&quot;&lt;H&quot;</span>, output, <span class="hljs-number">0x3A</span>, <span class="hljs-number">0</span>)<br>    struct.pack_into(<span class="hljs-string">&quot;&lt;H&quot;</span>, output, <span class="hljs-number">0x3C</span>, <span class="hljs-number">0</span>)<br>    struct.pack_into(<span class="hljs-string">&quot;&lt;H&quot;</span>, output, <span class="hljs-number">0x3E</span>, <span class="hljs-number">0</span>)<br><br>    <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(output_path, <span class="hljs-string">&quot;wb&quot;</span>) <span class="hljs-keyword">as</span> stream:<br>        stream.write(output)<br>    os.chmod(output_path, <span class="hljs-number">0o755</span>)<br>    gdb.write(<span class="hljs-string">&quot;Wrote 0x%x bytes to %s\n&quot;</span> % (<span class="hljs-built_in">len</span>(output), output_path))<br><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">DumpElfLoads</span>(gdb.Command):<br>    <span class="hljs-string">&quot;&quot;&quot;Rebuild an ELF64 file from PT_LOAD segments in inferior memory.</span><br><span class="hljs-string"></span><br><span class="hljs-string">    Usage: dump-elf-loads RUNTIME_EHDR OUTPUT</span><br><span class="hljs-string">    RUNTIME_EHDR is the address of the restored ELF header, not the UPX stub.</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-built_in">super</span>().__init__(<span class="hljs-string">&quot;dump-elf-loads&quot;</span>, gdb.COMMAND_FILES)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">invoke</span>(<span class="hljs-params">self, argument, from_tty</span>):<br>        args = shlex.split(argument)<br>        <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(args) != <span class="hljs-number">2</span>:<br>            <span class="hljs-keyword">raise</span> gdb.GdbError(<br>                <span class="hljs-string">&quot;usage: dump-elf-loads RUNTIME_EHDR OUTPUT&quot;</span><br>            )<br>        runtime_ehdr = <span class="hljs-built_in">int</span>(gdb.parse_and_eval(args[<span class="hljs-number">0</span>]))<br>        rebuild(runtime_ehdr, os.path.abspath(args[<span class="hljs-number">1</span>]))<br><br><br>DumpElfLoads()<br><br></code></pre></td></tr></table></figure>
+<p>大致流程其实就是把四个LOAD dump下来,然后先找到elf header和program header 并解析,之后再按照progam header的内容,分配并解析.ai 写的脚本,<br>先 gdb .&#x2F;upx<br>先start<br>在之后我们只需要在我们在dump的 下一个硬件断点</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">hbreak *<span class="hljs-number">0x7ffff7fef15e</span><br></code></pre></td></tr></table></figure>
+<p>之后</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">source gdb_dump_elf.py <br></code></pre></td></tr></table></figure>
+<p>之后运行</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">dump-elf-loads <br></code></pre></td></tr></table></figure>
+<p>就行了.</p>
+<h3 id="修复"><a href="#修复" class="headerlink" title="修复"></a>修复</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-string">&quot;&quot;&quot;Convert an ELF64 PIE OEP memory dump back to file-time state.&quot;&quot;&quot;</span><br><br><span class="hljs-keyword">import</span> argparse<br><span class="hljs-keyword">import</span> os<br><span class="hljs-keyword">import</span> struct<br><span class="hljs-keyword">from</span> pathlib <span class="hljs-keyword">import</span> Path<br><br><br>PT_LOAD = <span class="hljs-number">1</span><br>PT_DYNAMIC = <span class="hljs-number">2</span><br><br>DT_NULL = <span class="hljs-number">0</span><br>DT_DEBUG = <span class="hljs-number">21</span><br>DT_RELA = <span class="hljs-number">7</span><br>DT_RELASZ = <span class="hljs-number">8</span><br>DT_RELAENT = <span class="hljs-number">9</span><br>DT_JMPREL = <span class="hljs-number">23</span><br>DT_PLTRELSZ = <span class="hljs-number">2</span><br><br>R_X86_64_GLOB_DAT = <span class="hljs-number">6</span><br>R_X86_64_JUMP_SLOT = <span class="hljs-number">7</span><br>R_X86_64_RELATIVE = <span class="hljs-number">8</span><br><br><span class="hljs-comment"># These d_un values are addresses. Numeric sizes, flags and string offsets are</span><br><span class="hljs-comment"># intentionally excluded.</span><br>DYNAMIC_POINTER_TAGS = &#123;<br>    <span class="hljs-number">3</span>,          <span class="hljs-comment"># DT_PLTGOT</span><br>    <span class="hljs-number">4</span>,          <span class="hljs-comment"># DT_HASH</span><br>    <span class="hljs-number">5</span>,          <span class="hljs-comment"># DT_STRTAB</span><br>    <span class="hljs-number">6</span>,          <span class="hljs-comment"># DT_SYMTAB</span><br>    <span class="hljs-number">7</span>,          <span class="hljs-comment"># DT_RELA</span><br>    <span class="hljs-number">12</span>,         <span class="hljs-comment"># DT_INIT</span><br>    <span class="hljs-number">13</span>,         <span class="hljs-comment"># DT_FINI</span><br>    <span class="hljs-number">17</span>,         <span class="hljs-comment"># DT_REL</span><br>    <span class="hljs-number">23</span>,         <span class="hljs-comment"># DT_JMPREL</span><br>    <span class="hljs-number">25</span>,         <span class="hljs-comment"># DT_INIT_ARRAY</span><br>    <span class="hljs-number">26</span>,         <span class="hljs-comment"># DT_FINI_ARRAY</span><br>    <span class="hljs-number">32</span>,         <span class="hljs-comment"># DT_PREINIT_ARRAY</span><br>    <span class="hljs-number">0x6FFFFEF5</span>, <span class="hljs-comment"># DT_GNU_HASH</span><br>    <span class="hljs-number">0x6FFFFFF0</span>, <span class="hljs-comment"># DT_VERSYM</span><br>    <span class="hljs-number">0x6FFFFFFC</span>, <span class="hljs-comment"># DT_VERDEF</span><br>    <span class="hljs-number">0x6FFFFFFE</span>, <span class="hljs-comment"># DT_VERNEED</span><br>&#125;<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">parse_program_headers</span>(<span class="hljs-params">data</span>):<br>    <span class="hljs-keyword">if</span> data[:<span class="hljs-number">6</span>] != <span class="hljs-string">b&quot;\x7fELF\x02\x01&quot;</span>:<br>        <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">&quot;input is not a little-endian ELF64 file&quot;</span>)<br><br>    phoff = struct.unpack_from(<span class="hljs-string">&quot;&lt;Q&quot;</span>, data, <span class="hljs-number">0x20</span>)[<span class="hljs-number">0</span>]<br>    phentsize = struct.unpack_from(<span class="hljs-string">&quot;&lt;H&quot;</span>, data, <span class="hljs-number">0x36</span>)[<span class="hljs-number">0</span>]<br>    phnum = struct.unpack_from(<span class="hljs-string">&quot;&lt;H&quot;</span>, data, <span class="hljs-number">0x38</span>)[<span class="hljs-number">0</span>]<br>    <span class="hljs-keyword">if</span> phentsize &lt; <span class="hljs-number">0x38</span> <span class="hljs-keyword">or</span> <span class="hljs-keyword">not</span> <span class="hljs-number">0</span> &lt; phnum &lt; <span class="hljs-number">0x1000</span>:<br>        <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">&quot;invalid program header table&quot;</span>)<br><br>    <span class="hljs-keyword">return</span> [<br>        struct.unpack_from(<span class="hljs-string">&quot;&lt;IIQQQQQQ&quot;</span>, data, phoff + i * phentsize)<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(phnum)<br>    ]<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">vaddr_to_offset</span>(<span class="hljs-params">loads, vaddr, size=<span class="hljs-number">1</span></span>):<br>    <span class="hljs-keyword">for</span> ph <span class="hljs-keyword">in</span> loads:<br>        file_offset, segment_vaddr, filesz = ph[<span class="hljs-number">2</span>], ph[<span class="hljs-number">3</span>], ph[<span class="hljs-number">5</span>]<br>        <span class="hljs-keyword">if</span> segment_vaddr &lt;= vaddr <span class="hljs-keyword">and</span> vaddr + size &lt;= segment_vaddr + filesz:<br>            <span class="hljs-keyword">return</span> file_offset + vaddr - segment_vaddr<br>    <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">&quot;virtual address 0x%x is not file-backed&quot;</span> % vaddr)<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">repair_dynamic</span>(<span class="hljs-params">data, phdrs, old_base</span>):<br>    loads = [ph <span class="hljs-keyword">for</span> ph <span class="hljs-keyword">in</span> phdrs <span class="hljs-keyword">if</span> ph[<span class="hljs-number">0</span>] == PT_LOAD]<br>    image_min = <span class="hljs-built_in">min</span>(ph[<span class="hljs-number">3</span>] <span class="hljs-keyword">for</span> ph <span class="hljs-keyword">in</span> loads)<br>    image_max = <span class="hljs-built_in">max</span>(ph[<span class="hljs-number">3</span>] + ph[<span class="hljs-number">6</span>] <span class="hljs-keyword">for</span> ph <span class="hljs-keyword">in</span> loads)<br>    runtime_min = old_base + image_min<br>    runtime_max = old_base + image_max<br><br>    dynamic = <span class="hljs-built_in">next</span>((ph <span class="hljs-keyword">for</span> ph <span class="hljs-keyword">in</span> phdrs <span class="hljs-keyword">if</span> ph[<span class="hljs-number">0</span>] == PT_DYNAMIC), <span class="hljs-literal">None</span>)<br>    <span class="hljs-keyword">if</span> dynamic <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:<br>        <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">&quot;ELF has no PT_DYNAMIC&quot;</span>)<br><br>    dynamic_offset = vaddr_to_offset(loads, dynamic[<span class="hljs-number">3</span>], dynamic[<span class="hljs-number">5</span>])<br>    values = &#123;&#125;<br>    changes = []<br><br>    <span class="hljs-keyword">for</span> relative <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>, dynamic[<span class="hljs-number">5</span>], <span class="hljs-number">16</span>):<br>        offset = dynamic_offset + relative<br>        tag, value = struct.unpack_from(<span class="hljs-string">&quot;&lt;QQ&quot;</span>, data, offset)<br>        <span class="hljs-keyword">if</span> tag == DT_NULL:<br>            <span class="hljs-keyword">break</span><br><br>        repaired = value<br>        reason = <span class="hljs-literal">None</span><br>        <span class="hljs-keyword">if</span> tag == DT_DEBUG <span class="hljs-keyword">and</span> value != <span class="hljs-number">0</span>:<br>            repaired = <span class="hljs-number">0</span><br>            reason = <span class="hljs-string">&quot;clear DT_DEBUG&quot;</span><br>        <span class="hljs-keyword">elif</span> tag <span class="hljs-keyword">in</span> DYNAMIC_POINTER_TAGS <span class="hljs-keyword">and</span> runtime_min &lt;= value &lt; runtime_max:<br>            repaired = value - old_base<br>            reason = <span class="hljs-string">&quot;remove old load bias from dynamic pointer&quot;</span><br><br>        <span class="hljs-keyword">if</span> repaired != value:<br>            struct.pack_into(<span class="hljs-string">&quot;&lt;Q&quot;</span>, data, offset + <span class="hljs-number">8</span>, repaired)<br>            changes.append((offset + <span class="hljs-number">8</span>, value, repaired, reason))<br>        values[tag] = repaired<br><br>    <span class="hljs-keyword">return</span> loads, values, changes<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">iter_rela</span>(<span class="hljs-params">data, loads, vaddr, size, entry_size</span>):<br>    <span class="hljs-keyword">if</span> entry_size &lt; <span class="hljs-number">24</span> <span class="hljs-keyword">or</span> size % entry_size:<br>        <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">&quot;invalid ELF64 RELA table&quot;</span>)<br>    offset = vaddr_to_offset(loads, vaddr, size)<br>    <span class="hljs-keyword">for</span> relative <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>, size, entry_size):<br>        <span class="hljs-keyword">yield</span> struct.unpack_from(<span class="hljs-string">&quot;&lt;QQq&quot;</span>, data, offset + relative)<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">repair_relocation_targets</span>(<span class="hljs-params">data, loads, dynamic</span>):<br>    rela_vaddr = dynamic.get(DT_RELA)<br>    rela_size = dynamic.get(DT_RELASZ, <span class="hljs-number">0</span>)<br>    rela_entry = dynamic.get(DT_RELAENT, <span class="hljs-number">24</span>)<br>    <span class="hljs-keyword">if</span> rela_vaddr <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:<br>        <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">&quot;ELF has no DT_RELA&quot;</span>)<br><br>    relocations = <span class="hljs-built_in">list</span>(iter_rela(data, loads, rela_vaddr, rela_size, rela_entry))<br><br>    jmprel_vaddr = dynamic.get(DT_JMPREL)<br>    jmprel_size = dynamic.get(DT_PLTRELSZ, <span class="hljs-number">0</span>)<br>    <span class="hljs-keyword">if</span> jmprel_vaddr <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span> <span class="hljs-keyword">and</span> jmprel_size:<br>        relocations.extend(<br>            iter_rela(data, loads, jmprel_vaddr, jmprel_size, rela_entry)<br>        )<br><br>    changes = []<br>    <span class="hljs-keyword">for</span> r_offset, r_info, r_addend <span class="hljs-keyword">in</span> relocations:<br>        relocation_type = r_info &amp; <span class="hljs-number">0xFFFFFFFF</span><br>        <span class="hljs-keyword">try</span>:<br>            target = vaddr_to_offset(loads, r_offset, <span class="hljs-number">8</span>)<br>        <span class="hljs-keyword">except</span> ValueError:<br>            <span class="hljs-keyword">continue</span><br><br>        current = struct.unpack_from(<span class="hljs-string">&quot;&lt;Q&quot;</span>, data, target)[<span class="hljs-number">0</span>]<br>        <span class="hljs-keyword">if</span> relocation_type == R_X86_64_RELATIVE:<br>            repaired = r_addend &amp; <span class="hljs-number">0xFFFFFFFFFFFFFFFF</span><br>            reason = <span class="hljs-string">&quot;restore R_X86_64_RELATIVE addend&quot;</span><br>        <span class="hljs-keyword">elif</span> relocation_type <span class="hljs-keyword">in</span> (R_X86_64_GLOB_DAT, R_X86_64_JUMP_SLOT):<br>            repaired = <span class="hljs-number">0</span><br>            reason = <span class="hljs-string">&quot;clear resolved symbol slot&quot;</span><br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-keyword">continue</span><br><br>        <span class="hljs-keyword">if</span> repaired != current:<br>            struct.pack_into(<span class="hljs-string">&quot;&lt;Q&quot;</span>, data, target, repaired)<br>            changes.append((target, current, repaired, reason))<br>    <span class="hljs-keyword">return</span> changes<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">repair</span>(<span class="hljs-params">input_path, output_path, old_base</span>):<br>    data = <span class="hljs-built_in">bytearray</span>(Path(input_path).read_bytes())<br>    phdrs = parse_program_headers(data)<br>    loads, dynamic, dynamic_changes = repair_dynamic(data, phdrs, old_base)<br>    relocation_changes = repair_relocation_targets(data, loads, dynamic)<br><br>    Path(output_path).write_bytes(data)<br>    os.chmod(output_path, <span class="hljs-number">0o755</span>)<br><br>    <span class="hljs-keyword">for</span> offset, old, new, reason <span class="hljs-keyword">in</span> dynamic_changes + relocation_changes:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;0x%04x: 0x%x -&gt; 0x%x (%s)&quot;</span> % (offset, old, new, reason))<br>    <span class="hljs-built_in">print</span>(<br>        <span class="hljs-string">&quot;wrote %s: %d dynamic fixes, %d relocation-target fixes&quot;</span><br>        % (output_path, <span class="hljs-built_in">len</span>(dynamic_changes), <span class="hljs-built_in">len</span>(relocation_changes))<br>    )<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">main</span>():<br>    parser = argparse.ArgumentParser()<br>    parser.add_argument(<span class="hljs-string">&quot;input&quot;</span>)<br>    parser.add_argument(<span class="hljs-string">&quot;output&quot;</span>)<br>    parser.add_argument(<br>        <span class="hljs-string">&quot;old_base&quot;</span>,<br>        <span class="hljs-built_in">type</span>=<span class="hljs-keyword">lambda</span> value: <span class="hljs-built_in">int</span>(value, <span class="hljs-number">0</span>),<br>        <span class="hljs-built_in">help</span>=<span class="hljs-string">&quot;load bias of the process from which the OEP dump was taken&quot;</span>,<br>    )<br>    args = parser.parse_args()<br>    repair(args.<span class="hljs-built_in">input</span>, args.output, args.old_base)<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    main()<br><br></code></pre></td></tr></table></figure>
+<p>这里具体脚本我就没看了.就是修复DYNAMIC这个段相关的内容.</p>
+<p>如果想要不修,就在动态链接发生之前,也就是syscall 11这里发生之前dump</p>
+<p><img src="https://rockfox0.github.io/picx-images-hosting/Pasted-image-20260706195819.2h8zo3ftq9.webp" srcset="/img/loading.gif" lazyload alt="Pasted-image-20260706195819"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/reverse/" class="category-chain-item">reverse</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/reverse/" class="print-no-link">#reverse</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>手动脱壳--elf64 的upx</div>
+      <div>http://example.com/2025/07/06/upx/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Beitragsautor</div>
+          <div>fox</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Veröffentlicht am</div>
+          <div>July 6, 2025</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Urheberrechtshinweis</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/07/20/%E8%BF%87%E7%A8%8B%E8%A7%A3%E6%9E%90/" title="CVE-2021-3711的原理解析以及简单复现">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">CVE-2021-3711的原理解析以及简单复现</span>
+                        <span class="visible-mobile">Vorheriger</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/07/06/openssl/" title="openssl使用-1">
+                        <span class="hidden-mobile">openssl使用-1</span>
+                        <span class="visible-mobile">Nächster</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Inhaltsverzeichnis</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Stichwort</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog funktioniert am besten mit aktiviertem JavaScript</div>
+  </noscript>
+</body>
+</html>
