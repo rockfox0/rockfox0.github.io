@@ -535,12 +535,12 @@ hr {
 }
 
 .logo {
-    background: url("../favicon.png") no-repeat left top;
-    background-size: 5em
+    background: url("../fox.jpg") no-repeat left top;
+    background-size: 160px auto
 }
 
 .logo>h1 {
-    padding-left: 3em;
+    padding-left: 185px;
     font-size: 1.5em;
     line-height: 2.0em
 }
@@ -771,3 +771,29 @@ border: 2px solid rgb(255, 255, 255) !important;
 .rf-friend a:hover { border-color: #2bbc8a; transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0,0,0,.4); }
 .rf-friend b { color: #e8e8e8; display: block; font-size: 15px; }
 .rf-friend span { color: #8a9090; font-size: 13px; }
+
+/* Pixel fox brand */
+.nav-wrap .navbar-brand.rockfox-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: DOS, Monaco, Menlo, Consolas, 'Courier New', monospace;
+  letter-spacing: .08em;
+}
+.nav-wrap .navbar-brand .rockfox-logo {
+  width: 30px;
+  height: 30px;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  border-radius: 0;
+  border: 1px solid #222;
+  background: #000;
+  box-shadow: 0 0 0 1px #2bbc8a, 0 0 10px rgba(43,188,138,.25);
+}
+.nav-wrap .navbar-brand .rockfox-text {
+  color: #2bbc8a;
+  font-weight: 700;
+  text-shadow: 0 0 8px rgba(43,188,138,.18);
+  font-size: 13px;
+}
+.nav-wrap .navbar-brand:hover .rockfox-text { color: #7ef0c0; }
