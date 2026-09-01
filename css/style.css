@@ -761,3 +761,13 @@ border: 2px solid rgb(255, 255, 255) !important;
     height: 100%;
     fill: #ffffff !important;
 }
+/* 友链页卡片 */
+.rf-friends { display: flex; flex-wrap: wrap; gap: 14px; margin: 1.2em 0; }
+.rf-friend { flex: 1 1 200px; max-width: 260px; }
+.rf-friend a {
+  display: block; padding: 14px 16px; border: 1px solid #333; border-left: 3px solid #2bbc8a;
+  background: #1a1c1e; border-radius: 4px; text-decoration: none; transition: all .15s ease;
+}
+.rf-friend a:hover { border-color: #2bbc8a; transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0,0,0,.4); }
+.rf-friend b { color: #e8e8e8; display: block; font-size: 15px; }
+.rf-friend span { color: #8a9090; font-size: 13px; }
