@@ -1,311 +1,153 @@
-
-
-<!DOCTYPE html>
-<html lang="zh-CN en" data-default-color-scheme=auto>
-
-
-
+<!DOCTYPE HTML>
+<html>
 <head>
-  <meta charset="UTF-8">
-
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/OIP-C.jpg">
-  <link rel="icon" href="/img/OIP-C.jpg">
+  <meta charset="utf-8">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="cache-control" content="no-cache">
+  <meta http-equiv="expires" content="0">
   
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  
-  <meta name="theme-color" content="#2f4154">
+  <title>双线性配对补充及陇剑杯rsaio复现 | Rockfox的密码记录</title>
   <meta name="author" content="fox">
-  <meta name="keywords" content="菜菜的密码劳弟">
   
-    <meta name="description" content="双线性配对补充＋陇剑杯-rsa.io复现双线性配对 双线性配对在最初的学习密码学的时候已经接触过，不过当时不是很能理解一些东西，现在重新写一下顺便进行总结。  双线性映射 线性映射  这里做简单的解释：线性映射 给定域$F$ 上的线性空间$V$和$U$。如果有映射$f:V-&gt;U$满足: 对于任意向量$v_1,v_2∈V,标量c_1,c_2∈F$都有 $f(c_1v_1+c_2v_2)&amp;#x3">
-<meta property="og:type" content="article">
-<meta property="og:title" content="双线性配对补充及陇剑杯rsaio复现">
-<meta property="og:url" content="http://example.com/2025/11/11/%E5%8F%8C%E7%BA%BF%E7%BA%BF%E6%80%A7%E9%85%8D%E5%AF%B9%E5%8F%8A%E7%9B%B8%E5%85%B3%E9%A2%98%E7%9B%AE/index.html">
-<meta property="og:site_name" content="Rockfox的密码记录">
-<meta property="og:description" content="双线性配对补充＋陇剑杯-rsa.io复现双线性配对 双线性配对在最初的学习密码学的时候已经接触过，不过当时不是很能理解一些东西，现在重新写一下顺便进行总结。  双线性映射 线性映射  这里做简单的解释：线性映射 给定域$F$ 上的线性空间$V$和$U$。如果有映射$f:V-&gt;U$满足: 对于任意向量$v_1,v_2∈V,标量c_1,c_2∈F$都有 $f(c_1v_1+c_2v_2)&amp;#x3">
-<meta property="og:locale">
-<meta property="article:published_time" content="2025-11-11T04:00:00.000Z">
-<meta property="article:modified_time" content="2026-03-25T15:38:56.205Z">
-<meta property="article:author" content="fox">
-<meta property="article:tag" content="crypto">
-<meta property="article:tag" content="复现">
-<meta property="article:tag" content="区块链">
-<meta name="twitter:card" content="summary_large_image">
+  <meta name="description" content="这是FOx的密码和其他开发互联网开发学习记录">
   
   
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="双线性配对补充及陇剑杯rsaio复现"/>
+  <meta property="og:site_name" content="Rockfox的密码记录"/>
+
   
-  <title>双线性配对补充及陇剑杯rsaio复现 - Rockfox的密码记录</title>
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
-
-
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-<!-- Do not modify the link that theme dependent icons -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
-
-
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
-
-
-<link  rel="stylesheet" href="/css/main.css" />
-
-
-  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+    <meta property="og:image" content=""/>
   
-    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+
+  
+    <link rel="alternative" href="/atom.xml" title="Rockfox的密码记录" type="application/atom+xml">
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
   
 
 
 
 
-  <script id="fluid-configs">
-    var Fluid = window.Fluid || {};
-    Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":40,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
-
-    if (CONFIG.web_analytics.follow_dnt) {
-      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
-      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
-    }
-  </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
-  
-
-
-  
 <meta name="generator" content="Hexo 7.3.0"></head>
 
-
-<body>
-  
-
-  <header>
-    
-
-<div class="header-inner" style="height: 150vh;">
-  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand" href="/">
-      <strong>fox的密码学习记录</strong>
-    </a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/" target="_self">
-                <i class="iconfont icon-home-fill"></i>
-                <span>Startseite</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/" target="_self">
-                <i class="iconfont icon-archive-fill"></i>
-                <span>Archiv</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/" target="_self">
-                <i class="iconfont icon-category-fill"></i>
-                <span>Kategorien</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/" target="_self">
-                <i class="iconfont icon-tags-fill"></i>
-                <span>Schlagwörter</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/" target="_self">
-                <i class="iconfont icon-user-fill"></i>
-                <span>Über</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/links/" target="_self">
-                <i class="iconfont icon-link-fill"></i>
-                <span>Weblinks</span>
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
-              <i class="iconfont icon-search"></i>
-            </a>
-          </li>
-          
-        
-        
-          <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
-              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
-            </a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-</nav>
-
-  
-
-<div id="banner" class="banner" parallax=true
-     style="background: url('/img/xulun.jpg') no-repeat center center; background-size: cover;">
-  <div class="full-bg-img">
-    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-      <div class="banner-text text-center fade-in-up">
-        <div class="h2">
-          
-            <span id="subtitle" data-typed-text="双线性配对补充及陇剑杯rsaio复现"></span>
-          
-        </div>
-
-        
-          
-  <div class="mt-3">
-    
-    
-      <span class="post-meta">
-        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-11-11 12:00" pubdate>
-          November 11, 2025 pm
-        </time>
-      </span>
-    
-  </div>
-
-  <div class="mt-1">
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-chart"></i>
-        
-          1k wörter
-        
-      </span>
-    
-
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-clock-fill"></i>
-        
-        
-        
-          9 minuten
-        
-      </span>
-    
-
-    
-    
-  </div>
-
-
-        
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="/">Rockfox的密码记录</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/" title="Home">
+			  <i class="fa fa-home"></i>首页
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>归档
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>分类
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/map" title="Knowledge map">
+			  <i class="fa fa-sitemap"></i>图谱
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
       </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
 
-      
-        <div class="scroll-down-bar">
-          <i class="iconfont icon-arrowdown"></i>
-        </div>
-      
-    </div>
-  </div>
-</div>
+  <div class="container">
+  	<div class="content">
+    	 
 
-</div>
 
-  </header>
+	
+		<div class="page-header">
+			<h1> 双线性配对补充及陇剑杯rsaio复现</h1>
+		</div>
+	
 
-  <main>
-    
-      
 
-<div class="container-fluid nopadding-x">
-  <div class="row nomargin-x">
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
 
-    </div>
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
 
-    <div class="col-lg-8 nopadding-x-md">
-      <div class="container nopadding-x-md" id="board-ctn">
-        <div id="board">
-          <article class="post-content mx-auto">
-            <h1 id="seo-header">双线性配对补充及陇剑杯rsaio复现</h1>
-            
-            
-              <div class="markdown-body">
-                
-                <h1 id="双线性配对补充＋陇剑杯-rsa-io复现"><a href="#双线性配对补充＋陇剑杯-rsa-io复现" class="headerlink" title="双线性配对补充＋陇剑杯-rsa.io复现"></a>双线性配对补充＋陇剑杯-rsa.io复现</h1><h2 id="双线性配对"><a href="#双线性配对" class="headerlink" title="双线性配对"></a>双线性配对</h2><ul>
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <h1>双线性配对补充＋陇剑杯-rsa.io复现</h1>
+<h2 id="双线性配对">双线性配对</h2>
+<ul>
 <li>双线性配对在最初的学习密码学的时候已经接触过，不过当时不是很能理解一些东西，现在重新写一下顺便进行总结。</li>
 </ul>
-<h3 id="双线性映射"><a href="#双线性映射" class="headerlink" title="双线性映射"></a>双线性映射</h3><ul>
-<li><p>线性映射</p>
+<h3 id="双线性映射">双线性映射</h3>
+<ul>
+<li>
+<p>线性映射</p>
 <blockquote>
 <p>这里做简单的解释：线性映射</p>
 <p>给定域$F$ 上的线性空间$V$和$U$。如果有映射$f:V-&gt;U$满足: 对于任意向量$v_1,v_2∈V,标量c_1,c_2∈F$都有</p>
-<p>$f(c_1v_1+c_2v_2)&#x3D;c_1f(x_1)+c_2f(x_2)$</p>
+<p>$f(c_1v_1+c_2v_2)=c_1f(x_1)+c_2f(x_2)$</p>
 <p>则称作$f$是V到U的一个线性映射$(linear .~mp)$  也叫做线性变换</p>
 <p>上述满足的条件也可以叫做加性与齐加性</p>
-<p>$f(u+v)&#x3D;f(u+v)$     $f(cu)&#x3D;c[f(u)]$</p>
+<p>$f(u+v)=f(u+v)$     $f(cu)=c[f(u)]$</p>
 </blockquote>
 </li>
 </ul>
@@ -317,452 +159,198 @@
 <p>$f$是双线性映射，指$f$关于x,y都是线性的。也就是说，若固定$y∈Y,x∈X$</p>
 <p>则映射$f(x,y)$ 是$X$到Z的线性映射。固定X同理</p>
 </blockquote>
-<h2 id="weil配对"><a href="#weil配对" class="headerlink" title="weil配对"></a>weil配对</h2><ul>
-<li><p>在很久之前我写的里面写过，这里做些补充，懒TT。weil的配对的是基于</p>
+<h2 id="weil配对">weil配对</h2>
+<ul>
+<li>
+<p>在很久之前我写的里面写过，这里做些补充，懒TT。weil的配对的是基于</p>
 <blockquote>
 <p>设$P,Q∈E[m]$,也就是说P和Q是群E上阶为m的点。$f_p$和$f_Q$是群E上的有理函数</p>
 <p>，满足</p>
-<p>$div(f_p)&#x3D;m[P]-m[O],divf(_{Q})&#x3D;m[Q]-m[O]$</p>
+<p>$div(f_p)=m[P]-m[O],divf(_{Q})=m[Q]-m[O]$</p>
 <p>则$P$和$Q$的weil Pairing的定义为</p>
-<p>$e_m(P,Q)&#x3D;\frac{f_P{Q+S}&#x2F;f_P(S)}{f_Q(P-S)&#x2F;f_Q(-S)}$</p>
+<p>$e_m(P,Q)=\frac{f_P{Q+S}/f_P(S)}{f_Q(P-S)/f_Q(-S)}$</p>
 <p>式里面的S是E中的任意元素，且$S\notin {Q，P,Q,-Q,-P}$ 。而且$e_m(P,Q)的值不依赖于f_p.f_Q,S$的选择</p>
 </blockquote>
 <p>满足双线性的性质和特征这里不多做赘述。之前的文章已经说过。</p>
 </li>
 </ul>
-<h3 id="陇剑杯-rsa-iso"><a href="#陇剑杯-rsa-iso" class="headerlink" title="陇剑杯-rsa.iso"></a>陇剑杯-rsa.iso</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">from</span> secret <span class="hljs-keyword">import</span> flag<br><br>f = <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;output.txt&quot;</span>, <span class="hljs-string">&quot;w&quot;</span>)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_Prime</span>(<span class="hljs-params">bits</span>):<br>    <span class="hljs-keyword">from</span> random <span class="hljs-keyword">import</span> choices<br>    <span class="hljs-built_in">bytes</span> = [long_to_bytes(x) <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-number">256</span>)]<br>    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>        num = <span class="hljs-string">b&#x27;&#x27;</span>.join(choices(<span class="hljs-built_in">bytes</span>, k=bits//<span class="hljs-number">8</span>))<br>        <span class="hljs-keyword">if</span> is_prime(bytes_to_long(num)):<br>            <span class="hljs-keyword">return</span> bytes_to_long(num)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">gen_para</span>():<br>    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>        a = randint(<span class="hljs-number">50</span>, <span class="hljs-number">70</span>)<br>        r = getPrime(<span class="hljs-number">10</span>)<br>        <span class="hljs-keyword">if</span> is_prime(<span class="hljs-number">2</span>**a * r * lcm(<span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-number">256</span>)) - <span class="hljs-number">1</span>):<br>            <span class="hljs-keyword">return</span> a, r<br><br>a, r = gen_para()<br>f.write(<span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;a = &#125;</span>\n&#x27;</span>)<br>f.write(<span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;r = &#125;</span>\n&#x27;</span>)<br><br>p = <span class="hljs-number">2</span>**a * r * lcm(<span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-number">256</span>)) - <span class="hljs-number">1</span><br>F.&lt;i&gt; = GF(p^<span class="hljs-number">2</span>, modulus=[<span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>])<br>E = EllipticCurve(F, [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>])<br>E.set_order((p+<span class="hljs-number">1</span>)**<span class="hljs-number">2</span>)<br><br>P, Q = E.gens()[<span class="hljs-number">0</span>], E.gens()[<span class="hljs-number">1</span>]<br><br>f.write(<span class="hljs-string">f&#x27;P = <span class="hljs-subst">&#123;(P.x(), P.y())&#125;</span>\n&#x27;</span>)<br>f.write(<span class="hljs-string">f&#x27;Q = <span class="hljs-subst">&#123;(Q.x(), Q.y())&#125;</span>\n&#x27;</span>)<br><br>pp = get_Prime(<span class="hljs-number">1024</span>)<br>qq = get_Prime(<span class="hljs-number">1024</span>)<br>n = pp * qq<br>e = <span class="hljs-number">65537</span><br><br>gift = []<br><br><span class="hljs-keyword">while</span> pp:<br>    x = pp &amp; <span class="hljs-number">0xff</span><br>    <span class="hljs-keyword">assert</span> x != <span class="hljs-number">0</span><br>    pp = pp &gt;&gt; <span class="hljs-number">8</span><br>    k = randint(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>**a * x)<br>    R = P + k * Q<br>    K = (p + <span class="hljs-number">1</span>) // (<span class="hljs-number">2</span>**a * x) * R<br>    phi = E.isogeny(K, algorithm=<span class="hljs-string">&quot;factored&quot;</span>)<br>    tmp1 = phi(P)<br>    tmp2 = phi(Q)<br>    gift.append([(tmp1.x(), tmp1.y()), (tmp2.x(), tmp2.y())])<br><br>f.write(<span class="hljs-string">f&#x27;gift = <span class="hljs-subst">&#123;gift&#125;</span>\n&#x27;</span>)<br><br>m = bytes_to_long(flag)<br>c = <span class="hljs-built_in">pow</span>(m, e, n)<br><br>f.write(<span class="hljs-string">f&#x27;n = <span class="hljs-subst">&#123;n&#125;</span>\n&#x27;</span>)<br>f.write(<span class="hljs-string">f&#x27;c = <span class="hljs-subst">&#123;c&#125;</span>\n&#x27;</span>)<br></code></pre></td></tr></table></figure>
-
+<h3 id="陇剑杯-rsa-iso">陇剑杯-rsa.iso</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> secret <span class="keyword">import</span> flag</span><br><span class="line"></span><br><span class="line">f = <span class="built_in">open</span>(<span class="string">&quot;output.txt&quot;</span>, <span class="string">&quot;w&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_Prime</span>(<span class="params">bits</span>):</span><br><span class="line">    <span class="keyword">from</span> random <span class="keyword">import</span> choices</span><br><span class="line">    <span class="built_in">bytes</span> = [long_to_bytes(x) <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">256</span>)]</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        num = <span class="string">b&#x27;&#x27;</span>.join(choices(<span class="built_in">bytes</span>, k=bits//<span class="number">8</span>))</span><br><span class="line">        <span class="keyword">if</span> is_prime(bytes_to_long(num)):</span><br><span class="line">            <span class="keyword">return</span> bytes_to_long(num)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">gen_para</span>():</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        a = randint(<span class="number">50</span>, <span class="number">70</span>)</span><br><span class="line">        r = getPrime(<span class="number">10</span>)</span><br><span class="line">        <span class="keyword">if</span> is_prime(<span class="number">2</span>**a * r * lcm(<span class="built_in">range</span>(<span class="number">1</span>, <span class="number">256</span>)) - <span class="number">1</span>):</span><br><span class="line">            <span class="keyword">return</span> a, r</span><br><span class="line"></span><br><span class="line">a, r = gen_para()</span><br><span class="line">f.write(<span class="string">f&#x27;<span class="subst">&#123;a = &#125;</span>\n&#x27;</span>)</span><br><span class="line">f.write(<span class="string">f&#x27;<span class="subst">&#123;r = &#125;</span>\n&#x27;</span>)</span><br><span class="line"></span><br><span class="line">p = <span class="number">2</span>**a * r * lcm(<span class="built_in">range</span>(<span class="number">1</span>, <span class="number">256</span>)) - <span class="number">1</span></span><br><span class="line">F.&lt;i&gt; = GF(p^<span class="number">2</span>, modulus=[<span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>])</span><br><span class="line">E = EllipticCurve(F, [<span class="number">0</span>, <span class="number">1</span>])</span><br><span class="line">E.set_order((p+<span class="number">1</span>)**<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">P, Q = E.gens()[<span class="number">0</span>], E.gens()[<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">f.write(<span class="string">f&#x27;P = <span class="subst">&#123;(P.x(), P.y())&#125;</span>\n&#x27;</span>)</span><br><span class="line">f.write(<span class="string">f&#x27;Q = <span class="subst">&#123;(Q.x(), Q.y())&#125;</span>\n&#x27;</span>)</span><br><span class="line"></span><br><span class="line">pp = get_Prime(<span class="number">1024</span>)</span><br><span class="line">qq = get_Prime(<span class="number">1024</span>)</span><br><span class="line">n = pp * qq</span><br><span class="line">e = <span class="number">65537</span></span><br><span class="line"></span><br><span class="line">gift = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> pp:</span><br><span class="line">    x = pp &amp; <span class="number">0xff</span></span><br><span class="line">    <span class="keyword">assert</span> x != <span class="number">0</span></span><br><span class="line">    pp = pp &gt;&gt; <span class="number">8</span></span><br><span class="line">    k = randint(<span class="number">1</span>, <span class="number">2</span>**a * x)</span><br><span class="line">    R = P + k * Q</span><br><span class="line">    K = (p + <span class="number">1</span>) // (<span class="number">2</span>**a * x) * R</span><br><span class="line">    phi = E.isogeny(K, algorithm=<span class="string">&quot;factored&quot;</span>)</span><br><span class="line">    tmp1 = phi(P)</span><br><span class="line">    tmp2 = phi(Q)</span><br><span class="line">    gift.append([(tmp1.x(), tmp1.y()), (tmp2.x(), tmp2.y())])</span><br><span class="line"></span><br><span class="line">f.write(<span class="string">f&#x27;gift = <span class="subst">&#123;gift&#125;</span>\n&#x27;</span>)</span><br><span class="line"></span><br><span class="line">m = bytes_to_long(flag)</span><br><span class="line">c = <span class="built_in">pow</span>(m, e, n)</span><br><span class="line"></span><br><span class="line">f.write(<span class="string">f&#x27;n = <span class="subst">&#123;n&#125;</span>\n&#x27;</span>)</span><br><span class="line">f.write(<span class="string">f&#x27;c = <span class="subst">&#123;c&#125;</span>\n&#x27;</span>)</span><br></pre></td></tr></table></figure>
 <ul>
-<li>我们需要找到x，利用$2*<em>a</em>x$</li>
+<li>我们需要找到x，利用$2**a*x$</li>
 </ul>
-<p>$phi &#x3D; E.isogeny(K, algorithm&#x3D;”factored”)$</p>
+<p>$phi = E.isogeny(K, algorithm=&quot;factored&quot;)$</p>
 <p>进行了一个同源映射，进行了群同态(由K生成核)，因为核子群<K>的阶和域f的特征p互素，那么我们可以知道</p>
-<p>ker(k)&#x3D;der(phi)，同源映射的度等于这个核子群的阶。</p>
-<p>同态映射的度，是指的这个映射的核群<k>&#x3D;k.order()(k的阶)&#x3D;der(phi)。那么</p>
-<p>我们可以利用weil配对der(phi)&#x3D;d</p>
-<p>$e_m(phi(P),phi(Q))&#x3D;e_m(P,Q)^d$之后再利用discrete_log求解除p</p>
+<p>ker(k)=der(phi)，同源映射的度等于这个核子群的阶。</p>
+<p>同态映射的度，是指的这个映射的核群<k>=k.order()(k的阶)=der(phi)。那么</p>
+<p>我们可以利用weil配对der(phi)=d</p>
+<p>$e_m(phi(P),phi(Q))=e_m(P,Q)^d$之后再利用discrete_log求解除p</p>
 <p>不过呢。我们还需要计算一下同态映射后的椭圆曲线E2具体计算见WP。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sage.<span class="hljs-built_in">all</span> <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> *<br>aa = <span class="hljs-number">58</span><br>r = <span class="hljs-number">677</span><br>p = <span class="hljs-number">1626863075383233617973114208257225766167963541697680166689538585027790888344497393319393220115606426479054738139191706757627903999</span><br>F.&lt;i&gt; = GF(p^<span class="hljs-number">2</span>, modulus=[<span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>])<br>E = EllipticCurve(F, [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>])<br>P = E(<span class="hljs-number">1480902412624330128467265433604967924879175621324778721822553791992483165650313334065712892856426887628203798402227946111937619985</span>*i + <span class="hljs-number">248280033442212078026584729381629912663660842264732233544133931088920517333558326483592439680557530508869168630141184328058575487</span>, <span class="hljs-number">1063473267082463348943776983826670708619445017230835195844111648761226238767209731540252058515506618539450166188109440566086315438</span>*i + <span class="hljs-number">1477214491399359292603355035977428268773417965220883548847591474468057528862252443133638716703507083176807648546588008345161697639</span>)<br>Q = E(<span class="hljs-number">254336484714918197927485057298709531964473530684332223357900471713016451491419116513817849296332713866136292050578743336482952063</span>*i + <span class="hljs-number">336569779925581133673425296270934299380299004021997431211455336955947557460506916625576473941830956381008213287862958120734974088</span>, <span class="hljs-number">672798403906655690530129932893570217632405529086858027624968144934702132760440998323563013877307454993136939248872471610804174868</span>*i + <span class="hljs-number">978599551527900215169394972113017743837581044055673443208277943573091308364000557275120262619669438354499782419523067775829261358</span>)<br>gift = []<br>n = <span class="hljs-number">1702964505167542294309894624134040051985456000751301895681450703711209123273929347840767189769333598802007931175534183099577982055982094813045245735950771056151798358709294596212693586845327740981840974734260947504192849082082247982531638166723519817368621543647358361718962016975501235560072299206879455551179363257011645248897834786135688841937320538329157671950684987955303502005404340327657787221436015711630895743615195023754086594138352253842575921303048726058807135221950653758612234421493377641405846466416194921001135032171697695572842723082164349170706748881797912294462023414297556608213847345725952421549</span><br>c = <span class="hljs-number">1029114088686337892631302678503751809542083988891442035793586975372895407547705418982466289898928319560409880414514578474791488427127025559202986548834389826420682378231639934214095320267479088288097862850583409973649066883523716495624685075221287755197089845642475957655326217081767651038275947961474613737339181490066613632071544485135542705782597487288176673605371342372887413483451432315489970957375439078944009120957142560963596958126921713605049998752504003069481700268168699099735284558580028754084228031725395039694427728930164273683375216610222208763440193601962605329874384315938196365292841272339652972630</span><br>N =p+<span class="hljs-number">1</span><br>a = P.weil_pairing(Q, p+<span class="hljs-number">1</span>)<br>pp=<span class="hljs-number">0</span><br>xs=[]<br><span class="hljs-keyword">for</span> idx, item <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(gift):<br>    (x1, y1), (x2, y2) = item<br>    S1 = y1*y1 - x1*x1*x1<br>    S2 = y2*y2 - x2*x2*x2<br>    dx = x1 - x2<br>    A1 = (S1 - S2) / dx<br>    B1 = S1 - A1*x1<br>    E1 = EllipticCurve(F,[A1, B1])<br>    phiP=E1(x1,y1)<br>    phiQ=E1(x2,y2)<br>    a1=phiP.weil_pairing(phiQ,N)<br>    d=discrete_log(a1,a,N)<br>    x=<span class="hljs-built_in">int</span>(d)//(<span class="hljs-number">2</span>**aa)<br>    <span class="hljs-built_in">print</span>(x)<br>    xs.append(x)<br><span class="hljs-keyword">for</span> i,b <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(xs):<br>    pp|=(b&lt;&lt;(<span class="hljs-number">8</span>*i))<br><span class="hljs-keyword">if</span> n % pp != <span class="hljs-number">0</span>:<br>    <span class="hljs-keyword">raise</span> RuntimeError(<span class="hljs-string">&quot;pp 不能整除 n，可能解析出错。&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;pp=<span class="hljs-subst">&#123;pp&#125;</span>&#x27;</span>)<br>qq = n // pp<br>phi_n = (pp - <span class="hljs-number">1</span>) * (qq - <span class="hljs-number">1</span>)<br>dd = inverse(<span class="hljs-number">0x10001</span>, phi_n)<br>m = <span class="hljs-built_in">pow</span>(c, dd, n)<br>flag = long_to_bytes(m)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;flag =&quot;</span>, flag)<br><br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sage.<span class="built_in">all</span> <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line">aa = <span class="number">58</span></span><br><span class="line">r = <span class="number">677</span></span><br><span class="line">p = <span class="number">1626863075383233617973114208257225766167963541697680166689538585027790888344497393319393220115606426479054738139191706757627903999</span></span><br><span class="line">F.&lt;i&gt; = GF(p^<span class="number">2</span>, modulus=[<span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>])</span><br><span class="line">E = EllipticCurve(F, [<span class="number">0</span>, <span class="number">1</span>])</span><br><span class="line">P = E(<span class="number">1480902412624330128467265433604967924879175621324778721822553791992483165650313334065712892856426887628203798402227946111937619985</span>*i + <span class="number">248280033442212078026584729381629912663660842264732233544133931088920517333558326483592439680557530508869168630141184328058575487</span>, <span class="number">1063473267082463348943776983826670708619445017230835195844111648761226238767209731540252058515506618539450166188109440566086315438</span>*i + <span class="number">1477214491399359292603355035977428268773417965220883548847591474468057528862252443133638716703507083176807648546588008345161697639</span>)</span><br><span class="line">Q = E(<span class="number">254336484714918197927485057298709531964473530684332223357900471713016451491419116513817849296332713866136292050578743336482952063</span>*i + <span class="number">336569779925581133673425296270934299380299004021997431211455336955947557460506916625576473941830956381008213287862958120734974088</span>, <span class="number">672798403906655690530129932893570217632405529086858027624968144934702132760440998323563013877307454993136939248872471610804174868</span>*i + <span class="number">978599551527900215169394972113017743837581044055673443208277943573091308364000557275120262619669438354499782419523067775829261358</span>)</span><br><span class="line">gift = []</span><br><span class="line">n = <span class="number">1702964505167542294309894624134040051985456000751301895681450703711209123273929347840767189769333598802007931175534183099577982055982094813045245735950771056151798358709294596212693586845327740981840974734260947504192849082082247982531638166723519817368621543647358361718962016975501235560072299206879455551179363257011645248897834786135688841937320538329157671950684987955303502005404340327657787221436015711630895743615195023754086594138352253842575921303048726058807135221950653758612234421493377641405846466416194921001135032171697695572842723082164349170706748881797912294462023414297556608213847345725952421549</span></span><br><span class="line">c = <span class="number">1029114088686337892631302678503751809542083988891442035793586975372895407547705418982466289898928319560409880414514578474791488427127025559202986548834389826420682378231639934214095320267479088288097862850583409973649066883523716495624685075221287755197089845642475957655326217081767651038275947961474613737339181490066613632071544485135542705782597487288176673605371342372887413483451432315489970957375439078944009120957142560963596958126921713605049998752504003069481700268168699099735284558580028754084228031725395039694427728930164273683375216610222208763440193601962605329874384315938196365292841272339652972630</span></span><br><span class="line">N =p+<span class="number">1</span></span><br><span class="line">a = P.weil_pairing(Q, p+<span class="number">1</span>)</span><br><span class="line">pp=<span class="number">0</span></span><br><span class="line">xs=[]</span><br><span class="line"><span class="keyword">for</span> idx, item <span class="keyword">in</span> <span class="built_in">enumerate</span>(gift):</span><br><span class="line">    (x1, y1), (x2, y2) = item</span><br><span class="line">    S1 = y1*y1 - x1*x1*x1</span><br><span class="line">    S2 = y2*y2 - x2*x2*x2</span><br><span class="line">    dx = x1 - x2</span><br><span class="line">    A1 = (S1 - S2) / dx</span><br><span class="line">    B1 = S1 - A1*x1</span><br><span class="line">    E1 = EllipticCurve(F,[A1, B1])</span><br><span class="line">    phiP=E1(x1,y1)</span><br><span class="line">    phiQ=E1(x2,y2)</span><br><span class="line">    a1=phiP.weil_pairing(phiQ,N)</span><br><span class="line">    d=discrete_log(a1,a,N)</span><br><span class="line">    x=<span class="built_in">int</span>(d)//(<span class="number">2</span>**aa)</span><br><span class="line">    <span class="built_in">print</span>(x)</span><br><span class="line">    xs.append(x)</span><br><span class="line"><span class="keyword">for</span> i,b <span class="keyword">in</span> <span class="built_in">enumerate</span>(xs):</span><br><span class="line">    pp|=(b&lt;&lt;(<span class="number">8</span>*i))</span><br><span class="line"><span class="keyword">if</span> n % pp != <span class="number">0</span>:</span><br><span class="line">    <span class="keyword">raise</span> RuntimeError(<span class="string">&quot;pp 不能整除 n，可能解析出错。&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&#x27;pp=<span class="subst">&#123;pp&#125;</span>&#x27;</span>)</span><br><span class="line">qq = n // pp</span><br><span class="line">phi_n = (pp - <span class="number">1</span>) * (qq - <span class="number">1</span>)</span><br><span class="line">dd = inverse(<span class="number">0x10001</span>, phi_n)</span><br><span class="line">m = <span class="built_in">pow</span>(c, dd, n)</span><br><span class="line">flag = long_to_bytes(m)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;flag =&quot;</span>, flag)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<div class="post-enhance"><div class="related-posts my-4"><h5 class="related-title">相关文章</h5><ul class="related-list"><li><a href="https://rockfox0.github.io/2026/05/30/2026-5-30/" title="2026-5-30">2026-5-30</a></li><li><a href="https://rockfox0.github.io/2025/08/23/2025-6-1%20JQCTFone-line-crypto%20165730/" title="JQCTF复现">JQCTF复现</a></li></ul></div><div class="post-share my-4"><span class="mr-2">分享：</span><button type="button" class="btn btn-sm btn-outline-secondary share-copy" data-url="https://rockfox0.github.io/2025/11/11/%E5%8F%8C%E7%BA%BF%E7%BA%BF%E6%80%A7%E9%85%8D%E5%AF%B9%E5%8F%8A%E7%9B%B8%E5%85%B3%E9%A2%98%E7%9B%AE/">复制链接</button> <a class="btn btn-sm btn-outline-secondary" target="_blank" rel="noopener" href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Frockfox0.github.io%2F2025%2F11%2F11%2F%25E5%258F%258C%25E7%25BA%25BF%25E7%25BA%25BF%25E6%2580%25A7%25E9%2585%258D%25E5%25AF%25B9%25E5%258F%258A%25E7%259B%25B8%25E5%2585%25B3%25E9%25A2%2598%25E7%259B%25AE%2F&title=%E5%8F%8C%E7%BA%BF%E6%80%A7%E9%85%8D%E5%AF%B9%E8%A1%A5%E5%85%85%E5%8F%8A%E9%99%87%E5%89%91%E6%9D%AFrsaio%E5%A4%8D%E7%8E%B0">微博</a> <a class="btn btn-sm btn-outline-secondary" target="_blank" rel="noopener" href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A%2F%2Frockfox0.github.io%2F2025%2F11%2F11%2F%25E5%258F%258C%25E7%25BA%25BF%25E7%25BA%25BF%25E6%2580%25A7%25E9%2585%258D%25E5%25AF%25B9%25E5%258F%258A%25E7%259B%25B8%25E5%2585%25B3%25E9%25A2%2598%25E7%259B%25AE%2F&title=%E5%8F%8C%E7%BA%BF%E6%80%A7%E9%85%8D%E5%AF%B9%E8%A1%A5%E5%85%85%E5%8F%8A%E9%99%87%E5%89%91%E6%9D%AFrsaio%E5%A4%8D%E7%8E%B0">QQ</a> <a class="btn btn-sm btn-outline-secondary" target="_blank" rel="noopener" href="https://t.me/share/url?url=https%3A%2F%2Frockfox0.github.io%2F2025%2F11%2F11%2F%25E5%258F%258C%25E7%25BA%25BF%25E7%25BA%25BF%25E6%2580%25A7%25E9%2585%258D%25E5%25AF%25B9%25E5%258F%258A%25E7%259B%25B8%25E5%2585%25B3%25E9%25A2%2598%25E7%259B%25AE%2F&text=%E5%8F%8C%E7%BA%BF%E6%80%A7%E9%85%8D%E5%AF%B9%E8%A1%A5%E5%85%85%E5%8F%8A%E9%99%87%E5%89%91%E6%9D%AFrsaio%E5%A4%8D%E7%8E%B0">Telegram</a> <a class="btn btn-sm btn-outline-secondary" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Frockfox0.github.io%2F2025%2F11%2F11%2F%25E5%258F%258C%25E7%25BA%25BF%25E7%25BA%25BF%25E6%2580%25A7%25E9%2585%258D%25E5%25AF%25B9%25E5%258F%258A%25E7%259B%25B8%25E5%2585%25B3%25E9%25A2%2598%25E7%259B%25AE%2F&text=%E5%8F%8C%E7%BA%BF%E6%80%A7%E9%85%8D%E5%AF%B9%E8%A1%A5%E5%85%85%E5%8F%8A%E9%99%87%E5%89%91%E6%9D%AFrsaio%E5%A4%8D%E7%8E%B0">X</a><script>(function(){document.addEventListener('click',function(e){var b=e.target.closest?e.target.closest('.share-copy'):null;if(b){var u=b.getAttribute('data-url');if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u);}else{var ta=document.createElement('textarea');ta.value=u;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);}var old=b.textContent;b.textContent='已复制';setTimeout(function(){b.textContent=old;},1500);}});})();</script></div></div>
+	  <div class="article-footer-copyright">
 
+    本博客采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议(CC BY-NC-SA 4.0) 发布.</a>
+</div>
 
-                
-              </div>
-            
-            <hr/>
-            <div>
-              <div class="post-metas my-3">
-  
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
+	</div>
 
-<span class="category-chains">
-  
-  
+	
+	
+	<div>
+  	<center>
+
+	<div class="pagination">
+
     
-      <span class="category-chain">
-        
-  <a href="/categories/crypto/" class="category-chain-item">crypto</a>
-  
-  
-
-      </span>
     
-  
-</span>
+    <a href="/2025/11/19/RCTF-wp/" type="button" class="btn btn-default"><i
+                class="fa fa-arrow-circle-o-left"></i> 上一页</a>
+    
 
-    </div>
-  
-  
-    <div class="post-meta">
-      <i class="iconfont icon-tags"></i>
-      
-        <a href="/tags/crypto/" class="print-no-link">#crypto</a>
-      
-        <a href="/tags/%E5%A4%8D%E7%8E%B0/" class="print-no-link">#复现</a>
-      
-        <a href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" class="print-no-link">#区块链</a>
-      
-    </div>
-  
+    <a href="/" type="button" class="btn btn-default"><i class="fa fa-home"></i>Home</a>
+    
+    <a href="/2025/10/19/羊城杯2025-crypto复现/" type="button" class="btn btn-default ">下一页<i
+                class="fa fa-arrow-circle-o-right"></i></a>
+    
+
+    
 </div>
 
 
-              
-  
+    </center>
+	</div>
+	
+	<!-- comment -->
+	<!--
+<section id="comment">
+    <h2 class="title">留言</h2>
 
-  <div class="license-box my-3">
-    <div class="license-title">
-      <div>双线性配对补充及陇剑杯rsaio复现</div>
-      <div>http://example.com/2025/11/11/双线线性配对及相关题目/</div>
-    </div>
-    <div class="license-meta">
-      
-        <div class="license-meta-item">
-          <div>Beitragsautor</div>
-          <div>fox</div>
-        </div>
-      
-      
-        <div class="license-meta-item license-meta-date">
-          <div>Veröffentlicht am</div>
-          <div>November 11, 2025</div>
-        </div>
-      
-      
-      
-        <div class="license-meta-item">
-          <div>Urheberrechtshinweis</div>
-          <div>
-            
-              
-              
-                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
-                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
-                    <i class="iconfont icon-cc-by"></i>
-                  </span>
-                </a>
-              
-            
-          </div>
-        </div>
-      
-    </div>
-    <div class="license-icon iconfont"></div>
+    
+</section>
+
+-->
+	
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+
+
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2025-11-11 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/crypto/">crypto<span>18</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/crypto/">crypto<span>26</span></a></li> <li><a href="/tags/复现/">复现<span>3</span></a></li> <li><a href="/tags/区块链/">区块链<span>1</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+		
+
+	</div>
+	
+		
+
+</div><!-- row -->
+
+<!--
+ -->
+
+
+
+	</div>
   </div>
-
-
-
-              
-                <div class="post-prevnext my-3">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2025/11/19/RCTF-wp/" title="RCTF-2025部分题目">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">RCTF-2025部分题目</span>
-                        <span class="visible-mobile">Vorheriger</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2025/10/19/%E7%BE%8A%E5%9F%8E%E6%9D%AF2025-crypto%E5%A4%8D%E7%8E%B0/" title="羊城杯-2025复现">
-                        <span class="hidden-mobile">羊城杯-2025复现</span>
-                        <span class="visible-mobile">Nächster</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
-              
-            </div>
-
-            
-          </article>
-        </div>
-      </div>
-    </div>
-
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-  <aside class="sidebar" style="margin-left: -1rem">
-    <div id="toc">
-  <p class="toc-header">
-    <i class="iconfont icon-list"></i>
-    <span>Inhaltsverzeichnis</span>
-  </p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
-
-
-
-  </aside>
-
-
-    </div>
-  </div>
-</div>
-
-
-
-
-
+  <div class="container-narrow">
+  <footer> <p>
   
-
-
-
+  &copy; 2026 fox's Blog
   
-
-
-
-  
-
-
-
-  
-
-
-
+      powered by <a href="http://hexo.io/" target="_blank">Hexo</a>.Theme <a href="https://github.com/Ares-X/hexo-theme-freemind.bithack" target="_blank">freemind.bithack</a>  
+</p>
+ </footer>
+</div> <!-- container-narrow -->
   
 
 
   
-  
+<a id="gotop" href="#">   
+  <span>⬆︎TOP</span>
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
 
 
-
-
-
-
-
-
-
-    
-
-    
-      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
-        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-      </a>
-    
-
-    
-      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v" for="local-search-input">Stichwort</label>
-        </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-    
-
-    
-  </main>
-
-  <footer>
-    <div class="footer-inner">
-  
-    <div class="footer-content">
-       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
-    </div>
-  
-  
-  
-</div>
-
-  </footer>
-
-  <!-- Scripts -->
-  
-  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
-
-  <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-    NProgress.start()
-    window.addEventListener('load', function() {
-      NProgress.done();
-    })
-  </script>
-
-
-<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
-<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
-
-
-  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var subtitle = document.getElementById('subtitle');
-      if (!subtitle || !typing) {
-        return;
-      }
-      var text = subtitle.getAttribute('data-typed-text');
-      
-        typing(text);
-      
-    })(window, document);
-  </script>
-
-
-
-
-  
-    <script  src="/js/img-lazyload.js" ></script>
-  
-
-
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
-    var toc = jQuery('#toc');
-    if (toc.length === 0 || !window.tocbot) { return; }
-    var boardCtn = jQuery('#board-ctn');
-    var boardTop = boardCtn.offset().top;
-
-    window.tocbot.init(Object.assign({
-      tocSelector     : '#toc-body',
-      contentSelector : '.markdown-body',
-      linkClass       : 'tocbot-link',
-      activeLinkClass : 'tocbot-active-link',
-      listClass       : 'tocbot-list',
-      isCollapsedClass: 'tocbot-is-collapsed',
-      collapsibleClass: 'tocbot-is-collapsible',
-      scrollSmooth    : true,
-      includeTitleTags: true,
-      headingsOffset  : -boardTop,
-    }, CONFIG.toc));
-    if (toc.find('.toc-list-item').length > 0) {
-      toc.css('visibility', 'visible');
-    }
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('tocbot' in window) {
-        tocbot.refresh();
-        var toc = jQuery('#toc');
-        if (toc.length === 0 || !tocbot) {
-          return;
-        }
-        if (toc.find('.toc-list-item').length > 0) {
-          toc.css('visibility', 'visible');
-        }
-      }
-    });
-  });
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
 </script>
 
 
-  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
 
-  <script>Fluid.plugins.codeWidget();</script>
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
 
 
-  
 <script>
-  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
-    window.anchors.options = {
-      placement: CONFIG.anchorjs.placement,
-      visible  : CONFIG.anchorjs.visible
+  if (!window.MathJax) {
+    window.MathJax = {
+      tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']], processEscapes: true },
+      options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] },
+      startup: { typeset: true }
     };
-    if (CONFIG.anchorjs.icon) {
-      window.anchors.options.icon = CONFIG.anchorjs.icon;
-    }
-    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-    var res = [];
-    for (var item of el) {
-      res.push('.markdown-body > ' + item.trim());
-    }
-    if (CONFIG.anchorjs.placement === 'left') {
-      window.anchors.options.class = 'anchorjs-link-left';
-    }
-    window.anchors.add(res.join(', '));
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('anchors' in window) {
-        anchors.removeAll();
-        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-        var res = [];
-        for (var item of el) {
-          res.push('.markdown-body > ' + item.trim());
-        }
-        if (CONFIG.anchorjs.placement === 'left') {
-          anchors.options.class = 'anchorjs-link-left';
-        }
-        anchors.add(res.join(', '));
-      }
-    });
-  });
+  }
 </script>
+<script id="MathJax-script" async src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
 
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
-    Fluid.plugins.fancyBox();
-  });
-</script>
-
-
-  <script>Fluid.plugins.imageCaption();</script>
-
-  
-      <script>
-        if (!window.MathJax) {
-          window.MathJax = {
-            tex    : {
-              inlineMath: { '[+]': [['$', '$']] }
-            },
-            loader : {
-              load: ['ui/lazy']
-            },
-            options: {
-              renderActions: {
-                insertedScript: [200, () => {
-                  document.querySelectorAll('mjx-container').forEach(node => {
-                    let target = node.parentNode;
-                    if (target.nodeName.toLowerCase() === 'li') {
-                      target.parentNode.classList.add('has-jax');
-                    }
-                  });
-                }, '', false]
-              }
-            }
-          };
-        } else {
-          MathJax.startup.document.state(0);
-          MathJax.texReset();
-          MathJax.typeset();
-          MathJax.typesetPromise();
-        }
-
-        Fluid.events.registerRefreshCallback(function() {
-          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
-            MathJax.startup.document.state(0);
-            MathJax.texReset();
-            MathJax.typeset();
-            MathJax.typesetPromise();
-          }
-        });
-      </script>
-    
-
-  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
-
-  <script  src="/js/local-search.js" ></script>
-
-
-
-
-
-<!-- 主题的启动项，将它保持在最底部 -->
-<!-- the boot of the theme, keep it at the bottom -->
-<script  src="/js/boot.js" ></script>
-
-
-  
-
-  <noscript>
-    <div class="noscript-warning">Blog funktioniert am besten mit aktiviertem JavaScript</div>
-  </noscript>
 </body>
-</html>
+   </html>

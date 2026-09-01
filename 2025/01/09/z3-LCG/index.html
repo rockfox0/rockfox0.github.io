@@ -1,744 +1,323 @@
-
-
-<!DOCTYPE html>
-<html lang="zh-CN en" data-default-color-scheme=auto>
-
-
-
+<!DOCTYPE HTML>
+<html>
 <head>
-  <meta charset="UTF-8">
-
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/OIP-C.jpg">
-  <link rel="icon" href="/img/OIP-C.jpg">
+  <meta charset="utf-8">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="cache-control" content="no-cache">
+  <meta http-equiv="expires" content="0">
   
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  
-  <meta name="theme-color" content="#2f4154">
+  <title>楚慧杯(原题杯)抽象lcg | Rockfox的密码记录</title>
   <meta name="author" content="fox">
-  <meta name="keywords" content="菜菜的密码劳弟">
   
-    <meta name="description" content="DASCTF(2024楚慧杯原题杯)的一道抽象lcg做题过程一些吐槽为什么翻遍全网都没有这道题wp，对于真菜的我，手搓有点难泵 做题过程12345678910111213141516171819202122from Crypto.Util.number import *from random import *from secret import flagLENGTH &#x3D; 512RATIO &#x3D; 0.">
-<meta property="og:type" content="article">
-<meta property="og:title" content="楚慧杯(原题杯)抽象lcg">
-<meta property="og:url" content="http://example.com/2025/01/09/z3-LCG/index.html">
-<meta property="og:site_name" content="Rockfox的密码记录">
-<meta property="og:description" content="DASCTF(2024楚慧杯原题杯)的一道抽象lcg做题过程一些吐槽为什么翻遍全网都没有这道题wp，对于真菜的我，手搓有点难泵 做题过程12345678910111213141516171819202122from Crypto.Util.number import *from random import *from secret import flagLENGTH &#x3D; 512RATIO &#x3D; 0.">
-<meta property="og:locale">
-<meta property="article:published_time" content="2025-01-08T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-09-15T12:11:06.000Z">
-<meta property="article:author" content="fox">
-<meta property="article:tag" content="crypto">
-<meta property="article:tag" content="python">
-<meta property="article:tag" content="Lcg">
-<meta name="twitter:card" content="summary_large_image">
+  <meta name="description" content="这是FOx的密码和其他开发互联网开发学习记录">
   
   
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="楚慧杯(原题杯)抽象lcg"/>
+  <meta property="og:site_name" content="Rockfox的密码记录"/>
+
   
-  <title>楚慧杯(原题杯)抽象lcg - Rockfox的密码记录</title>
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
-
-
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-<!-- Do not modify the link that theme dependent icons -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
-
-
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
-
-
-<link  rel="stylesheet" href="/css/main.css" />
-
-
-  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+    <meta property="og:image" content=""/>
   
-    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+
+  
+    <link rel="alternative" href="/atom.xml" title="Rockfox的密码记录" type="application/atom+xml">
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
   
 
 
 
 
-  <script id="fluid-configs">
-    var Fluid = window.Fluid || {};
-    Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":40,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
-
-    if (CONFIG.web_analytics.follow_dnt) {
-      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
-      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
-    }
-  </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
-  
-
-
-  
 <meta name="generator" content="Hexo 7.3.0"></head>
 
-
-<body>
-  
-
-  <header>
-    
-
-<div class="header-inner" style="height: 100vh;">
-  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand" href="/">
-      <strong>fox的密码学习记录</strong>
-    </a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/" target="_self">
-                <i class="iconfont icon-home-fill"></i>
-                <span>Startseite</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/" target="_self">
-                <i class="iconfont icon-archive-fill"></i>
-                <span>Archiv</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/" target="_self">
-                <i class="iconfont icon-category-fill"></i>
-                <span>Kategorien</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/" target="_self">
-                <i class="iconfont icon-tags-fill"></i>
-                <span>Schlagwörter</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/" target="_self">
-                <i class="iconfont icon-user-fill"></i>
-                <span>Über</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/links/" target="_self">
-                <i class="iconfont icon-link-fill"></i>
-                <span>Weblinks</span>
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
-              <i class="iconfont icon-search"></i>
-            </a>
-          </li>
-          
-        
-        
-          <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
-              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
-            </a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-</nav>
-
-  
-
-<div id="banner" class="banner" parallax=true
-     style="background: url('/img/syc.jpg') no-repeat center center; background-size: cover;">
-  <div class="full-bg-img">
-    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-      <div class="banner-text text-center fade-in-up">
-        <div class="h2">
-          
-            <span id="subtitle" data-typed-text="楚慧杯(原题杯)抽象lcg"></span>
-          
-        </div>
-
-        
-          
-  <div class="mt-3">
-    
-    
-      <span class="post-meta">
-        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-01-09 00:00" pubdate>
-          January 9, 2025 am
-        </time>
-      </span>
-    
-  </div>
-
-  <div class="mt-1">
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-chart"></i>
-        
-          655 wörter
-        
-      </span>
-    
-
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-clock-fill"></i>
-        
-        
-        
-          6 minuten
-        
-      </span>
-    
-
-    
-    
-  </div>
-
-
-        
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="/">Rockfox的密码记录</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/" title="Home">
+			  <i class="fa fa-home"></i>首页
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>归档
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>分类
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/map" title="Knowledge map">
+			  <i class="fa fa-sitemap"></i>图谱
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
       </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
 
-      
-        <div class="scroll-down-bar">
-          <i class="iconfont icon-arrowdown"></i>
-        </div>
-      
-    </div>
-  </div>
-</div>
+  <div class="container">
+  	<div class="content">
+    	 
 
-</div>
 
-  </header>
+	
+		<div class="page-header">
+			<h1> 楚慧杯(原题杯)抽象lcg</h1>
+		</div>
+	
 
-  <main>
-    
-      
 
-<div class="container-fluid nopadding-x">
-  <div class="row nomargin-x">
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
 
-    </div>
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
 
-    <div class="col-lg-8 nopadding-x-md">
-      <div class="container nopadding-x-md" id="board-ctn">
-        <div id="board">
-          <article class="post-content mx-auto">
-            <h1 id="seo-header">楚慧杯(原题杯)抽象lcg</h1>
-            
-            
-              <div class="markdown-body">
-                
-                <h1 id="DASCTF-2024楚慧杯原题杯-的一道抽象lcg做题过程"><a href="#DASCTF-2024楚慧杯原题杯-的一道抽象lcg做题过程" class="headerlink" title="DASCTF(2024楚慧杯原题杯)的一道抽象lcg做题过程"></a>DASCTF(2024楚慧杯原题杯)的一道抽象lcg做题过程</h1><h3 id="一些吐槽"><a href="#一些吐槽" class="headerlink" title="一些吐槽"></a>一些吐槽</h3><p>为什么翻遍全网都没有这道题wp，对于真菜的我，手搓有点难泵</p>
-<h3 id="做题过程"><a href="#做题过程" class="headerlink" title="做题过程"></a>做题过程</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs pytho">from Crypto.Util.number import *<br>from random import *<br>from secret import flag<br><br>LENGTH = 512<br>RATIO = 0.02024<br>M = 2**LENGTH<br>a, b, seed = getPrime(LENGTH), getPrime(LENGTH), getPrime(LENGTH)<br>SEED = seed<br><br><br>x = []<br>for i in range(64):<br>    seed = (a*seed + b) % M<br>    x.append(&quot;&quot;.join([bin(seed)[2:].zfill(LENGTH)[i] if uniform(0,1) &lt; RATIO else &quot;*&quot; for i in range(LENGTH)]))<br><br><br>print(&quot;c =&quot;, bytes_to_long(flag) ^ SEED)<br>print(&quot;a =&quot;,a)<br>print(&quot;b =&quot;,b)<br>print(&quot;x =&quot;,x)<br><br></code></pre></td></tr></table></figure>
+	<!-- content -->
+	<div class="mypage">		
+	  		
 
+	  <h1>DASCTF(2024楚慧杯原题杯)的一道抽象lcg做题过程</h1>
+<h3 id="一些吐槽">一些吐槽</h3>
+<p>为什么翻遍全网都没有这道题wp，对于真菜的我，手搓有点难泵</p>
+<h3 id="做题过程">做题过程</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">from Crypto.Util.number import *</span><br><span class="line">from random import *</span><br><span class="line">from secret import flag</span><br><span class="line"></span><br><span class="line">LENGTH = 512</span><br><span class="line">RATIO = 0.02024</span><br><span class="line">M = 2**LENGTH</span><br><span class="line">a, b, seed = getPrime(LENGTH), getPrime(LENGTH), getPrime(LENGTH)</span><br><span class="line">SEED = seed</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">x = []</span><br><span class="line">for i in range(64):</span><br><span class="line">    seed = (a*seed + b) % M</span><br><span class="line">    x.append(&quot;&quot;.join([bin(seed)[2:].zfill(LENGTH)[i] if uniform(0,1) &lt; RATIO else &quot;*&quot; for i in range(LENGTH)]))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">print(&quot;c =&quot;, bytes_to_long(flag) ^ SEED)</span><br><span class="line">print(&quot;a =&quot;,a)</span><br><span class="line">print(&quot;b =&quot;,b)</span><br><span class="line">print(&quot;x =&quot;,x)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>尝试模拟一个类似情</p>
-<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs mel">from Crypto.Util.number import *<br>from random import *<br>a = <span class="hljs-number">7048435472566573813031570507837890091364947084306630050544242220147807292350445564322172244244726206563452305566866223414437853917448623276909090327076693</span><br>b = <span class="hljs-number">9204853069421046007176344891235245198607052139715825810823076231566533652655127030214860066312526149219510111657539481375881111759200483396551737326166933</span><br>f=b<span class="hljs-string">&#x27;flag&#123;yoxi_nidi_liangmin&#125;&#x27;</span><br>m=bytes_to_long(f)<br>M=<span class="hljs-number">2</span>**<span class="hljs-number">512</span><br><span class="hljs-keyword">seed</span>=<span class="hljs-number">8656702749867102422219200570484898209691959687594188444284921871713214793286935518322058853234901407306874127174670521978953484935737586264798208150365287</span><br>RATIO=<span class="hljs-number">0.6</span><br>Seed=<span class="hljs-keyword">seed</span><br><span class="hljs-keyword">print</span>(<span class="hljs-keyword">seed</span>)<br>x=[]<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">3</span>):<br>    <span class="hljs-keyword">seed</span> = (a * <span class="hljs-keyword">seed</span> + b) % M<br>    <span class="hljs-keyword">print</span>(<span class="hljs-keyword">seed</span>)<br>    x.append(<span class="hljs-string">&quot;&quot;</span>.join([bin(<span class="hljs-keyword">seed</span>)[<span class="hljs-number">2</span>:].zfill(<span class="hljs-number">512</span>)[i] <span class="hljs-keyword">if</span> <span class="hljs-keyword">uniform</span>(<span class="hljs-number">0</span>,<span class="hljs-number">1</span>) &lt; RATIO <span class="hljs-keyword">else</span> <span class="hljs-string">&quot;*&quot;</span> <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">512</span>)]))<br><span class="hljs-keyword">print</span>(<span class="hljs-keyword">seed</span>)<br><span class="hljs-keyword">print</span>(x)<br>c=m^Seed<br><span class="hljs-keyword">print</span>(c)<br><br></code></pre></td></tr></table></figure>
-
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">from Crypto.Util.number import *</span><br><span class="line">from random import *</span><br><span class="line">a = 7048435472566573813031570507837890091364947084306630050544242220147807292350445564322172244244726206563452305566866223414437853917448623276909090327076693</span><br><span class="line">b = 9204853069421046007176344891235245198607052139715825810823076231566533652655127030214860066312526149219510111657539481375881111759200483396551737326166933</span><br><span class="line">f=b&#x27;flag&#123;yoxi_nidi_liangmin&#125;&#x27;</span><br><span class="line">m=bytes_to_long(f)</span><br><span class="line">M=2**512</span><br><span class="line">seed=8656702749867102422219200570484898209691959687594188444284921871713214793286935518322058853234901407306874127174670521978953484935737586264798208150365287</span><br><span class="line">RATIO=0.6</span><br><span class="line">Seed=seed</span><br><span class="line">print(seed)</span><br><span class="line">x=[]</span><br><span class="line">for i in range(3):</span><br><span class="line">    seed = (a * seed + b) % M</span><br><span class="line">    print(seed)</span><br><span class="line">    x.append(&quot;&quot;.join([bin(seed)[2:].zfill(512)[i] if uniform(0,1) &lt; RATIO else &quot;*&quot; for i in range(512)]))</span><br><span class="line">print(seed)</span><br><span class="line">print(x)</span><br><span class="line">c=m^Seed</span><br><span class="line">print(c)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>我把显示数据百分比调高了一点，因为测试如果太低就是出现错误结果。这行代码加密逻辑跟原题一样。过程也很简洁</p>
 <p>我们使用z3约束。由于是才学的z3有的，写的时候也有些问题，比如定义</p>
 <p>BitVec向量在转换的时候会出现类型错误。这是改进后的解开上述脚本的代码</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> z3 <span class="hljs-keyword">import</span> *<br><br><br>num = [[BitVec(<span class="hljs-string">f&#x27;num[<span class="hljs-subst">&#123;i&#125;</span>,<span class="hljs-subst">&#123;j&#125;</span>]&#x27;</span>, <span class="hljs-number">512</span>) <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>)] <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">3</span>)]<br>a = <br>b = <br>M = <span class="hljs-number">2</span>**<span class="hljs-number">512</span><br><br><br>A = []<br>s=Solver()<br><br><br><br>seed = []<br><br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">3</span>):<br>    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">512</span>):<br>        <span class="hljs-keyword">if</span> A[i][j] == <span class="hljs-string">&#x27;0&#x27;</span>:<br>            s.add(Extract(<span class="hljs-number">511</span>-j, <span class="hljs-number">511</span>-j, num[i][<span class="hljs-number">0</span>]) == <span class="hljs-number">0</span>)<br>        <span class="hljs-keyword">elif</span> A[i][j] == <span class="hljs-string">&#x27;1&#x27;</span>:<br>            s.add(Extract(<span class="hljs-number">511</span>-j, <span class="hljs-number">511</span>-j, num[i][<span class="hljs-number">0</span>]) == <span class="hljs-number">1</span>)<br><br><br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">2</span>):<br>    s.add(num[i+<span class="hljs-number">1</span>][<span class="hljs-number">0</span>] == (a * num[i][<span class="hljs-number">0</span>] + b) % M)<br><br><br><span class="hljs-keyword">if</span> s.check() == sat:<br>    model = s.model()<br>    Seed=model[num[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>]]<br></code></pre></td></tr></table></figure>
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> z3 <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">num = [[BitVec(<span class="string">f&#x27;num[<span class="subst">&#123;i&#125;</span>,<span class="subst">&#123;j&#125;</span>]&#x27;</span>, <span class="number">512</span>) <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>)] <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>)]</span><br><span class="line">a = </span><br><span class="line">b = </span><br><span class="line">M = <span class="number">2</span>**<span class="number">512</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">A = []</span><br><span class="line">s=Solver()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">seed = []</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">512</span>):</span><br><span class="line">        <span class="keyword">if</span> A[i][j] == <span class="string">&#x27;0&#x27;</span>:</span><br><span class="line">            s.add(Extract(<span class="number">511</span>-j, <span class="number">511</span>-j, num[i][<span class="number">0</span>]) == <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">elif</span> A[i][j] == <span class="string">&#x27;1&#x27;</span>:</span><br><span class="line">            s.add(Extract(<span class="number">511</span>-j, <span class="number">511</span>-j, num[i][<span class="number">0</span>]) == <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>):</span><br><span class="line">    s.add(num[i+<span class="number">1</span>][<span class="number">0</span>] == (a * num[i][<span class="number">0</span>] + b) % M)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> s.check() == sat:</span><br><span class="line">    model = s.model()</span><br><span class="line">    Seed=model[num[<span class="number">0</span>][<span class="number">0</span>]]</span><br></pre></td></tr></table></figure>
 <p>接下来看一下题目本身</p>
-<p>64此Lcg递推，得到64个被大部分隐藏的二进制位我们需要求到第一个被递归的再反推出SEED。解密过程看起来还算简单但是，计算也需要时间我的脚本大概算了半个小时。<br>补充</p>
+<p>64此Lcg递推，得到64个被大部分隐藏的二进制位我们需要求到第一个被递归的再反推出SEED。解密过程看起来还算简单但是，计算也需要时间我的脚本大概算了半个小时。
+补充</p>
 <blockquote>
 <p>Extract这一部分是定义起始和结束位置</p>
 </blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> z3 <span class="hljs-keyword">import</span> *<br><br><br>num = [BitVec(<span class="hljs-string">f&#x27;num[<span class="hljs-subst">&#123;i&#125;</span>]&#x27;</span>, <span class="hljs-number">512</span>) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">64</span>)]<span class="hljs-comment">#有点像二维数组，是重点得理解一下,512这里是num[i]一个的大小。我们定义j</span><br><br><br>a = <span class="hljs-number">7048435472566573813031570507837890091364947084306630050544242220147807292350445564322172244244726206563452305566866223414437853917448623276909090327076693</span><br>b = <span class="hljs-number">9204853069421046007176344891235245198607052139715825810823076231566533652655127030214860066312526149219510111657539481375881111759200483396551737326166933</span><br>M = <span class="hljs-number">2</span>**<span class="hljs-number">512</span><br>c = <span class="hljs-number">168815802663712138791999335515513916578434659976069633486645257813364375941625207868153496481655635421252190634818222465004994343266249958687663356753760620029589052494330932123212</span><br>A=[]<br><br>s=Solver()<br><br>seed = []<br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">64</span>):<br>    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">512</span>):<br>        <span class="hljs-keyword">if</span> A[i][j] == <span class="hljs-string">&#x27;0&#x27;</span>:<br>            s.add(Extract(<span class="hljs-number">511</span>-j, <span class="hljs-number">511</span>-j, num[i]) == <span class="hljs-number">0</span>)<br>        <span class="hljs-keyword">elif</span> A[i][j] == <span class="hljs-string">&#x27;1&#x27;</span>:<br>            s.add(Extract(<span class="hljs-number">511</span>-j, <span class="hljs-number">511</span>-j, num[i]) == <span class="hljs-number">1</span>)<span class="hljs-comment">#定义替换位置</span><br><br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">63</span>):<br>    s.add(num[i+<span class="hljs-number">1</span>] == (a * num[i] + b) % M)<br><br><span class="hljs-keyword">if</span> s.check() == sat:<br><br>    model = s.model()<br>    Seed=model[num[<span class="hljs-number">0</span>]]<br>    <span class="hljs-built_in">print</span>(Seed)<br>然后<br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">3109110488358343346016940967694590460203057088734099480714916540569545873216239855284197469883314735576988812243170940490083088872700634135415701390964362</span><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br>a_1 = <span class="hljs-built_in">pow</span>(a, -<span class="hljs-number">1</span>, M)<br>seed = (a_1 * (Seed - b)) % M<br>m = c ^ seed<br><span class="hljs-built_in">print</span>(long_to_bytes(m))<br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">b&#x27;DASCTF&#123;0n\x85\xb8\xffU_know_th3_polynomial_0F_D47a_you_can_m@ke_Use_of_Leak_bits!&#125;&#x27;</span><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">from z3 import *</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">num = [BitVec(f&#x27;num[&#123;i&#125;]&#x27;, 512) for i in range(64)]#有点像二维数组，是重点得理解一下,512这里是num[i]一个的大小。我们定义j</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">a = 7048435472566573813031570507837890091364947084306630050544242220147807292350445564322172244244726206563452305566866223414437853917448623276909090327076693</span><br><span class="line">b = 9204853069421046007176344891235245198607052139715825810823076231566533652655127030214860066312526149219510111657539481375881111759200483396551737326166933</span><br><span class="line">M = 2**512</span><br><span class="line">c = 168815802663712138791999335515513916578434659976069633486645257813364375941625207868153496481655635421252190634818222465004994343266249958687663356753760620029589052494330932123212</span><br><span class="line">A=[]</span><br><span class="line"></span><br><span class="line">s=Solver()</span><br><span class="line"></span><br><span class="line">seed = []</span><br><span class="line"></span><br><span class="line">for i in range(64):</span><br><span class="line">    for j in range(512):</span><br><span class="line">        if A[i][j] == &#x27;0&#x27;:</span><br><span class="line">            s.add(Extract(511-j, 511-j, num[i]) == 0)</span><br><span class="line">        elif A[i][j] == &#x27;1&#x27;:</span><br><span class="line">            s.add(Extract(511-j, 511-j, num[i]) == 1)#定义替换位置</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">for i in range(63):</span><br><span class="line">    s.add(num[i+1] == (a * num[i] + b) % M)</span><br><span class="line"></span><br><span class="line">if s.check() == sat:</span><br><span class="line"></span><br><span class="line">    model = s.model()</span><br><span class="line">    Seed=model[num[0]]</span><br><span class="line">    print(Seed)</span><br><span class="line">然后</span><br><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line">3109110488358343346016940967694590460203057088734099480714916540569545873216239855284197469883314735576988812243170940490083088872700634135415701390964362</span><br><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line">a_1 = pow(a, -1, M)</span><br><span class="line">seed = (a_1 * (Seed - b)) % M</span><br><span class="line">m = c ^ seed</span><br><span class="line">print(long_to_bytes(m))</span><br><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line">b&#x27;DASCTF&#123;0n\x85\xb8\xffU_know_th3_polynomial_0F_D47a_you_can_m@ke_Use_of_Leak_bits!&#125;&#x27;</span><br><span class="line">&#x27;&#x27;&#x27;</span><br></pre></td></tr></table></figure>
+<p>[b1 = 7460389551079554387122271298325611265784698986736547147823340219048332254455805157908674848837957142308219634256824129290019180206444308088064508250516905,
+num[0] = 10599409846929758704844986735870774340904454393976179873952790083232713828736193252683701451023941027317069154823211494649607196952725636764499584998762813,
+a1 = 10228317474636303335053552404814053657805411067027231406728234220672759592055253789577953699468140093930405966764784406346333080866081688685493755751657173,
+num[1] = 24715322907153490101674157028995424681990970744363521182307796271708772855332488892418033987973193397256803702333506924197248506511038425386617004996006]</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">seed   = 648254584003525981818930468973202332901541704221939528419904023118741124029145595498816604196232397997140883705942729644556700319454263171710181925557358</span><br></pre></td></tr></table></figure><div class="post-enhance"><div class="related-posts my-4"><h5 class="related-title">相关文章</h5><ul class="related-list"><li><a href="https://rockfox0.github.io/2026/05/30/2026-5-30/" title="2026-5-30">2026-5-30</a></li><li><a href="https://rockfox0.github.io/2025/08/23/2025-6-1%20JQCTFone-line-crypto%20165730/" title="JQCTF复现">JQCTF复现</a></li></ul></div><div class="post-share my-4"><span class="mr-2">分享：</span><button type="button" class="btn btn-sm btn-outline-secondary share-copy" data-url="https://rockfox0.github.io/2025/01/09/z3-LCG/">复制链接</button> <a class="btn btn-sm btn-outline-secondary" target="_blank" rel="noopener" href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Frockfox0.github.io%2F2025%2F01%2F09%2Fz3-LCG%2F&title=%E6%A5%9A%E6%85%A7%E6%9D%AF(%E5%8E%9F%E9%A2%98%E6%9D%AF)%E6%8A%BD%E8%B1%A1lcg">微博</a> <a class="btn btn-sm btn-outline-secondary" target="_blank" rel="noopener" href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A%2F%2Frockfox0.github.io%2F2025%2F01%2F09%2Fz3-LCG%2F&title=%E6%A5%9A%E6%85%A7%E6%9D%AF(%E5%8E%9F%E9%A2%98%E6%9D%AF)%E6%8A%BD%E8%B1%A1lcg">QQ</a> <a class="btn btn-sm btn-outline-secondary" target="_blank" rel="noopener" href="https://t.me/share/url?url=https%3A%2F%2Frockfox0.github.io%2F2025%2F01%2F09%2Fz3-LCG%2F&text=%E6%A5%9A%E6%85%A7%E6%9D%AF(%E5%8E%9F%E9%A2%98%E6%9D%AF)%E6%8A%BD%E8%B1%A1lcg">Telegram</a> <a class="btn btn-sm btn-outline-secondary" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Frockfox0.github.io%2F2025%2F01%2F09%2Fz3-LCG%2F&text=%E6%A5%9A%E6%85%A7%E6%9D%AF(%E5%8E%9F%E9%A2%98%E6%9D%AF)%E6%8A%BD%E8%B1%A1lcg">X</a><script>(function(){document.addEventListener('click',function(e){var b=e.target.closest?e.target.closest('.share-copy'):null;if(b){var u=b.getAttribute('data-url');if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u);}else{var ta=document.createElement('textarea');ta.value=u;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);}var old=b.textContent;b.textContent='已复制';setTimeout(function(){b.textContent=old;},1500);}});})();</script></div></div>
+	  <div class="article-footer-copyright">
 
-<p>[b1 &#x3D; 7460389551079554387122271298325611265784698986736547147823340219048332254455805157908674848837957142308219634256824129290019180206444308088064508250516905,<br> num[0] &#x3D; 10599409846929758704844986735870774340904454393976179873952790083232713828736193252683701451023941027317069154823211494649607196952725636764499584998762813,<br> a1 &#x3D; 10228317474636303335053552404814053657805411067027231406728234220672759592055253789577953699468140093930405966764784406346333080866081688685493755751657173,<br> num[1] &#x3D; 24715322907153490101674157028995424681990970744363521182307796271708772855332488892418033987973193397256803702333506924197248506511038425386617004996006]</p>
-<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abnf"><span class="hljs-attribute">seed</span>   <span class="hljs-operator">=</span> <span class="hljs-number">648254584003525981818930468973202332901541704221939528419904023118741124029145595498816604196232397997140883705942729644556700319454263171710181925557358</span><br></code></pre></td></tr></table></figure>
-                
-              </div>
-            
-            <hr/>
-            <div>
-              <div class="post-metas my-3">
-  
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
+    本博客采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议(CC BY-NC-SA 4.0) 发布.</a>
+</div>
 
-<span class="category-chains">
-  
-  
+	</div>
+
+	
+	
+	<div>
+  	<center>
+
+	<div class="pagination">
+
     
-      <span class="category-chain">
-        
-  <a href="/categories/z3/" class="category-chain-item">z3</a>
-  
-  
-    <span>></span>
     
-  <a href="/categories/z3/crypto/" class="category-chain-item">crypto</a>
-  
-  
-
-  
-
-      </span>
+    <a href="/2025/01/23/copper/" type="button" class="btn btn-default"><i
+                class="fa fa-arrow-circle-o-left"></i> 上一页</a>
     
-  
-</span>
 
-    </div>
-  
-  
-    <div class="post-meta">
-      <i class="iconfont icon-tags"></i>
-      
-        <a href="/tags/crypto/" class="print-no-link">#crypto</a>
-      
-        <a href="/tags/python/" class="print-no-link">#python</a>
-      
-        <a href="/tags/Lcg/" class="print-no-link">#Lcg</a>
-      
-    </div>
-  
+    <a href="/" type="button" class="btn btn-default"><i class="fa fa-home"></i>Home</a>
+    
+    <a href="/2024/12/29/DSA签名算法/" type="button" class="btn btn-default ">下一页<i
+                class="fa fa-arrow-circle-o-right"></i></a>
+    
+
+    
 </div>
 
 
-              
-  
+    </center>
+	</div>
+	
+	<!-- comment -->
+	<!--
+<section id="comment">
+    <h2 class="title">留言</h2>
 
-  <div class="license-box my-3">
-    <div class="license-title">
-      <div>楚慧杯(原题杯)抽象lcg</div>
-      <div>http://example.com/2025/01/09/z3-LCG/</div>
-    </div>
-    <div class="license-meta">
-      
-        <div class="license-meta-item">
-          <div>Beitragsautor</div>
-          <div>fox</div>
-        </div>
-      
-      
-        <div class="license-meta-item license-meta-date">
-          <div>Veröffentlicht am</div>
-          <div>January 9, 2025</div>
-        </div>
-      
-      
-      
-        <div class="license-meta-item">
-          <div>Urheberrechtshinweis</div>
-          <div>
-            
-              
-              
-                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
-                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
-                    <i class="iconfont icon-cc-by"></i>
-                  </span>
-                </a>
-              
-            
-          </div>
-        </div>
-      
-    </div>
-    <div class="license-icon iconfont"></div>
+    
+</section>
+
+-->
+	
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+
+
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2025-01-09 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/z3/">z3<span>1</span></a></li> <li><a href="/categories/z3/crypto/">crypto<span>1</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/crypto/">crypto<span>26</span></a></li> <li><a href="/tags/python/">python<span>4</span></a></li> <li><a href="/tags/Lcg/">Lcg<span>1</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+		
+
+	</div>
+	
+		
+
+</div><!-- row -->
+
+<!--
+ -->
+
+
+
+	</div>
   </div>
-
-
-
-              
-                <div class="post-prevnext my-3">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2025/01/23/copper/" title="coppersmith方法相关">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">coppersmith方法相关</span>
-                        <span class="visible-mobile">Vorheriger</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2024/12/29/DSA%E7%AD%BE%E5%90%8D%E7%AE%97%E6%B3%95/" title="DSA签名算法">
-                        <span class="hidden-mobile">DSA签名算法</span>
-                        <span class="visible-mobile">Nächster</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
-              
-            </div>
-
-            
-          </article>
-        </div>
-      </div>
-    </div>
-
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-  <aside class="sidebar" style="margin-left: -1rem">
-    <div id="toc">
-  <p class="toc-header">
-    <i class="iconfont icon-list"></i>
-    <span>Inhaltsverzeichnis</span>
-  </p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
-
-
-
-  </aside>
-
-
-    </div>
-  </div>
-</div>
-
-
-
-
-
+  <div class="container-narrow">
+  <footer> <p>
   
-
-
-
+  &copy; 2026 fox's Blog
   
-
-
-
-  
-
-
-
-  
-
-
-
+      powered by <a href="http://hexo.io/" target="_blank">Hexo</a>.Theme <a href="https://github.com/Ares-X/hexo-theme-freemind.bithack" target="_blank">freemind.bithack</a>  
+</p>
+ </footer>
+</div> <!-- container-narrow -->
   
 
 
   
-  
+<a id="gotop" href="#">   
+  <span>⬆︎TOP</span>
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
 
 
-
-
-
-
-
-
-
-    
-
-    
-      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
-        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-      </a>
-    
-
-    
-      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v" for="local-search-input">Stichwort</label>
-        </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-    
-
-    
-  </main>
-
-  <footer>
-    <div class="footer-inner">
-  
-    <div class="footer-content">
-       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
-    </div>
-  
-  
-  
-</div>
-
-  </footer>
-
-  <!-- Scripts -->
-  
-  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
-
-  <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-    NProgress.start()
-    window.addEventListener('load', function() {
-      NProgress.done();
-    })
-  </script>
-
-
-<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
-<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
-
-
-  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var subtitle = document.getElementById('subtitle');
-      if (!subtitle || !typing) {
-        return;
-      }
-      var text = subtitle.getAttribute('data-typed-text');
-      
-        typing(text);
-      
-    })(window, document);
-  </script>
-
-
-
-
-  
-    <script  src="/js/img-lazyload.js" ></script>
-  
-
-
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
-    var toc = jQuery('#toc');
-    if (toc.length === 0 || !window.tocbot) { return; }
-    var boardCtn = jQuery('#board-ctn');
-    var boardTop = boardCtn.offset().top;
-
-    window.tocbot.init(Object.assign({
-      tocSelector     : '#toc-body',
-      contentSelector : '.markdown-body',
-      linkClass       : 'tocbot-link',
-      activeLinkClass : 'tocbot-active-link',
-      listClass       : 'tocbot-list',
-      isCollapsedClass: 'tocbot-is-collapsed',
-      collapsibleClass: 'tocbot-is-collapsible',
-      scrollSmooth    : true,
-      includeTitleTags: true,
-      headingsOffset  : -boardTop,
-    }, CONFIG.toc));
-    if (toc.find('.toc-list-item').length > 0) {
-      toc.css('visibility', 'visible');
-    }
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('tocbot' in window) {
-        tocbot.refresh();
-        var toc = jQuery('#toc');
-        if (toc.length === 0 || !tocbot) {
-          return;
-        }
-        if (toc.find('.toc-list-item').length > 0) {
-          toc.css('visibility', 'visible');
-        }
-      }
-    });
-  });
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
 </script>
 
 
-  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
 
-  <script>Fluid.plugins.codeWidget();</script>
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
 
 
-  
 <script>
-  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
-    window.anchors.options = {
-      placement: CONFIG.anchorjs.placement,
-      visible  : CONFIG.anchorjs.visible
+  if (!window.MathJax) {
+    window.MathJax = {
+      tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']], processEscapes: true },
+      options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] },
+      startup: { typeset: true }
     };
-    if (CONFIG.anchorjs.icon) {
-      window.anchors.options.icon = CONFIG.anchorjs.icon;
-    }
-    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-    var res = [];
-    for (var item of el) {
-      res.push('.markdown-body > ' + item.trim());
-    }
-    if (CONFIG.anchorjs.placement === 'left') {
-      window.anchors.options.class = 'anchorjs-link-left';
-    }
-    window.anchors.add(res.join(', '));
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('anchors' in window) {
-        anchors.removeAll();
-        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-        var res = [];
-        for (var item of el) {
-          res.push('.markdown-body > ' + item.trim());
-        }
-        if (CONFIG.anchorjs.placement === 'left') {
-          anchors.options.class = 'anchorjs-link-left';
-        }
-        anchors.add(res.join(', '));
-      }
-    });
-  });
+  }
 </script>
+<script id="MathJax-script" async src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
 
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
-    Fluid.plugins.fancyBox();
-  });
-</script>
-
-
-  <script>Fluid.plugins.imageCaption();</script>
-
-  
-      <script>
-        if (!window.MathJax) {
-          window.MathJax = {
-            tex    : {
-              inlineMath: { '[+]': [['$', '$']] }
-            },
-            loader : {
-              load: ['ui/lazy']
-            },
-            options: {
-              renderActions: {
-                insertedScript: [200, () => {
-                  document.querySelectorAll('mjx-container').forEach(node => {
-                    let target = node.parentNode;
-                    if (target.nodeName.toLowerCase() === 'li') {
-                      target.parentNode.classList.add('has-jax');
-                    }
-                  });
-                }, '', false]
-              }
-            }
-          };
-        } else {
-          MathJax.startup.document.state(0);
-          MathJax.texReset();
-          MathJax.typeset();
-          MathJax.typesetPromise();
-        }
-
-        Fluid.events.registerRefreshCallback(function() {
-          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
-            MathJax.startup.document.state(0);
-            MathJax.texReset();
-            MathJax.typeset();
-            MathJax.typesetPromise();
-          }
-        });
-      </script>
-    
-
-  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
-
-  <script  src="/js/local-search.js" ></script>
-
-
-
-
-
-<!-- 主题的启动项，将它保持在最底部 -->
-<!-- the boot of the theme, keep it at the bottom -->
-<script  src="/js/boot.js" ></script>
-
-
-  
-
-  <noscript>
-    <div class="noscript-warning">Blog funktioniert am besten mit aktiviertem JavaScript</div>
-  </noscript>
 </body>
-</html>
+   </html>

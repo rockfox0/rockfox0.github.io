@@ -1,752 +1,360 @@
-
-
-<!DOCTYPE html>
-<html lang="zh-CN en" data-default-color-scheme=auto>
-
-
-
+<!DOCTYPE HTML>
+<html>
 <head>
-  <meta charset="UTF-8">
-
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/OIP-C.jpg">
-  <link rel="icon" href="/img/OIP-C.jpg">
+  <meta charset="utf-8">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="cache-control" content="no-cache">
+  <meta http-equiv="expires" content="0">
   
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  
-  <meta name="theme-color" content="#2f4154">
+  <title>代码混淆(smc和flower) | Rockfox的密码记录</title>
   <meta name="author" content="fox">
-  <meta name="keywords" content="菜菜的密码劳弟">
   
-    <meta name="description" content="[[]] 代码混淆(smc和花指令)自修改代码（Self-Modifying Code, SMC）SMC，即Self Modifying Code，动态代码加密技术，指通过修改代码或数据，阻止别人直接静态分析，然后在动态运行程序时对代码进行解密，达到程序正常运行的效果。SMC的实现方式有很多种，可以通过修改PE文件的Section Header、使用API Hook实现代码加密和解密、使用VMPr">
-<meta property="og:type" content="article">
-<meta property="og:title" content="代码混淆(smc和flower)">
-<meta property="og:url" content="http://example.com/2026/01/06/%E4%BB%A3%E7%A0%81%E6%B7%B7%E6%B7%86/index.html">
-<meta property="og:site_name" content="Rockfox的密码记录">
-<meta property="og:description" content="[[]] 代码混淆(smc和花指令)自修改代码（Self-Modifying Code, SMC）SMC，即Self Modifying Code，动态代码加密技术，指通过修改代码或数据，阻止别人直接静态分析，然后在动态运行程序时对代码进行解密，达到程序正常运行的效果。SMC的实现方式有很多种，可以通过修改PE文件的Section Header、使用API Hook实现代码加密和解密、使用VMPr">
-<meta property="og:locale">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/rockfox0/foximages/mine/1111.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/rockfox0/foximages/mine/1122.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/rockfox0/foximages/mine/123.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/rockfox0/foximages/mine/12345.png">
-<meta property="article:published_time" content="2026-01-06T04:00:00.000Z">
-<meta property="article:modified_time" content="2026-01-08T04:32:36.000Z">
-<meta property="article:author" content="fox">
-<meta property="article:tag" content="re">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/rockfox0/foximages/mine/1111.png">
+  <meta name="description" content="这是FOx的密码和其他开发互联网开发学习记录">
   
   
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="代码混淆(smc和flower)"/>
+  <meta property="og:site_name" content="Rockfox的密码记录"/>
+
   
-  <title>代码混淆(smc和flower) - Rockfox的密码记录</title>
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
-
-
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-<!-- Do not modify the link that theme dependent icons -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
-
-
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
-
-
-<link  rel="stylesheet" href="/css/main.css" />
-
-
-  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+    <meta property="og:image" content=""/>
   
-    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+
+  
+    <link rel="alternative" href="/atom.xml" title="Rockfox的密码记录" type="application/atom+xml">
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
   
 
 
 
 
-  <script id="fluid-configs">
-    var Fluid = window.Fluid || {};
-    Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":40,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
-
-    if (CONFIG.web_analytics.follow_dnt) {
-      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
-      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
-    }
-  </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
-  
-
-
-  
 <meta name="generator" content="Hexo 7.3.0"></head>
 
-
-<body>
-  
-
-  <header>
-    
-
-<div class="header-inner" style="height: 150vh;">
-  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand" href="/">
-      <strong>fox的密码学习记录</strong>
-    </a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/" target="_self">
-                <i class="iconfont icon-home-fill"></i>
-                <span>Startseite</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/" target="_self">
-                <i class="iconfont icon-archive-fill"></i>
-                <span>Archiv</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/" target="_self">
-                <i class="iconfont icon-category-fill"></i>
-                <span>Kategorien</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/" target="_self">
-                <i class="iconfont icon-tags-fill"></i>
-                <span>Schlagwörter</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/" target="_self">
-                <i class="iconfont icon-user-fill"></i>
-                <span>Über</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/links/" target="_self">
-                <i class="iconfont icon-link-fill"></i>
-                <span>Weblinks</span>
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
-              <i class="iconfont icon-search"></i>
-            </a>
-          </li>
-          
-        
-        
-          <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
-              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
-            </a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-</nav>
-
-  
-
-<div id="banner" class="banner" parallax=true
-     style="background: url('/img/R-C.jpg') no-repeat center center; background-size: cover;">
-  <div class="full-bg-img">
-    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-      <div class="banner-text text-center fade-in-up">
-        <div class="h2">
-          
-            <span id="subtitle" data-typed-text="代码混淆(smc和flower)"></span>
-          
-        </div>
-
-        
-          
-  <div class="mt-3">
-    
-    
-      <span class="post-meta">
-        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2026-01-06 12:00" pubdate>
-          January 6, 2026 pm
-        </time>
-      </span>
-    
-  </div>
-
-  <div class="mt-1">
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-chart"></i>
-        
-          983 wörter
-        
-      </span>
-    
-
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-clock-fill"></i>
-        
-        
-        
-          9 minuten
-        
-      </span>
-    
-
-    
-    
-  </div>
-
-
-        
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="/">Rockfox的密码记录</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/" title="Home">
+			  <i class="fa fa-home"></i>首页
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>归档
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>分类
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/map" title="Knowledge map">
+			  <i class="fa fa-sitemap"></i>图谱
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
       </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
 
-      
-        <div class="scroll-down-bar">
-          <i class="iconfont icon-arrowdown"></i>
-        </div>
-      
-    </div>
-  </div>
-</div>
+  <div class="container">
+  	<div class="content">
+    	 
 
-</div>
 
-  </header>
+	
+		<div class="page-header">
+			<h1> 代码混淆(smc和flower)</h1>
+		</div>
+	
 
-  <main>
-    
-      
 
-<div class="container-fluid nopadding-x">
-  <div class="row nomargin-x">
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
 
-    </div>
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
 
-    <div class="col-lg-8 nopadding-x-md">
-      <div class="container nopadding-x-md" id="board-ctn">
-        <div id="board">
-          <article class="post-content mx-auto">
-            <h1 id="seo-header">代码混淆(smc和flower)</h1>
-            
-            
-              <div class="markdown-body">
-                
-                <p>[[<a href=""></a>]]</p>
-<h1 id="代码混淆-smc和花指令"><a href="#代码混淆-smc和花指令" class="headerlink" title="代码混淆(smc和花指令)"></a>代码混淆(smc和花指令)</h1><h2 id="自修改代码（Self-Modifying-Code-SMC）"><a href="#自修改代码（Self-Modifying-Code-SMC）" class="headerlink" title="自修改代码（Self-Modifying Code, SMC）"></a>自修改代码（Self-Modifying Code, SMC）</h2><p>SMC，即Self Modifying Code，动态代码加密技术，指通过修改代码或数据，阻止别人直接静态分析，然后在动态运行程序时对代码进行解密，达到程序正常运行的效果。<br>SMC的实现方式有很多种，可以通过修改PE文件的Section Header、使用API Hook实现代码加密和解密、使用VMProtect等第三方加密工具等。<br>这里我们把函数的代码提取出来然后进行加密解密.</p>
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <p>[[<a href=""></a>]]</p>
+<h1>代码混淆(smc和花指令)</h1>
+<h2 id="自修改代码（Self-Modifying-Code-SMC）">自修改代码（Self-Modifying Code, SMC）</h2>
+<p>SMC，即Self Modifying Code，动态代码加密技术，指通过修改代码或数据，阻止别人直接静态分析，然后在动态运行程序时对代码进行解密，达到程序正常运行的效果。<br>
+SMC的实现方式有很多种，可以通过修改PE文件的Section Header、使用API Hook实现代码加密和解密、使用VMProtect等第三方加密工具等。
+这里我们把函数的代码提取出来然后进行加密解密.</p>
 <ul>
 <li>有点lazy,懒得总结了,一般可以把被加密的那一段代码解密或者动态调试就能找到我们想要的,之前学过的不是很想看了,当一下lazydog jump掉吧</li>
 </ul>
-<h2 id="花指令"><a href="#花指令" class="headerlink" title="花指令"></a>花指令</h2><ul>
-<li>简介<br>利用花指令可以增大代码的阅读难度,并且使得工具无法轻易的反编译,也极大增加了静态分析的难度</li>
-</ul>
-<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>反编译器这种并没有想象中的智慧,他们都是利用的线性反编译.从机器码挨个读取内容,这就会导致有时候我们插入一些不被使用的垃圾代码比如这个代码被跳转的时候,他仍然会错误的编译他导致后续无法成功解析出来,当然常用的ida其实是 利用的<em><strong>递归下降</strong></em>,遇到call这种跳转的时候就会直接到call的分支进行分析<br>当然遇到递归下降这种形式我们可以利用一些条件判断的跳转来绕过或者是一些其他方法我们</p>
-<h3 id="简单的花指令"><a href="#简单的花指令" class="headerlink" title="简单的花指令"></a>简单的花指令</h3><p>这里就不讲那种能直接跳过的形式了</p>
+<h2 id="花指令">花指令</h2>
 <ul>
-<li>多层判断但是一定会发生<br>实例<br>asm</li>
+<li>简介
+利用花指令可以增大代码的阅读难度,并且使得工具无法轻易的反编译,也极大增加了静态分析的难度</li>
 </ul>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">asm</span>  <br>&#123;  <br>Jz Label  <br>Jnz Label  <br>Db thunkcode;垃圾数据  <br>Label:  <br>&#125;<br></code></pre></td></tr></table></figure>
-<p>这里jz和jnz跳转条件分别为zf&#x3D;1和zf&#x3D;0,则一定会跳转.<br>示例<br><img src="https://cdn.jsdelivr.net/gh/rockfox0/foximages/mine/1111.png" srcset="/img/loading.gif" lazyload alt="1111.png"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/rockfox0/foximages/mine/1122.png" srcset="/img/loading.gif" lazyload alt="1122.png"></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c">__asm &#123;<br>push ebx;<br>xor ebx, ebx;<br>test ebx, ebx;<br>jnz LABEL7;<br>jz LABEL8;<br>LABEL7:<br>_emit <span class="hljs-number">0xC7</span>;<br>LABEL8:<br>pop ebx;<br>&#125;<br></code></pre></td></tr></table></figure>
-<h3 id="稍微复杂一点"><a href="#稍微复杂一点" class="headerlink" title="稍微复杂一点"></a>稍微复杂一点</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs c">__asm__ __volatile__(<br><br><span class="hljs-string">&quot;.intel_syntax noprefix\n&quot;</span><br><br><span class="hljs-string">&quot;call 1f\n&quot;</span><br><br><span class="hljs-string">&quot;.byte 0xe8\n&quot;</span><br><br><span class="hljs-string">&quot;1:\n&quot;</span><br><br><span class="hljs-string">&quot;add dword ptr ss:[rsp], 8\n&quot;</span><br><br><span class="hljs-string">&quot;ret\n&quot;</span><br><br><span class="hljs-string">&quot;.byte 0xf3\n&quot;</span><br><br><span class="hljs-string">&quot;.att_syntax prefix\n&quot;</span><br><br>);<br></code></pre></td></tr></table></figure>
-<p>我改了一下默认使用 intel语法局部,and then<br>这里先跳转到1这个位置,然后 再给栈顶存储的 rip-15 然后再跳过0xf3然后就能得到我们想要的值.<br><img src="https://cdn.jsdelivr.net/gh/rockfox0/foximages/mine/123.png" srcset="/img/loading.gif" lazyload alt="123.png"></p>
+<h3 id="原理">原理</h3>
+<p>反编译器这种并没有想象中的智慧,他们都是利用的线性反编译.从机器码挨个读取内容,这就会导致有时候我们插入一些不被使用的垃圾代码比如这个代码被跳转的时候,他仍然会错误的编译他导致后续无法成功解析出来,当然常用的ida其实是 利用的<em><strong>递归下降</strong></em>,遇到call这种跳转的时候就会直接到call的分支进行分析
+当然遇到递归下降这种形式我们可以利用一些条件判断的跳转来绕过或者是一些其他方法我们</p>
+<h3 id="简单的花指令">简单的花指令</h3>
+<p>这里就不讲那种能直接跳过的形式了</p>
+<ul>
+<li>多层判断但是一定会发生
+实例
+asm</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">asm</span>  </span><br><span class="line">&#123;  </span><br><span class="line">Jz Label  </span><br><span class="line">Jnz Label  </span><br><span class="line">Db thunkcode;垃圾数据  </span><br><span class="line">Label:  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里jz和jnz跳转条件分别为zf=1和zf=0,则一定会跳转.
+示例
+<img src="https://cdn.jsdelivr.net/gh/rockfox0/foximages/mine/1111.png" alt="1111.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/rockfox0/foximages/mine/1122.png" alt="1122.png"></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">__asm &#123;</span><br><span class="line">push ebx;</span><br><span class="line">xor ebx, ebx;</span><br><span class="line">test ebx, ebx;</span><br><span class="line">jnz LABEL7;</span><br><span class="line">jz LABEL8;</span><br><span class="line">LABEL7:</span><br><span class="line">_emit <span class="number">0xC7</span>;</span><br><span class="line">LABEL8:</span><br><span class="line">pop ebx;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="稍微复杂一点">稍微复杂一点</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">__asm__ __volatile__(</span><br><span class="line"></span><br><span class="line"><span class="string">&quot;.intel_syntax noprefix\n&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;call 1f\n&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;.byte 0xe8\n&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;1:\n&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;add dword ptr ss:[rsp], 8\n&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;ret\n&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;.byte 0xf3\n&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;.att_syntax prefix\n&quot;</span></span><br><span class="line"></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>我改了一下默认使用 intel语法局部,and then
+这里先跳转到1这个位置,然后 再给栈顶存储的 rip-15 然后再跳过0xf3然后就能得到我们想要的值.
+<img src="https://cdn.jsdelivr.net/gh/rockfox0/foximages/mine/123.png" alt="123.png"></p>
 <p>这里就直接跳转到我们期待的位置了.ok</p>
-<h3 id="插入一些废话组合"><a href="#插入一些废话组合" class="headerlink" title="插入一些废话组合"></a>插入一些废话组合</h3><p>示例</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c">__asm__ __volatile__ (<br><br><span class="hljs-string">&quot;.byte 0xFF,0xC0,0x48;&quot;</span><br><br>);<br><br><span class="hljs-keyword">if</span> (!fgets(key, <span class="hljs-keyword">sizeof</span>(key), <span class="hljs-built_in">stdin</span>)) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;1&quot;</span>); <span class="hljs-keyword">else</span> <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;0&quot;</span>);<br></code></pre></td></tr></table></figure>
-<p>0xFF ,0xC0是inc eax<br>0x48 是dec  eax<br>刚好eax 加一 减一就直接恢复了,不过直接这样写显然没什么用,我们首先插入一个0xEB</p>
-<p>就能得到<br><img src="https://cdn.jsdelivr.net/gh/rockfox0/foximages/mine/12345.png" srcset="/img/loading.gif" lazyload alt="12345.png"></p>
+<h3 id="插入一些废话组合">插入一些废话组合</h3>
+<p>示例</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">__asm__ __volatile__ (</span><br><span class="line"></span><br><span class="line"><span class="string">&quot;.byte 0xFF,0xC0,0x48;&quot;</span></span><br><span class="line"></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!fgets(key, <span class="keyword">sizeof</span>(key), <span class="built_in">stdin</span>)) <span class="built_in">printf</span>(<span class="string">&quot;1&quot;</span>); <span class="keyword">else</span> <span class="built_in">printf</span>(<span class="string">&quot;0&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p>0xFF ,0xC0是inc eax
+0x48 是dec  eax
+刚好eax 加一 减一就直接恢复了,不过直接这样写显然没什么用,我们首先插入一个0xEB</p>
+<p>就能得到
+<img src="https://cdn.jsdelivr.net/gh/rockfox0/foximages/mine/12345.png" alt="12345.png"></p>
 <p>这里是从0xEB 后跳到0xff重新开始运行就相当于nop掉0xEB 但是呢 因为0xeb本身存在ida还是会错误的读取.</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c">__asm__ __volatile__ (<br><br><span class="hljs-string">&quot;.byte 0xEB,0xFF,0xC0,0x48;&quot;</span><br><br>);<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">__asm__ __volatile__ (</span><br><span class="line"></span><br><span class="line"><span class="string">&quot;.byte 0xEB,0xFF,0xC0,0x48;&quot;</span></span><br><span class="line"></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
 <p>值得注意的是. 如果你后面跟着的正常代码有可能还是会和0x48搅在一起导致出错,这样的花指令就按情况而定了.</p>
-<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>要睡觉了懒得写出来了,太简单了也没啥好写的就做了geek 的only_flower和 newstar2024的 flower. smc的话就是ez_smc</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>动态调试+smc+花指令,还是太慢了,花的时间比较少…….有点摆子<br>对于花指令来说的话可能就是得学会看汇编不然还是比较吃力,还有就是哪里红了点哪里.<br>不过只是看到红了全nop掉还是挺没意思的. 暂时遇到的强度都不高,或许是我缺乏对自己的挑战性哈哈哈,反正不会的就问一能工智人……,最困难的可能就是看十一样的cpp反汇编,观感太差了.</p>
+<h2 id="题目">题目</h2>
+<p>要睡觉了懒得写出来了,太简单了也没啥好写的就做了geek 的only_flower和 newstar2024的 flower. smc的话就是ez_smc</p>
+<h2 id="总结">总结</h2>
+<p>动态调试+smc+花指令,还是太慢了,花的时间比较少.......有点摆子
+对于花指令来说的话可能就是得学会看汇编不然还是比较吃力,还有就是哪里红了点哪里.
+不过只是看到红了全nop掉还是挺没意思的. 暂时遇到的强度都不高,或许是我缺乏对自己的挑战性哈哈哈,反正不会的就问一能工智人......,最困难的可能就是看十一样的cpp反汇编,观感太差了.</p>
 <p>画饼环节:</p>
 <ul>
-<li>学习脱壳相关的吧 </li>
+<li>学习脱壳相关的吧</li>
 <li>ida工具使用,反正暂时不会写idapython,应该要看一看</li>
 <li>学习vm</li>
 </ul>
+<div class="post-enhance"><div class="post-share my-4"><span class="mr-2">分享：</span><button type="button" class="btn btn-sm btn-outline-secondary share-copy" data-url="https://rockfox0.github.io/2026/01/06/%E4%BB%A3%E7%A0%81%E6%B7%B7%E6%B7%86/">复制链接</button> <a class="btn btn-sm btn-outline-secondary" target="_blank" rel="noopener" href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Frockfox0.github.io%2F2026%2F01%2F06%2F%25E4%25BB%25A3%25E7%25A0%2581%25E6%25B7%25B7%25E6%25B7%2586%2F&title=%E4%BB%A3%E7%A0%81%E6%B7%B7%E6%B7%86(smc%E5%92%8Cflower)">微博</a> <a class="btn btn-sm btn-outline-secondary" target="_blank" rel="noopener" href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A%2F%2Frockfox0.github.io%2F2026%2F01%2F06%2F%25E4%25BB%25A3%25E7%25A0%2581%25E6%25B7%25B7%25E6%25B7%2586%2F&title=%E4%BB%A3%E7%A0%81%E6%B7%B7%E6%B7%86(smc%E5%92%8Cflower)">QQ</a> <a class="btn btn-sm btn-outline-secondary" target="_blank" rel="noopener" href="https://t.me/share/url?url=https%3A%2F%2Frockfox0.github.io%2F2026%2F01%2F06%2F%25E4%25BB%25A3%25E7%25A0%2581%25E6%25B7%25B7%25E6%25B7%2586%2F&text=%E4%BB%A3%E7%A0%81%E6%B7%B7%E6%B7%86(smc%E5%92%8Cflower)">Telegram</a> <a class="btn btn-sm btn-outline-secondary" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Frockfox0.github.io%2F2026%2F01%2F06%2F%25E4%25BB%25A3%25E7%25A0%2581%25E6%25B7%25B7%25E6%25B7%2586%2F&text=%E4%BB%A3%E7%A0%81%E6%B7%B7%E6%B7%86(smc%E5%92%8Cflower)">X</a><script>(function(){document.addEventListener('click',function(e){var b=e.target.closest?e.target.closest('.share-copy'):null;if(b){var u=b.getAttribute('data-url');if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u);}else{var ta=document.createElement('textarea');ta.value=u;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);}var old=b.textContent;b.textContent='已复制';setTimeout(function(){b.textContent=old;},1500);}});})();</script></div></div>
+	  <div class="article-footer-copyright">
 
-                
-              </div>
-            
-            <hr/>
-            <div>
-              <div class="post-metas my-3">
-  
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
+    本博客采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议(CC BY-NC-SA 4.0) 发布.</a>
+</div>
 
-<span class="category-chains">
-  
-  
+	</div>
+
+	
+	
+	<div>
+  	<center>
+
+	<div class="pagination">
+
     
-      <span class="category-chain">
-        
-  <a href="/categories/reserve/" class="category-chain-item">reserve</a>
-  
-  
-
-      </span>
     
-  
-</span>
+    <a href="/2026/03/24/APK 文件结构/" type="button" class="btn btn-default"><i
+                class="fa fa-arrow-circle-o-left"></i> 上一页</a>
+    
 
-    </div>
-  
-  
-    <div class="post-meta">
-      <i class="iconfont icon-tags"></i>
-      
-        <a href="/tags/re/" class="print-no-link">#re</a>
-      
-    </div>
-  
+    <a href="/" type="button" class="btn btn-default"><i class="fa fa-home"></i>Home</a>
+    
+    <a href="/2025/12/19/逆向入门-汇编基础/" type="button" class="btn btn-default ">下一页<i
+                class="fa fa-arrow-circle-o-right"></i></a>
+    
+
+    
 </div>
 
 
-              
-  
+    </center>
+	</div>
+	
+	<!-- comment -->
+	<!--
+<section id="comment">
+    <h2 class="title">留言</h2>
 
-  <div class="license-box my-3">
-    <div class="license-title">
-      <div>代码混淆(smc和flower)</div>
-      <div>http://example.com/2026/01/06/代码混淆/</div>
-    </div>
-    <div class="license-meta">
-      
-        <div class="license-meta-item">
-          <div>Beitragsautor</div>
-          <div>fox</div>
-        </div>
-      
-      
-        <div class="license-meta-item license-meta-date">
-          <div>Veröffentlicht am</div>
-          <div>January 6, 2026</div>
-        </div>
-      
-      
-      
-        <div class="license-meta-item">
-          <div>Urheberrechtshinweis</div>
-          <div>
-            
-              
-              
-                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
-                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
-                    <i class="iconfont icon-cc-by"></i>
-                  </span>
-                </a>
-              
-            
-          </div>
-        </div>
-      
-    </div>
-    <div class="license-icon iconfont"></div>
+    
+</section>
+
+-->
+	
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+
+
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2026-01-06 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/reserve/">reserve<span>4</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/re/">re<span>2</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+		
+
+	</div>
+	
+		
+
+</div><!-- row -->
+
+<!--
+ -->
+
+
+
+	</div>
   </div>
-
-
-
-              
-                <div class="post-prevnext my-3">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2026/03/24/APK%20%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/" title="apk文件结构">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">apk文件结构</span>
-                        <span class="visible-mobile">Vorheriger</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2025/12/19/%E9%80%86%E5%90%91%E5%85%A5%E9%97%A8-%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80/" title="逆向入门-汇编基础">
-                        <span class="hidden-mobile">逆向入门-汇编基础</span>
-                        <span class="visible-mobile">Nächster</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
-              
-            </div>
-
-            
-          </article>
-        </div>
-      </div>
-    </div>
-
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-  <aside class="sidebar" style="margin-left: -1rem">
-    <div id="toc">
-  <p class="toc-header">
-    <i class="iconfont icon-list"></i>
-    <span>Inhaltsverzeichnis</span>
-  </p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
-
-
-
-  </aside>
-
-
-    </div>
-  </div>
-</div>
-
-
-
-
-
+  <div class="container-narrow">
+  <footer> <p>
   
-
-
-
+  &copy; 2026 fox's Blog
   
-
-
-
-  
-
-
-
-  
-
-
-
+      powered by <a href="http://hexo.io/" target="_blank">Hexo</a>.Theme <a href="https://github.com/Ares-X/hexo-theme-freemind.bithack" target="_blank">freemind.bithack</a>  
+</p>
+ </footer>
+</div> <!-- container-narrow -->
   
 
 
   
-  
+<a id="gotop" href="#">   
+  <span>⬆︎TOP</span>
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
 
 
-
-
-
-
-
-
-
-    
-
-    
-      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
-        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-      </a>
-    
-
-    
-      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v" for="local-search-input">Stichwort</label>
-        </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-    
-
-    
-  </main>
-
-  <footer>
-    <div class="footer-inner">
-  
-    <div class="footer-content">
-       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
-    </div>
-  
-  
-  
-</div>
-
-  </footer>
-
-  <!-- Scripts -->
-  
-  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
-
-  <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-    NProgress.start()
-    window.addEventListener('load', function() {
-      NProgress.done();
-    })
-  </script>
-
-
-<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
-<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
-
-
-  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var subtitle = document.getElementById('subtitle');
-      if (!subtitle || !typing) {
-        return;
-      }
-      var text = subtitle.getAttribute('data-typed-text');
-      
-        typing(text);
-      
-    })(window, document);
-  </script>
-
-
-
-
-  
-    <script  src="/js/img-lazyload.js" ></script>
-  
-
-
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
-    var toc = jQuery('#toc');
-    if (toc.length === 0 || !window.tocbot) { return; }
-    var boardCtn = jQuery('#board-ctn');
-    var boardTop = boardCtn.offset().top;
-
-    window.tocbot.init(Object.assign({
-      tocSelector     : '#toc-body',
-      contentSelector : '.markdown-body',
-      linkClass       : 'tocbot-link',
-      activeLinkClass : 'tocbot-active-link',
-      listClass       : 'tocbot-list',
-      isCollapsedClass: 'tocbot-is-collapsed',
-      collapsibleClass: 'tocbot-is-collapsible',
-      scrollSmooth    : true,
-      includeTitleTags: true,
-      headingsOffset  : -boardTop,
-    }, CONFIG.toc));
-    if (toc.find('.toc-list-item').length > 0) {
-      toc.css('visibility', 'visible');
-    }
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('tocbot' in window) {
-        tocbot.refresh();
-        var toc = jQuery('#toc');
-        if (toc.length === 0 || !tocbot) {
-          return;
-        }
-        if (toc.find('.toc-list-item').length > 0) {
-          toc.css('visibility', 'visible');
-        }
-      }
-    });
-  });
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
 </script>
 
 
-  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
 
-  <script>Fluid.plugins.codeWidget();</script>
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
 
 
-  
 <script>
-  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
-    window.anchors.options = {
-      placement: CONFIG.anchorjs.placement,
-      visible  : CONFIG.anchorjs.visible
+  if (!window.MathJax) {
+    window.MathJax = {
+      tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']], processEscapes: true },
+      options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] },
+      startup: { typeset: true }
     };
-    if (CONFIG.anchorjs.icon) {
-      window.anchors.options.icon = CONFIG.anchorjs.icon;
-    }
-    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-    var res = [];
-    for (var item of el) {
-      res.push('.markdown-body > ' + item.trim());
-    }
-    if (CONFIG.anchorjs.placement === 'left') {
-      window.anchors.options.class = 'anchorjs-link-left';
-    }
-    window.anchors.add(res.join(', '));
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('anchors' in window) {
-        anchors.removeAll();
-        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-        var res = [];
-        for (var item of el) {
-          res.push('.markdown-body > ' + item.trim());
-        }
-        if (CONFIG.anchorjs.placement === 'left') {
-          anchors.options.class = 'anchorjs-link-left';
-        }
-        anchors.add(res.join(', '));
-      }
-    });
-  });
+  }
 </script>
+<script id="MathJax-script" async src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
 
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
-    Fluid.plugins.fancyBox();
-  });
-</script>
-
-
-  <script>Fluid.plugins.imageCaption();</script>
-
-  
-      <script>
-        if (!window.MathJax) {
-          window.MathJax = {
-            tex    : {
-              inlineMath: { '[+]': [['$', '$']] }
-            },
-            loader : {
-              load: ['ui/lazy']
-            },
-            options: {
-              renderActions: {
-                insertedScript: [200, () => {
-                  document.querySelectorAll('mjx-container').forEach(node => {
-                    let target = node.parentNode;
-                    if (target.nodeName.toLowerCase() === 'li') {
-                      target.parentNode.classList.add('has-jax');
-                    }
-                  });
-                }, '', false]
-              }
-            }
-          };
-        } else {
-          MathJax.startup.document.state(0);
-          MathJax.texReset();
-          MathJax.typeset();
-          MathJax.typesetPromise();
-        }
-
-        Fluid.events.registerRefreshCallback(function() {
-          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
-            MathJax.startup.document.state(0);
-            MathJax.texReset();
-            MathJax.typeset();
-            MathJax.typesetPromise();
-          }
-        });
-      </script>
-    
-
-  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
-
-  <script  src="/js/local-search.js" ></script>
-
-
-
-
-
-<!-- 主题的启动项，将它保持在最底部 -->
-<!-- the boot of the theme, keep it at the bottom -->
-<script  src="/js/boot.js" ></script>
-
-
-  
-
-  <noscript>
-    <div class="noscript-warning">Blog funktioniert am besten mit aktiviertem JavaScript</div>
-  </noscript>
 </body>
-</html>
+   </html>

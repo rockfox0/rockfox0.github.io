@@ -1,314 +1,150 @@
-
-
-<!DOCTYPE html>
-<html lang="zh-CN en" data-default-color-scheme=auto>
-
-
-
+<!DOCTYPE HTML>
+<html>
 <head>
-  <meta charset="UTF-8">
-
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/OIP-C.jpg">
-  <link rel="icon" href="/img/OIP-C.jpg">
+  <meta charset="utf-8">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="cache-control" content="no-cache">
+  <meta http-equiv="expires" content="0">
   
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  
-  <meta name="theme-color" content="#2f4154">
+  <title>JQCTF复现 | Rockfox的密码记录</title>
   <meta name="author" content="fox">
-  <meta name="keywords" content="菜菜的密码劳弟">
   
-    <meta name="description" content="JQCTFone-line-crypto1assert __import__(&#x27;re&#x27;).fullmatch(br&#x27;flag\&#123;[!-z]&#123;11&#125;\&#125;&#x27;,flag:&#x3D;os.getenvb(b&#x27;FLAG&#x27;)) and [is_prime(int(flag.hex(),16)^^int(input(&amp;#">
-<meta property="og:type" content="article">
-<meta property="og:title" content="JQCTF复现">
-<meta property="og:url" content="http://example.com/2025/08/23/2025-6-1%20JQCTFone-line-crypto%20165730/index.html">
-<meta property="og:site_name" content="Rockfox的密码记录">
-<meta property="og:description" content="JQCTFone-line-crypto1assert __import__(&#x27;re&#x27;).fullmatch(br&#x27;flag\&#123;[!-z]&#123;11&#125;\&#125;&#x27;,flag:&#x3D;os.getenvb(b&#x27;FLAG&#x27;)) and [is_prime(int(flag.hex(),16)^^int(input(&amp;#">
-<meta property="og:locale">
-<meta property="og:image" content="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-06-01-153422.2obrpte89y.webp">
-<meta property="article:published_time" content="2025-08-23T04:00:00.000Z">
-<meta property="article:modified_time" content="2026-03-25T15:37:38.750Z">
-<meta property="article:author" content="fox">
-<meta property="article:tag" content="crypto">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-06-01-153422.2obrpte89y.webp">
+  <meta name="description" content="这是FOx的密码和其他开发互联网开发学习记录">
   
   
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="JQCTF复现"/>
+  <meta property="og:site_name" content="Rockfox的密码记录"/>
+
   
-  <title>JQCTF复现 - Rockfox的密码记录</title>
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
-
-
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-<!-- Do not modify the link that theme dependent icons -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
-
-
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
-
-
-<link  rel="stylesheet" href="/css/main.css" />
-
-
-  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+    <meta property="og:image" content=""/>
   
-    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+
+  
+    <link rel="alternative" href="/atom.xml" title="Rockfox的密码记录" type="application/atom+xml">
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
   
 
 
 
 
-  <script id="fluid-configs">
-    var Fluid = window.Fluid || {};
-    Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":40,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
-
-    if (CONFIG.web_analytics.follow_dnt) {
-      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
-      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
-    }
-  </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
-  
-
-
-  
 <meta name="generator" content="Hexo 7.3.0"></head>
 
-
-<body>
-  
-
-  <header>
-    
-
-<div class="header-inner" style="height: 150vh;">
-  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand" href="/">
-      <strong>fox的密码学习记录</strong>
-    </a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/" target="_self">
-                <i class="iconfont icon-home-fill"></i>
-                <span>Startseite</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/" target="_self">
-                <i class="iconfont icon-archive-fill"></i>
-                <span>Archiv</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/" target="_self">
-                <i class="iconfont icon-category-fill"></i>
-                <span>Kategorien</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/" target="_self">
-                <i class="iconfont icon-tags-fill"></i>
-                <span>Schlagwörter</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/" target="_self">
-                <i class="iconfont icon-user-fill"></i>
-                <span>Über</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/links/" target="_self">
-                <i class="iconfont icon-link-fill"></i>
-                <span>Weblinks</span>
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
-              <i class="iconfont icon-search"></i>
-            </a>
-          </li>
-          
-        
-        
-          <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
-              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
-            </a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-</nav>
-
-  
-
-<div id="banner" class="banner" parallax=true
-     style="background: url('/img/R-C.jpg') no-repeat center center; background-size: cover;">
-  <div class="full-bg-img">
-    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-      <div class="banner-text text-center fade-in-up">
-        <div class="h2">
-          
-            <span id="subtitle" data-typed-text="JQCTF复现"></span>
-          
-        </div>
-
-        
-          
-  <div class="mt-3">
-    
-    
-      <span class="post-meta">
-        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-08-23 12:00" pubdate>
-          August 23, 2025 pm
-        </time>
-      </span>
-    
-  </div>
-
-  <div class="mt-1">
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-chart"></i>
-        
-          869 wörter
-        
-      </span>
-    
-
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-clock-fill"></i>
-        
-        
-        
-          8 minuten
-        
-      </span>
-    
-
-    
-    
-  </div>
-
-
-        
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="/">Rockfox的密码记录</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/" title="Home">
+			  <i class="fa fa-home"></i>首页
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>归档
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>分类
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/map" title="Knowledge map">
+			  <i class="fa fa-sitemap"></i>图谱
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
       </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
 
-      
-        <div class="scroll-down-bar">
-          <i class="iconfont icon-arrowdown"></i>
-        </div>
-      
-    </div>
-  </div>
-</div>
+  <div class="container">
+  	<div class="content">
+    	 
 
-</div>
 
-  </header>
+	
+		<div class="page-header">
+			<h1> JQCTF复现</h1>
+		</div>
+	
 
-  <main>
-    
-      
 
-<div class="container-fluid nopadding-x">
-  <div class="row nomargin-x">
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
 
-    </div>
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
 
-    <div class="col-lg-8 nopadding-x-md">
-      <div class="container nopadding-x-md" id="board-ctn">
-        <div id="board">
-          <article class="post-content mx-auto">
-            <h1 id="seo-header">JQCTF复现</h1>
-            
-            
-              <div class="markdown-body">
-                
-                <h1 id="JQCTFone-line-crypto"><a href="#JQCTFone-line-crypto" class="headerlink" title="JQCTFone-line-crypto"></a>JQCTFone-line-crypto</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">assert</span> <span class="hljs-built_in">__import__</span>(<span class="hljs-string">&#x27;re&#x27;</span>).fullmatch(<span class="hljs-string">br&#x27;flag\&#123;[!-z]&#123;11&#125;\&#125;&#x27;</span>,flag:=os.getenvb(<span class="hljs-string">b&#x27;FLAG&#x27;</span>)) <span class="hljs-keyword">and</span> [is_prime(<span class="hljs-built_in">int</span>(flag.<span class="hljs-built_in">hex</span>(),<span class="hljs-number">16</span>)^^<span class="hljs-built_in">int</span>(<span class="hljs-built_in">input</span>(<span class="hljs-string">&#x27;🌌 &#x27;</span>))) <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">7</span>^<span class="hljs-number">7</span>)]<br></code></pre></td></tr></table></figure>
+	<!-- content -->
+	<div class="mypage">		
+	  		
 
+	  <h1>JQCTFone-line-crypto</h1>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">assert</span> <span class="built_in">__import__</span>(<span class="string">&#x27;re&#x27;</span>).fullmatch(<span class="string">br&#x27;flag\&#123;[!-z]&#123;11&#125;\&#125;&#x27;</span>,flag:=os.getenvb(<span class="string">b&#x27;FLAG&#x27;</span>)) <span class="keyword">and</span> [is_prime(<span class="built_in">int</span>(flag.<span class="built_in">hex</span>(),<span class="number">16</span>)^^<span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">&#x27;🌌 &#x27;</span>))) <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">7</span>^<span class="number">7</span>)]</span><br></pre></td></tr></table></figure>
 <p>这是题目源码。这道题侧重点在于利用is_Prime函数的特性。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sage.misc.sageinspect <span class="hljs-keyword">import</span> sage_getsource<br><span class="hljs-built_in">print</span>(sage_getsource(Integer.is_prime))<br></code></pre></td></tr></table></figure>
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sage.misc.sageinspect <span class="keyword">import</span> sage_getsource</span><br><span class="line"><span class="built_in">print</span>(sage_getsource(Integer.is_prime))</span><br></pre></td></tr></table></figure>
 <p>查看sage的这个函数</p>
-<p><img src="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-06-01-153422.2obrpte89y.webp" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-06-01-153422.2obrpte89y.webp" alt=""></p>
 <p>发现是基于pari_is_prime的，查看源码</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs python">long<br>BPSW_psp(GEN N)<br>&#123;<br>  pari_sp av;<br>  <span class="hljs-keyword">if</span> (typ(N) != t_INT) pari_err_TYPE(<span class="hljs-string">&quot;BPSW_psp&quot;</span>,N);<br>  <span class="hljs-keyword">if</span> (signe(N) &lt;= <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>  <span class="hljs-keyword">if</span> (lgefint(N) == <span class="hljs-number">3</span>) <span class="hljs-keyword">return</span> uisprime(uel(N,<span class="hljs-number">2</span>));<br>  <span class="hljs-keyword">if</span> (!mod2(N)) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br><span class="hljs-comment">#ifdef LONG_IS_64BIT</span><br>  /* <span class="hljs-number">16294579238595022365</span> = <span class="hljs-number">3</span>*<span class="hljs-number">5</span>*<span class="hljs-number">7</span>*<span class="hljs-number">11</span>*<span class="hljs-number">13</span>*<span class="hljs-number">17</span>*<span class="hljs-number">19</span>*<span class="hljs-number">23</span>*<span class="hljs-number">29</span>*<span class="hljs-number">31</span>*<span class="hljs-number">37</span>*<span class="hljs-number">41</span>*<span class="hljs-number">43</span>*<span class="hljs-number">47</span>*<span class="hljs-number">53</span><br>   *  <span class="hljs-number">7145393598349078859</span> = <span class="hljs-number">59</span>*<span class="hljs-number">61</span>*<span class="hljs-number">67</span>*<span class="hljs-number">71</span>*<span class="hljs-number">73</span>*<span class="hljs-number">79</span>*<span class="hljs-number">83</span>*<span class="hljs-number">89</span>*<span class="hljs-number">97</span>*<span class="hljs-number">101</span> */<br>  <span class="hljs-keyword">if</span> (!iu_coprime(N, 16294579238595022365UL) ||<br>      !iu_coprime(N,  7145393598349078859UL)) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br><span class="hljs-comment">#else</span><br>  /* <span class="hljs-number">4127218095</span> = <span class="hljs-number">3</span>*<span class="hljs-number">5</span>*<span class="hljs-number">7</span>*<span class="hljs-number">11</span>*<span class="hljs-number">13</span>*<span class="hljs-number">17</span>*<span class="hljs-number">19</span>*<span class="hljs-number">23</span>*<span class="hljs-number">37</span><br>   * <span class="hljs-number">3948078067</span> = <span class="hljs-number">29</span>*<span class="hljs-number">31</span>*<span class="hljs-number">41</span>*<span class="hljs-number">43</span>*<span class="hljs-number">47</span>*<span class="hljs-number">53</span><br>   * <span class="hljs-number">4269855901</span> = <span class="hljs-number">59</span>*<span class="hljs-number">83</span>*<span class="hljs-number">89</span>*<span class="hljs-number">97</span>*<span class="hljs-number">101</span><br>   * <span class="hljs-number">1673450759</span> = <span class="hljs-number">61</span>*<span class="hljs-number">67</span>*<span class="hljs-number">71</span>*<span class="hljs-number">73</span>*<span class="hljs-number">79</span> */<br>  <span class="hljs-keyword">if</span> (!iu_coprime(N, 4127218095UL) ||<br>      !iu_coprime(N, 3948078067UL) ||<br>      !iu_coprime(N, 1673450759UL) ||<br>      !iu_coprime(N, 4269855901UL)) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br><span class="hljs-comment">#endif</span><br>  /* no prime divisor &lt; <span class="hljs-number">103</span> */<br>  av = avma;<br>  <span class="hljs-keyword">return</span> gc_long(av, is2psp(N) &amp;&amp; islucaspsp(N));<br>&#125;<br></code></pre></td></tr></table></figure>
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">long</span><br><span class="line">BPSW_psp(GEN N)</span><br><span class="line">&#123;</span><br><span class="line">  pari_sp av;</span><br><span class="line">  <span class="keyword">if</span> (typ(N) != t_INT) pari_err_TYPE(<span class="string">&quot;BPSW_psp&quot;</span>,N);</span><br><span class="line">  <span class="keyword">if</span> (signe(N) &lt;= <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">if</span> (lgefint(N) == <span class="number">3</span>) <span class="keyword">return</span> uisprime(uel(N,<span class="number">2</span>));</span><br><span class="line">  <span class="keyword">if</span> (!mod2(N)) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"><span class="comment">#ifdef LONG_IS_64BIT</span></span><br><span class="line">  /* <span class="number">16294579238595022365</span> = <span class="number">3</span>*<span class="number">5</span>*<span class="number">7</span>*<span class="number">11</span>*<span class="number">13</span>*<span class="number">17</span>*<span class="number">19</span>*<span class="number">23</span>*<span class="number">29</span>*<span class="number">31</span>*<span class="number">37</span>*<span class="number">41</span>*<span class="number">43</span>*<span class="number">47</span>*<span class="number">53</span></span><br><span class="line">   *  <span class="number">7145393598349078859</span> = <span class="number">59</span>*<span class="number">61</span>*<span class="number">67</span>*<span class="number">71</span>*<span class="number">73</span>*<span class="number">79</span>*<span class="number">83</span>*<span class="number">89</span>*<span class="number">97</span>*<span class="number">101</span> */</span><br><span class="line">  <span class="keyword">if</span> (!iu_coprime(N, 16294579238595022365UL) ||</span><br><span class="line">      !iu_coprime(N,  7145393598349078859UL)) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"><span class="comment">#else</span></span><br><span class="line">  /* <span class="number">4127218095</span> = <span class="number">3</span>*<span class="number">5</span>*<span class="number">7</span>*<span class="number">11</span>*<span class="number">13</span>*<span class="number">17</span>*<span class="number">19</span>*<span class="number">23</span>*<span class="number">37</span></span><br><span class="line">   * <span class="number">3948078067</span> = <span class="number">29</span>*<span class="number">31</span>*<span class="number">41</span>*<span class="number">43</span>*<span class="number">47</span>*<span class="number">53</span></span><br><span class="line">   * <span class="number">4269855901</span> = <span class="number">59</span>*<span class="number">83</span>*<span class="number">89</span>*<span class="number">97</span>*<span class="number">101</span></span><br><span class="line">   * <span class="number">1673450759</span> = <span class="number">61</span>*<span class="number">67</span>*<span class="number">71</span>*<span class="number">73</span>*<span class="number">79</span> */</span><br><span class="line">  <span class="keyword">if</span> (!iu_coprime(N, 4127218095UL) ||</span><br><span class="line">      !iu_coprime(N, 3948078067UL) ||</span><br><span class="line">      !iu_coprime(N, 1673450759UL) ||</span><br><span class="line">      !iu_coprime(N, 4269855901UL)) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"><span class="comment">#endif</span></span><br><span class="line">  /* no prime divisor &lt; <span class="number">103</span> */</span><br><span class="line">  av = avma;</span><br><span class="line">  <span class="keyword">return</span> gc_long(av, is2psp(N) &amp;&amp; islucaspsp(N));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>明显的，如果输入的N的有小于103的素因子，那么就不会进入真正的素数检测，而是直接return 0。</p>
 <p><code>iu_coprime(N, 4127218095UL)</code>是判断是否互质的函数。如果我们输入的N非常大，但是它没有小于103的素因子，那么它就会进入素数检测，因为N很大，那么这个函数所需要花费的时间明显是比有小于103的素因子的数N1花费的时间多，我们可以利用这一点做侧信道攻击。</p>
 <p>利用时间不同我们可以判断输入的N^int(fllag)是否有小于103的素因子.</p>
-<p>然后控制我们的输入，一种int(flag)&lt;$2^{136}$  ,那么输入N&#x3D;k*$2^{136}$ ,那么N^int(flag)&#x3D;N+int(flag)。</p>
-<p>再利用(flag+N)%p&#x3D;0时，$flag\equiv -N mod p$ 。然后通过中国剩余定理就能做了</p>
+<p>然后控制我们的输入，一种int(flag)&lt;$2^{136}$  ,那么输入N=k*$2^{136}$ ,那么N^int(flag)=N+int(flag)。</p>
+<p>再利用(flag+N)%p=0时，$flag\equiv -N mod p$ 。然后通过中国剩余定理就能做了</p>
 <ul>
 <li><strong>已知条件</strong></li>
 </ul>
@@ -317,434 +153,181 @@
 <ul>
 <li><strong>优化方法</strong></li>
 </ul>
-<p>我们爆破的时候，可以遍历$r&#x3D;Nmodp,r∈{1,p-1},N&#x3D;k*2^{136}$，</p>
-<p>一旦$r&#x3D;Nmodp$与flag互为逆元 ,那么任意满足此条件的N满足(N+flag)%p&#x3D;0</p>
-<p>为了防止这个N是与其他不是p单仍是小于103的素数整除为0，我们需要测试多组满足此条件的N。如果连续多组仍然满足，则r&#x3D;-flag mod p。注意因为N肯定是偶数所以我们排除掉2这个素数。然后因为最后一位肯定是’}’</p>
-<p>那么  </p>
-<p>flag mod 256&#x3D;ord(‘}‘)</p>
+<p>我们爆破的时候，可以遍历$r=Nmodp,r∈{1,p-1},N=k*2^{136}$，</p>
+<p>一旦$r=Nmodp$与flag互为逆元 ,那么任意满足此条件的N满足(N+flag)%p=0</p>
+<p>为了防止这个N是与其他不是p单仍是小于103的素数整除为0，我们需要测试多组满足此条件的N。如果连续多组仍然满足，则r=-flag mod p。注意因为N肯定是偶数所以我们排除掉2这个素数。然后因为最后一位肯定是'}'</p>
+<p>那么</p>
+<p>flag mod 256=ord('}')</p>
 <ul>
 <li><strong>解题代码</strong></li>
 </ul>
 <p>平台环境关了，这里做本地测试，为了节约时间，把$7^7$的循环次数改为$7 ^3$。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">task</span>(<span class="hljs-params">input_num</span>):<br>    flag = <span class="hljs-string">b&quot;flag&#123;$c4^Cr7=w!N&#125;&quot;</span><br>    flag_num = <span class="hljs-built_in">int</span>(flag.<span class="hljs-built_in">hex</span>(), <span class="hljs-number">16</span>)<br>    <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">7</span>**<span class="hljs-number">3</span>):<br>        is_prime(flag_num^^input_num)<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">task</span>(<span class="params">input_num</span>):</span><br><span class="line">    flag = <span class="string">b&quot;flag&#123;$c4^Cr7=w!N&#125;&quot;</span></span><br><span class="line">    flag_num = <span class="built_in">int</span>(flag.<span class="built_in">hex</span>(), <span class="number">16</span>)</span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">7</span>**<span class="number">3</span>):</span><br><span class="line">        is_prime(flag_num^^input_num)</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">from</span> math <span class="keyword">import</span> prod</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line">primes_le_103 = [</span><br><span class="line">    <span class="number">2</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">11</span>, <span class="number">13</span>, <span class="number">17</span>, <span class="number">19</span>, <span class="number">23</span>, <span class="number">29</span>, <span class="number">31</span>, <span class="number">37</span>, <span class="number">41</span>, <span class="number">43</span>,</span><br><span class="line">    <span class="number">47</span>, <span class="number">53</span>, <span class="number">59</span>, <span class="number">61</span>, <span class="number">67</span>, <span class="number">71</span>, <span class="number">73</span>, <span class="number">79</span>, <span class="number">83</span>, <span class="number">89</span>, <span class="number">97</span>, <span class="number">101</span></span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">task</span>(<span class="params">input_num</span>):</span><br><span class="line">    flag = <span class="string">b&quot;flag&#123;$c4^Cr7=w!N&#125;&quot;</span></span><br><span class="line">    flag_num = <span class="built_in">int</span>(flag.<span class="built_in">hex</span>(), <span class="number">16</span>)</span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">7</span>**<span class="number">3</span>):</span><br><span class="line">        is_prime(flag_num^^input_num)</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">server_side_channel_oracle</span>(<span class="params">input_num</span>):</span><br><span class="line">    st = time.time()</span><br><span class="line">    a=task(input_num)</span><br><span class="line">    et = time.time()</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0.002</span>&lt;(et-st)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sample_mod_r_mod_p</span>(<span class="params">r, p, bit_length = <span class="number">32</span>, start_bit = <span class="number">136</span></span>):</span><br><span class="line">    <span class="keyword">assert</span> p != <span class="number">2</span>, <span class="string">&quot;p=2&quot;</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        randnum = random.getrandbits(bit_length) &lt;&lt; start_bit</span><br><span class="line">        <span class="keyword">if</span> randnum % p == r:</span><br><span class="line">            <span class="keyword">yield</span> randnum</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">recover_flag</span>(<span class="params">n_sample = <span class="number">50</span></span>):</span><br><span class="line">    moduli = &#123;&#125;</span><br><span class="line">    moduli[<span class="number">256</span>] = <span class="built_in">ord</span>(<span class="string">&quot;&#125;&quot;</span>)</span><br><span class="line">    <span class="keyword">for</span> p <span class="keyword">in</span> primes_le_103[<span class="number">1</span>:]:</span><br><span class="line">        <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(p):</span><br><span class="line">            count = <span class="number">0</span></span><br><span class="line">            good_k = <span class="literal">True</span></span><br><span class="line">            <span class="keyword">for</span> input_num <span class="keyword">in</span> sample_mod_r_mod_p(k, p):</span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">not</span> server_side_channel_oracle(input_num):</span><br><span class="line">                    count += <span class="number">1</span></span><br><span class="line">                    <span class="keyword">if</span> count == n_sample:</span><br><span class="line">                        <span class="keyword">break</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    good_k = <span class="literal">False</span></span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">if</span> good_k:</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">f&quot;p: <span class="subst">&#123;p&#125;</span>, k: <span class="subst">&#123;k&#125;</span>&quot;</span>)</span><br><span class="line">                moduli[p] = (-k) % p</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">    primes = [<span class="number">256</span>] + primes_le_103[<span class="number">1</span>:]</span><br><span class="line">    remainders = [moduli[p] <span class="keyword">for</span> p <span class="keyword">in</span> primes]</span><br><span class="line">    x = <span class="built_in">int</span>(crt(remainders, primes))</span><br><span class="line">    N = <span class="built_in">int</span>(prod(primes))</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        hex_str = <span class="built_in">hex</span>(x)[<span class="number">2</span>:]</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(hex_str) % <span class="number">2</span> != <span class="number">0</span>:</span><br><span class="line">            hex_str = <span class="string">&#x27;0&#x27;</span> + hex_str</span><br><span class="line">        <span class="keyword">if</span> <span class="string">b&quot;flag&quot;</span> <span class="keyword">in</span> <span class="built_in">bytes</span>.fromhex(hex_str):</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">bytes</span>.fromhex(hex_str).decode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">        x += N</span><br><span class="line"></span><br><span class="line">flag = recover_flag()</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Recovered Flag:&quot;</span>, flag)</span><br></pre></td></tr></table></figure>
+<div class="post-enhance"><div class="related-posts my-4"><h5 class="related-title">相关文章</h5><ul class="related-list"><li><a href="https://rockfox0.github.io/2026/05/30/2026-5-30/" title="2026-5-30">2026-5-30</a></li></ul></div><div class="post-share my-4"><span class="mr-2">分享：</span><button type="button" class="btn btn-sm btn-outline-secondary share-copy" data-url="https://rockfox0.github.io/2025/08/23/2025-6-1%20JQCTFone-line-crypto%20165730/">复制链接</button> <a class="btn btn-sm btn-outline-secondary" target="_blank" rel="noopener" href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Frockfox0.github.io%2F2025%2F08%2F23%2F2025-6-1%2520JQCTFone-line-crypto%2520165730%2F&title=JQCTF%E5%A4%8D%E7%8E%B0">微博</a> <a class="btn btn-sm btn-outline-secondary" target="_blank" rel="noopener" href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A%2F%2Frockfox0.github.io%2F2025%2F08%2F23%2F2025-6-1%2520JQCTFone-line-crypto%2520165730%2F&title=JQCTF%E5%A4%8D%E7%8E%B0">QQ</a> <a class="btn btn-sm btn-outline-secondary" target="_blank" rel="noopener" href="https://t.me/share/url?url=https%3A%2F%2Frockfox0.github.io%2F2025%2F08%2F23%2F2025-6-1%2520JQCTFone-line-crypto%2520165730%2F&text=JQCTF%E5%A4%8D%E7%8E%B0">Telegram</a> <a class="btn btn-sm btn-outline-secondary" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Frockfox0.github.io%2F2025%2F08%2F23%2F2025-6-1%2520JQCTFone-line-crypto%2520165730%2F&text=JQCTF%E5%A4%8D%E7%8E%B0">X</a><script>(function(){document.addEventListener('click',function(e){var b=e.target.closest?e.target.closest('.share-copy'):null;if(b){var u=b.getAttribute('data-url');if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u);}else{var ta=document.createElement('textarea');ta.value=u;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);}var old=b.textContent;b.textContent='已复制';setTimeout(function(){b.textContent=old;},1500);}});})();</script></div></div>
+	  <div class="article-footer-copyright">
 
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> random<br><span class="hljs-keyword">from</span> math <span class="hljs-keyword">import</span> prod<br><span class="hljs-keyword">import</span> time<br>primes_le_103 = [<br>    <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>, <span class="hljs-number">7</span>, <span class="hljs-number">11</span>, <span class="hljs-number">13</span>, <span class="hljs-number">17</span>, <span class="hljs-number">19</span>, <span class="hljs-number">23</span>, <span class="hljs-number">29</span>, <span class="hljs-number">31</span>, <span class="hljs-number">37</span>, <span class="hljs-number">41</span>, <span class="hljs-number">43</span>,<br>    <span class="hljs-number">47</span>, <span class="hljs-number">53</span>, <span class="hljs-number">59</span>, <span class="hljs-number">61</span>, <span class="hljs-number">67</span>, <span class="hljs-number">71</span>, <span class="hljs-number">73</span>, <span class="hljs-number">79</span>, <span class="hljs-number">83</span>, <span class="hljs-number">89</span>, <span class="hljs-number">97</span>, <span class="hljs-number">101</span><br>]<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">task</span>(<span class="hljs-params">input_num</span>):<br>    flag = <span class="hljs-string">b&quot;flag&#123;$c4^Cr7=w!N&#125;&quot;</span><br>    flag_num = <span class="hljs-built_in">int</span>(flag.<span class="hljs-built_in">hex</span>(), <span class="hljs-number">16</span>)<br>    <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">7</span>**<span class="hljs-number">3</span>):<br>        is_prime(flag_num^^input_num)<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">1</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">server_side_channel_oracle</span>(<span class="hljs-params">input_num</span>):<br>    st = time.time()<br>    a=task(input_num)<br>    et = time.time()<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0.002</span>&lt;(et-st)<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">sample_mod_r_mod_p</span>(<span class="hljs-params">r, p, bit_length = <span class="hljs-number">32</span>, start_bit = <span class="hljs-number">136</span></span>):<br>    <span class="hljs-keyword">assert</span> p != <span class="hljs-number">2</span>, <span class="hljs-string">&quot;p=2&quot;</span><br>    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>        randnum = random.getrandbits(bit_length) &lt;&lt; start_bit<br>        <span class="hljs-keyword">if</span> randnum % p == r:<br>            <span class="hljs-keyword">yield</span> randnum<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">recover_flag</span>(<span class="hljs-params">n_sample = <span class="hljs-number">50</span></span>):<br>    moduli = &#123;&#125;<br>    moduli[<span class="hljs-number">256</span>] = <span class="hljs-built_in">ord</span>(<span class="hljs-string">&quot;&#125;&quot;</span>)<br>    <span class="hljs-keyword">for</span> p <span class="hljs-keyword">in</span> primes_le_103[<span class="hljs-number">1</span>:]:<br>        <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(p):<br>            count = <span class="hljs-number">0</span><br>            good_k = <span class="hljs-literal">True</span><br>            <span class="hljs-keyword">for</span> input_num <span class="hljs-keyword">in</span> sample_mod_r_mod_p(k, p):<br>                <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> server_side_channel_oracle(input_num):<br>                    count += <span class="hljs-number">1</span><br>                    <span class="hljs-keyword">if</span> count == n_sample:<br>                        <span class="hljs-keyword">break</span><br>                <span class="hljs-keyword">else</span>:<br>                    good_k = <span class="hljs-literal">False</span><br>                    <span class="hljs-keyword">break</span><br>            <span class="hljs-keyword">if</span> good_k:<br>                <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;p: <span class="hljs-subst">&#123;p&#125;</span>, k: <span class="hljs-subst">&#123;k&#125;</span>&quot;</span>)<br>                moduli[p] = (-k) % p<br>                <span class="hljs-keyword">break</span><br><br>    primes = [<span class="hljs-number">256</span>] + primes_le_103[<span class="hljs-number">1</span>:]<br>    remainders = [moduli[p] <span class="hljs-keyword">for</span> p <span class="hljs-keyword">in</span> primes]<br>    x = <span class="hljs-built_in">int</span>(crt(remainders, primes))<br>    N = <span class="hljs-built_in">int</span>(prod(primes))<br>    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>        hex_str = <span class="hljs-built_in">hex</span>(x)[<span class="hljs-number">2</span>:]<br>        <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(hex_str) % <span class="hljs-number">2</span> != <span class="hljs-number">0</span>:<br>            hex_str = <span class="hljs-string">&#x27;0&#x27;</span> + hex_str<br>        <span class="hljs-keyword">if</span> <span class="hljs-string">b&quot;flag&quot;</span> <span class="hljs-keyword">in</span> <span class="hljs-built_in">bytes</span>.fromhex(hex_str):<br>            <span class="hljs-keyword">return</span> <span class="hljs-built_in">bytes</span>.fromhex(hex_str).decode(<span class="hljs-string">&#x27;utf-8&#x27;</span>)<br>        x += N<br><br>flag = recover_flag()<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Recovered Flag:&quot;</span>, flag)<br></code></pre></td></tr></table></figure>
+    本博客采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议(CC BY-NC-SA 4.0) 发布.</a>
+</div>
 
+	</div>
 
-                
-              </div>
-            
-            <hr/>
-            <div>
-              <div class="post-metas my-3">
-  
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
+	
+	
+	<div>
+  	<center>
 
-<span class="category-chains">
-  
-  
+	<div class="pagination">
+
     
-      <span class="category-chain">
-        
-  <a href="/categories/crypto/" class="category-chain-item">crypto</a>
-  
-  
-
-      </span>
     
-  
-</span>
+    <a href="/2025/09/23/算法1/" type="button" class="btn btn-default"><i
+                class="fa fa-arrow-circle-o-left"></i> 上一页</a>
+    
 
-    </div>
-  
-  
-    <div class="post-meta">
-      <i class="iconfont icon-tags"></i>
-      
-        <a href="/tags/crypto/" class="print-no-link">#crypto</a>
-      
-    </div>
-  
+    <a href="/" type="button" class="btn btn-default"><i class="fa fa-home"></i>Home</a>
+    
+    <a href="/2025/08/08/docker/" type="button" class="btn btn-default ">下一页<i
+                class="fa fa-arrow-circle-o-right"></i></a>
+    
+
+    
 </div>
 
 
-              
-  
+    </center>
+	</div>
+	
+	<!-- comment -->
+	<!--
+<section id="comment">
+    <h2 class="title">留言</h2>
 
-  <div class="license-box my-3">
-    <div class="license-title">
-      <div>JQCTF复现</div>
-      <div>http://example.com/2025/08/23/2025-6-1 JQCTFone-line-crypto 165730/</div>
-    </div>
-    <div class="license-meta">
-      
-        <div class="license-meta-item">
-          <div>Beitragsautor</div>
-          <div>fox</div>
-        </div>
-      
-      
-        <div class="license-meta-item license-meta-date">
-          <div>Veröffentlicht am</div>
-          <div>August 23, 2025</div>
-        </div>
-      
-      
-      
-        <div class="license-meta-item">
-          <div>Urheberrechtshinweis</div>
-          <div>
-            
-              
-              
-                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
-                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
-                    <i class="iconfont icon-cc-by"></i>
-                  </span>
-                </a>
-              
-            
-          </div>
-        </div>
-      
-    </div>
-    <div class="license-icon iconfont"></div>
+    
+</section>
+
+-->
+	
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+
+
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2025-08-23 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/crypto/">crypto<span>18</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/crypto/">crypto<span>26</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+		
+
+	</div>
+	
+		
+
+</div><!-- row -->
+
+<!--
+ -->
+
+
+
+	</div>
   </div>
-
-
-
-              
-                <div class="post-prevnext my-3">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2025/09/23/%E7%AE%97%E6%B3%951/" title="算法基础1">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">算法基础1</span>
-                        <span class="visible-mobile">Vorheriger</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2025/08/08/docker/" title="docker-desktop 代理冲突问题解决方式">
-                        <span class="hidden-mobile">docker-desktop 代理冲突问题解决方式</span>
-                        <span class="visible-mobile">Nächster</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
-              
-            </div>
-
-            
-          </article>
-        </div>
-      </div>
-    </div>
-
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-  <aside class="sidebar" style="margin-left: -1rem">
-    <div id="toc">
-  <p class="toc-header">
-    <i class="iconfont icon-list"></i>
-    <span>Inhaltsverzeichnis</span>
-  </p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
-
-
-
-  </aside>
-
-
-    </div>
-  </div>
-</div>
-
-
-
-
-
+  <div class="container-narrow">
+  <footer> <p>
   
-
-
-
+  &copy; 2026 fox's Blog
   
-
-
-
-  
-
-
-
-  
-
-
-
+      powered by <a href="http://hexo.io/" target="_blank">Hexo</a>.Theme <a href="https://github.com/Ares-X/hexo-theme-freemind.bithack" target="_blank">freemind.bithack</a>  
+</p>
+ </footer>
+</div> <!-- container-narrow -->
   
 
 
   
-  
+<a id="gotop" href="#">   
+  <span>⬆︎TOP</span>
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
 
 
-
-
-
-
-
-
-
-    
-
-    
-      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
-        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-      </a>
-    
-
-    
-      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v" for="local-search-input">Stichwort</label>
-        </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-    
-
-    
-  </main>
-
-  <footer>
-    <div class="footer-inner">
-  
-    <div class="footer-content">
-       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
-    </div>
-  
-  
-  
-</div>
-
-  </footer>
-
-  <!-- Scripts -->
-  
-  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
-
-  <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-    NProgress.start()
-    window.addEventListener('load', function() {
-      NProgress.done();
-    })
-  </script>
-
-
-<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
-<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
-
-
-  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var subtitle = document.getElementById('subtitle');
-      if (!subtitle || !typing) {
-        return;
-      }
-      var text = subtitle.getAttribute('data-typed-text');
-      
-        typing(text);
-      
-    })(window, document);
-  </script>
-
-
-
-
-  
-    <script  src="/js/img-lazyload.js" ></script>
-  
-
-
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
-    var toc = jQuery('#toc');
-    if (toc.length === 0 || !window.tocbot) { return; }
-    var boardCtn = jQuery('#board-ctn');
-    var boardTop = boardCtn.offset().top;
-
-    window.tocbot.init(Object.assign({
-      tocSelector     : '#toc-body',
-      contentSelector : '.markdown-body',
-      linkClass       : 'tocbot-link',
-      activeLinkClass : 'tocbot-active-link',
-      listClass       : 'tocbot-list',
-      isCollapsedClass: 'tocbot-is-collapsed',
-      collapsibleClass: 'tocbot-is-collapsible',
-      scrollSmooth    : true,
-      includeTitleTags: true,
-      headingsOffset  : -boardTop,
-    }, CONFIG.toc));
-    if (toc.find('.toc-list-item').length > 0) {
-      toc.css('visibility', 'visible');
-    }
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('tocbot' in window) {
-        tocbot.refresh();
-        var toc = jQuery('#toc');
-        if (toc.length === 0 || !tocbot) {
-          return;
-        }
-        if (toc.find('.toc-list-item').length > 0) {
-          toc.css('visibility', 'visible');
-        }
-      }
-    });
-  });
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
 </script>
 
 
-  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
 
-  <script>Fluid.plugins.codeWidget();</script>
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
 
 
-  
 <script>
-  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
-    window.anchors.options = {
-      placement: CONFIG.anchorjs.placement,
-      visible  : CONFIG.anchorjs.visible
+  if (!window.MathJax) {
+    window.MathJax = {
+      tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']], processEscapes: true },
+      options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] },
+      startup: { typeset: true }
     };
-    if (CONFIG.anchorjs.icon) {
-      window.anchors.options.icon = CONFIG.anchorjs.icon;
-    }
-    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-    var res = [];
-    for (var item of el) {
-      res.push('.markdown-body > ' + item.trim());
-    }
-    if (CONFIG.anchorjs.placement === 'left') {
-      window.anchors.options.class = 'anchorjs-link-left';
-    }
-    window.anchors.add(res.join(', '));
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('anchors' in window) {
-        anchors.removeAll();
-        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-        var res = [];
-        for (var item of el) {
-          res.push('.markdown-body > ' + item.trim());
-        }
-        if (CONFIG.anchorjs.placement === 'left') {
-          anchors.options.class = 'anchorjs-link-left';
-        }
-        anchors.add(res.join(', '));
-      }
-    });
-  });
+  }
 </script>
+<script id="MathJax-script" async src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
 
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
-    Fluid.plugins.fancyBox();
-  });
-</script>
-
-
-  <script>Fluid.plugins.imageCaption();</script>
-
-  
-      <script>
-        if (!window.MathJax) {
-          window.MathJax = {
-            tex    : {
-              inlineMath: { '[+]': [['$', '$']] }
-            },
-            loader : {
-              load: ['ui/lazy']
-            },
-            options: {
-              renderActions: {
-                insertedScript: [200, () => {
-                  document.querySelectorAll('mjx-container').forEach(node => {
-                    let target = node.parentNode;
-                    if (target.nodeName.toLowerCase() === 'li') {
-                      target.parentNode.classList.add('has-jax');
-                    }
-                  });
-                }, '', false]
-              }
-            }
-          };
-        } else {
-          MathJax.startup.document.state(0);
-          MathJax.texReset();
-          MathJax.typeset();
-          MathJax.typesetPromise();
-        }
-
-        Fluid.events.registerRefreshCallback(function() {
-          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
-            MathJax.startup.document.state(0);
-            MathJax.texReset();
-            MathJax.typeset();
-            MathJax.typesetPromise();
-          }
-        });
-      </script>
-    
-
-  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
-
-  <script  src="/js/local-search.js" ></script>
-
-
-
-
-
-<!-- 主题的启动项，将它保持在最底部 -->
-<!-- the boot of the theme, keep it at the bottom -->
-<script  src="/js/boot.js" ></script>
-
-
-  
-
-  <noscript>
-    <div class="noscript-warning">Blog funktioniert am besten mit aktiviertem JavaScript</div>
-  </noscript>
 </body>
-</html>
+   </html>

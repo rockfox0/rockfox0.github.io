@@ -1,961 +1,885 @@
-
-
-<!DOCTYPE html>
-<html lang="zh-CN en" data-default-color-scheme=auto>
-
-
-
+<!DOCTYPE HTML>
+<html>
 <head>
-  <meta charset="UTF-8">
-
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/OIP-C.jpg">
-  <link rel="icon" href="/img/OIP-C.jpg">
-  
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  
-  <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="fox">
-  <meta name="keywords" content="菜菜的密码劳弟">
-  
-    <meta name="description" content="这是FOx的密码和其他开发互联网开发学习记录">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Rockfox的密码记录">
-<meta property="og:url" content="http://example.com/index.html">
-<meta property="og:site_name" content="Rockfox的密码记录">
-<meta property="og:description" content="这是FOx的密码和其他开发互联网开发学习记录">
-<meta property="og:locale">
-<meta property="article:author" content="fox">
-<meta property="article:tag" content="菜菜的密码劳弟">
-<meta name="twitter:card" content="summary_large_image">
-  
-  
+  <meta charset="utf-8">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="cache-control" content="no-cache">
+  <meta http-equiv="expires" content="0">
   
   <title>Rockfox的密码记录</title>
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
-
-
-
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-<!-- Do not modify the link that theme dependent icons -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
-
-
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
-
-
-<link  rel="stylesheet" href="/css/main.css" />
-
-
-  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  <meta name="author" content="fox">
   
-    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  <meta name="description" content="这是FOx的密码和其他开发互联网开发学习记录">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Rockfox的密码记录"/>
+
+  
+    <meta property="og:image" content=""/>
   
 
+  
+    <link rel="alternative" href="/atom.xml" title="Rockfox的密码记录" type="application/atom+xml">
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
+  <script src="/js/jquery-2.0.3.min.js"></script>
 
-
-  <script id="fluid-configs">
-    var Fluid = window.Fluid || {};
-    Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":40,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
-
-    if (CONFIG.web_analytics.follow_dnt) {
-      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
-      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
-    }
-  </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
+  <!-- analytics -->
   
 
 
-  
+
+
 <meta name="generator" content="Hexo 7.3.0"></head>
 
-
-<body>
-  
-
-  <header>
-    
-
-<div class="header-inner" style="height: 100vh;">
-  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand" href="/">
-      <strong>fox的密码学习记录</strong>
-    </a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/" target="_self">
-                <i class="iconfont icon-home-fill"></i>
-                <span>Startseite</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/" target="_self">
-                <i class="iconfont icon-archive-fill"></i>
-                <span>Archiv</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/" target="_self">
-                <i class="iconfont icon-category-fill"></i>
-                <span>Kategorien</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/" target="_self">
-                <i class="iconfont icon-tags-fill"></i>
-                <span>Schlagwörter</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/" target="_self">
-                <i class="iconfont icon-user-fill"></i>
-                <span>Über</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/links/" target="_self">
-                <i class="iconfont icon-link-fill"></i>
-                <span>Weblinks</span>
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
-              <i class="iconfont icon-search"></i>
-            </a>
-          </li>
-          
-        
-        
-          <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
-              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
-            </a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="/">Rockfox的密码记录</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/" title="Home">
+			  <i class="fa fa-home"></i>首页
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>归档
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>分类
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/map" title="Knowledge map">
+			  <i class="fa fa-sitemap"></i>图谱
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
 </nav>
+<div class="clearfix"></div>
 
-  
-
-<div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.jpg') no-repeat center center; background-size: cover;">
-  <div class="full-bg-img">
-    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-      <div class="banner-text text-center fade-in-up">
-        <div class="h2">
-          
-            <span id="subtitle" data-typed-text="一天竟然有24个小时！！！"></span>
-          
-        </div>
-
-        
-      </div>
-
-      
-        <div class="scroll-down-bar">
-          <i class="iconfont icon-arrowdown"></i>
-        </div>
-      
-    </div>
-  </div>
+  <div class="container">
+  	<div class="content">
+    	 <div class="page-header logo">
+  <h1>fox is too low<span class="blink-fast">|</span></h1>
 </div>
 
+<div class="row page">
+
+	
+	<div class="col-md-9">
+	
+
+		<div class="slogan">
+
+
+		<i class="fa fa-heart blink-slow"></i>
+
+		wubba lubba dub dub.
+
+</div>    
+
+		<div id="top_search"></div>
+		<div class="mypage">
+		
+		<!-- title and entry -->
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
+			<a href="/2026/07/20/回顾常见国密算法/" >回顾常见国密算法</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2026-07-20  </div>
+		</div>
+	</div>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+	
+		<h1>常见国密算法</h1>
+<p>这次 商密杯,做点赛前的康复训练吧.
+国密算法是我国商用密码体系的算法,常见的公开算法有</p>
+<table>
+<thead>
+<tr>
+<th>算法</th>
+<th>类型</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SM2</td>
+<td>非对称算法</td>
+<td>数字签名,公钥加密,密钥交换</td>
+</tr>
+<tr>
+<td>SM3</td>
+<td>摘要算法</td>
+<td>数字摘要,完整性校验</td>
+</tr>
+<tr>
+<td>SM4</td>
+<td>对称分组密码</td>
+<td>数据加密</td>
+</tr>
+<tr>
+<td>ZUC</td>
+<td>序列密码</td>
+<td>移动数据通信加密</td>
+</tr>
+<tr>
+<td>SM9</td>
+<td>标识密码</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="SM4分组密码算法">SM4分组密码算法</h2>
+<h3 id="加密过程">加密过程</h3>
+<p>输入128bit明文M=(X0,X1,X2,X3) Key=(MK0,MK1,MK2,MK3)
+输出密文(X0,X1,X2,X3)
+![[Pasted image 20260717193000.png]]
+加密流程$X_{i}$待定$X_{i+1},X_{i+2},X_{i+3}$
+然后 获得 $SBOX_INPUT=X_{i+1}\oplus X_{i+2} \oplus X_{i+3} \oplus rk_{i}$
+之后拆分成4*8bit进入Sbox替换,获得32bit的Sbox_output 结果
+之后将这个32bit 进行上述循环左移动xxx位.得到$y_{2} ,y_{10},y,y_{18},y_{24}$
+$X_{i+4}=y_{2}\oplus y_{10} \oplus y \oplus y_{18} \oplus y_{24} \oplus x_{i}$
+最后获得输出密文$(X_{35},X_{34},X_{33},X_{32})$
+密钥扩展
+大同小异,见参考图</p>
+<h3 id="解密过程">解密过程</h3>
+<p>$x_{4}=x_{0}\oplus T(x_{1}\oplus x_{2} \oplus x_{3 \oplus rk_{0}})$
+这是加密过程的函数
+那么 $x_{0}=x_{4}\oplus  T(x_{1}\oplus x_{2} \oplus x_{3 \oplus rk_{0}})$
+那么$x_{31}=x_{35}\oplus T(x_{32}\oplus x_{33} \oplus x_{34} \oplus rk_{31})$
+那么依次类推就能得到前面的</p>
+<p>算法实现</p>
+	
+	</div>
+  <a type="button" href="/2026/07/20/回顾常见国密算法/#more" class="btn btn-default more">阅读此文</a>
 </div>
 
-  </header>
-
-  <main>
-    
-      <div class="container nopadding-x-md">
-        <div id="board"
-          style="margin-top: 0">
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
-
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2026/07/20/%E5%9B%9E%E9%A1%BE%E5%B8%B8%E8%A7%81%E5%9B%BD%E5%AF%86%E7%AE%97%E6%B3%95/" target="_self">
-          回顾常见国密算法
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2026/07/20/%E5%9B%9E%E9%A1%BE%E5%B8%B8%E8%A7%81%E5%9B%BD%E5%AF%86%E7%AE%97%E6%B3%95/" target="_self">
-        <div>
-          常见国密算法这次 商密杯,做点赛前的康复训练吧.国密算法是我国商用密码体系的算法,常见的公开算法有    算法 类型 用途    SM2 非对称算法 数字签名,公钥加密,密钥交换   SM3 摘要算法 数字摘要,完整性校验   SM4 对称分组密码 数据加密   ZUC 序列密码 移动数据通信加密   SM9 标识密码    SM4分组密码算法加密过程输入128bit明文M&#x3D;(X0,X1
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2026-07-20 12:00" pubdate>
-              2026-07-20
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/crypto/" class="category-chain-item">crypto</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/crypto/">#crypto</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2026/07/06/upx/" target="_self">
-          手动脱壳--elf64 的upx
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2026/07/06/upx/" target="_self">
-        <div>
-          手脱upxupx壳是什么一个基础的压缩壳,这里就以 elf的upx 加壳为示例来做.当然仅仅作为练手还是不错的.因为我的拖延,也花费了些许的时间. upx 的压缩和解压upx壳的压缩分为四个步骤. pack1生成新的elf header.先生成能生成的一个elf header的框架 pack2压缩原始PT_LOAD的内容,先用压缩算法预处理里面的内容,再把PT_LOAD压缩成UPX block,最
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2026-07-06 12:00" pubdate>
-              2026-07-06
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/reverse/" class="category-chain-item">reverse</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/reverse/">#reverse</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2026/06/28/pwn-retolibc/" target="_self">
-          二进制安全-elf文件结构和动态链接
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2026/06/28/pwn-retolibc/" target="_self">
-        <div>
-          二进制安全-elf文件结构和动态链接Rop链因为现在的NX保护,构造shellcode变得困难.所以现在一般用一些方法让ret返回到程序原本就有的代码去执行, checksec可以确定程序保护机制的开启情况 123456789101112 ~/St/b/p/6/ret2libc (1)  checksec ./pwn            ✔  sage-10.6   16:05:18 [*
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2026-06-28 12:00" pubdate>
-              2026-06-28
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AE%89%E5%85%A8/" class="category-chain-item">二进制安全</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/pwn/">#pwn</a>
-            
-              <a href="/tags/%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AE%89%E5%85%A8/">#二进制安全</a>
-            
-              <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">#操作系统</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2026/06/16/sctf-2026/" target="_self">
-          SCTF-2026-invisile
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2026/06/16/sctf-2026/" target="_self">
-        <div>
-          这次我是出invisble这个题目的人,时间比较紧只有两周所以质量可能不是很能提,多多担待如果有任何题目或者其他题目的疑问可以找我ps:怎么没人看我的无敌少侠,而是直接拿ai放个链接梭了,伤心…参考论文:https://eprint.iacr.org/2019/861.pdfcve:https://github.com/HugoBond/CVE-2024-31497-POC Invincible这
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2026-06-16 12:00" pubdate>
-              2026-06-16
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/crypto/" class="category-chain-item">crypto</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/crypto/">#crypto</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2026/06/11/month-stack/" target="_self">
-          简单的栈溢出
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2026/06/11/month-stack/" target="_self">
-        <div>
-          ez_pwn遇到的问题 前面三个  setvbuf(stdout, 0LL, 2, 0LL);  setvbuf(stdin, 0LL, 2, 0LL);  setvbuf(stderr, 0LL, 2, 0LL);  这个是取消这三个stdio函数的缓冲,stdio函数有个缓冲机制,输入的 内容比如  123456789#include &lt;stdio.h&gt;#include &lt;u
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2026-06-11 12:00" pubdate>
-              2026-06-11
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/pwn/" class="category-chain-item">pwn</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E5%A4%8D%E7%8E%B0/">#复现</a>
-            
-              <a href="/tags/pwn/">#pwn</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2026/05/30/2026-5-30/" target="_self">
-          2026-5-30
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2026/05/30/2026-5-30/" target="_self">
-        <div>
-          2024-9&#x2F;1-2025-5-30大学这两年,意义又是什么呢,似乎不合适的情感总会被日渐磨损而消散,我应该早已看清.只是就像往常一样的执着于一时的快乐,就像沉迷b站的数字泔水,和别人鉴证到通宵.这种精神的无趣高潮我一直是想摆脱的,但是每次又沦陷其中.我又能做什么呢,每次都说想做出改变,却只能做一些最基础的,而那些需要每天坚持的,似乎对我来说已经很难做到.我似乎已经无法控制住自己所做的,
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2026-05-30 00:00" pubdate>
-              2026-05-30
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E6%97%A5%E5%B8%B8/" class="category-chain-item">日常</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/crypto/">#crypto</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2026/05/19/cpp_%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/" target="_self">
-          cpp智能指针
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2026/05/19/cpp_%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/" target="_self">
-        <div>
-          cpp智能指针引入在cpp 中,我们用new来定义一个我们自己掌控生命周期的对象.他不像局部变量这种会在函数结束的时候销毁,或者普通全局变量会在程序结束的时候变量所在内存被销毁.我们需要手动delete,但是这样的步骤就是有点繁琐了,比如我们这么写 12345678910111213#include &lt;iostream&gt;int main() &#123;    while (true)
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2026-05-19 12:00" pubdate>
-              2026-05-19
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/" class="category-chain-item">计算机语言</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/cpp/">#cpp</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2026/05/04/vps/" target="_self">
-          
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2026/05/04/vps/" target="_self">
-        <div>
-          裸 VPS 使用 sing-box 搭建 VMess 代理教程本文档适用于裸 VPS 手动部署 sing-box，不使用面板、不使用域名、不使用 TLS、不使用 Reality。 配置方案： 1VMess + TCP + none + alterId 0 + 端口 18080  不过这个vps需要找那种有国内线路的,一般很多国外服务器国内无法直连,网速也偏慢.  注意：VMess 明文 TCP 不
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2026-05-04 02:30" pubdate>
-              2026-05-04
-            </time>
-          </div>
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2026/03/26/activity%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" target="_self">
-          activity生命周期-每日小记
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2026/03/26/activity%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" target="_self">
-        <div>
-          参考activity生命周期 onCreate()activity必须实现此回调,在系统初次创建Activity的时候就会触发,进入已经创建的状态在OnCreate()中,执行的基本应用逻辑,在activity内仅发生一次 123456789101112131415161718192021222324252627282930313233343536373839404142434445protect
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2026-03-26 12:00" pubdate>
-              2026-03-26
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/reserve/" class="category-chain-item">reserve</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/android/">#android</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2026/03/24/APK%20%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/" target="_self">
-          apk文件结构
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2026/03/24/APK%20%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/" target="_self">
-        <div>
-          学安卓有一段时间了,不过学的很慢,打算先花一天整理一下之前学的参考:安卓逆向基础知识之apk文件结构  结构 lib: 存放其他语言编写的so(动态链接库)   META-INF:用于存放数字签名相关   resources.arsc:暂时没怎么用过,用于存放编译打包厚度资源关系映射.同时还会生成一个R类指出id   res :存放经过编译后的资源文件   assets:存放不需要编译的资源文件
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2026-03-24 00:00" pubdate>
-              2026-03-24
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/reserve/" class="category-chain-item">reserve</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/reserve/android/" class="category-chain-item">android</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/reserve/">#reserve</a>
-            
-              <a href="/tags/android/">#android</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-
-
-  <nav aria-label="navigation">
-    <span class="pagination" id="pagination">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/#board">2</a><a class="page-number" href="/page/3/#board">3</a><a class="page-number" href="/page/4/#board">4</a><a class="extend next" rel="next" href="/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
-    </span>
-  </nav>
-
-
-
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    
-
-    
-      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
-        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-      </a>
-    
-
-    
-      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v" for="local-search-input">Stichwort</label>
-        </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
-    </div>
-  </div>
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
+			<a href="/2026/07/06/upx/" >手动脱壳--elf64 的upx</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2026-07-06  </div>
+		</div>
+	</div>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+	
+		<h1>手脱upx</h1>
+<h2 id="upx壳是什么">upx壳是什么</h2>
+<p>一个基础的压缩壳,这里就以 elf的upx 加壳为示例来做.当然仅仅作为练手还是不错的.因为我的拖延,也花费了些许的时间.</p>
+<h2 id="upx-的压缩和解压">upx 的压缩和解压</h2>
+<h3 id="upx壳的压缩">upx壳的压缩</h3>
+<p>分为四个步骤.</p>
+<h4 id="pack1">pack1</h4>
+<p>生成新的elf header.先生成能生成的一个elf header的框架</p>
+<h4 id="pack2">pack2</h4>
+	
+	</div>
+  <a type="button" href="/2026/07/06/upx/#more" class="btn btn-default more">阅读此文</a>
 </div>
 
-    
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
+			<a href="/2026/06/28/pwn-retolibc/" >二进制安全-elf文件结构和动态链接</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2026-06-28  </div>
+		</div>
+	</div>
+	
 
-    
-  </main>
 
-  <footer>
-    <div class="footer-inner">
-  
-    <div class="footer-content">
-       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
-    </div>
-  
-  
+			<div class="entry">
+  <div class="row">
+	
+	
+		<h1>二进制安全-elf文件结构和动态链接</h1>
+<p>Rop链
+因为现在的NX保护,构造shellcode变得困难.所以现在一般用一些方法让ret返回到程序原本就有的代码去执行,</p>
+<h2 id="checksec">checksec</h2>
+<p>可以确定程序保护机制的开启情况</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"> ~/St/b/p/<span class="number">6</span>/ret2libc (<span class="number">1</span>)  checksec ./pwn            ✔  sage<span class="number">-10.6</span>   <span class="number">16</span>:<span class="number">05</span>:<span class="number">18</span> </span><br><span class="line">[*] <span class="string">&#x27;/home/f0x/Study/binbinbin/pwn/6month/ret2libc (1)/pwn&#x27;</span></span><br><span class="line">    Arch:       amd64<span class="number">-64</span>-little</span><br><span class="line">    RELRO:      Partial RELRO</span><br><span class="line">    Stack:      No canary found</span><br><span class="line">    NX:         NX enabled</span><br><span class="line">    PIE:        No <span class="title function_">PIE</span> <span class="params">(<span class="number">0x400000</span>)</span></span><br><span class="line">    SHSTK:      Enabled</span><br><span class="line">    IBT:        Enabled</span><br><span class="line">    Stripped:   No</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>可以简要介绍一下这几个保护机制</p>
+<h4 id="Arch-amd64-64-little">Arch:       amd64-64-little</h4>
+<p>属性是小端序.这里是64bit开启小端序</p>
+<ul>
+<li>大端序:符合人类阅读顺序,<strong>高位字节放在低地址处</strong>。</li>
+<li></li>
+<li>小端绪: 低位字节放低地址处</li>
+</ul>
+	
+	</div>
+  <a type="button" href="/2026/06/28/pwn-retolibc/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
+			<a href="/2026/06/16/sctf-2026/" >SCTF-2026-invisile</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2026-06-16  </div>
+		</div>
+	</div>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+	
+		<p>这次我是出invisble这个题目的人,时间比较紧只有两周所以质量可能不是很能提,多多担待
+如果有任何题目或者其他题目的疑问可以找我
+ps:怎么没人看我的无敌少侠,而是直接拿ai放个链接梭了,伤心...
+参考论文:https://eprint.iacr.org/2019/861.pdf
+cve:https://github.com/HugoBond/CVE-2024-31497-POC</p>
+<h1>Invincible</h1>
+<p>这里是一个web端有jwt校验的题目,我们的思路是想办法获得admin权限.
+值得注意的是,这个,他限制注册账户.并且你反复清空cookie状态 也不会 重新生成新的jwt .so我们怎么办呢
+回顾一下ecdsa的流程.设定 有限域p下的
+私钥 d, 公钥 Q,消息m. 椭圆曲线 E 生成元点G
+nonce k= xxx 在有限域p下(0,p)的一个随机数.
+R=k<em>G, r=X(R)
+$s=k^{-1}(e+r</em>d) Mod~p$
+e= hash(m)</p>
+<p>最终获得签名 (r,s)
+验证签名 ,已经知道 消息m ,签名(r,s),公钥 Q
+$k=s^{-1}(e+r*d)$
+所以$s^{-1}eG+s^{-1}rQ=R_{1}$
+由此得到$X(R_{1})=r$
+这个题泄漏了什么信息呢?
+我们的k 是用foxhash生成的</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> annotations</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> hashlib <span class="keyword">import</span> sha256</span><br><span class="line"><span class="keyword">from</span> random <span class="keyword">import</span> Random, getrandbits</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> AES</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> bytes_to_long, isPrime, long_to_bytes, sieve_base</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">HASH_WORD_BITS = <span class="number">16</span></span><br><span class="line">HASH_WORDS = <span class="number">32</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">generate_prime</span>(<span class="params">bits: <span class="built_in">int</span>, a: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        p_sub = <span class="number">2</span></span><br><span class="line">        <span class="keyword">for</span> prime <span class="keyword">in</span> sieve_base:</span><br><span class="line">            p_sub *= prime</span><br><span class="line">            <span class="keyword">if</span> p_sub.bit_length() &gt; bits - <span class="number">2</span>:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, a, <span class="number">2</span>):</span><br><span class="line">            p = p_sub * k + <span class="number">1</span></span><br><span class="line">            <span class="keyword">if</span> isPrime(p):</span><br><span class="line">                <span class="keyword">return</span> p</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">FoxHash</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="variable language_">self</span>.key = getrandbits(<span class="number">128</span>)</span><br><span class="line">        <span class="variable language_">self</span>.iv = getrandbits(<span class="number">128</span>)</span><br><span class="line">        <span class="variable language_">self</span>.key_bytes = long_to_bytes(<span class="variable language_">self</span>.key, <span class="number">16</span>)</span><br><span class="line">        <span class="variable language_">self</span>.iv_bytes = long_to_bytes(<span class="variable language_">self</span>.iv, <span class="number">16</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">_to_bytes</span>(<span class="params">self, x</span>):</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">isinstance</span>(x, <span class="built_in">int</span>):</span><br><span class="line">            x = long_to_bytes(x)</span><br><span class="line">        <span class="keyword">elif</span> <span class="built_in">isinstance</span>(x, <span class="built_in">str</span>):</span><br><span class="line">            x = x.encode()</span><br><span class="line">        <span class="keyword">elif</span> <span class="built_in">isinstance</span>(x, <span class="built_in">bytearray</span>):</span><br><span class="line">            x = <span class="built_in">bytes</span>(x)</span><br><span class="line">        <span class="keyword">return</span> x[-<span class="number">16</span>:].rjust(<span class="number">16</span>, <span class="string">b&quot;\x00&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">_to_int</span>(<span class="params">self, x</span>):</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">isinstance</span>(x, <span class="built_in">int</span>):</span><br><span class="line">            <span class="keyword">return</span> x</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">isinstance</span>(x, <span class="built_in">str</span>):</span><br><span class="line">            x = x.encode()</span><br><span class="line">        <span class="keyword">elif</span> <span class="built_in">isinstance</span>(x, <span class="built_in">bytearray</span>):</span><br><span class="line">            x = <span class="built_in">bytes</span>(x)</span><br><span class="line">        <span class="keyword">return</span> bytes_to_long(x <span class="keyword">or</span> <span class="string">b&quot;\x00&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">hash</span>(<span class="params">self, m</span>):</span><br><span class="line">        m = sha256(m).digest()</span><br><span class="line">        c1 = AES.new(<span class="variable language_">self</span>.key_bytes, AES.MODE_CBC, iv=<span class="variable language_">self</span>.iv_bytes).encrypt(m)</span><br><span class="line">        c2 = AES.new(c1, AES.MODE_CBC, iv=<span class="variable language_">self</span>.iv_bytes).encrypt(<span class="variable language_">self</span>.key_bytes)</span><br><span class="line">        c1 = sha256(c1).digest()</span><br><span class="line">        c2 = sha256(c2).digest()</span><br><span class="line">        h = []</span><br><span class="line">        r1 = Random(bytes_to_long(c2))</span><br><span class="line">        <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">32</span>):</span><br><span class="line">            h.append(r1.getrandbits(<span class="number">16</span>))</span><br><span class="line"></span><br><span class="line">        r2 = Random(<span class="variable language_">self</span>.key)</span><br><span class="line">        n = generate_prime(<span class="built_in">int</span>(<span class="built_in">int</span>.from_bytes(m, <span class="string">&quot;big&quot;</span>)) % <span class="number">512</span>, <span class="built_in">max</span>(<span class="number">500</span>, r2.getrandbits(<span class="number">15</span>)))</span><br><span class="line"></span><br><span class="line">        r3 = Random(n)</span><br><span class="line">        pos = r3.getrandbits(<span class="number">5</span>)</span><br><span class="line">        value = r3.getrandbits(<span class="number">16</span>)</span><br><span class="line">        h[pos] = value</span><br><span class="line">        res = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> x <span class="keyword">in</span> h:</span><br><span class="line">            res = (res &lt;&lt; <span class="number">16</span>) | x</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> res</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>测试过的话会发现,</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">generate_prime</span>(<span class="params">bits: <span class="built_in">int</span>, a: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        p_sub = <span class="number">2</span></span><br><span class="line">        <span class="keyword">for</span> prime <span class="keyword">in</span> sieve_base:</span><br><span class="line">            p_sub *= prime</span><br><span class="line">            <span class="keyword">if</span> p_sub.bit_length() &gt; bits - <span class="number">2</span>:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, a, <span class="number">2</span>):</span><br><span class="line">            p = p_sub * k + <span class="number">1</span></span><br><span class="line">            <span class="keyword">if</span> isPrime(p):</span><br><span class="line">                <span class="keyword">return</span> p</span><br></pre></td></tr></table></figure>
+<p>这个函数的只要 相同bit 位次,输出的素数是一样的
+我们之后得到的 pos和value其实都是可预测的泄漏连续16bit
+由此我们就可以构造一个lattice</p>
+<p>$k_{i}=s^{-1}<em>{i}*{h</em>{i}+r_{i}<em>d}$
+$k_{i}=konw_{i}+high_{i}+low_{i}$
+$k_{i}=konw</em>2^{p}+low+high*2^{p+16}$</p>
+	
+	</div>
+  <a type="button" href="/2026/06/16/sctf-2026/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
+			<a href="/2026/06/11/month-stack/" >简单的栈溢出</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2026-06-11  </div>
+		</div>
+	</div>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+	
+		<h1>ez_pwn</h1>
+<h2 id="遇到的问题">遇到的问题</h2>
+<ol>
+<li>前面三个
+setvbuf(stdout, 0LL, 2, 0LL);
+setvbuf(stdin, 0LL, 2, 0LL);
+setvbuf(stderr, 0LL, 2, 0LL);
+这个是取消这三个stdio函数的缓冲,
+stdio函数有个缓冲机制,输入的 内容比如</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;hello&quot;</span>); </span><br><span class="line">    <span class="type">char</span>* a;</span><br><span class="line">    read(<span class="number">0</span>,a,<span class="number">100</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里hello 如果 printf里面没有\n就会保存到 缓冲区里面,不输出到终端,
+指导遇到  调用下一个stdio 里面的标准输入输出函数 的时候会刷新stdio的状态
+或者在整个程序结束的时候释放缓冲区里面的内容再输出.
+这里的read是系统调用syscall
+表示从 某个fd(文件描述符)读取数据到内存
+(挖个坑后面可能会讲一下文件描述符和系统调用,是的.只是挖坑)
+anyway看了半天,讲文件描述符的后面一起看吧,
+反正就是这个
+setvbuf(stdin, 0LL, 2, 0LL);比如就是把stdin这个函数的int setvbuf(FILE *stream, char *buf, int mode, size_t size);2 指的是#define _IONBF 2 就是没有缓冲区
+各种缓冲区</p>
+  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">  _IOFBF <span class="comment">// full buffering，全缓冲  ,等缓冲区满、程序退出、手动 `fflush` 时才输出</span></span><br><span class="line">_IOLBF <span class="comment">// line buffering，行缓冲  ,\n输出</span></span><br><span class="line">_IONBF <span class="comment">// no buffering，无缓冲,直接输出</span></span><br><span class="line">  </span><br></pre></td></tr></table></figure>
+<p>之后这样设置我们printf 无论怎样都是直接输出了</p>
+<p>这里其实是一个最简单的栈溢出,难度不高.
+原因是call这个指令在进入另一个函数的时候,
+call 是把一个rip 的当前地址 push入栈, 然后再 jmp到函数地址.
+push 是 例如 push rbp,把栈底的寄存器 ,先扩大栈 让rsp生长保存到rsp 保存的栈顶存放的内存</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sub rsp, <span class="number">8</span></span><br><span class="line">mov [rsp], rbp</span><br></pre></td></tr></table></figure>
+	
+	</div>
+  <a type="button" href="/2026/06/11/month-stack/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
+			<a href="/2026/05/30/2026-5-30/" >2026-5-30</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2026-05-30  </div>
+		</div>
+	</div>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+	
+		<h1>2024-9/1-2025-5-30</h1>
+<p>大学这两年,意义又是什么呢,似乎不合适的情感总会被日渐磨损而消散,我应该早已看清.只是就像往常一样的执着于一时的快乐,就像沉迷b站的数字泔水,和别人鉴证到通宵.这种精神的无趣高潮我一直是想摆脱的,但是每次又沦陷其中.
+我又能做什么呢,每次都说想做出改变,却只能做一些最基础的,而那些需要每天坚持的,似乎对我来说已经很难做到.我似乎已经无法控制住自己所做的,只能成为懒惰和欲望的傀儡.
+或许这次也是,我只是被自己的情绪推着走,那什么才是真正的理性呢.放弃吗?我其实完全搞不清楚状况,就像我刚刚进入青春期的自大和迷茫已经变成了心里对自己的一些鄙夷和外部表现的不在乎以及挥之不去的迷茫.
+回顾大学快两年
+恋爱或许刚开始是快乐的,但是时间久了,其实一开始就会发现是不合适的,为什么要继续呢?是觉得能继续磨合性格吗,我不知道.只是或许不合适就不应该开始,中间到底是快乐还是无意义的享乐呢?我到底又学会了什么,只是看着以前的一些照片可能会有一些感慨吧.这种事情也没有什么好坏,就这样吧,已不想去想那么多,都挺好的.
+学习,大一刚开始gpa是挺高的,直到大二下开始疯狂旷课,或许是大一下没有挂科的侥幸,大二上期末就一点不复习,总是想着明天会做到的,其实什么也没做好.挂了五科,gpa垫底.也不想找任何借口了,懒惰是一切的根源,尽管学校的部分课程确实有点烂,但是这始终是不应该的.
+作息,刚刚上大学,我以为我的作息会更好,可是没想到大学之后由于没有什么限制,每周基本都有一次通宵.这样做导致我的精神状况完全不如高中的时候甚至.每次这样我总感觉自己像在drug,我是及其不喜欢这样的,尽管很难做到,所为什么会通宵呢?或许一开始就是想做一些正经的事情花很多时间,但是晚上开始做就觉得好累,就想着先玩会,就玩会,就结束了.哇天亮了哈哈哈.确实是玩物丧志,这种真的算是自由吗,不过是被物品把控罢了.这样的作息只能导致低下的学习效率和能力,每次学着学着就玩手机,又能学会什么 呢.</p>
+<p>技术,一开始接触crypto,应该是效率最高?不清楚其实以前花在学习上的时间也不算非常多,或许我需要一个记录来量化自己的学习过程.至少以前学crypto的时候不会某个学到一半就跑去弄别的什么导致什么也没有学到一点.我现在所学的二进制相关的更多是自我安慰,根本没有什么值得推敲的,入门强度太大,加上太久没学密码,感觉现在出于四不像都算不上,可以说四不会.不过总之也还算有所收获.但是因为低下的效率,确实没学到多少,两进制方向技术对比也相差甚远.</p>
+<p>对比两年的大学生活,到现在来看可以是失败的,或许前一年半到今天已经完全暴雷了,一切的享乐早已埋下伏笔.说到底,到现在我也是迷茫的无论是感情还是学习和工作.更多的或许是知道的和做到的不一样,这往往是最可怕的了.我上大学就说想系统学习历史,到现在我也没完整读完过任何正史的一章节.只是在网上看看视频资料.吃别人拉的二手粪,以及一些无意义的历史段子.或许我上大学唯一学会的就是在网上心平气和的讲出自己的道理,但是发现其实大家很多都是用自认为正确的观点来说罢了.以至于我现在逃避一切与争论有关的视频,可以说都很10.然后又沉迷与纯粹享乐的数字泔水吗.用极致的视觉冲击逃避现实的一地鸡毛,或许这也是为什么z时代青年大多不像老一辈沉迷喝酒的原因,能逃避现实的诱惑太多了.数不胜数.这个年代,对纯粹的自律要求是更高的.</p>
+<p>所以,对现状还算清醒的认知,我该对我的感情和事业做出怎样的下一步.都是空话,我无法做到完全控制自己了,无论是真正逃脱这段好像已经完全失败的情感,还是做出真正自我约束的改变.别扭的就像是刚刚吸完粉的毒虫,在地上扭动,清醒的时候后悔,沉醉的时候忘却.更多的只是迷茫,循环往复.现在我只想好好的睡一觉,虽然是下午一点半,但是管他的.我困了</p>
+<div class="post-enhance"><div class="related-posts my-4"><h5 class="related-title">相关文章</h5><ul class="related-list"><li><a href="https://rockfox0.github.io/2025/08/23/2025-6-1%20JQCTFone-line-crypto%20165730/" title="JQCTF复现">JQCTF复现</a></li></ul></div><div class="post-share my-4"><span class="mr-2">分享：</span><button type="button" class="btn btn-sm btn-outline-secondary share-copy" data-url="https://rockfox0.github.io/2026/05/30/2026-5-30/">复制链接</button> <a class="btn btn-sm btn-outline-secondary" target="_blank" rel="noopener" href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Frockfox0.github.io%2F2026%2F05%2F30%2F2026-5-30%2F&title=2026-5-30">微博</a> <a class="btn btn-sm btn-outline-secondary" target="_blank" rel="noopener" href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A%2F%2Frockfox0.github.io%2F2026%2F05%2F30%2F2026-5-30%2F&title=2026-5-30">QQ</a> <a class="btn btn-sm btn-outline-secondary" target="_blank" rel="noopener" href="https://t.me/share/url?url=https%3A%2F%2Frockfox0.github.io%2F2026%2F05%2F30%2F2026-5-30%2F&text=2026-5-30">Telegram</a> <a class="btn btn-sm btn-outline-secondary" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Frockfox0.github.io%2F2026%2F05%2F30%2F2026-5-30%2F&text=2026-5-30">X</a><script>(function(){document.addEventListener('click',function(e){var b=e.target.closest?e.target.closest('.share-copy'):null;if(b){var u=b.getAttribute('data-url');if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u);}else{var ta=document.createElement('textarea');ta.value=u;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);}var old=b.textContent;b.textContent='已复制';setTimeout(function(){b.textContent=old;},1500);}});})();</script></div></div>
+	
+	</div>
+  <a type="button" href="/2026/05/30/2026-5-30/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
+			<a href="/2026/05/19/cpp_智能指针/" >cpp智能指针</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2026-05-19  </div>
+		</div>
+	</div>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+	
+		<h1>cpp智能指针</h1>
+<h2 id="引入">引入</h2>
+<p>在cpp 中,我们用new来定义一个我们自己掌控生命周期的对象.
+他不像局部变量这种会在函数结束的时候销毁,或者普通全局变量会在程序结束的时候变量所在内存被销毁.
+我们需要手动delete,但是这样的步骤就是有点繁琐了,比如我们这么写</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;iostream&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">int</span> main() &#123;</span><br><span class="line">    <span class="keyword">while</span> (true) &#123;</span><br><span class="line">        <span class="built_in">int</span>* p = new <span class="built_in">int</span>[<span class="number">1000000</span>];</span><br><span class="line"></span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;申请了一块内存&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">        delete p;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>这个p在这里如果没有delete p就会疯狂的 申请新的内存,内存疯涨,建议不要轻易尝试,可能会死机
+所以这里我们的智能指针就解决这样一些问题</p>
+<blockquote>
+<p><strong>“申请了堆内存以后，忘记释放、重复释放、异常情况下没法正确释放” 这些资源管理问题。</strong></p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;iostream&gt;</span></span><br><span class="line"><span class="comment">#include &lt;memory&gt;</span></span><br><span class="line">void test() &#123;</span><br><span class="line">        auto p = std::shared_ptr&lt;<span class="built_in">int</span>[]&gt;(new <span class="built_in">int</span>[<span class="number">1000000</span>]);</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;申请了一块内存&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">int</span> main() &#123;</span><br><span class="line">    <span class="keyword">while</span> (true) &#123;</span><br><span class="line">        test();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里智能指针就会自动销毁int的内存.智能指针会在指针p销毁的时候,同时对应指向的内存也会被销毁,当然下面还是要具体情况具体分析.
+cpp一共提供了三种智能指针,后续我们基于具体情况也会讲智能指针自动销毁的原理</p>
+<h3 id="delelte-和delete-的区别">delelte 和delete[]的区别</h3>
+	
+	</div>
+  <a type="button" href="/2026/05/19/cpp_智能指针/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
+			<a href="/2026/05/04/vps/" ></a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2026-05-04  </div>
+		</div>
+	</div>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+	
+		<h1>裸 VPS 使用 sing-box 搭建 VMess 代理教程</h1>
+<p>本文档适用于裸 VPS 手动部署 sing-box，不使用面板、不使用域名、不使用 TLS、不使用 Reality。</p>
+<p>配置方案：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">VMess + TCP + none + alterId 0 + 端口 18080</span><br></pre></td></tr></table></figure>
+<p>不过这个vps需要找那种有国内线路的,一般很多国外服务器国内无法直连,网速也偏慢.</p>
+<blockquote>
+<p>注意：VMess 明文 TCP 不适合长期高强度使用。长期使用建议改成 VLESS + Reality 或其他带 TLS/伪装的方案。</p>
+</blockquote>
+<hr>
+<h2 id="一、准备条件">一、准备条件</h2>
+<p>推荐系统：</p>
+	
+	</div>
+  <a type="button" href="/2026/05/04/vps/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
+			<a href="/2026/03/26/activity生命周期/" >activity生命周期-每日小记</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2026-03-26  </div>
+		</div>
+	</div>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+	
+		<p>参考<a target="_blank" rel="noopener" href="https://developer.android.com/guide/components/activities/activity-lifecycle?hl=zh-cn">activity生命周期</a>
+<img src="https://cdn.jsdelivr.net/gh/rockfox0/foximages/mine/activity_lifecycle%20(1).png" alt></p>
+<h2 id="onCreate">onCreate()</h2>
+<p>activity必须实现此回调,在系统初次创建Activity的时候就会触发,进入已经创建的状态
+在OnCreate()中,执行的基本应用逻辑,在activity内仅发生一次</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">onCreate</span><span class="params">(Bundle bundle)</span> &#123;  </span><br><span class="line">    <span class="built_in">super</span>.onCreate(bundle);  </span><br><span class="line">    ExplainUtils.setSystemUiVisibility(getWindow().getDecorView());  </span><br><span class="line">    <span class="keyword">if</span> (Build.VERSION.SDK_INT &gt;= <span class="number">28</span>) &#123;  </span><br><span class="line">        WindowManager.<span class="type">LayoutParams</span> <span class="variable">attributes</span> <span class="operator">=</span> getWindow().getAttributes();  </span><br><span class="line">        attributes.layoutInDisplayCutoutMode = <span class="number">1</span>;  </span><br><span class="line">        getWindow().setAttributes(attributes);  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">if</span> (Build.VERSION.SDK_INT &gt;= <span class="number">30</span>) &#123;  </span><br><span class="line">        <span class="type">WindowInsetsController</span> <span class="variable">windowInsetsController</span> <span class="operator">=</span> getWindow().getDecorView().getWindowInsetsController();  </span><br><span class="line">        windowInsetsController.hide(WindowInsets.Type.statusBars());  </span><br><span class="line">        windowInsetsController.hide(WindowInsets.Type.navigationBars());  </span><br><span class="line">        windowInsetsController.hide(WindowInsets.Type.systemBars());  </span><br><span class="line">        windowInsetsController.setSystemBarsBehavior(<span class="number">2</span>);  </span><br><span class="line">    &#125;  </span><br><span class="line">    getWindow().setStatusBarColor(getResources().getColor(R.color.transparent));  </span><br><span class="line">    getWindow().setNavigationBarColor(getResources().getColor(R.color.transparent));  </span><br><span class="line">    <span class="keyword">if</span> (!isTaskRoot()) &#123;  </span><br><span class="line">        MSLog.m11849i(TAG, <span class="string">&quot;!isTaskRoot()&quot;</span>);  </span><br><span class="line">        <span class="type">boolean</span> <span class="variable">z</span> <span class="operator">=</span> getIntent().getSourceBounds() != <span class="literal">null</span>;  </span><br><span class="line">        MSLog.m11849i(TAG, <span class="string">&quot;fromLauncher:&quot;</span> + z);  </span><br><span class="line">        <span class="keyword">if</span> (z) &#123;  </span><br><span class="line">            finish();  </span><br><span class="line">            <span class="keyword">return</span>;  </span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (isYSDK()) &#123;  </span><br><span class="line">            MSLog.m11849i(TAG, <span class="string">&quot;isYSDK:true&quot;</span>);  </span><br><span class="line">            MsldLifecycleUpdata.get().onNewIntent(<span class="built_in">this</span>, getIntent());  </span><br><span class="line">            finish();  </span><br><span class="line">            <span class="keyword">return</span>;  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">if</span> (ExplainUtils.isCheckProtocal(<span class="built_in">this</span>)) &#123;  </span><br><span class="line">        MsThreadUtil.postDelayedMainThread(<span class="keyword">new</span> <span class="title class_">Runnable</span>() &#123; <span class="comment">// from class: com.ms.sdk.plugin.explain.ExplainActivity.1  </span></span><br><span class="line">            <span class="meta">@Override</span> <span class="comment">// java.lang.Runnable  </span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;  </span><br><span class="line">                ExplainUtils.toNext(ExplainActivity.<span class="built_in">this</span>);  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;, <span class="number">300L</span>);  </span><br><span class="line">        <span class="keyword">return</span>;  </span><br><span class="line">    &#125;  </span><br><span class="line">    setWindowStyle();  </span><br><span class="line">    initView();  </span><br><span class="line">    initGirdView();  </span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>例如这里基于api版本,初始化状态栏.初始化系统ui之类的功能</p>
+<h2 id="Onstart">Onstart</h2>
+<p>当Activity进入已启动状态,系统会调用Onstart(),从调用会以应用准备activity进入前台并变为可互动状态.
+当 activity 进入“已启动”状态时，所有具有生命周期感知能力的组件 activity 生命周期的剩余时间会收到 <a target="_blank" rel="noopener" href="https://developer.android.com/reference/androidx/lifecycle/Lifecycle.Event?hl=zh-cn#ON_START"><code>ON_START</code></a> 事件。
+<code>onStart()</code> 方法完成 与“已创建”状态一样，activity 不会保持 “已启动”状态此回调完成后，Activity 将进入 处于_已恢复_状态，并且系统会调用 <code>onResume()</code> 方法。</p>
+<h2 id="onResume">onResume()</h2>
+<p>当activity进入&quot;已恢复&quot; 状态,会进入前台,并且执行onResume()系统调用,这是用户与应用的交互状态,就是我们真正运行的那个界面.
+官方文档描述的是,如果焦点远离应用(这里的焦点应该是主屏幕是否在使用这个activity)
+例如接听来电的设备、用户 导航到其他 activity，或设备屏幕关闭。就会退出交互状态</p>
+	
+	</div>
+  <a type="button" href="/2026/03/26/activity生命周期/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
+			<a href="/2026/03/24/APK 文件结构/" >apk文件结构</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2026-03-24  </div>
+		</div>
+	</div>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+	
+		<ul>
+<li>学安卓有一段时间了,不过学的很慢,打算先花一天整理一下之前学的
+参考:<a target="_blank" rel="noopener" href="https://bbs.kanxue.com/thread-278112-1.htm#msg_header_h3_1">安卓逆向基础知识之apk文件结构</a></li>
+</ul>
+<h2 id="结构">结构</h2>
+<blockquote>
+<p>lib: 存放其他语言编写的so(动态链接库)</p>
+</blockquote>
+<blockquote>
+<p>META-INF:用于存放数字签名相关</p>
+</blockquote>
+<blockquote>
+<p>resources.arsc:暂时没怎么用过,用于存放编译打包厚度资源关系映射.同时还会生成一个R类指出id</p>
+</blockquote>
+<blockquote>
+<p>res :存放经过编译后的资源文件</p>
+</blockquote>
+<blockquote>
+<p>assets:存放不需要编译的资源文件</p>
+</blockquote>
+<p>下面进行一些讲解,可能不是很详细</p>
+<h2 id="lib">lib</h2>
+	
+	</div>
+  <a type="button" href="/2026/03/24/APK 文件结构/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+
+		</div>
+
+		<!-- pagination -->
+		<div>
+  		<center>
+		<div class="pagination">
+
+   
+    
+           <a type="button" class="btn btn-default disabled"><i class="fa fa-arrow-circle-o-left"></i>上一页</a>
+        
+
+        <a href="/" type="button" class="btn btn-default"><i class="fa fa-home"></i>Home</a>
+ 
+       <a href="/page/2/" type="button" class="btn btn-default ">下一页<i class="fa fa-arrow-circle-o-right"></i></a>     
+        
+
   
 </div>
 
-  </footer>
+  		</center>
+		</div>
 
-  <!-- Scripts -->
+		
+		
+	</div> <!-- col-md-9 -->
+
+	
+		<div class="col-md-3">
+	<div id="sidebar">
+	
+			
+  <div id="site_search">
+   <div class="form-group">
+    <input type="text" id="local-search-input" name="q" results="0" placeholder="搜索" class="st-search-input st-default-search-input form-control"/>
+   </div>  
+  <div id="local-search-result"></div>
+  </div>
+
+
+		
+			
+	<div class="widget">
+		<h4>分类</h4>
+		<ul class="tag_box inline list-unstyled">
+		
+			<li><a href="/categories/crypto/RSA/">RSA<span>1</span></a></li>
+		
+			<li><a href="/categories/TLS/">TLS<span>1</span></a></li>
+		
+			<li><a href="/categories/reserve/android/">android<span>1</span></a></li>
+		
+			<li><a href="/categories/cpp/">cpp<span>1</span></a></li>
+		
+			<li><a href="/categories/crypto/">crypto<span>18</span></a></li>
+		
+			<li><a href="/categories/python/crypto/">crypto<span>3</span></a></li>
+		
+			<li><a href="/categories/go/crypto/">crypto<span>1</span></a></li>
+		
+			<li><a href="/categories/cpp/crypto/">crypto<span>1</span></a></li>
+		
+			<li><a href="/categories/TLS/crypto/">crypto<span>1</span></a></li>
+		
+			<li><a href="/categories/z3/crypto/">crypto<span>1</span></a></li>
+		
+			<li><a href="/categories/tools/crypto/">crypto<span>1</span></a></li>
+		
+			<li><a href="/categories/docker/">docker<span>1</span></a></li>
+		
+			<li><a href="/categories/crypto/ecc/">ecc<span>1</span></a></li>
+		
+			<li><a href="/categories/go/">go<span>1</span></a></li>
+		
+			<li><a href="/categories/math/">math<span>1</span></a></li>
+		
+			<li><a href="/categories/pwn/">pwn<span>1</span></a></li>
+		
+			<li><a href="/categories/python/">python<span>3</span></a></li>
+		
+			<li><a href="/categories/reserve/">reserve<span>4</span></a></li>
+		
+			<li><a href="/categories/reverse/">reverse<span>1</span></a></li>
+		
+			<li><a href="/categories/tools/">tools<span>1</span></a></li>
+		
+			<li><a href="/categories/z3/">z3<span>1</span></a></li>
+		
+			<li><a href="/categories/二进制安全/">二进制安全<span>1</span></a></li>
+		
+			<li><a href="/categories/日常/">日常<span>1</span></a></li>
+		
+			<li><a href="/categories/crypto/算法/">算法<span>1</span></a></li>
+		
+			<li><a href="/categories/计算机语言/">计算机语言<span>1</span></a></li>
+		
+		</ul>
+	</div>
+
+		
+			
+	<div class="widget">
+		<h4>标签云</h4>
+		<ul class="tag_box inline list-unstyled">		
+		
+			<li><a href="/tags/工具配置/">工具配置<span>1</span></a></li>
+		
+			<li><a href="/tags/math/">math<span>1</span></a></li>
+		
+			<li><a href="/tags/reverse/">reverse<span>1</span></a></li>
+		
+			<li><a href="/tags/Lcg/">Lcg<span>1</span></a></li>
+		
+			<li><a href="/tags/go/">go<span>1</span></a></li>
+		
+			<li><a href="/tags/CTF/">CTF<span>1</span></a></li>
+		
+			<li><a href="/tags/algorithm/">algorithm<span>5</span></a></li>
+		
+			<li><a href="/tags/reserve/">reserve<span>1</span></a></li>
+		
+			<li><a href="/tags/区块链/">区块链<span>1</span></a></li>
+		
+			<li><a href="/tags/cpp/">cpp<span>2</span></a></li>
+		
+			<li><a href="/tags/RSA/">RSA<span>1</span></a></li>
+		
+			<li><a href="/tags/复现/">复现<span>3</span></a></li>
+		
+			<li><a href="/tags/android/">android<span>2</span></a></li>
+		
+			<li><a href="/tags/Hexo/">Hexo<span>3</span></a></li>
+		
+			<li><a href="/tags/ctf/">ctf<span>1</span></a></li>
+		
+			<li><a href="/tags/pwn/">pwn<span>2</span></a></li>
+		
+			<li><a href="/tags/re/">re<span>2</span></a></li>
+		
+			<li><a href="/tags/二进制安全/">二进制安全<span>1</span></a></li>
+		
+			<li><a href="/tags/openssl/">openssl<span>1</span></a></li>
+		
+			<li><a href="/tags/python/">python<span>4</span></a></li>
+		
+		
+		   <li><a href="/tags">...<span>24</span></a></li>
+		 
+		</ul>
+	</div>
+
+
+		
+			
+<div class="widget">
+  <h4>最新文章</h4>
+  <ul class="entry list-unstyled">
+    
+      <li>
+        <a href="/2026/07/20/回顾常见国密算法/" ><i class="fa fa-file-o"></i>回顾常见国密算法</a>
+      </li>
+    
+      <li>
+        <a href="/2026/07/06/upx/" ><i class="fa fa-file-o"></i>手动脱壳--elf64 的upx</a>
+      </li>
+    
+      <li>
+        <a href="/2026/06/28/pwn-retolibc/" ><i class="fa fa-file-o"></i>二进制安全-elf文件结构和动态链接</a>
+      </li>
+    
+      <li>
+        <a href="/2026/06/16/sctf-2026/" ><i class="fa fa-file-o"></i>SCTF-2026-invisile</a>
+      </li>
+    
+      <li>
+        <a href="/2026/06/11/month-stack/" ><i class="fa fa-file-o"></i>简单的栈溢出</a>
+      </li>
+    
+  </ul>
+</div>
+
+		
+			
+<div class="widget">
+	<h4>链接</h4>
+	<ul class="blogroll list-unstyled">
+	
+		<li><i class="fa fa-external-link"></i><a href="https://4ak5ra.github.io/" title="pwn大手子" target="_blank"]);">4ak5ra</a></li>
+	
+		<li><i class="fa fa-external-link"></i><a href="https://qyqs1.github.io/" title="全栈re✌" target="_blank"]);">QYQS</a></li>
+	
+		<li><i class="fa fa-external-link"></i><a href="https://notion-next-yeye.vercel.app/" title="CRYPTO✌" target="_blank"]);">komiko</a></li>
+	
+		<li><i class="fa fa-external-link"></i><a href="https://mi1n9.github.io/" title="HnuSec的crypto✌" target="_blank"]);">浮白载笔</a></li>
+	
+		<li><i class="fa fa-external-link"></i><a href="https://ireel.github.io/links/" title="勤劳的web手子" target="_blank"]);">ivory的Blog</a></li>
+	
+		<li><i class="fa fa-external-link"></i><a href="https://matriy330.github.io/" title="go on!!!" target="_blank"]);">Matriy&#39;s blog</a></li>
+	
+		<li><i class="fa fa-external-link"></i><a href="https://www.rockfox.top/" title="lazy ff0x" target="_blank"]);">F0X</a></li>
+	
+		<li><i class="fa fa-external-link"></i><a href="https://www.Halois.top" title="密码学劳大,man!!" target="_blank"]);">halois</a></li>
+	
+	</ul>
+</div>
+
+
+		
+	</div> <!-- sidebar -->
+</div> <!-- col-md-3 -->
+
+	
+	
+</div> <!-- row-fluid -->
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
   
-  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
-
-  <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-    NProgress.start()
-    window.addEventListener('load', function() {
-      NProgress.done();
-    })
-  </script>
-
-
-<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
-<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
-
-
-  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var subtitle = document.getElementById('subtitle');
-      if (!subtitle || !typing) {
-        return;
-      }
-      var text = subtitle.getAttribute('data-typed-text');
-      
-        typing(text);
-      
-    })(window, document);
-  </script>
-
-
-
-
+  &copy; 2026 fox's Blog
   
-    <script  src="/js/img-lazyload.js" ></script>
+      powered by <a href="http://hexo.io/" target="_blank">Hexo</a>.Theme <a href="https://github.com/Ares-X/hexo-theme-freemind.bithack" target="_blank">freemind.bithack</a>  
+</p>
+ </footer>
+</div> <!-- container-narrow -->
   
 
 
-
-
-  <script  src="/js/local-search.js" ></script>
-
-
-
-
-
-<!-- 主题的启动项，将它保持在最底部 -->
-<!-- the boot of the theme, keep it at the bottom -->
-<script  src="/js/boot.js" ></script>
-
-
   
+<a id="gotop" href="#">   
+  <span>⬆︎TOP</span>
+</a>
 
-  <noscript>
-    <div class="noscript-warning">Blog funktioniert am besten mit aktiviertem JavaScript</div>
-  </noscript>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+<script>
+  if (!window.MathJax) {
+    window.MathJax = {
+      tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']], processEscapes: true },
+      options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] },
+      startup: { typeset: true }
+    };
+  }
+</script>
+<script id="MathJax-script" async src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+
 </body>
-</html>
+   </html>
