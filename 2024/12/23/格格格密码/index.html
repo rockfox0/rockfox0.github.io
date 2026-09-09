@@ -228,7 +228,7 @@ $||\mathbf{v}||=\sqrt{1+|m|2+|c|2}\approx2^{401}&gt;|p|{1/3}=2^{341}$
 <p><img src="https://www.helloimg.com/i/2024/12/20/6765634b5c0e0.jpg" alt=""></p>
 <p>造格，(2p)**1/2&gt;=(f^2+ g^2) ^1/2  不成立，所以我们需要配平，对h和p同时乘256如下</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">from Crypto.Util.number import *</span><br><span class="line">import gmpy2</span><br><span class="line">h = 9848463356094730516607732957888686710609147955724620108704251779566910519170690198684628685762596232124613115691882688827918489297122319416081019121038443</span><br><span class="line">p = 11403618200995593428747663693860532026261161211931726381922677499906885834766955987247477478421850280928508004160386000301268285541073474589048412962888947     </span><br><span class="line">b=2^256</span><br><span class="line">L=matrix(ZZ,[[1,b*h],[0,b*p]])</span><br><span class="line">print(L.LLL()[0])</span><br><span class="line">f,g=L.LLL()[0]</span><br><span class="line">f=abs(f)</span><br><span class="line">print(long_to_bytes(f)</span><br><span class="line">’‘’</span><br><span class="line">(-50073894085033274448337202692453522746880698077702322983028272289946704698284083256500537353714697134260425361796, -29555150073396592208680335494684523983684143293301981158157800432304888982432677680588686983225737089584138075242496)</span><br><span class="line">b&#x27;SICTF&#123;e3fea01c-18f3-4638-9544-9201393940a9&#125;A\xf0\x89\x84&#x27;</span><br><span class="line">‘’‘</span><br></pre></td></tr></table></figure>
-<div class="post-enhance"><div class="related-posts my-4"><h5 class="related-title">相关文章</h5><ul class="related-list"><li><a href="https://rockfox0.github.io/2025/08/23/2025-6-1%20JQCTFone-line-crypto%20165730/" title="JQCTF复现">JQCTF复现</a></li></ul></div><div class="post-share my-4"><span class="mr-2">分享：</span><button type="button" class="btn btn-sm btn-outline-secondary share-copy" data-url="https://rockfox0.github.io/2024/12/23/%E6%A0%BC%E6%A0%BC%E6%A0%BC%E5%AF%86%E7%A0%81/">复制链接</button> <a class="btn btn-sm btn-outline-secondary" target="_blank" rel="noopener" href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Frockfox0.github.io%2F2024%2F12%2F23%2F%25E6%25A0%25BC%25E6%25A0%25BC%25E6%25A0%25BC%25E5%25AF%2586%25E7%25A0%2581%2F&title=%E6%A0%BC%E5%AF%86%E7%A0%81">微博</a> <a class="btn btn-sm btn-outline-secondary" target="_blank" rel="noopener" href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A%2F%2Frockfox0.github.io%2F2024%2F12%2F23%2F%25E6%25A0%25BC%25E6%25A0%25BC%25E6%25A0%25BC%25E5%25AF%2586%25E7%25A0%2581%2F&title=%E6%A0%BC%E5%AF%86%E7%A0%81">QQ</a> <a class="btn btn-sm btn-outline-secondary" target="_blank" rel="noopener" href="https://t.me/share/url?url=https%3A%2F%2Frockfox0.github.io%2F2024%2F12%2F23%2F%25E6%25A0%25BC%25E6%25A0%25BC%25E6%25A0%25BC%25E5%25AF%2586%25E7%25A0%2581%2F&text=%E6%A0%BC%E5%AF%86%E7%A0%81">Telegram</a> <a class="btn btn-sm btn-outline-secondary" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Frockfox0.github.io%2F2024%2F12%2F23%2F%25E6%25A0%25BC%25E6%25A0%25BC%25E6%25A0%25BC%25E5%25AF%2586%25E7%25A0%2581%2F&text=%E6%A0%BC%E5%AF%86%E7%A0%81">X</a><script>(function(){document.addEventListener('click',function(e){var b=e.target.closest?e.target.closest('.share-copy'):null;if(b){var u=b.getAttribute('data-url');if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u);}else{var ta=document.createElement('textarea');ta.value=u;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);}var old=b.textContent;b.textContent='已复制';setTimeout(function(){b.textContent=old;},1500);}});})();</script></div></div>
+<div class="post-enhance"><div class="related-posts my-4"><h5 class="related-title">相关文章</h5><ul class="related-list"><li><a href="https://rockfox0.github.io/2025/08/23/2025-6-1%20JQCTFone-line-crypto%20165730/" title="JQCTF复现">JQCTF复现</a></li><li><a href="https://rockfox0.github.io/2024/12/24/AES%E5%8A%A0%E5%AF%86%E5%9B%9E%E9%A1%BE%E4%BB%A5%E5%8F%8A%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/" title="AES加密以及代码实现">AES加密以及代码实现</a></li></ul></div><div class="post-share my-4"><span class="mr-2">分享：</span><button type="button" class="btn btn-sm btn-outline-secondary share-copy" data-url="https://rockfox0.github.io/2024/12/23/%E6%A0%BC%E6%A0%BC%E6%A0%BC%E5%AF%86%E7%A0%81/">复制链接</button> <a class="btn btn-sm btn-outline-secondary" target="_blank" rel="noopener" href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Frockfox0.github.io%2F2024%2F12%2F23%2F%25E6%25A0%25BC%25E6%25A0%25BC%25E6%25A0%25BC%25E5%25AF%2586%25E7%25A0%2581%2F&title=%E6%A0%BC%E5%AF%86%E7%A0%81">微博</a> <a class="btn btn-sm btn-outline-secondary" target="_blank" rel="noopener" href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A%2F%2Frockfox0.github.io%2F2024%2F12%2F23%2F%25E6%25A0%25BC%25E6%25A0%25BC%25E6%25A0%25BC%25E5%25AF%2586%25E7%25A0%2581%2F&title=%E6%A0%BC%E5%AF%86%E7%A0%81">QQ</a> <a class="btn btn-sm btn-outline-secondary" target="_blank" rel="noopener" href="https://t.me/share/url?url=https%3A%2F%2Frockfox0.github.io%2F2024%2F12%2F23%2F%25E6%25A0%25BC%25E6%25A0%25BC%25E6%25A0%25BC%25E5%25AF%2586%25E7%25A0%2581%2F&text=%E6%A0%BC%E5%AF%86%E7%A0%81">Telegram</a> <a class="btn btn-sm btn-outline-secondary" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Frockfox0.github.io%2F2024%2F12%2F23%2F%25E6%25A0%25BC%25E6%25A0%25BC%25E6%25A0%25BC%25E5%25AF%2586%25E7%25A0%2581%2F&text=%E6%A0%BC%E5%AF%86%E7%A0%81">X</a><script>(function(){document.addEventListener('click',function(e){var b=e.target.closest?e.target.closest('.share-copy'):null;if(b){var u=b.getAttribute('data-url');if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u);}else{var ta=document.createElement('textarea');ta.value=u;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);}var old=b.textContent;b.textContent='已复制';setTimeout(function(){b.textContent=old;},1500);}});})();</script></div></div>
 	  <div class="article-footer-copyright">
 
     本博客采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议(CC BY-NC-SA 4.0) 发布.</a>
@@ -314,10 +314,116 @@ $||\mathbf{v}||=\sqrt{1+|m|2+|c|2}\approx2^{401}&gt;|p|{1/3}=2^{341}$
 	</div>
 		
 
-	<!-- toc -->
-	<div class="meta-widget">
+	<!-- 右侧浮动阅读目录（独立固定面板，不依赖主题栅格） -->
 	
+	
+	<div class="rf-toc-wrap rf-toc-open">
+	<button id="rf-toc-btn" type="button" title="展开目录" aria-label="展开目录"><i class="fa fa-angle-down"></i></button>
+	<nav id="rf-toc" class="rf-toc" aria-label="文章目录">
+		<div class="rf-toc-head">
+			<span class="rf-toc-title">Contents</span>
+			<button id="rf-toc-collapse" type="button" title="收起目录" aria-label="收起目录"><i class="fa fa-angle-up"></i></button>
+		</div>
+		<div class="rf-toc-body">
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#LLL%E7%AE%97%E6%B3%95%E8%A7%A3%E9%87%8A"><span class="toc-article-text">LLL算法解释</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E5%AF%B9%E6%A0%BC%E7%9A%84%E8%AE%A4%E8%AF%86"><span class="toc-article-text">对格的认识</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E6%8E%A5%E4%B8%8B%E6%9D%A5%E5%AE%9E%E6%88%98%E4%B8%80%E4%BA%9B%E6%A0%BC%E7%9A%84%E9%A2%98"><span class="toc-article-text">接下来实战一些格的题</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#hermite-%E5%AE%9A%E7%90%86"><span class="toc-article-text">hermite 定理</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#easyLattice"><span class="toc-article-text">easyLattice</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-5"><a class="toc-article-link"><span class="toc-article-text">相关文章</span></a></li></ol></li></ol></li></ol></li></ol>
+		</div>
+	</nav>
 	</div>
+	<style>
+	.rf-toc-wrap .rf-toc{position:fixed;right:18px;top:86px;z-index:1200;width:238px;max-height:calc(100vh - 130px);
+	  display:flex;flex-direction:column;background:rgba(24,26,31,.96);border:1px solid #343a42;border-radius:10px;
+	  box-shadow:0 6px 24px rgba(0,0,0,.5);overflow:hidden;color:#cbd3e1;}
+	.rf-toc-wrap .rf-toc-head{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;
+	  border-bottom:1px solid #343a42;background:rgba(255,255,255,.03);}
+	.rf-toc-wrap .rf-toc-title{font-size:13px;font-weight:600;letter-spacing:.5px;color:#e6ecf5;text-transform:uppercase;}
+	.rf-toc-wrap #rf-toc-collapse{border:0;background:transparent;color:#8b95a5;font-size:16px;line-height:1;cursor:pointer;padding:0 2px;width:24px;height:24px;display:flex;align-items:center;justify-content:center;border-radius:4px;}
+	.rf-toc-wrap #rf-toc-collapse:hover{color:#fff;background:rgba(255,255,255,.08);}
+	.rf-toc-wrap .rf-toc-body{overflow-y:auto;padding:8px 10px;}
+	.rf-toc-wrap .rf-toc-body .toc-article{list-style:none;margin:0;padding:0;}
+	.rf-toc-wrap .rf-toc-body .toc-article ol{list-style:none;margin:0;padding:0 0 0 14px;}
+	.rf-toc-wrap .rf-toc-body .toc-article li{margin:0;padding:0;line-height:1.35;}
+	.rf-toc-wrap .rf-toc-body .toc-article a{display:block;padding:3px 6px;color:#a7b2c6;text-decoration:none;
+	  font-size:12px;border-left:2px solid transparent;border-radius:3px;transition:color .15s,border-color .15s,background .15s;}
+	.rf-toc-wrap .rf-toc-body .toc-article a:hover{color:#fff;background:rgba(255,255,255,.06);}
+	.rf-toc-wrap .rf-toc-body .toc-article a.active,
+	.rf-toc-wrap .rf-toc-body .toc-article li.active > a{color:#2bbc8a;border-left-color:#2bbc8a;font-weight:600;background:rgba(43,188,138,.08);}
+	.rf-toc-wrap .rf-toc-body::-webkit-scrollbar{width:6px;}
+	.rf-toc-wrap .rf-toc-body::-webkit-scrollbar-thumb{background:#3a4350;border-radius:3px;}
+	.rf-toc-wrap #rf-toc-btn{position:fixed;right:18px;top:86px;z-index:1200;width:40px;height:40px;border-radius:9px;border:1px solid #343a42;
+	  background:rgba(24,26,31,.96);color:#cbd3e1;font-size:16px;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.5);}
+	.rf-toc-wrap #rf-toc-btn:hover{color:#fff;border-color:#2bbc8a;}
+	/* 收起时显示按钮、隐藏面板；展开时反之（与视口宽度无关，桌面/窄屏一致） */
+	.rf-toc-wrap:not(.rf-toc-open) .rf-toc{display:none;}
+	.rf-toc-wrap:not(.rf-toc-open) #rf-toc-btn{display:flex;align-items:center;justify-content:center;}
+	.rf-toc-wrap.rf-toc-open .rf-toc{display:flex;}
+	.rf-toc-wrap.rf-toc-open #rf-toc-btn{display:none;}
+	</style>
+	<script>
+	(function(){
+	  var wrap = document.querySelector('.rf-toc-wrap');
+	  if (!wrap) return;
+	  var panel = document.getElementById('rf-toc');
+	  var btn = document.getElementById('rf-toc-btn');
+	  var collapseBtn = document.getElementById('rf-toc-collapse');
+	  var body = document.querySelector('#rf-toc .rf-toc-body');
+	  var wide = function(){ return window.matchMedia && window.matchMedia('(min-width: 1201px)').matches; };
+	  var setOpen = function(open){ wrap.classList.toggle('rf-toc-open', !!open); };
+
+	  // 初始与窗口尺寸变化时按宽度设置默认状态（宽屏展开 / 窄屏收起）
+	  setOpen(wide());
+	  if (window.addEventListener) window.addEventListener('resize', function(){ setOpen(wide()); });
+
+	  // 点按钮展开、点头部按钮收起
+	  if (btn) btn.addEventListener('click', function(e){ e.stopPropagation(); setOpen(true); });
+	  if (collapseBtn) collapseBtn.addEventListener('click', function(e){ e.stopPropagation(); setOpen(false); });
+	  // 窄屏点击面板外收起
+	  document.addEventListener('click', function(e){
+	    if (!wide() && wrap.classList.contains('rf-toc-open') && !panel.contains(e.target) && !btn.contains(e.target)) {
+	      setOpen(false);
+	    }
+	  });
+
+	  var links = [].slice.call(panel.querySelectorAll('a.toc-article-link[href^="#"]'));
+	  if (!links.length) return;
+	  var items = links.map(function (a) {
+	    var id;
+	    try { id = decodeURIComponent(a.getAttribute('href').slice(1)); }
+	    catch (e) { id = a.getAttribute('href').slice(1); }
+	    return { a: a, el: document.getElementById(id) };
+	  });
+	  links.forEach(function (a) {
+	    a.addEventListener('click', function (e) {
+	      var id;
+	      try { id = decodeURIComponent(a.getAttribute('href').slice(1)); }
+	      catch (err) { id = a.getAttribute('href').slice(1); }
+	      var el = document.getElementById(id);
+	      if (!el) return;
+	      e.preventDefault();
+	      var y = el.getBoundingClientRect().top + (window.pageYOffset || document.documentElement.scrollTop) - 72;
+	      window.scrollTo({ top: Math.max(y, 0), behavior: 'smooth' });
+	      if (history.replaceState) history.replaceState(null, '', a.getAttribute('href'));
+	    });
+	  });
+	  function spy() {
+	    var mark = -1;
+	    items.forEach(function (it, i) {
+	      if (it.el && it.el.getBoundingClientRect().top <= 100) mark = i;
+	    });
+	    links.forEach(function (a) { a.classList.remove('active'); });
+	    if (mark >= 0 && items[mark].a) items[mark].a.classList.add('active');
+	    // 让当前条目可见
+	    if (mark >= 0 && items[mark].a && body) {
+	      var a = items[mark].a;
+	      if (a.offsetTop < body.scrollTop || a.offsetTop > body.scrollTop + body.clientHeight - 40) {
+	        body.scrollTop = a.offsetTop - 20;
+	      }
+	    }
+	  }
+	  window.addEventListener('scroll', spy, { passive: true });
+	  spy();
+	})();
+	</script>
+	
 	
     <hr>
 	

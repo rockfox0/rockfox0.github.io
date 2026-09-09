@@ -411,10 +411,116 @@
 	<!-- tags -->
 		
 
-	<!-- toc -->
-	<div class="meta-widget">
+	<!-- 右侧浮动阅读目录（独立固定面板，不依赖主题栅格） -->
 	
+	
+	<div class="rf-toc-wrap rf-toc-open">
+	<button id="rf-toc-btn" type="button" title="展开目录" aria-label="展开目录"><i class="fa fa-angle-down"></i></button>
+	<nav id="rf-toc" class="rf-toc" aria-label="文章目录">
+		<div class="rf-toc-head">
+			<span class="rf-toc-title">Contents</span>
+			<button id="rf-toc-collapse" type="button" title="收起目录" aria-label="收起目录"><i class="fa fa-angle-up"></i></button>
+		</div>
+		<div class="rf-toc-body">
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E4%B8%80%E3%80%81%E5%87%86%E5%A4%87%E6%9D%A1%E4%BB%B6"><span class="toc-article-text">一、准备条件</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E4%BA%8C%E3%80%81%E7%99%BB%E5%BD%95-VPS"><span class="toc-article-text">二、登录 VPS</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E4%B8%89%E3%80%81%E6%9B%B4%E6%96%B0%E7%B3%BB%E7%BB%9F%E5%B9%B6%E5%AE%89%E8%A3%85%E5%9F%BA%E7%A1%80%E5%B7%A5%E5%85%B7"><span class="toc-article-text">三、更新系统并安装基础工具</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E5%9B%9B%E3%80%81%E5%AE%89%E8%A3%85-sing-box"><span class="toc-article-text">四、安装 sing-box</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E4%BA%94%E3%80%81%E7%94%9F%E6%88%90-UUID"><span class="toc-article-text">五、生成 UUID</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E5%85%AD%E3%80%81%E5%86%99%E5%85%A5-sing-box-%E9%85%8D%E7%BD%AE"><span class="toc-article-text">六、写入 sing-box 配置</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E4%B8%83%E3%80%81%E6%A3%80%E6%9F%A5%E9%85%8D%E7%BD%AE%E5%B9%B6%E5%90%AF%E5%8A%A8-sing-box"><span class="toc-article-text">七、检查配置并启动 sing-box</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E5%85%AB%E3%80%81%E7%A1%AE%E8%AE%A4%E7%AB%AF%E5%8F%A3%E6%98%AF%E5%90%A6%E7%9B%91%E5%90%AC"><span class="toc-article-text">八、确认端口是否监听</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E4%B9%9D%E3%80%81%E6%94%BE%E8%A1%8C%E9%98%B2%E7%81%AB%E5%A2%99%E7%AB%AF%E5%8F%A3"><span class="toc-article-text">九、放行防火墙端口</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E5%8D%81%E3%80%81%E6%9C%AC%E5%9C%B0%E6%B5%8B%E8%AF%95%E7%AB%AF%E5%8F%A3%E6%98%AF%E5%90%A6%E5%BC%80%E6%94%BE"><span class="toc-article-text">十、本地测试端口是否开放</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#macOS-Linux"><span class="toc-article-text">macOS &#x2F; Linux</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Windows-PowerShell"><span class="toc-article-text">Windows PowerShell</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E5%8D%81%E4%B8%80%E3%80%81v2rayN-%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%85%8D%E7%BD%AE"><span class="toc-article-text">十一、v2rayN 客户端配置</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E5%8D%81%E4%BA%8C%E3%80%81VMess-%E5%AF%BC%E5%85%A5%E9%93%BE%E6%8E%A5%E7%A4%BA%E4%BE%8B"><span class="toc-article-text">十二、VMess 导入链接示例</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E5%8D%81%E4%B8%89%E3%80%81%E6%B5%8B%E8%AF%95%E4%BB%A3%E7%90%86%E6%98%AF%E5%90%A6%E7%94%9F%E6%95%88"><span class="toc-article-text">十三、测试代理是否生效</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E5%8D%81%E5%9B%9B%E3%80%81%E5%B8%B8%E8%A7%81%E6%8E%92%E9%9A%9C%E5%91%BD%E4%BB%A4"><span class="toc-article-text">十四、常见排障命令</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E6%9F%A5%E7%9C%8B%E6%9C%8D%E5%8A%A1%E7%8A%B6%E6%80%81"><span class="toc-article-text">查看服务状态</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E6%9F%A5%E7%9C%8B%E6%9C%80%E8%BF%91%E6%97%A5%E5%BF%97"><span class="toc-article-text">查看最近日志</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E6%9F%A5%E7%9C%8B%E5%AE%9E%E6%97%B6%E6%97%A5%E5%BF%97"><span class="toc-article-text">查看实时日志</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E6%A3%80%E6%9F%A5%E7%AB%AF%E5%8F%A3%E7%9B%91%E5%90%AC"><span class="toc-article-text">检查端口监听</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E6%A3%80%E6%9F%A5%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-article-text">检查配置文件</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E6%9F%A5%E7%9C%8B-sing-box-%E5%AE%9E%E9%99%85%E8%AF%BB%E5%8F%96%E5%93%AA%E4%B8%AA%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-article-text">查看 sing-box 实际读取哪个配置文件</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E5%8D%81%E4%BA%94%E3%80%81%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E5%90%8E%E7%9A%84%E6%A0%87%E5%87%86%E9%87%8D%E5%90%AF%E6%B5%81%E7%A8%8B"><span class="toc-article-text">十五、修改配置后的标准重启流程</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E5%8D%81%E5%85%AD%E3%80%81%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-article-text">十六、常见问题</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#1-apt-update-%E6%8A%A5-buster-404"><span class="toc-article-text">1. apt update 报 buster 404</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-ss-tulnp-grep-18080-%E6%B2%A1%E6%9C%89%E8%BE%93%E5%87%BA"><span class="toc-article-text">2. ss -tulnp | grep 18080 没有输出</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#3-%E6%9C%AC%E5%9C%B0-nc-%E6%B5%8B%E8%AF%95%E7%AB%AF%E5%8F%A3%E5%A4%B1%E8%B4%A5"><span class="toc-article-text">3. 本地 nc 测试端口失败</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#4-v2rayN-%E8%BF%9E%E4%B8%8D%E4%B8%8A"><span class="toc-article-text">4. v2rayN 连不上</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#5-%E4%BB%A3%E7%90%86%E9%80%9A%E4%BA%86%EF%BC%8C%E4%BD%86%E6%9F%90%E4%BA%9B%E7%BD%91%E7%AB%99%E6%8F%90%E7%A4%BA%E5%9C%B0%E5%8C%BA%E4%B8%8D%E6%94%AF%E6%8C%81"><span class="toc-article-text">5. 代理通了，但某些网站提示地区不支持</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E5%8D%81%E4%B8%83%E3%80%81%E5%AE%8C%E6%95%B4%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%8F%82%E6%95%B0%E6%A8%A1%E6%9D%BF"><span class="toc-article-text">十七、完整客户端参数模板</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E5%8D%81%E5%85%AB%E3%80%81%E5%AE%8C%E6%95%B4%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE%E6%A8%A1%E6%9D%BF"><span class="toc-article-text">十八、完整服务端配置模板</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E5%8D%81%E4%B9%9D%E3%80%81%E6%80%BB%E7%BB%93"><span class="toc-article-text">十九、总结</span></a></li></ol>
+		</div>
+	</nav>
 	</div>
+	<style>
+	.rf-toc-wrap .rf-toc{position:fixed;right:18px;top:86px;z-index:1200;width:238px;max-height:calc(100vh - 130px);
+	  display:flex;flex-direction:column;background:rgba(24,26,31,.96);border:1px solid #343a42;border-radius:10px;
+	  box-shadow:0 6px 24px rgba(0,0,0,.5);overflow:hidden;color:#cbd3e1;}
+	.rf-toc-wrap .rf-toc-head{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;
+	  border-bottom:1px solid #343a42;background:rgba(255,255,255,.03);}
+	.rf-toc-wrap .rf-toc-title{font-size:13px;font-weight:600;letter-spacing:.5px;color:#e6ecf5;text-transform:uppercase;}
+	.rf-toc-wrap #rf-toc-collapse{border:0;background:transparent;color:#8b95a5;font-size:16px;line-height:1;cursor:pointer;padding:0 2px;width:24px;height:24px;display:flex;align-items:center;justify-content:center;border-radius:4px;}
+	.rf-toc-wrap #rf-toc-collapse:hover{color:#fff;background:rgba(255,255,255,.08);}
+	.rf-toc-wrap .rf-toc-body{overflow-y:auto;padding:8px 10px;}
+	.rf-toc-wrap .rf-toc-body .toc-article{list-style:none;margin:0;padding:0;}
+	.rf-toc-wrap .rf-toc-body .toc-article ol{list-style:none;margin:0;padding:0 0 0 14px;}
+	.rf-toc-wrap .rf-toc-body .toc-article li{margin:0;padding:0;line-height:1.35;}
+	.rf-toc-wrap .rf-toc-body .toc-article a{display:block;padding:3px 6px;color:#a7b2c6;text-decoration:none;
+	  font-size:12px;border-left:2px solid transparent;border-radius:3px;transition:color .15s,border-color .15s,background .15s;}
+	.rf-toc-wrap .rf-toc-body .toc-article a:hover{color:#fff;background:rgba(255,255,255,.06);}
+	.rf-toc-wrap .rf-toc-body .toc-article a.active,
+	.rf-toc-wrap .rf-toc-body .toc-article li.active > a{color:#2bbc8a;border-left-color:#2bbc8a;font-weight:600;background:rgba(43,188,138,.08);}
+	.rf-toc-wrap .rf-toc-body::-webkit-scrollbar{width:6px;}
+	.rf-toc-wrap .rf-toc-body::-webkit-scrollbar-thumb{background:#3a4350;border-radius:3px;}
+	.rf-toc-wrap #rf-toc-btn{position:fixed;right:18px;top:86px;z-index:1200;width:40px;height:40px;border-radius:9px;border:1px solid #343a42;
+	  background:rgba(24,26,31,.96);color:#cbd3e1;font-size:16px;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.5);}
+	.rf-toc-wrap #rf-toc-btn:hover{color:#fff;border-color:#2bbc8a;}
+	/* 收起时显示按钮、隐藏面板；展开时反之（与视口宽度无关，桌面/窄屏一致） */
+	.rf-toc-wrap:not(.rf-toc-open) .rf-toc{display:none;}
+	.rf-toc-wrap:not(.rf-toc-open) #rf-toc-btn{display:flex;align-items:center;justify-content:center;}
+	.rf-toc-wrap.rf-toc-open .rf-toc{display:flex;}
+	.rf-toc-wrap.rf-toc-open #rf-toc-btn{display:none;}
+	</style>
+	<script>
+	(function(){
+	  var wrap = document.querySelector('.rf-toc-wrap');
+	  if (!wrap) return;
+	  var panel = document.getElementById('rf-toc');
+	  var btn = document.getElementById('rf-toc-btn');
+	  var collapseBtn = document.getElementById('rf-toc-collapse');
+	  var body = document.querySelector('#rf-toc .rf-toc-body');
+	  var wide = function(){ return window.matchMedia && window.matchMedia('(min-width: 1201px)').matches; };
+	  var setOpen = function(open){ wrap.classList.toggle('rf-toc-open', !!open); };
+
+	  // 初始与窗口尺寸变化时按宽度设置默认状态（宽屏展开 / 窄屏收起）
+	  setOpen(wide());
+	  if (window.addEventListener) window.addEventListener('resize', function(){ setOpen(wide()); });
+
+	  // 点按钮展开、点头部按钮收起
+	  if (btn) btn.addEventListener('click', function(e){ e.stopPropagation(); setOpen(true); });
+	  if (collapseBtn) collapseBtn.addEventListener('click', function(e){ e.stopPropagation(); setOpen(false); });
+	  // 窄屏点击面板外收起
+	  document.addEventListener('click', function(e){
+	    if (!wide() && wrap.classList.contains('rf-toc-open') && !panel.contains(e.target) && !btn.contains(e.target)) {
+	      setOpen(false);
+	    }
+	  });
+
+	  var links = [].slice.call(panel.querySelectorAll('a.toc-article-link[href^="#"]'));
+	  if (!links.length) return;
+	  var items = links.map(function (a) {
+	    var id;
+	    try { id = decodeURIComponent(a.getAttribute('href').slice(1)); }
+	    catch (e) { id = a.getAttribute('href').slice(1); }
+	    return { a: a, el: document.getElementById(id) };
+	  });
+	  links.forEach(function (a) {
+	    a.addEventListener('click', function (e) {
+	      var id;
+	      try { id = decodeURIComponent(a.getAttribute('href').slice(1)); }
+	      catch (err) { id = a.getAttribute('href').slice(1); }
+	      var el = document.getElementById(id);
+	      if (!el) return;
+	      e.preventDefault();
+	      var y = el.getBoundingClientRect().top + (window.pageYOffset || document.documentElement.scrollTop) - 72;
+	      window.scrollTo({ top: Math.max(y, 0), behavior: 'smooth' });
+	      if (history.replaceState) history.replaceState(null, '', a.getAttribute('href'));
+	    });
+	  });
+	  function spy() {
+	    var mark = -1;
+	    items.forEach(function (it, i) {
+	      if (it.el && it.el.getBoundingClientRect().top <= 100) mark = i;
+	    });
+	    links.forEach(function (a) { a.classList.remove('active'); });
+	    if (mark >= 0 && items[mark].a) items[mark].a.classList.add('active');
+	    // 让当前条目可见
+	    if (mark >= 0 && items[mark].a && body) {
+	      var a = items[mark].a;
+	      if (a.offsetTop < body.scrollTop || a.offsetTop > body.scrollTop + body.clientHeight - 40) {
+	        body.scrollTop = a.offsetTop - 20;
+	      }
+	    }
+	  }
+	  window.addEventListener('scroll', spy, { passive: true });
+	  spy();
+	})();
+	</script>
+	
 	
     <hr>
 	

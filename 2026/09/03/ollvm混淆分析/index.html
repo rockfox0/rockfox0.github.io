@@ -719,10 +719,116 @@ jmp回分发器</p>
 	</div>
 		
 
-	<!-- toc -->
-	<div class="meta-widget">
+	<!-- 右侧浮动阅读目录（独立固定面板，不依赖主题栅格） -->
 	
+	
+	<div class="rf-toc-wrap rf-toc-open">
+	<button id="rf-toc-btn" type="button" title="展开目录" aria-label="展开目录"><i class="fa fa-angle-down"></i></button>
+	<nav id="rf-toc" class="rf-toc" aria-label="文章目录">
+		<div class="rf-toc-head">
+			<span class="rf-toc-title">Contents</span>
+			<button id="rf-toc-collapse" type="button" title="收起目录" aria-label="收起目录"><i class="fa fa-angle-up"></i></button>
+		</div>
+		<div class="rf-toc-body">
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E4%B8%80%E4%BA%9B%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-article-text">一些基础知识</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E5%85%B3%E7%B3%BB%E6%94%AF%E9%85%8D%E6%A0%91"><span class="toc-article-text">关系支配树</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#clang-%E7%BC%96%E8%AF%91%E5%99%A8%E7%9A%84%E7%BC%96%E8%AF%91%E6%B5%81%E7%A8%8B"><span class="toc-article-text">clang 编译器的编译流程</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#pass%E5%92%8Cnew-pass-manager"><span class="toc-article-text">pass和new pass manager</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFpass"><span class="toc-article-text">什么是pass</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#%E4%B8%AD%E9%97%B4%E5%B1%82%E7%9A%84%E5%A4%84%E7%90%86%E5%B1%82%E6%AC%A1"><span class="toc-article-text">中间层的处理层次</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-5"><a class="toc-article-link" href="#Module"><span class="toc-article-text">Module</span></a></li><li class="toc-article-item toc-article-level-5"><a class="toc-article-link" href="#Call-Graph-Pass-%E4%B8%BB%E8%A6%81%E6%98%AFGCSCC"><span class="toc-article-text">Call Graph Pass 主要是GCSCC</span></a></li><li class="toc-article-item toc-article-level-5"><a class="toc-article-link" href="#Functions-Pass"><span class="toc-article-text">Functions Pass</span></a></li><li class="toc-article-item toc-article-level-5"><a class="toc-article-link" href="#loop-pass"><span class="toc-article-text">loop pass</span></a></li></ol></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#%E6%80%8E%E4%B9%88%E7%BC%96%E5%86%99%E7%BC%96%E8%AF%91pass"><span class="toc-article-text">怎么编写编译pass</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-5"><a class="toc-article-link" href="#%E4%BD%BF%E7%94%A8-dyn-cast-%E5%88%A4%E6%96%AD%E6%8C%87%E4%BB%A4%E7%B1%BB%E5%9E%8B"><span class="toc-article-text">使用 dyn_cast 判断指令类型</span></a></li><li class="toc-article-item toc-article-level-5"><a class="toc-article-link" href="#%E5%88%A4%E6%96%AD%E6%93%8D%E4%BD%9C%E7%A0%81"><span class="toc-article-text">判断操作码</span></a></li><li class="toc-article-item toc-article-level-5"><a class="toc-article-link" href="#%E8%8E%B7%E5%8F%96%E6%93%8D%E4%BD%9C%E6%95%B0"><span class="toc-article-text">获取操作数</span></a></li><li class="toc-article-item toc-article-level-5"><a class="toc-article-link" href="#%E4%BD%BF%E7%94%A8-PatternMatch-%E5%8C%B9%E9%85%8D%E9%9B%B6"><span class="toc-article-text">使用 PatternMatch 匹配零</span></a></li><li class="toc-article-item toc-article-level-5"><a class="toc-article-link" href="#%E6%9B%BF%E6%8D%A2%E6%89%80%E6%9C%89%E4%BD%BF%E7%94%A8"><span class="toc-article-text">替换所有使用</span></a></li><li class="toc-article-item toc-article-level-5"><a class="toc-article-link" href="#%E5%88%A0%E9%99%A4%E6%8C%87%E4%BB%A4"><span class="toc-article-text">删除指令</span></a></li></ol></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#%E5%A6%82%E4%BD%95%E5%8A%A0%E8%BD%BD-Pass"><span class="toc-article-text">如何加载 Pass</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-5"><a class="toc-article-link" href="#1-New-PM-%E5%8A%A8%E6%80%81%E6%8F%92%E4%BB%B6"><span class="toc-article-text">1. New PM 动态插件</span></a></li><li class="toc-article-item toc-article-level-5"><a class="toc-article-link" href="#2-Legacy-PM-%E5%8A%A8%E6%80%81%E6%8F%92%E4%BB%B6"><span class="toc-article-text">2. Legacy PM 动态插件</span></a></li><li class="toc-article-item toc-article-level-5"><a class="toc-article-link" href="#3-%E9%9D%99%E6%80%81%E5%86%85%E7%BD%AE-Pass"><span class="toc-article-text">3. 静态内置 Pass</span></a></li><li class="toc-article-item toc-article-level-5"><a class="toc-article-link" href="#4-PassBuilder-%E5%9B%9E%E8%B0%83%E8%87%AA%E5%8A%A8%E6%B3%A8%E5%86%8C"><span class="toc-article-text">4. PassBuilder 回调自动注册</span></a></li></ol></li></ol></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#IR"><span class="toc-article-text">IR</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#%E9%9D%99%E6%80%81%E5%8D%95%E8%B5%8B%E5%80%BC-SSA"><span class="toc-article-text">静态单赋值(SSA)</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#LLVM-IR%E6%8C%87%E4%BB%A4"><span class="toc-article-text">LLVM IR指令</span></a></li></ol></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E5%90%84%E7%A7%8D%E6%B7%B7%E6%B7%86"><span class="toc-article-text">各种混淆</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E8%99%9A%E5%81%87%E6%8E%A7%E5%88%B6%E6%B5%81-BogusControlFlow"><span class="toc-article-text">虚假控制流(BogusControlFlow)</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#D810"><span class="toc-article-text">D810</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#%E4%BF%AE%E6%94%B9-%E4%B8%8D%E9%80%8F%E6%98%8E%E8%B0%93%E8%AF%8D%E7%9A%84%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F"><span class="toc-article-text">修改 不透明谓词的全局变量</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#%E6%A8%A1%E6%8B%9F%E6%89%A7%E8%A1%8C"><span class="toc-article-text">模拟执行</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-5"><a class="toc-article-link" href="#qiling%E7%9A%84%E7%BB%84%E6%88%90"><span class="toc-article-text">qiling的组成</span></a></li><li class="toc-article-item toc-article-level-5"><a class="toc-article-link" href="#hook"><span class="toc-article-text">hook</span></a></li></ol></li></ol></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#SUB%EF%BC%9AInstruction-Substitution%EF%BC%8C%E6%8C%87%E4%BB%A4%E6%9B%BF%E6%8D%A2%E6%B7%B7%E6%B7%86"><span class="toc-article-text">SUB：Instruction Substitution，指令替换混淆</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#sobf-String-Obfuscation%EF%BC%88%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%B7%B7%E6%B7%86%EF%BC%89"><span class="toc-article-text">sobf-- String Obfuscation（字符串混淆）</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#split-%E2%80%94%E2%80%94-Basic-Block-Splitting%EF%BC%88%E5%9F%BA%E6%9C%AC%E5%9D%97%E5%88%86%E5%89%B2%EF%BC%89"><span class="toc-article-text">split —— Basic Block Splitting（基本块分割）</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#ibr-%E2%80%94%E2%80%94-Indirect-Branch%EF%BC%88%E9%97%B4%E6%8E%A5%E5%88%86%E6%94%AF%EF%BC%89"><span class="toc-article-text">ibr —— Indirect Branch（间接分支）</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-5"><a class="toc-article-link" href="#%E5%8E%BB%E9%97%B4%E6%8E%A5%E5%88%86%E6%94%AF"><span class="toc-article-text">去间接分支</span></a></li></ol></li></ol></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#icall-%E2%80%94%E2%80%94-Indirect-Call%EF%BC%88%E9%97%B4%E6%8E%A5%E8%B0%83%E7%94%A8%EF%BC%89"><span class="toc-article-text">icall —— Indirect Call（间接调用）</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#fla-%E6%8E%A7%E5%88%B6%E6%B5%81%E5%B9%B3%E5%9D%A6%E5%8C%96"><span class="toc-article-text">fla(控制流平坦化)</span></a></li></ol></li></ol>
+		</div>
+	</nav>
 	</div>
+	<style>
+	.rf-toc-wrap .rf-toc{position:fixed;right:18px;top:86px;z-index:1200;width:238px;max-height:calc(100vh - 130px);
+	  display:flex;flex-direction:column;background:rgba(24,26,31,.96);border:1px solid #343a42;border-radius:10px;
+	  box-shadow:0 6px 24px rgba(0,0,0,.5);overflow:hidden;color:#cbd3e1;}
+	.rf-toc-wrap .rf-toc-head{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;
+	  border-bottom:1px solid #343a42;background:rgba(255,255,255,.03);}
+	.rf-toc-wrap .rf-toc-title{font-size:13px;font-weight:600;letter-spacing:.5px;color:#e6ecf5;text-transform:uppercase;}
+	.rf-toc-wrap #rf-toc-collapse{border:0;background:transparent;color:#8b95a5;font-size:16px;line-height:1;cursor:pointer;padding:0 2px;width:24px;height:24px;display:flex;align-items:center;justify-content:center;border-radius:4px;}
+	.rf-toc-wrap #rf-toc-collapse:hover{color:#fff;background:rgba(255,255,255,.08);}
+	.rf-toc-wrap .rf-toc-body{overflow-y:auto;padding:8px 10px;}
+	.rf-toc-wrap .rf-toc-body .toc-article{list-style:none;margin:0;padding:0;}
+	.rf-toc-wrap .rf-toc-body .toc-article ol{list-style:none;margin:0;padding:0 0 0 14px;}
+	.rf-toc-wrap .rf-toc-body .toc-article li{margin:0;padding:0;line-height:1.35;}
+	.rf-toc-wrap .rf-toc-body .toc-article a{display:block;padding:3px 6px;color:#a7b2c6;text-decoration:none;
+	  font-size:12px;border-left:2px solid transparent;border-radius:3px;transition:color .15s,border-color .15s,background .15s;}
+	.rf-toc-wrap .rf-toc-body .toc-article a:hover{color:#fff;background:rgba(255,255,255,.06);}
+	.rf-toc-wrap .rf-toc-body .toc-article a.active,
+	.rf-toc-wrap .rf-toc-body .toc-article li.active > a{color:#2bbc8a;border-left-color:#2bbc8a;font-weight:600;background:rgba(43,188,138,.08);}
+	.rf-toc-wrap .rf-toc-body::-webkit-scrollbar{width:6px;}
+	.rf-toc-wrap .rf-toc-body::-webkit-scrollbar-thumb{background:#3a4350;border-radius:3px;}
+	.rf-toc-wrap #rf-toc-btn{position:fixed;right:18px;top:86px;z-index:1200;width:40px;height:40px;border-radius:9px;border:1px solid #343a42;
+	  background:rgba(24,26,31,.96);color:#cbd3e1;font-size:16px;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.5);}
+	.rf-toc-wrap #rf-toc-btn:hover{color:#fff;border-color:#2bbc8a;}
+	/* 收起时显示按钮、隐藏面板；展开时反之（与视口宽度无关，桌面/窄屏一致） */
+	.rf-toc-wrap:not(.rf-toc-open) .rf-toc{display:none;}
+	.rf-toc-wrap:not(.rf-toc-open) #rf-toc-btn{display:flex;align-items:center;justify-content:center;}
+	.rf-toc-wrap.rf-toc-open .rf-toc{display:flex;}
+	.rf-toc-wrap.rf-toc-open #rf-toc-btn{display:none;}
+	</style>
+	<script>
+	(function(){
+	  var wrap = document.querySelector('.rf-toc-wrap');
+	  if (!wrap) return;
+	  var panel = document.getElementById('rf-toc');
+	  var btn = document.getElementById('rf-toc-btn');
+	  var collapseBtn = document.getElementById('rf-toc-collapse');
+	  var body = document.querySelector('#rf-toc .rf-toc-body');
+	  var wide = function(){ return window.matchMedia && window.matchMedia('(min-width: 1201px)').matches; };
+	  var setOpen = function(open){ wrap.classList.toggle('rf-toc-open', !!open); };
+
+	  // 初始与窗口尺寸变化时按宽度设置默认状态（宽屏展开 / 窄屏收起）
+	  setOpen(wide());
+	  if (window.addEventListener) window.addEventListener('resize', function(){ setOpen(wide()); });
+
+	  // 点按钮展开、点头部按钮收起
+	  if (btn) btn.addEventListener('click', function(e){ e.stopPropagation(); setOpen(true); });
+	  if (collapseBtn) collapseBtn.addEventListener('click', function(e){ e.stopPropagation(); setOpen(false); });
+	  // 窄屏点击面板外收起
+	  document.addEventListener('click', function(e){
+	    if (!wide() && wrap.classList.contains('rf-toc-open') && !panel.contains(e.target) && !btn.contains(e.target)) {
+	      setOpen(false);
+	    }
+	  });
+
+	  var links = [].slice.call(panel.querySelectorAll('a.toc-article-link[href^="#"]'));
+	  if (!links.length) return;
+	  var items = links.map(function (a) {
+	    var id;
+	    try { id = decodeURIComponent(a.getAttribute('href').slice(1)); }
+	    catch (e) { id = a.getAttribute('href').slice(1); }
+	    return { a: a, el: document.getElementById(id) };
+	  });
+	  links.forEach(function (a) {
+	    a.addEventListener('click', function (e) {
+	      var id;
+	      try { id = decodeURIComponent(a.getAttribute('href').slice(1)); }
+	      catch (err) { id = a.getAttribute('href').slice(1); }
+	      var el = document.getElementById(id);
+	      if (!el) return;
+	      e.preventDefault();
+	      var y = el.getBoundingClientRect().top + (window.pageYOffset || document.documentElement.scrollTop) - 72;
+	      window.scrollTo({ top: Math.max(y, 0), behavior: 'smooth' });
+	      if (history.replaceState) history.replaceState(null, '', a.getAttribute('href'));
+	    });
+	  });
+	  function spy() {
+	    var mark = -1;
+	    items.forEach(function (it, i) {
+	      if (it.el && it.el.getBoundingClientRect().top <= 100) mark = i;
+	    });
+	    links.forEach(function (a) { a.classList.remove('active'); });
+	    if (mark >= 0 && items[mark].a) items[mark].a.classList.add('active');
+	    // 让当前条目可见
+	    if (mark >= 0 && items[mark].a && body) {
+	      var a = items[mark].a;
+	      if (a.offsetTop < body.scrollTop || a.offsetTop > body.scrollTop + body.clientHeight - 40) {
+	        body.scrollTop = a.offsetTop - 20;
+	      }
+	    }
+	  }
+	  window.addEventListener('scroll', spy, { passive: true });
+	  spy();
+	})();
+	</script>
+	
 	
     <hr>
 	
