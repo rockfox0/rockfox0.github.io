@@ -182,9 +182,9 @@ pass主要能够分析和改变一个IR</p>
 <p>那么什么是强连通调用图呢</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">B</span><span class="params">()</span>;</span><br><span class="line"><span class="type">void</span> <span class="title function_">D</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">A</span><span class="params">()</span> &#123;</span><br><span class="line">    B();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">B</span><span class="params">()</span> &#123;</span><br><span class="line">    A();   <span class="comment">// A 和 B 相互调用</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">C</span><span class="params">()</span> &#123;</span><br><span class="line">    D();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">D</span><span class="params">()</span> &#123;</span><br><span class="line">    C();   <span class="comment">// C 和 D 相互调用</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    A();</span><br><span class="line">    C();</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>调用图如下
-![[Pasted image 20260728200029.png]]
+<img src="/images/Pasted-image-20260728200029.png" alt="">
 这是ida的图的可能有点难看,就是这样
-![[Pasted image 20260728200625.png]]
+<img src="/images/Pasted-image-20260728200625.png" alt="">
 所以这里构成了两个循环,
 有向图中一个尽可能大的节点集合，其中任意两个节点都能够互相到达。
 因此强连通分量划分是：</p>
@@ -362,22 +362,22 @@ opt -passes=mem2reg -S /tmp/noopt.ll -o /tmp/phi.ll
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;tea.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstdint&gt;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">uint32_t</span> key[<span class="number">4</span>] = &#123;</span><br><span class="line">        <span class="number">0x10345678</span>,</span><br><span class="line">        <span class="number">0x9abcdef0</span>,</span><br><span class="line">        <span class="number">0x11223344</span>,</span><br><span class="line">        <span class="number">0x55667788</span></span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="function">TEA <span class="title">tea</span><span class="params">(key)</span></span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="type">static</span> <span class="type">const</span> <span class="type">unsigned</span> <span class="type">char</span> cipher[<span class="number">24</span>] = &#123;</span><br><span class="line">        <span class="number">0x22</span>, <span class="number">0xec</span>, <span class="number">0x42</span>, <span class="number">0x47</span>, <span class="number">0xfe</span>, <span class="number">0xf0</span>, <span class="number">0xbf</span>, <span class="number">0x40</span>,</span><br><span class="line">        <span class="number">0x45</span>, <span class="number">0x49</span>, <span class="number">0xf7</span>, <span class="number">0x4b</span>, <span class="number">0x5e</span>, <span class="number">0x65</span>, <span class="number">0x66</span>, <span class="number">0x27</span>,</span><br><span class="line">        <span class="number">0x23</span>, <span class="number">0x2e</span>, <span class="number">0xbf</span>, <span class="number">0x09</span>, <span class="number">0x89</span>, <span class="number">0xf0</span>, <span class="number">0x60</span>, <span class="number">0xba</span></span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">constexpr</span> std::<span class="type">size_t</span> FLAG_LEN = <span class="number">22</span>;</span><br><span class="line"></span><br><span class="line">    std::string input;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Enter the flag: &quot;</span>;</span><br><span class="line">    std::<span class="built_in">getline</span>(std::cin, input);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (input.<span class="built_in">size</span>() != FLAG_LEN) &#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;Wrong flag!&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 拷贝输入并 padding 到 24 字节 (0x00 填充)</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">char</span> buf[<span class="number">24</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    std::<span class="built_in">memcpy</span>(buf, input.<span class="built_in">c_str</span>(), FLAG_LEN);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 分块 TEA 加密</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) &#123;</span><br><span class="line">        <span class="type">uint32_t</span> v0, v1;</span><br><span class="line">        std::<span class="built_in">memcpy</span>(&amp;v0, buf + i * <span class="number">8</span>, <span class="number">4</span>);</span><br><span class="line">        std::<span class="built_in">memcpy</span>(&amp;v1, buf + i * <span class="number">8</span> + <span class="number">4</span>, <span class="number">4</span>);</span><br><span class="line">        tea.<span class="built_in">encrypt</span>(v0, v1);</span><br><span class="line">        std::<span class="built_in">memcpy</span>(buf + i * <span class="number">8</span>, &amp;v0, <span class="number">4</span>);</span><br><span class="line">        std::<span class="built_in">memcpy</span>(buf + i * <span class="number">8</span> + <span class="number">4</span>, &amp;v1, <span class="number">4</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 与密文比对</span></span><br><span class="line">    <span class="keyword">if</span> (std::<span class="built_in">memcmp</span>(buf, cipher, <span class="built_in">sizeof</span>(cipher)) == <span class="number">0</span>) &#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;Correct! flag is accepted.&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Wrong flag!&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <h3 id="虚假控制流-BogusControlFlow">虚假控制流(BogusControlFlow)</h3>
 <p>虚假控制流指，通过向正常控制流中插入若干<strong>不可达基本块</strong>（永远不会被执行的基本块）和由<strong>不透明谓词</strong>（指一个表达式，它的值在执行到某处时，对程序员而言必然是已知的，但是由于某种原因，编译器或者说静态分析器无法推断出这个值，只能在运行时确定）造成的虚假跳转，以产生大量垃圾代码干扰攻击者分析的混淆。
-比如这里一个简单的hello world![[Pasted image 20260820164225.png]]
+比如这里一个简单的hello world<img src="/images/Pasted-image-20260820164225.png" alt="">
 混淆后,这里之加入了1级
-![[Pasted image 20260820164331.png]]
+<img src="/images/Pasted-image-20260820164331.png" alt="">
 就变成了这样
 这里因为体量比较小,如果体量较大的话.会导致文件体量膨胀,毕竟把一个块增生了很多东西
 可以看看他的结构是怎样的,让ai翻译了一下注释
-![[Pasted image 20260820175125.png]]
+<img src="/images/Pasted-image-20260820175125.png" alt="">
 虚假控制流的操作单位是基本块
 他的实际执行流程是basicBlock-&gt;originalBB-&gt;originalBBpart2
 原理其实非常简单.正如我们前面所说的写一个恒真的条件然后跳转到我们制定的位置.差不多就是这样.
 重点在与如何绕过呢</p>
 <p>之后我们在
-![[Pasted image 20260822204019.png]]</p>
+<img src="/images/Pasted-image-20260822204019.png" alt=""></p>
 <p>这是原本的结构
 混淆之后
-![[Pasted image 20260822204141.png]]
+<img src="/images/Pasted-image-20260822204141.png" alt="">
 ok现在变成大粪了.之后我们试试这些方法</p>
 <h4 id="D810">D810</h4>
 <p><strong>D810</strong>（又称 Deobfuscator-810）是一个用于 IDA Pro 的强大<strong>代码去混淆（Deobfuscation）插件</strong>。它主要通过在反编译时修改 IDA 的微代码（Microcode），将复杂、难以阅读的混淆代码还原为清晰、直观的逻辑
@@ -553,7 +553,7 @@ ok现在变成大粪了.之后我们试试这些方法</p>
 <h3 id="sobf-String-Obfuscation（字符串混淆）">sobf-- String Obfuscation（字符串混淆）</h3>
 <p>字符串加密解密函数有时候放在.init_array 里面,有时候放在放在.text通过call调用
 这里是第二种形式
-![[Pasted image 20260825185929.png]]
+<img src="/images/Pasted-image-20260825185929.png" alt="">
 比如这里.就是unk_406存放明文, &amp;unk_2054是密文+key,调用解密函数sub_14C0进行解密,之后再输出解密函数如下</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">__int64 __fastcall <span class="title function_">sub_14C0</span><span class="params">(__int64 a1, __int64 a2)</span></span><br><span class="line">&#123;</span><br><span class="line">  __int64 result; <span class="comment">// rax</span></span><br><span class="line">  <span class="type">int</span> v3; <span class="comment">// [rsp+20h] [rbp-4h]</span></span><br><span class="line"></span><br><span class="line">  result = <span class="number">0LL</span>;</span><br><span class="line">  v3 = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">if</span> ( dword_4080 != <span class="number">1</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">do</span></span><br><span class="line">    &#123;</span><br><span class="line">      *(_BYTE *)(a1 + v3) = *(_BYTE *)(a2 + v3 % <span class="number">22u</span>) ^ *(_BYTE *)(a2 + <span class="number">22</span> + v3);</span><br><span class="line">      result = (<span class="type">unsigned</span> <span class="type">int</span>)++v3;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> ( v3 != <span class="number">17</span> );</span><br><span class="line">    dword_4080 = <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>其实就是xor.调试什么的都行,或者模拟执行把解密后的都保存下来.</p>
@@ -562,14 +562,14 @@ ok现在变成大粪了.之后我们试试这些方法</p>
 <h3 id="split-——-Basic-Block-Splitting（基本块分割）">split —— Basic Block Splitting（基本块分割）</h3>
 <p>把一个大的基本块分割成为N个小基本块,不过一般会被ida优化,建议搭配 fla或者 bcf食用</p>
 <h3 id="ibr-——-Indirect-Branch（间接分支）">ibr —— Indirect Branch（间接分支）</h3>
-<p>关于简介调用,打开了我们可能就只能看到这个样子因为有分支就会被 打断.具体是怎样的![[Pasted image 20260825205115.png]]
+<p>关于简介调用,打开了我们可能就只能看到这个样子因为有分支就会被 打断.具体是怎样的<img src="/images/Pasted-image-20260825205115.png" alt="">
 比如遇到了类似与这种与到了条件跳转比如jz之类的指令就会有两个分支或者多个分支</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (x &gt; <span class="number">10</span>)</span><br><span class="line">    <span class="built_in">foo</span>();</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="built_in">bar</span>();</span><br></pre></td></tr></table></figure>
 <p>这种,就会把
-![[Pasted image 20260825220607.png]]
+<img src="/images/Pasted-image-20260825220607.png" alt="">
 就会被把跳转的块记录为在表中并加密.
 之后就变成了这样
-![[Pasted image 20260825220700.png]]
+<img src="/images/Pasted-image-20260825220700.png" alt="">
 rcx控制跳转哪个块,作为偏移,在</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mov     rax, [rax+rcx*8+8]</span><br></pre></td></tr></table></figure>
 <p>这里
@@ -593,7 +593,7 @@ rcx控制跳转哪个块,作为偏移,在</p>
 <p>这种形式.处理方法其实就和前面的ibr差不多用模拟执行批量处理</p>
 <h3 id="fla-控制流平坦化">fla(控制流平坦化)</h3>
 <p>个人感觉这应该是最难的一部分,因为他塞了很多东西,我们可以先讲一讲加了fla后cfg的结构
-![[Pasted image 20260826184916.png]]
+<img src="/images/Pasted-image-20260826184916.png" alt="">
 ok上面的图相信能够看出被混淆后大概的结构,原本的我们也只有真实块这部分
 控制流平坦化其实就是把 原来的
 比如</p>
@@ -609,7 +609,7 @@ ok上面的图相信能够看出被混淆后大概的结构,原本的我们也�
 <li>序言块:函数入口那部分块</li>
 <li>状态变量:你可以看作 switch(state)的操控case到哪里的值</li>
 <li>主分发器:控制真实块的执行路径
-![[Pasted image 20260826215014.png]]
+<img src="/images/Pasted-image-20260826215014.png" alt="">
 比如这里,他会根据判断,一步步往下走,也就是下面的子分发器.不过其实我觉得就是一步步往下推 用sub eax case_value来判断,是就到对应的块,不是就继续往下执行.</li>
 <li>真实块:原本的业务逻辑
 不过你需要注意.原先的业务逻辑块一般有三种情况
@@ -619,7 +619,7 @@ ok上面的图相信能够看出被混淆后大概的结构,原本的我们也�
 <li>没有后继块,就直接retn了</li>
 <li>有1个后继块:A-&gt; B,把state 修改成B对应的case 的value就行</li>
 <li>有两个后继块,对应条件跳转.
-![[Pasted image 20260826221737.png]]
+<img src="/images/Pasted-image-20260826221737.png" alt="">
 这里就根据判断选择 value就行,实现的话就用select</li>
 </ol>
 <ul>
