@@ -1,0 +1,656 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="cache-control" content="no-cache">
+  <meta http-equiv="expires" content="0">
+  
+  <title>virtual app的基础架构 | Rockfox的密码记录</title>
+  <meta name="author" content="fox">
+  
+  <meta name="description" content="这是FOx的密码和其他开发互联网开发学习记录">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="virtual app的基础架构"/>
+  <meta property="og:site_name" content="Rockfox的密码记录"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  
+    <link rel="alternative" href="/atom.xml" title="Rockfox的密码记录" type="application/atom+xml">
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/prism.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container nav-wrap">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand rockfox-brand" href="/">
+        <img class="rockfox-logo" src="/favicon.png" alt="F0X" />
+        <span class="rockfox-text">F0X is sleepping</span>
+      </a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/" title="Home">
+			  <i class="fa fa-home"></i>首页
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>归档
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>分类
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/map" title="Knowledge map">
+			  <i class="fa fa-sitemap"></i>图谱
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/links" title="Friends.">
+			  <i class="fa fa-link"></i>友链
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class="fa fa-rss"></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header">
+			<h1> virtual app的基础架构</h1>
+		</div>
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <ul>
+<li>最近在看安卓的应用级虚拟化的架构
+这一章我们先来说一下大致架构
+大致框架是这样的
+<img src="/images/Pasted-image-20261030145151.png" alt="">
+host 主进程，va server 进程 和各个 client进程。这里host主进程就可以看作vritual app本身 ，然后vaserverkey看作虚拟机内部的一个framwork 架构 。后门就是各个client 进程
+而因为我们的虚拟机内部没有 service manager进程来要负责 Binder 服务的注册、查询和管理。所以我们还需要自己实现一个类似的结构</li>
+</ul>
+<h2 id="构建一个类似service-manager的服务">构建一个类似service manager的服务</h2>
+<p>首先我们先抛开binder的底层机制,我们需要明白,如果一个进程要通过binder调用另一个进程,那么这个进程就要获取到他的ibinder
+我们一层一层往下看</p>
+<h3 id="binderprovider">binderprovider</h3>
+<p>继承自组件contentprovider</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.lody.virtual.server;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.content.ComponentName;</span><br><span class="line"><span class="keyword">import</span> android.content.ContentProvider;</span><br><span class="line"><span class="keyword">import</span> android.content.ContentValues;</span><br><span class="line"><span class="keyword">import</span> android.content.Context;</span><br><span class="line"><span class="keyword">import</span> android.content.Intent;</span><br><span class="line"><span class="keyword">import</span> android.content.ServiceConnection;</span><br><span class="line"><span class="keyword">import</span> android.database.Cursor;</span><br><span class="line"><span class="keyword">import</span> android.net.Uri;</span><br><span class="line"><span class="keyword">import</span> android.os.Build;</span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> android.os.IBinder;</span><br><span class="line"><span class="keyword">import</span> android.os.RemoteException;</span><br><span class="line"><span class="keyword">import</span> android.os.ResultReceiver;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.lody.virtual.client.core.VirtualCore;</span><br><span class="line"><span class="keyword">import</span> com.lody.virtual.client.ipc.ServiceManagerNative;</span><br><span class="line"><span class="keyword">import</span> com.lody.virtual.client.stub.KeepAliveService;</span><br><span class="line"><span class="keyword">import</span> com.lody.virtual.helper.compat.BundleCompat;</span><br><span class="line"><span class="keyword">import</span> com.lody.virtual.helper.compat.NotificationChannelCompat;</span><br><span class="line"><span class="keyword">import</span> com.lody.virtual.server.accounts.VAccountManagerService;</span><br><span class="line"><span class="keyword">import</span> com.lody.virtual.server.am.VActivityManagerService;</span><br><span class="line"><span class="keyword">import</span> com.lody.virtual.server.content.VContentService;</span><br><span class="line"><span class="keyword">import</span> com.lody.virtual.server.device.VDeviceManagerService;</span><br><span class="line"><span class="keyword">import</span> com.lody.virtual.server.interfaces.IServiceFetcher;</span><br><span class="line"><span class="keyword">import</span> com.lody.virtual.server.job.VJobSchedulerService;</span><br><span class="line"><span class="keyword">import</span> com.lody.virtual.server.location.VirtualLocationService;</span><br><span class="line"><span class="keyword">import</span> com.lody.virtual.server.notification.VNotificationManagerService;</span><br><span class="line"><span class="keyword">import</span> com.lody.virtual.server.pm.VAppManagerService;</span><br><span class="line"><span class="keyword">import</span> com.lody.virtual.server.pm.VPackageManagerService;</span><br><span class="line"><span class="keyword">import</span> com.lody.virtual.server.pm.VUserManagerService;</span><br><span class="line"><span class="keyword">import</span> com.lody.virtual.server.vs.VirtualStorageService;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Lody</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">BinderProvider</span> <span class="keyword">extends</span> <span class="title class_">ContentProvider</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">ServiceFetcher</span> <span class="variable">mServiceFetcher</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ServiceFetcher</span>();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">boolean</span> <span class="variable">sInitialized</span> <span class="operator">=</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">onCreate</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> init();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">boolean</span> <span class="title function_">isInitialized</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> sInitialized;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">boolean</span> <span class="title function_">init</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (sInitialized) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">Context</span> <span class="variable">context</span> <span class="operator">=</span> getContext();</span><br><span class="line">        <span class="keyword">if</span> (context != <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (android.os.Build.VERSION.SDK_INT &gt;= android.os.Build.VERSION_CODES.O) &#123;</span><br><span class="line">                NotificationChannelCompat.checkOrCreateChannel(context, NotificationChannelCompat.DAEMON_ID, <span class="string">&quot;daemon&quot;</span>);</span><br><span class="line">                NotificationChannelCompat.checkOrCreateChannel(context, NotificationChannelCompat.DEFAULT_ID, <span class="string">&quot;default&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                context.startService(<span class="keyword">new</span> <span class="title class_">Intent</span>(context, KeepAliveService.class));</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!VirtualCore.get().isStartup()) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        VPackageManagerService.systemReady();</span><br><span class="line">        addService(ServiceManagerNative.PACKAGE, VPackageManagerService.get());</span><br><span class="line">        addService(ServiceManagerNative.ACTIVITY, VActivityManagerService.get());</span><br><span class="line">        addService(ServiceManagerNative.USER, VUserManagerService.get());</span><br><span class="line">        VAppManagerService.systemReady();</span><br><span class="line">        addService(ServiceManagerNative.APP, VAppManagerService.get());</span><br><span class="line">        <span class="keyword">if</span> (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.LOLLIPOP) &#123;</span><br><span class="line">            addService(ServiceManagerNative.JOB, VJobSchedulerService.get());</span><br><span class="line">        &#125;</span><br><span class="line">        VNotificationManagerService.systemReady(context);</span><br><span class="line">        addService(ServiceManagerNative.NOTIFICATION, VNotificationManagerService.get());</span><br><span class="line">        VAppManagerService.get().scanApps();</span><br><span class="line">        VAccountManagerService.systemReady();</span><br><span class="line">        VContentService.systemReady();</span><br><span class="line">        addService(ServiceManagerNative.ACCOUNT, VAccountManagerService.get());</span><br><span class="line">        addService(ServiceManagerNative.CONTENT, VContentService.get());</span><br><span class="line">        addService(ServiceManagerNative.VS, VirtualStorageService.get());</span><br><span class="line">        addService(ServiceManagerNative.DEVICE, VDeviceManagerService.get());</span><br><span class="line">        addService(ServiceManagerNative.VIRTUAL_LOC, VirtualLocationService.get());</span><br><span class="line">        sInitialized = <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">addService</span><span class="params">(String name, IBinder service)</span> &#123;</span><br><span class="line">        ServiceCache.addService(name, service);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Bundle <span class="title function_">call</span><span class="params">(String method, String arg, Bundle extras)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (!sInitialized) &#123;</span><br><span class="line">            init();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="string">&quot;@&quot;</span>.equals(method)) &#123;</span><br><span class="line">            <span class="type">Bundle</span> <span class="variable">bundle</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Bundle</span>();</span><br><span class="line">            BundleCompat.putBinder(bundle, <span class="string">&quot;_VA_|_binder_&quot;</span>, mServiceFetcher);</span><br><span class="line">            <span class="keyword">return</span> bundle;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Cursor <span class="title function_">query</span><span class="params">(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getType</span><span class="params">(Uri uri)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Uri <span class="title function_">insert</span><span class="params">(Uri uri, ContentValues values)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">delete</span><span class="params">(Uri uri, String selection, String[] selectionArgs)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">update</span><span class="params">(Uri uri, ContentValues values, String selection, String[] selectionArgs)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">class</span> <span class="title class_">ServiceFetcher</span> <span class="keyword">extends</span> <span class="title class_">IServiceFetcher</span>.Stub &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> IBinder <span class="title function_">getService</span><span class="params">(String name)</span> <span class="keyword">throws</span> RemoteException &#123;</span><br><span class="line">            <span class="keyword">if</span> (name != <span class="literal">null</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> ServiceCache.getService(name);</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addService</span><span class="params">(String name, IBinder service)</span> <span class="keyword">throws</span> RemoteException &#123;</span><br><span class="line">            <span class="keyword">if</span> (name != <span class="literal">null</span> &amp;&amp; service != <span class="literal">null</span>) &#123;</span><br><span class="line">                ServiceCache.addService(name, service);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">removeService</span><span class="params">(String name)</span> <span class="keyword">throws</span> RemoteException &#123;</span><br><span class="line">            <span class="keyword">if</span> (name != <span class="literal">null</span>) &#123;</span><br><span class="line">                ServiceCache.removeService(name);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>我们稍后会讲解几个结构首先这个ServiceFetcher，是作为调用的接口，通过控制ServiceCache 控制和调用服务。至于什么服务，其实就是server 提供的一些类似于 安卓系统级的binder服务。
+因为contentprovider 的call 是通过ams管理并能够被外部通过contentresover调用的.
+所以我们还需要在 app 的mainfest专门写注册代码以便ams发现并管理</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">    <span class="comment">&lt;!-- lib/src/main/AndroidManifest.xml:381-386 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">provider</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:name</span>=<span class="string">&quot;com.lody.virtual.server.BinderProvider&quot;</span>                        ← <span class="attr">类</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:authorities</span>=<span class="string">&quot;$&#123;AUTHORITY_PREFIX&#125;.virtual.service.BinderProvider&quot;</span>     ← <span class="attr">唯一标识</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:exported</span>=<span class="string">&quot;true&quot;</span>                                                      ← <span class="attr">允许跨</span> <span class="attr">uid</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:permission</span>=<span class="string">&quot;$&#123;PERMISSION_PREFIX&#125;.permission.SAFE_ACCESS&quot;</span>             ← <span class="attr">签名级准入</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:process</span>=<span class="string">&quot;@string/engine_process_name&quot;</span> /&gt;</span>                             ← 承载进程 :x</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>根据前面的代码private class ServiceFetcher extends IServiceFetcher.Stub 他继承的IServiceFetcher.Stub 本身就是一个ibinder对象，所以我们就只需要在call函数返回bundle</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Bundle</span> <span class="variable">bundle</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Bundle</span>();</span><br><span class="line">BundleCompat.putBinder(bundle, <span class="string">&quot;_VA_|_binder_&quot;</span>, mServiceFetcher);</span><br><span class="line"><span class="keyword">return</span> bundle;</span><br></pre></td></tr></table></figure>
+<p>里面存放ibinder就是mServiceFetcher</p>
+<h3 id="ServiceFetcher">ServiceFetcher</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">class</span> <span class="title class_">ServiceFetcher</span> <span class="keyword">extends</span> <span class="title class_">IServiceFetcher</span>.Stub &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> IBinder <span class="title function_">getService</span><span class="params">(String name)</span> <span class="keyword">throws</span> RemoteException &#123;</span><br><span class="line">        <span class="keyword">if</span> (name != <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> ServiceCache.getService(name);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addService</span><span class="params">(String name, IBinder service)</span> <span class="keyword">throws</span> RemoteException &#123;</span><br><span class="line">        <span class="keyword">if</span> (name != <span class="literal">null</span> &amp;&amp; service != <span class="literal">null</span>) &#123;</span><br><span class="line">            ServiceCache.addService(name, service);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">removeService</span><span class="params">(String name)</span> <span class="keyword">throws</span> RemoteException &#123;</span><br><span class="line">        <span class="keyword">if</span> (name != <span class="literal">null</span>) &#123;</span><br><span class="line">            ServiceCache.removeService(name);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个类主要来自于IServiceFetcher接口结合stub静态类.stub是作为binder 的server 的服务端的接口.在这里是</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">Stub</span> <span class="keyword">extends</span> <span class="title class_">android</span>.os.Binder <span class="keyword">implements</span> <span class="title class_">com</span>.lody.virtual.server.interfaces.IServiceFetcher  </span><br><span class="line">&#123;  </span><br><span class="line">  <span class="comment">/** Construct the stub at attach it to the interface. */</span>  </span><br><span class="line">  <span class="meta">@SuppressWarnings(&quot;this-escape&quot;)</span>  </span><br><span class="line">  <span class="keyword">public</span> <span class="title function_">Stub</span><span class="params">()</span>  </span><br><span class="line">  &#123;  </span><br><span class="line">    <span class="built_in">this</span>.attachInterface(<span class="built_in">this</span>, DESCRIPTOR);  </span><br><span class="line">  &#125;  </span><br><span class="line">  <span class="comment">/**  </span></span><br><span class="line"><span class="comment">   * Cast an IBinder object into an com.lody.virtual.server.interfaces.IServiceFetcher interface,   * generating a proxy if needed.   */</span>  <span class="keyword">public</span> <span class="keyword">static</span></span><br></pre></td></tr></table></figure>
+<p>这几个操作就是在操作serviceCache这个hashmap</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ServiceCache</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Map&lt;String, IBinder&gt; sCache =</span><br><span class="line">            <span class="keyword">new</span> <span class="title class_">ArrayMap</span>&lt;&gt;(<span class="number">5</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">addService</span><span class="params">(String name, IBinder service)</span> &#123;</span><br><span class="line">        sCache.put(name, service);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> IBinder <span class="title function_">removeService</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> sCache.remove(name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> IBinder <span class="title function_">getService</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> sCache.get(name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>实现如下，这个service cache的存储的就是ibinder而这个ibinder就是client app真正要从server获取的服务.还有一点怎么把我们的这些服务编程ibinder呢？ 原开源版本中使用的是一个ipcbus类，但是他要使用反射调用函数.获取每个类的函数对应的code（按顺序编码），因为ibinder本身是通过这些code调用的 这些方法，所以我们要用code。bug挖个坑，后门我们详细讲一讲安卓的binder
+但是其实这么没有直接用 aidl来的方便，所以还是直接通过
+类似与前面直接用继承一个</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">VAccountManagerService</span> <span class="keyword">extends</span> <span class="title class_">IAccountManager</span>.Stub</span><br></pre></td></tr></table></figure>
+<p>这个类本身就是一个ibinder的形式.</p>
+<h2 id="host">host</h2>
+<p>host进程就是宿主app这个进程本身，启动的时候为后续server的执行做准备，执行的时候运行ui和 监听安装广播</p>
+<h2 id="server">server</h2>
+<p>前面我们讲到，<code>ServiceCache</code> 里注册了 11 个服务，而注册这个动作发生在 <code>BinderProvider.init()</code> 里。那问题就来了：这 11 个服务是干什么的？除了服务，server 还提供了别的东西吗？</p>
+<p><code>lib/src/main/java/com/lody/virtual/server/</code> 这个目录，一共 <strong>22,502 行、13 个子包</strong>。我们把它拆成三块来看：<strong>服务</strong>、<strong>组件</strong>，以及<strong>它们怎么配合</strong>。</p>
+<h3 id="server-提供了哪些服务">server 提供了哪些服务</h3>
+<p>先看表格，这 11 个就是 <code>ServiceCache</code> 里存着的东西：</p>
+<table>
+<thead>
+<tr>
+<th>服务名</th>
+<th>实现类</th>
+<th>模拟的系统服务</th>
+<th>主要职责</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>package</code></td>
+<td><code>VPackageManagerService</code></td>
+<td>PackageManager</td>
+<td>虚拟包表查询、组件解析、权限/签名</td>
+</tr>
+<tr>
+<td><code>activity</code></td>
+<td><code>VActivityManagerService</code></td>
+<td>ActivityManager</td>
+<td>进程池、Activity 栈、Service 绑定</td>
+</tr>
+<tr>
+<td><code>user</code></td>
+<td><code>VUserManagerService</code></td>
+<td>UserManager</td>
+<td>虚拟用户管理（多开的基础）</td>
+</tr>
+<tr>
+<td><code>app</code></td>
+<td><code>VAppManagerService</code></td>
+<td>——</td>
+<td>安装、卸载、扫描</td>
+</tr>
+<tr>
+<td><code>account</code></td>
+<td><code>VAccountManagerService</code></td>
+<td>AccountManager</td>
+<td>账户、认证器、token</td>
+</tr>
+<tr>
+<td><code>content</code></td>
+<td><code>VContentService</code></td>
+<td>ContentService</td>
+<td>ContentObserver、Sync</td>
+</tr>
+<tr>
+<td><code>job</code></td>
+<td><code>VJobSchedulerService</code></td>
+<td>JobScheduler</td>
+<td>Job 调度隔离</td>
+</tr>
+<tr>
+<td><code>notification</code></td>
+<td><code>VNotificationManagerService</code></td>
+<td>NotificationManager</td>
+<td>通知 id/tag 改写</td>
+</tr>
+<tr>
+<td><code>vs</code></td>
+<td><code>VirtualStorageService</code></td>
+<td>——</td>
+<td>虚拟 SD 卡映射</td>
+</tr>
+<tr>
+<td><code>device</code></td>
+<td><code>VDeviceManagerService</code></td>
+<td>——</td>
+<td>设备指纹</td>
+</tr>
+<tr>
+<td><code>virtual-loc</code></td>
+<td><code>VirtualLocationService</code></td>
+<td>LocationManager</td>
+<td>虚拟定位</td>
+</tr>
+</tbody>
+</table>
+<p>里面最重的是 <code>activity</code>，54 个 AIDL 方法，1,271 行——因为我们没有真的 AMS，进程怎么起、Activity 栈怎么管、Service 怎么绑，全得自己写。其次是 <code>package</code>（34 个方法）和 <code>account</code>（35 个方法）。</p>
+<p>这里有个细节值得单独说一句：<strong>这些服务类本身都是 Binder</strong>。比如：</p>
+<p>java</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">public class VActivityManagerService extends IActivityManager.Stub &#123; ... &#125;</span><br><span class="line">public class VPackageManagerService extends IPackageManager.Stub &#123; ... &#125;</span><br></pre></td></tr></table></figure>
+<p><code>IXxx.Stub</code> 继承自 <code>android.os.Binder</code>，所以服务实例天生就是 IBinder，直接 <code>addService(name, service)</code> 扔进 <code>ServiceCache</code> 就行。这也是为什么前面说&quot;换回 AIDL 比 ipcbus 省事&quot;——AIDL 编译出来的 Stub 天然满足&quot;可跨进程 + 可当接口用&quot;两个条件，不需要运行时反射再包一层。</p>
+<h3 id="server提供组件">server提供组件</h3>
+<p>光有服务还不够。</p>
+<p>服务是给&quot;我们自己人&quot;用的——客户端的 <code>VActivityManager</code> 通过 Binder 找到它。但<strong>系统不会调用服务</strong>，系统只认 virtualapp本身在manifest 里声明的组件。虚拟应用的组件在系统里根本不存在，所以凡是&quot;系统要回调 VA&quot;的场景，都必须有一个<strong>真实存在的组件</strong>顶上去。</p>
+<p>于是就有了这些组件。<code>lib</code> 模块的 <code>:x</code> 进程里一共 16 个，按 Android 四大组件分类：</p>
+<p><strong>Activity（8 个）</strong></p>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>干什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ShadowPendingActivity</code></td>
+<td>接住虚拟应用的 <code>PendingIntent.getActivity()</code></td>
+</tr>
+<tr>
+<td><code>ShortcutHandleActivity</code></td>
+<td>桌面快捷方式点进来的跳板</td>
+</tr>
+<tr>
+<td><code>ChooserActivity</code></td>
+<td>顶替 <code>Intent.createChooser()</code> 的分享面板</td>
+</tr>
+<tr>
+<td><code>ResolverActivity</code></td>
+<td>顶替隐式 Intent 的&quot;用哪个应用打开&quot;</td>
+</tr>
+<tr>
+<td><code>ChooseAccountTypeActivity</code></td>
+<td>账户类型选择</td>
+</tr>
+<tr>
+<td><code>ChooseTypeAndAccountActivity</code></td>
+<td>账户选择</td>
+</tr>
+<tr>
+<td><code>WindowPreviewActivity</code></td>
+<td>启动前显示窗口背景预览（防止白屏）</td>
+</tr>
+<tr>
+<td><code>RequestPermissionsActivity</code></td>
+<td>替虚拟应用弹运行时权限</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Service（5 个）</strong></p>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>干什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>KeepAliveService</code></td>
+<td>保活，<code>START_STICKY</code></td>
+</tr>
+<tr>
+<td><code>HiddenForeNotification</code></td>
+<td>显示一个隐藏的前台通知，提高 <code>:x</code> 优先级</td>
+</tr>
+<tr>
+<td><code>ShadowPendingService</code></td>
+<td>接住 <code>PendingIntent.getService()</code></td>
+</tr>
+<tr>
+<td><code>ShadowJobService</code></td>
+<td>虚拟应用 JobService 的系统侧入口</td>
+</tr>
+<tr>
+<td><code>ShadowJobWorkService</code></td>
+<td>Job 真正执行的地方</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Provider（2 个）</strong></p>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>干什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>BinderProvider</code></td>
+<td>服务注册表入口，<code>call(&quot;@&quot;)</code> 返回 <code>IServiceFetcher</code></td>
+</tr>
+<tr>
+<td><code>ContentProviderProxy</code></td>
+<td>虚拟应用 Provider 的请求转发</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Receiver（1 个）</strong></p>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>干什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ShadowPendingReceiver</code></td>
+<td>接住 <code>PendingIntent.getBroadcast()</code></td>
+</tr>
+</tbody>
+</table>
+<p>这些组件按用途其实分三类：</p>
+<ol>
+<li><strong>虚拟应用的代理</strong>——就是 <code>:p0..:p99</code> 里那 399 个槽位组件（<code>ShadowActivity$Pn</code> 之类）。系统只认组件名，所以每个虚拟应用进程都得有一个合法名字顶着。</li>
+<li><strong>系统 API 的回调接收器</strong>——比如 <code>PendingIntent</code>、<code>JobScheduler</code>、选择器这些 API，系统要求目标组件必须真实存在，那就用 <code>ShadowPending*</code>、<code>ShadowJob*</code> 去接。</li>
+<li><strong>VA 自己用的</strong>——<code>BinderProvider</code>（注册表入口）、<code>KeepAliveService</code>、<code>ShortcutHandleActivity</code>（快捷方式）这些。</li>
+</ol>
+<p>把它们都放在 <code>:x</code> (server进程)里，是因为这些组件必须<strong>比虚拟应用活得久</strong>——虚拟应用进程死了，Job 还得能触发，PendingIntent 还得能响，<code>:x</code> 不能跟着挂。</p>
+<div class="post-enhance"><div class="post-share my-4"><span class="mr-2">分享：</span><button type="button" class="btn btn-sm btn-outline-secondary share-copy" data-url="https://rockfox0.github.io/2026/11/14/virtual%20app%E7%9A%84%E5%9F%BA%E7%A1%80%E6%9E%B6%E6%9E%84/">复制链接</button> <a class="btn btn-sm btn-outline-secondary" target="_blank" rel="noopener" href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Frockfox0.github.io%2F2026%2F11%2F14%2Fvirtual%2520app%25E7%259A%2584%25E5%259F%25BA%25E7%25A1%2580%25E6%259E%25B6%25E6%259E%2584%2F&title=virtual%20app%E7%9A%84%E5%9F%BA%E7%A1%80%E6%9E%B6%E6%9E%84">微博</a> <a class="btn btn-sm btn-outline-secondary" target="_blank" rel="noopener" href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A%2F%2Frockfox0.github.io%2F2026%2F11%2F14%2Fvirtual%2520app%25E7%259A%2584%25E5%259F%25BA%25E7%25A1%2580%25E6%259E%25B6%25E6%259E%2584%2F&title=virtual%20app%E7%9A%84%E5%9F%BA%E7%A1%80%E6%9E%B6%E6%9E%84">QQ</a> <a class="btn btn-sm btn-outline-secondary" target="_blank" rel="noopener" href="https://t.me/share/url?url=https%3A%2F%2Frockfox0.github.io%2F2026%2F11%2F14%2Fvirtual%2520app%25E7%259A%2584%25E5%259F%25BA%25E7%25A1%2580%25E6%259E%25B6%25E6%259E%2584%2F&text=virtual%20app%E7%9A%84%E5%9F%BA%E7%A1%80%E6%9E%B6%E6%9E%84">Telegram</a> <a class="btn btn-sm btn-outline-secondary" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Frockfox0.github.io%2F2026%2F11%2F14%2Fvirtual%2520app%25E7%259A%2584%25E5%259F%25BA%25E7%25A1%2580%25E6%259E%25B6%25E6%259E%2584%2F&text=virtual%20app%E7%9A%84%E5%9F%BA%E7%A1%80%E6%9E%B6%E6%9E%84">X</a><script>(function(){document.addEventListener('click',function(e){var b=e.target.closest?e.target.closest('.share-copy'):null;if(b){var u=b.getAttribute('data-url');if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u);}else{var ta=document.createElement('textarea');ta.value=u;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);}var old=b.textContent;b.textContent='已复制';setTimeout(function(){b.textContent=old;},1500);}});})();</script></div></div>
+	  <div class="article-footer-copyright">
+
+    本博客采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议(CC BY-NC-SA 4.0) 发布.</a>
+</div>
+
+	</div>
+
+	
+	
+	<div>
+  	<center>
+
+	<div class="pagination">
+
+    
+    
+    <a type="button" class="btn btn-default disabled"><i class="fa fa-arrow-circle-o-left"></i>上一页</a>
+    
+
+    <a href="/" type="button" class="btn btn-default"><i class="fa fa-home"></i>Home</a>
+    
+    <a href="/2026/09/03/ollvm混淆分析/" type="button" class="btn btn-default ">下一页<i
+                class="fa fa-arrow-circle-o-right"></i></a>
+    
+
+    
+</div>
+
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	<!--
+<section id="comment">
+    <h2 class="title">留言</h2>
+
+    
+</section>
+
+-->
+	
+	
+	
+	</div> <!-- col-md-9/col-md-12 -->
+
+
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2026-11-14 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/安卓应用级虚拟化/">安卓应用级虚拟化<span>1</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/android/">android<span>3</span></a></li> <li><a href="/tags/reverse/">reverse<span>3</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- 右侧浮动阅读目录（独立固定面板，不依赖主题栅格） -->
+	
+	
+	<div class="rf-toc-wrap rf-toc-open">
+	<button id="rf-toc-btn" type="button" title="展开目录" aria-label="展开目录"><i class="fa fa-angle-down"></i></button>
+	<nav id="rf-toc" class="rf-toc" aria-label="文章目录">
+		<div class="rf-toc-head">
+			<span class="rf-toc-title">Contents</span>
+			<button id="rf-toc-collapse" type="button" title="收起目录" aria-label="收起目录"><i class="fa fa-angle-up"></i></button>
+		</div>
+		<div class="rf-toc-body">
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E6%9E%84%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%B1%BB%E4%BC%BCservice-manager%E7%9A%84%E6%9C%8D%E5%8A%A1"><span class="toc-article-text">构建一个类似service manager的服务</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#binderprovider"><span class="toc-article-text">binderprovider</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#ServiceFetcher"><span class="toc-article-text">ServiceFetcher</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#host"><span class="toc-article-text">host</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#server"><span class="toc-article-text">server</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#server-%E6%8F%90%E4%BE%9B%E4%BA%86%E5%93%AA%E4%BA%9B%E6%9C%8D%E5%8A%A1"><span class="toc-article-text">server 提供了哪些服务</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#server%E6%8F%90%E4%BE%9B%E7%BB%84%E4%BB%B6"><span class="toc-article-text">server提供组件</span></a></li></ol></li></ol>
+		</div>
+	</nav>
+	</div>
+	<style>
+	.rf-toc-wrap .rf-toc{position:fixed;right:18px;top:86px;z-index:1200;width:238px;max-height:calc(100vh - 130px);
+	  display:flex;flex-direction:column;background:rgba(24,26,31,.96);border:1px solid #343a42;border-radius:10px;
+	  box-shadow:0 6px 24px rgba(0,0,0,.5);overflow:hidden;color:#cbd3e1;}
+	.rf-toc-wrap .rf-toc-head{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;
+	  border-bottom:1px solid #343a42;background:rgba(255,255,255,.03);}
+	.rf-toc-wrap .rf-toc-title{font-size:13px;font-weight:600;letter-spacing:.5px;color:#e6ecf5;text-transform:uppercase;}
+	.rf-toc-wrap #rf-toc-collapse{border:0;background:transparent;color:#8b95a5;font-size:16px;line-height:1;cursor:pointer;padding:0 2px;width:24px;height:24px;display:flex;align-items:center;justify-content:center;border-radius:4px;}
+	.rf-toc-wrap #rf-toc-collapse:hover{color:#fff;background:rgba(255,255,255,.08);}
+	.rf-toc-wrap .rf-toc-body{overflow-y:auto;padding:8px 10px;}
+	.rf-toc-wrap .rf-toc-body .toc-article{list-style:none;margin:0;padding:0;}
+	.rf-toc-wrap .rf-toc-body .toc-article ol{list-style:none;margin:0;padding:0 0 0 14px;}
+	.rf-toc-wrap .rf-toc-body .toc-article li{margin:0;padding:0;line-height:1.35;}
+	.rf-toc-wrap .rf-toc-body .toc-article a{display:block;padding:3px 6px;color:#a7b2c6;text-decoration:none;
+	  font-size:12px;border-left:2px solid transparent;border-radius:3px;transition:color .15s,border-color .15s,background .15s;}
+	.rf-toc-wrap .rf-toc-body .toc-article a:hover{color:#fff;background:rgba(255,255,255,.06);}
+	.rf-toc-wrap .rf-toc-body .toc-article a.active,
+	.rf-toc-wrap .rf-toc-body .toc-article li.active > a{color:#2bbc8a;border-left-color:#2bbc8a;font-weight:600;background:rgba(43,188,138,.08);}
+	.rf-toc-wrap .rf-toc-body::-webkit-scrollbar{width:6px;}
+	.rf-toc-wrap .rf-toc-body::-webkit-scrollbar-thumb{background:#3a4350;border-radius:3px;}
+	.rf-toc-wrap #rf-toc-btn{position:fixed;right:18px;top:86px;z-index:1200;width:40px;height:40px;border-radius:9px;border:1px solid #343a42;
+	  background:rgba(24,26,31,.96);color:#cbd3e1;font-size:16px;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.5);}
+	.rf-toc-wrap #rf-toc-btn:hover{color:#fff;border-color:#2bbc8a;}
+	/* 收起时显示按钮、隐藏面板；展开时反之（与视口宽度无关，桌面/窄屏一致） */
+	.rf-toc-wrap:not(.rf-toc-open) .rf-toc{display:none;}
+	.rf-toc-wrap:not(.rf-toc-open) #rf-toc-btn{display:flex;align-items:center;justify-content:center;}
+	.rf-toc-wrap.rf-toc-open .rf-toc{display:flex;}
+	.rf-toc-wrap.rf-toc-open #rf-toc-btn{display:none;}
+	</style>
+	<script>
+	(function(){
+	  var wrap = document.querySelector('.rf-toc-wrap');
+	  if (!wrap) return;
+	  var panel = document.getElementById('rf-toc');
+	  var btn = document.getElementById('rf-toc-btn');
+	  var collapseBtn = document.getElementById('rf-toc-collapse');
+	  var body = document.querySelector('#rf-toc .rf-toc-body');
+	  var wide = function(){ return window.matchMedia && window.matchMedia('(min-width: 1201px)').matches; };
+	  var setOpen = function(open){ wrap.classList.toggle('rf-toc-open', !!open); };
+
+	  // 初始与窗口尺寸变化时按宽度设置默认状态（宽屏展开 / 窄屏收起）
+	  setOpen(wide());
+	  if (window.addEventListener) window.addEventListener('resize', function(){ setOpen(wide()); });
+
+	  // 点按钮展开、点头部按钮收起
+	  if (btn) btn.addEventListener('click', function(e){ e.stopPropagation(); setOpen(true); });
+	  if (collapseBtn) collapseBtn.addEventListener('click', function(e){ e.stopPropagation(); setOpen(false); });
+	  // 窄屏点击面板外收起
+	  document.addEventListener('click', function(e){
+	    if (!wide() && wrap.classList.contains('rf-toc-open') && !panel.contains(e.target) && !btn.contains(e.target)) {
+	      setOpen(false);
+	    }
+	  });
+
+	  var links = [].slice.call(panel.querySelectorAll('a.toc-article-link[href^="#"]'));
+	  if (!links.length) return;
+	  var items = links.map(function (a) {
+	    var id;
+	    try { id = decodeURIComponent(a.getAttribute('href').slice(1)); }
+	    catch (e) { id = a.getAttribute('href').slice(1); }
+	    return { a: a, el: document.getElementById(id) };
+	  });
+	  links.forEach(function (a) {
+	    a.addEventListener('click', function (e) {
+	      var id;
+	      try { id = decodeURIComponent(a.getAttribute('href').slice(1)); }
+	      catch (err) { id = a.getAttribute('href').slice(1); }
+	      var el = document.getElementById(id);
+	      if (!el) return;
+	      e.preventDefault();
+	      var y = el.getBoundingClientRect().top + (window.pageYOffset || document.documentElement.scrollTop) - 72;
+	      window.scrollTo({ top: Math.max(y, 0), behavior: 'smooth' });
+	      if (history.replaceState) history.replaceState(null, '', a.getAttribute('href'));
+	    });
+	  });
+	  function spy() {
+	    var mark = -1;
+	    items.forEach(function (it, i) {
+	      if (it.el && it.el.getBoundingClientRect().top <= 100) mark = i;
+	    });
+	    links.forEach(function (a) { a.classList.remove('active'); });
+	    if (mark >= 0 && items[mark].a) items[mark].a.classList.add('active');
+	    // 让当前条目可见
+	    if (mark >= 0 && items[mark].a && body) {
+	      var a = items[mark].a;
+	      if (a.offsetTop < body.scrollTop || a.offsetTop > body.scrollTop + body.clientHeight - 40) {
+	        body.scrollTop = a.offsetTop - 20;
+	      }
+	    }
+	  }
+	  window.addEventListener('scroll', spy, { passive: true });
+	  spy();
+	})();
+	</script>
+	
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+		
+
+	</div>
+	
+		
+
+</div><!-- row -->
+
+<!--
+ -->
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  
+  &copy; 2026 fox's Blog
+  
+      powered by <a href="http://hexo.io/" target="_blank">Hexo</a>.Theme <a href="https://github.com/Ares-X/hexo-theme-freemind.bithack" target="_blank">freemind.bithack</a>  
+</p>
+ </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>⬆︎TOP</span>
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+<script>
+  if (!window.MathJax) {
+    window.MathJax = {
+      tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']], processEscapes: true },
+      options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] },
+      startup: { typeset: true }
+    };
+  }
+</script>
+<script id="MathJax-script" async src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+
+</body>
+   </html>

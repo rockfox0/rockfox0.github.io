@@ -149,6 +149,46 @@
 <div class="row">
 	<div class="col-md-8">
 		<h3 class="title">
+			<a href="/2025/08/08/docker/" >docker-desktop 代理冲突问题解决方式</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2025-08-08  </div>
+		</div>
+	</div>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+	
+		<h1>docker 代理冲突问题的解决</h1>
+<p>docker的配置在网上已经有很多，大多数用的是配置镜像的方法，但是有的盆友可能和我一样发现不开代理登录不上去docker--desktop，登录上去之后呢，拉去镜像会出现这个问题。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker pull nginx</span><br><span class="line">Using default tag: latest</span><br><span class="line">Error response <span class="keyword">from</span> daemon: failed to resolve reference <span class="string">&quot;docker.io/library/nginx:latest&quot;</span>: failed to do request: Head <span class="string">&quot;https://hub-mirror.c.163.com/v2/library/nginx/manifests/latest?ns=docker.io&quot;</span>: proxyconnect tcp: dial tcp <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">7897</span>: connect: connection refused</span><br></pre></td></tr></table></figure>
+<p>因为用clash-verge这样的软件进入代理之后，会自动设置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">HTTP_PROXY=127.0.0.1:7897</span><br><span class="line"></span><br><span class="line">HTTP_PROXYs=127.0.0.1:7897</span><br></pre></td></tr></table></figure>
+<p>然鹅这样是拉去不了镜像的，一个很好的解决方法是，</p>
+<ul>
+<li>
+<p>关掉系统代理，开启虚拟网卡模式，这样的坏处可能就是下东西卡了点。</p>
+<p><img src="https://rockfox0.github.io/picx-images-hosting/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE-2025-08-08-220336.7lkb75nvtm.png" alt="image-20250808221124189"></p>
+</li>
+</ul>
+<p>在clashverge里面可以调整。</p>
+<p>之后就可以拉去了</p>
+	
+	</div>
+  <a type="button" href="/2025/08/08/docker/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
 			<a href="/2025/07/20/过程解析/" >CVE-2021-3711的原理解析以及简单复现</a>
 		</h3>
 		</div>
@@ -508,47 +548,6 @@ $x^2=1 mod p---&gt;(x-1)(x+1)=0mod p$</p>
 </div>
 
 		
-			
-	
-	<!-- display as entry -->
-<div class="row">
-	<div class="col-md-8">
-		<h3 class="title">
-			<a href="/2024/12/29/DSA签名算法/" >DSA签名算法</a>
-		</h3>
-		</div>
-	<div class="col-md-4">
-		<div class="date">post @ 2024-12-29  </div>
-		</div>
-	</div>
-	
-
-
-			<div class="entry">
-  <div class="row">
-	
-	
-		<h1>DSA签名算法</h1>
-<h2 id="DSA算法简介">DSA算法简介</h2>
-<p>DSA（Digital Signature Algorithm）是Schnorr和ElGamal<a target="_blank" rel="noopener" href="https://zhida.zhihu.com/search?content_id=165246664&amp;content_type=Article&amp;match_order=1&amp;q=%E7%AD%BE%E5%90%8D%E7%AE%97%E6%B3%95&amp;zhida_source=entity">签名算法</a>的变种，被美国NIST作为DSS(DigitalSignature Standard) 数字签名的标准。</p>
-<p>DSA是一种更高级的验证方式，它是一种<a target="_blank" rel="noopener" href="https://zhida.zhihu.com/search?content_id=165246664&amp;content_type=Article&amp;match_order=1&amp;q=%E5%85%AC%E5%BC%80%E5%AF%86%E9%92%A5%E7%AE%97%E6%B3%95&amp;zhida_source=entity">公开密钥算法</a>，不能用来加密数据，一般用于数字签名和认证。DSA 不单单只有公钥、私钥，还有数字签名。私钥加密生成数字签名，公钥验证数据及签名。在DSA数字签名和认证中，发送者使用自己的私钥对文件或消息进行签名，接受者收到消息后使用发送者的公钥来验证签名的真实性，包括数据的完整性以及数据发送者的身份。如果数据和签名不匹配则认为验证失败！数字签名的作用就是校验数据在传输过程中不被修改。</p>
-<p>DSA数字签名可以理解为是<a target="_blank" rel="noopener" href="https://zhida.zhihu.com/search?content_id=165246664&amp;content_type=Article&amp;match_order=1&amp;q=%E5%8D%95%E5%90%91%E5%8A%A0%E5%AF%86&amp;zhida_source=entity">单向加密</a>的升级，不仅校验数据完整性，还校验发送者身份，同时还由于使用了非对称的密钥来保证密钥的安全，所以相比消息摘要算法更安全。</p>
-<p>DSA只是一种算法，和RSA不同之处在于它不能用作加密和解密，也不能进行<a target="_blank" rel="noopener" href="https://zhida.zhihu.com/search?content_id=165246664&amp;content_type=Article&amp;match_order=1&amp;q=%E5%AF%86%E9%92%A5%E4%BA%A4%E6%8D%A2&amp;zhida_source=entity">密钥交换</a>，只用于签名,它比RSA要快很多。</p>
-<h2 id="DSA算法签名的过程">DSA算法签名的过程</h2>
-<ol>
-<li>使用<a target="_blank" rel="noopener" href="https://zhida.zhihu.com/search?content_id=165246664&amp;content_type=Article&amp;match_order=2&amp;q=%E6%B6%88%E6%81%AF%E6%91%98%E8%A6%81%E7%AE%97%E6%B3%95&amp;zhida_source=entity">消息摘要算法</a>（例如sha-256/md5)将要发送数据加密生成信息摘要。</li>
-<li>发送方用自己的DSA私钥对信息摘要再加密，形成数字签名。</li>
-<li>将原报文和加密后的数字签名一并通过互联网传给接收方。</li>
-<li>接收方用发送方的公钥对数字签名进行解密，同时对收到的数据用消息摘要算法产生同一信息摘要。</li>
-<li>将解密后的信息摘要和收到的数据在接收方重新加密产生的摘要进行比对校验，如果两者一致，则说明在传送过程中信息没有破坏和篡改；否则，则说明信息已经失去安全性和保密性。</li>
-</ol>
-<h2 id="算法原理">算法原理</h2>
-	
-	</div>
-  <a type="button" href="/2024/12/29/DSA签名算法/#more" class="btn btn-default more">阅读此文</a>
-</div>
-
-		
 
 		</div>
 
@@ -640,6 +639,8 @@ $x^2=1 mod p---&gt;(x-1)(x+1)=0mod p$</p>
 		
 			<li><a href="/categories/二进制安全/">二进制安全<span>1</span></a></li>
 		
+			<li><a href="/categories/安卓应用级虚拟化/">安卓应用级虚拟化<span>1</span></a></li>
+		
 			<li><a href="/categories/crypto/算法/">算法<span>1</span></a></li>
 		
 			<li><a href="/categories/计算机语言/">计算机语言<span>1</span></a></li>
@@ -653,43 +654,43 @@ $x^2=1 mod p---&gt;(x-1)(x+1)=0mod p$</p>
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
+			<li><a href="/tags/algorithm/">algorithm<span>5</span></a></li>
+		
 			<li><a href="/tags/区块链/">区块链<span>1</span></a></li>
 		
-			<li><a href="/tags/工具配置/">工具配置<span>1</span></a></li>
+			<li><a href="/tags/混淆/">混淆<span>1</span></a></li>
+		
+			<li><a href="/tags/tools/">tools<span>1</span></a></li>
+		
+			<li><a href="/tags/pwn/">pwn<span>2</span></a></li>
 		
 			<li><a href="/tags/二进制安全/">二进制安全<span>1</span></a></li>
 		
 			<li><a href="/tags/io/">io<span>1</span></a></li>
 		
-			<li><a href="/tags/RSA/">RSA<span>1</span></a></li>
+			<li><a href="/tags/ctf/">ctf<span>1</span></a></li>
 		
-			<li><a href="/tags/Lcg/">Lcg<span>1</span></a></li>
-		
-			<li><a href="/tags/math/">math<span>1</span></a></li>
+			<li><a href="/tags/工具配置/">工具配置<span>1</span></a></li>
 		
 			<li><a href="/tags/CTF/">CTF<span>1</span></a></li>
 		
-			<li><a href="/tags/混淆/">混淆<span>1</span></a></li>
+			<li><a href="/tags/reverse/">reverse<span>3</span></a></li>
 		
 			<li><a href="/tags/操作系统/">操作系统<span>1</span></a></li>
 		
-			<li><a href="/tags/re/">re<span>2</span></a></li>
+			<li><a href="/tags/math/">math<span>1</span></a></li>
 		
 			<li><a href="/tags/reserve/">reserve<span>1</span></a></li>
 		
-			<li><a href="/tags/android/">android<span>2</span></a></li>
+			<li><a href="/tags/Lcg/">Lcg<span>1</span></a></li>
+		
+			<li><a href="/tags/RSA/">RSA<span>1</span></a></li>
 		
 			<li><a href="/tags/Hexo/">Hexo<span>3</span></a></li>
 		
-			<li><a href="/tags/python/">python<span>4</span></a></li>
-		
-			<li><a href="/tags/openssl/">openssl<span>1</span></a></li>
+			<li><a href="/tags/复现/">复现<span>3</span></a></li>
 		
 			<li><a href="/tags/cpp/">cpp<span>2</span></a></li>
-		
-			<li><a href="/tags/tools/">tools<span>1</span></a></li>
-		
-			<li><a href="/tags/algorithm/">algorithm<span>5</span></a></li>
 		
 			<li><a href="/tags/go/">go<span>1</span></a></li>
 		
@@ -707,6 +708,10 @@ $x^2=1 mod p---&gt;(x-1)(x+1)=0mod p$</p>
   <ul class="entry list-unstyled">
     
       <li>
+        <a href="/2026/11/14/virtual app的基础架构/" ><i class="fa fa-file-o"></i>virtual app的基础架构</a>
+      </li>
+    
+      <li>
         <a href="/2026/09/03/ollvm混淆分析/" ><i class="fa fa-file-o"></i>llvm 实现的混淆和去混淆</a>
       </li>
     
@@ -720,10 +725,6 @@ $x^2=1 mod p---&gt;(x-1)(x+1)=0mod p$</p>
     
       <li>
         <a href="/2026/06/28/pwn-retolibc/" ><i class="fa fa-file-o"></i>二进制安全-elf文件结构和动态链接</a>
-      </li>
-    
-      <li>
-        <a href="/2026/06/16/sctf-2026/" ><i class="fa fa-file-o"></i>SCTF-2026-invisile</a>
       </li>
     
   </ul>

@@ -149,6 +149,51 @@
 <div class="row">
 	<div class="col-md-8">
 		<h3 class="title">
+			<a href="/2026/11/14/virtual app的基础架构/" >virtual app的基础架构</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2026-11-14  </div>
+		</div>
+	</div>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+	
+		<ul>
+<li>最近在看安卓的应用级虚拟化的架构
+这一章我们先来说一下大致架构
+大致框架是这样的
+<img src="/images/Pasted-image-20261030145151.png" alt>
+host 主进程，va server 进程 和各个 client进程。这里host主进程就可以看作vritual app本身 ，然后vaserverkey看作虚拟机内部的一个framwork 架构 。后门就是各个client 进程
+而因为我们的虚拟机内部没有 service manager进程来要负责 Binder 服务的注册、查询和管理。所以我们还需要自己实现一个类似的结构</li>
+</ul>
+<h2 id="构建一个类似service-manager的服务">构建一个类似service manager的服务</h2>
+<p>首先我们先抛开binder的底层机制,我们需要明白,如果一个进程要通过binder调用另一个进程,那么这个进程就要获取到他的ibinder
+我们一层一层往下看</p>
+<h3 id="binderprovider">binderprovider</h3>
+<p>继承自组件contentprovider</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.lody.virtual.server;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.content.ComponentName;</span><br><span class="line"><span class="keyword">import</span> android.content.ContentProvider;</span><br><span class="line"><span class="keyword">import</span> android.content.ContentValues;</span><br><span class="line"><span class="keyword">import</span> android.content.Context;</span><br><span class="line"><span class="keyword">import</span> android.content.Intent;</span><br><span class="line"><span class="keyword">import</span> android.content.ServiceConnection;</span><br><span class="line"><span class="keyword">import</span> android.database.Cursor;</span><br><span class="line"><span class="keyword">import</span> android.net.Uri;</span><br><span class="line"><span class="keyword">import</span> android.os.Build;</span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> android.os.IBinder;</span><br><span class="line"><span class="keyword">import</span> android.os.RemoteException;</span><br><span class="line"><span class="keyword">import</span> android.os.ResultReceiver;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.lody.virtual.client.core.VirtualCore;</span><br><span class="line"><span class="keyword">import</span> com.lody.virtual.client.ipc.ServiceManagerNative;</span><br><span class="line"><span class="keyword">import</span> com.lody.virtual.client.stub.KeepAliveService;</span><br><span class="line"><span class="keyword">import</span> com.lody.virtual.helper.compat.BundleCompat;</span><br><span class="line"><span class="keyword">import</span> com.lody.virtual.helper.compat.NotificationChannelCompat;</span><br><span class="line"><span class="keyword">import</span> com.lody.virtual.server.accounts.VAccountManagerService;</span><br><span class="line"><span class="keyword">import</span> com.lody.virtual.server.am.VActivityManagerService;</span><br><span class="line"><span class="keyword">import</span> com.lody.virtual.server.content.VContentService;</span><br><span class="line"><span class="keyword">import</span> com.lody.virtual.server.device.VDeviceManagerService;</span><br><span class="line"><span class="keyword">import</span> com.lody.virtual.server.interfaces.IServiceFetcher;</span><br><span class="line"><span class="keyword">import</span> com.lody.virtual.server.job.VJobSchedulerService;</span><br><span class="line"><span class="keyword">import</span> com.lody.virtual.server.location.VirtualLocationService;</span><br><span class="line"><span class="keyword">import</span> com.lody.virtual.server.notification.VNotificationManagerService;</span><br><span class="line"><span class="keyword">import</span> com.lody.virtual.server.pm.VAppManagerService;</span><br><span class="line"><span class="keyword">import</span> com.lody.virtual.server.pm.VPackageManagerService;</span><br><span class="line"><span class="keyword">import</span> com.lody.virtual.server.pm.VUserManagerService;</span><br><span class="line"><span class="keyword">import</span> com.lody.virtual.server.vs.VirtualStorageService;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Lody</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">BinderProvider</span> <span class="keyword">extends</span> <span class="title class_">ContentProvider</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">ServiceFetcher</span> <span class="variable">mServiceFetcher</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ServiceFetcher</span>();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">boolean</span> <span class="variable">sInitialized</span> <span class="operator">=</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">onCreate</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> init();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">boolean</span> <span class="title function_">isInitialized</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> sInitialized;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">boolean</span> <span class="title function_">init</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (sInitialized) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">Context</span> <span class="variable">context</span> <span class="operator">=</span> getContext();</span><br><span class="line">        <span class="keyword">if</span> (context != <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (android.os.Build.VERSION.SDK_INT &gt;= android.os.Build.VERSION_CODES.O) &#123;</span><br><span class="line">                NotificationChannelCompat.checkOrCreateChannel(context, NotificationChannelCompat.DAEMON_ID, <span class="string">&quot;daemon&quot;</span>);</span><br><span class="line">                NotificationChannelCompat.checkOrCreateChannel(context, NotificationChannelCompat.DEFAULT_ID, <span class="string">&quot;default&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                context.startService(<span class="keyword">new</span> <span class="title class_">Intent</span>(context, KeepAliveService.class));</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!VirtualCore.get().isStartup()) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        VPackageManagerService.systemReady();</span><br><span class="line">        addService(ServiceManagerNative.PACKAGE, VPackageManagerService.get());</span><br><span class="line">        addService(ServiceManagerNative.ACTIVITY, VActivityManagerService.get());</span><br><span class="line">        addService(ServiceManagerNative.USER, VUserManagerService.get());</span><br><span class="line">        VAppManagerService.systemReady();</span><br><span class="line">        addService(ServiceManagerNative.APP, VAppManagerService.get());</span><br><span class="line">        <span class="keyword">if</span> (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.LOLLIPOP) &#123;</span><br><span class="line">            addService(ServiceManagerNative.JOB, VJobSchedulerService.get());</span><br><span class="line">        &#125;</span><br><span class="line">        VNotificationManagerService.systemReady(context);</span><br><span class="line">        addService(ServiceManagerNative.NOTIFICATION, VNotificationManagerService.get());</span><br><span class="line">        VAppManagerService.get().scanApps();</span><br><span class="line">        VAccountManagerService.systemReady();</span><br><span class="line">        VContentService.systemReady();</span><br><span class="line">        addService(ServiceManagerNative.ACCOUNT, VAccountManagerService.get());</span><br><span class="line">        addService(ServiceManagerNative.CONTENT, VContentService.get());</span><br><span class="line">        addService(ServiceManagerNative.VS, VirtualStorageService.get());</span><br><span class="line">        addService(ServiceManagerNative.DEVICE, VDeviceManagerService.get());</span><br><span class="line">        addService(ServiceManagerNative.VIRTUAL_LOC, VirtualLocationService.get());</span><br><span class="line">        sInitialized = <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">addService</span><span class="params">(String name, IBinder service)</span> &#123;</span><br><span class="line">        ServiceCache.addService(name, service);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Bundle <span class="title function_">call</span><span class="params">(String method, String arg, Bundle extras)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (!sInitialized) &#123;</span><br><span class="line">            init();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="string">&quot;@&quot;</span>.equals(method)) &#123;</span><br><span class="line">            <span class="type">Bundle</span> <span class="variable">bundle</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Bundle</span>();</span><br><span class="line">            BundleCompat.putBinder(bundle, <span class="string">&quot;_VA_|_binder_&quot;</span>, mServiceFetcher);</span><br><span class="line">            <span class="keyword">return</span> bundle;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Cursor <span class="title function_">query</span><span class="params">(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getType</span><span class="params">(Uri uri)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Uri <span class="title function_">insert</span><span class="params">(Uri uri, ContentValues values)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">delete</span><span class="params">(Uri uri, String selection, String[] selectionArgs)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">update</span><span class="params">(Uri uri, ContentValues values, String selection, String[] selectionArgs)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">class</span> <span class="title class_">ServiceFetcher</span> <span class="keyword">extends</span> <span class="title class_">IServiceFetcher</span>.Stub &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> IBinder <span class="title function_">getService</span><span class="params">(String name)</span> <span class="keyword">throws</span> RemoteException &#123;</span><br><span class="line">            <span class="keyword">if</span> (name != <span class="literal">null</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> ServiceCache.getService(name);</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addService</span><span class="params">(String name, IBinder service)</span> <span class="keyword">throws</span> RemoteException &#123;</span><br><span class="line">            <span class="keyword">if</span> (name != <span class="literal">null</span> &amp;&amp; service != <span class="literal">null</span>) &#123;</span><br><span class="line">                ServiceCache.addService(name, service);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">removeService</span><span class="params">(String name)</span> <span class="keyword">throws</span> RemoteException &#123;</span><br><span class="line">            <span class="keyword">if</span> (name != <span class="literal">null</span>) &#123;</span><br><span class="line">                ServiceCache.removeService(name);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>我们稍后会讲解几个结构首先这个ServiceFetcher，是作为调用的接口，通过控制ServiceCache 控制和调用服务。至于什么服务，其实就是server 提供的一些类似于 安卓系统级的binder服务。
+因为contentprovider 的call 是通过ams管理并能够被外部通过contentresover调用的.
+所以我们还需要在 app 的mainfest专门写注册代码以便ams发现并管理</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">    <span class="comment">&lt;!-- lib/src/main/AndroidManifest.xml:381-386 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">provider</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:name</span>=<span class="string">&quot;com.lody.virtual.server.BinderProvider&quot;</span>                        ← <span class="attr">类</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:authorities</span>=<span class="string">&quot;$&#123;AUTHORITY_PREFIX&#125;.virtual.service.BinderProvider&quot;</span>     ← <span class="attr">唯一标识</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:exported</span>=<span class="string">&quot;true&quot;</span>                                                      ← <span class="attr">允许跨</span> <span class="attr">uid</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:permission</span>=<span class="string">&quot;$&#123;PERMISSION_PREFIX&#125;.permission.SAFE_ACCESS&quot;</span>             ← <span class="attr">签名级准入</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:process</span>=<span class="string">&quot;@string/engine_process_name&quot;</span> /&gt;</span>                             ← 承载进程 :x</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>根据前面的代码private class ServiceFetcher extends IServiceFetcher.Stub 他继承的IServiceFetcher.Stub 本身就是一个ibinder对象，所以我们就只需要在call函数返回bundle</p>
+	
+	</div>
+  <a type="button" href="/2026/11/14/virtual app的基础架构/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
 			<a href="/2026/09/03/ollvm混淆分析/" >llvm 实现的混淆和去混淆</a>
 		</h3>
 		</div>
@@ -569,54 +614,6 @@ cpp一共提供了三种智能指针,后续我们基于具体情况也会讲智�
 </div>
 
 		
-			
-	
-	<!-- display as entry -->
-<div class="row">
-	<div class="col-md-8">
-		<h3 class="title">
-			<a href="/2026/03/24/APK 文件结构/" >apk文件结构</a>
-		</h3>
-		</div>
-	<div class="col-md-4">
-		<div class="date">post @ 2026-03-24  </div>
-		</div>
-	</div>
-	
-
-
-			<div class="entry">
-  <div class="row">
-	
-	
-		<ul>
-<li>学安卓有一段时间了,不过学的很慢,打算先花一天整理一下之前学的
-参考:<a target="_blank" rel="noopener" href="https://bbs.kanxue.com/thread-278112-1.htm#msg_header_h3_1">安卓逆向基础知识之apk文件结构</a></li>
-</ul>
-<h2 id="结构">结构</h2>
-<blockquote>
-<p>lib: 存放其他语言编写的so(动态链接库)</p>
-</blockquote>
-<blockquote>
-<p>META-INF:用于存放数字签名相关</p>
-</blockquote>
-<blockquote>
-<p>resources.arsc:暂时没怎么用过,用于存放编译打包厚度资源关系映射.同时还会生成一个R类指出id</p>
-</blockquote>
-<blockquote>
-<p>res :存放经过编译后的资源文件</p>
-</blockquote>
-<blockquote>
-<p>assets:存放不需要编译的资源文件</p>
-</blockquote>
-<p>下面进行一些讲解,可能不是很详细</p>
-<h2 id="lib">lib</h2>
-	
-	</div>
-  <a type="button" href="/2026/03/24/APK 文件结构/#more" class="btn btn-default more">阅读此文</a>
-</div>
-
-		
 
 		</div>
 
@@ -708,6 +705,8 @@ cpp一共提供了三种智能指针,后续我们基于具体情况也会讲智�
 		
 			<li><a href="/categories/二进制安全/">二进制安全<span>1</span></a></li>
 		
+			<li><a href="/categories/安卓应用级虚拟化/">安卓应用级虚拟化<span>1</span></a></li>
+		
 			<li><a href="/categories/crypto/算法/">算法<span>1</span></a></li>
 		
 			<li><a href="/categories/计算机语言/">计算机语言<span>1</span></a></li>
@@ -721,45 +720,45 @@ cpp一共提供了三种智能指针,后续我们基于具体情况也会讲智�
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/reserve/">reserve<span>1</span></a></li>
+			<li><a href="/tags/openssl/">openssl<span>1</span></a></li>
 		
-			<li><a href="/tags/区块链/">区块链<span>1</span></a></li>
-		
-			<li><a href="/tags/Hexo/">Hexo<span>3</span></a></li>
-		
-			<li><a href="/tags/crypto/">crypto<span>25</span></a></li>
-		
-			<li><a href="/tags/工具配置/">工具配置<span>1</span></a></li>
-		
-			<li><a href="/tags/复现/">复现<span>3</span></a></li>
-		
-			<li><a href="/tags/cpp/">cpp<span>2</span></a></li>
-		
-			<li><a href="/tags/CTF/">CTF<span>1</span></a></li>
-		
-			<li><a href="/tags/io/">io<span>1</span></a></li>
-		
-			<li><a href="/tags/二进制安全/">二进制安全<span>1</span></a></li>
+			<li><a href="/tags/混淆/">混淆<span>1</span></a></li>
 		
 			<li><a href="/tags/操作系统/">操作系统<span>1</span></a></li>
 		
-			<li><a href="/tags/ctf/">ctf<span>1</span></a></li>
+			<li><a href="/tags/二进制安全/">二进制安全<span>1</span></a></li>
 		
 			<li><a href="/tags/math/">math<span>1</span></a></li>
 		
-			<li><a href="/tags/android/">android<span>2</span></a></li>
+			<li><a href="/tags/ctf/">ctf<span>1</span></a></li>
 		
-			<li><a href="/tags/python/">python<span>4</span></a></li>
-		
-			<li><a href="/tags/re/">re<span>2</span></a></li>
-		
-			<li><a href="/tags/openssl/">openssl<span>1</span></a></li>
+			<li><a href="/tags/pwn/">pwn<span>2</span></a></li>
 		
 			<li><a href="/tags/go/">go<span>1</span></a></li>
 		
-			<li><a href="/tags/RSA/">RSA<span>1</span></a></li>
+			<li><a href="/tags/cpp/">cpp<span>2</span></a></li>
 		
-			<li><a href="/tags/pwn/">pwn<span>2</span></a></li>
+			<li><a href="/tags/复现/">复现<span>3</span></a></li>
+		
+			<li><a href="/tags/re/">re<span>2</span></a></li>
+		
+			<li><a href="/tags/工具配置/">工具配置<span>1</span></a></li>
+		
+			<li><a href="/tags/CTF/">CTF<span>1</span></a></li>
+		
+			<li><a href="/tags/Hexo/">Hexo<span>3</span></a></li>
+		
+			<li><a href="/tags/python/">python<span>4</span></a></li>
+		
+			<li><a href="/tags/algorithm/">algorithm<span>5</span></a></li>
+		
+			<li><a href="/tags/区块链/">区块链<span>1</span></a></li>
+		
+			<li><a href="/tags/io/">io<span>1</span></a></li>
+		
+			<li><a href="/tags/crypto/">crypto<span>25</span></a></li>
+		
+			<li><a href="/tags/android/">android<span>3</span></a></li>
 		
 		
 		   <li><a href="/tags">...<span>25</span></a></li>
@@ -775,6 +774,10 @@ cpp一共提供了三种智能指针,后续我们基于具体情况也会讲智�
   <ul class="entry list-unstyled">
     
       <li>
+        <a href="/2026/11/14/virtual app的基础架构/" ><i class="fa fa-file-o"></i>virtual app的基础架构</a>
+      </li>
+    
+      <li>
         <a href="/2026/09/03/ollvm混淆分析/" ><i class="fa fa-file-o"></i>llvm 实现的混淆和去混淆</a>
       </li>
     
@@ -788,10 +791,6 @@ cpp一共提供了三种智能指针,后续我们基于具体情况也会讲智�
     
       <li>
         <a href="/2026/06/28/pwn-retolibc/" ><i class="fa fa-file-o"></i>二进制安全-elf文件结构和动态链接</a>
-      </li>
-    
-      <li>
-        <a href="/2026/06/16/sctf-2026/" ><i class="fa fa-file-o"></i>SCTF-2026-invisile</a>
       </li>
     
   </ul>
